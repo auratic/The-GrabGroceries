@@ -7760,4 +7760,85 @@ h6 {
   opacity: 1;
 }
 
+.containe
+{
+    margin-left: 550px;
+    margin-top: 10px;
+}
+
+.formbox
+{
+    width: 40%;
+    text-align: center;
+    background-color:white;
+    border-radius: 10px;
+    justify-content: center;
+    padding: 50px;
+}
+
+input[type=text], input[type=password] 
+{
+    width: 60%;
+    padding: 5px;
+    margin: 15px 0 22px 0;
+    text-align: center;
+    display: inline-block;
+    border-color: black;
+    background: #fffefe;
+    border-radius: 10px;
+}
+
+input[type=text]
+{
+	background-image:url(.../images/login/user.jpg);
+	background-size:30px;
+	background-repeat:no-repeat; 
+    background-position:center left;
+}
+
+input[type=password]
+{
+	background-image:url(img/lock.png);
+	background-size:30px;
+	background-repeat:no-repeat; 
+	background-position:center left;
+}
+
+.signinbtn
+{
+    text-transform: capitalize;
+    height: 30px;
+    width: 100px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(40, 224, 40);
+    color: white;
+    cursor: pointer;
+    font-weight: bold
+}
+
+.fgtpwd
+{
+    color: darkblue;
+    font-weight: bold;
+}
+
+a:link
+{
+    text-decoration: none;
+}
+a:hover
+{
+    color: black;
+    text-decoration: underline;
+}
+
+.signupbtn
+{
+    color: darkblue;
+    font-style: italic;
+    font-weight: bold;
+}
+
 /*# sourceMappingURL=organik.css.map */

@@ -5,7 +5,7 @@
 # access to the main server configuration file (which is usually called
 # `httpd.conf`), you should add this logic there.
 #
-# https://httpd.apache.org/docs/current/howto/htaccess.html
+# https://httpd.apache.org/docs/current/howto/htaccess.php
 
 # ######################################################################
 # # CROSS-ORIGIN                                                       #
@@ -32,7 +32,7 @@
 # Send the CORS header for images when browsers request it.
 #
 # https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
-# https://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
+# https://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.php
 
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
@@ -86,9 +86,9 @@
 
 # Customize what Apache returns to the client in case of an error.
 #
-# https://httpd.apache.org/docs/current/mod/core.html#errordocument
+# https://httpd.apache.org/docs/current/mod/core.php#errordocument
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /404.php
 
 # ----------------------------------------------------------------------
 # | Error prevention                                                   |
@@ -99,7 +99,7 @@ ErrorDocument 404 /404.html
 # This setting prevents Apache from returning a 404 error as the result
 # of a rewrite when the directory with the same name does not exist.
 #
-# https://httpd.apache.org/docs/current/content-negotiation.html#multiviews
+# https://httpd.apache.org/docs/current/content-negotiation.php#multiviews
 
 Options -MultiViews
 
@@ -150,7 +150,7 @@ Options -MultiViews
 # Serve resources with the proper media types (f.k.a. MIME types).
 #
 # https://www.iana.org/assignments/media-types/media-types.xhtml
-# https://httpd.apache.org/docs/current/mod/mod_mime.html#addtype
+# https://httpd.apache.org/docs/current/mod/mod_mime.php#addtype
 
 <IfModule mod_mime.c>
 
@@ -167,7 +167,7 @@ Options -MultiViews
   # JavaScript
 
     # Servers should use text/javascript for JavaScript resources.
-    # https://html.spec.whatwg.org/multipage/scripting.html#scriptingLanguages
+    # https://html.spec.whatwg.org/multipage/scripting.php#scriptingLanguages
 
     AddType text/javascript                             js mjs
 
@@ -236,7 +236,7 @@ Options -MultiViews
 # Serve all resources labeled as `text/html` or `text/plain`
 # with the media type `charset` parameter set to `UTF-8`.
 #
-# https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
+# https://httpd.apache.org/docs/current/mod/core.php#adddefaultcharset
 
 AddDefaultCharset utf-8
 
@@ -245,7 +245,7 @@ AddDefaultCharset utf-8
 # Serve the following file types with the media type `charset`
 # parameter set to `UTF-8`.
 #
-# https://httpd.apache.org/docs/current/mod/mod_mime.html#addcharset
+# https://httpd.apache.org/docs/current/mod/mod_mime.php#addcharset
 
 <IfModule mod_mime.c>
     AddCharset utf-8 .atom \
@@ -281,29 +281,29 @@ AddDefaultCharset utf-8
 # (1) Turn on the rewrite engine (this is necessary in order for
 #     the `RewriteRule` directives to work).
 #
-#     https://httpd.apache.org/docs/current/mod/mod_rewrite.html#RewriteEngine
+#     https://httpd.apache.org/docs/current/mod/mod_rewrite.php#RewriteEngine
 #
 # (2) Enable the `FollowSymLinks` option if it isn't already.
 #
-#     https://httpd.apache.org/docs/current/mod/core.html#options
+#     https://httpd.apache.org/docs/current/mod/core.php#options
 #
 # (3) If your web host doesn't allow the `FollowSymlinks` option,
 #     you need to comment it out or remove it, and then uncomment
 #     the `Options +SymLinksIfOwnerMatch` line (4), but be aware
 #     of the performance impact.
 #
-#     https://httpd.apache.org/docs/current/misc/perf-tuning.html#symlinks
+#     https://httpd.apache.org/docs/current/misc/perf-tuning.php#symlinks
 #
 # (4) Some cloud hosting services will require you set `RewriteBase`.
 #
 #     https://www.rackspace.com/knowledge_center/frequently-asked-question/why-is-modrewrite-not-working-on-my-site
-#     https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+#     https://httpd.apache.org/docs/current/mod/mod_rewrite.php#rewritebase
 #
 # (5) Depending on how your server is set up, you may also need to
 #     use the `RewriteOptions` directive to enable some options for
 #     the rewrite engine.
 #
-#     https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriteoptions
+#     https://httpd.apache.org/docs/current/mod/mod_rewrite.php#rewriteoptions
 #
 # (6) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
 #     appropriate schema automatically (http or https).
@@ -495,7 +495,7 @@ AddDefaultCharset utf-8
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 # https://www.w3.org/TR/CSP3/
 # https://content-security-policy.com/
-# https://www.html5rocks.com/en/tutorials/security/content-security-policy/
+# https://www.php5rocks.com/en/tutorials/security/content-security-policy/
 
 # <IfModule mod_headers.c>
 
@@ -611,7 +611,7 @@ AddDefaultCharset utf-8
 #
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
 # https://tools.ietf.org/html/rfc6797#section-6.1
-# https://www.html5rocks.com/en/tutorials/security/transport-layer-security/
+# https://www.php5rocks.com/en/tutorials/security/transport-layer-security/
 # https://blogs.msdn.microsoft.com/ieinternals/2014/08/18/strict-transport-security/
 
 # <IfModule mod_headers.c>
@@ -749,7 +749,7 @@ AddDefaultCharset utf-8
 # https://tools.ietf.org/html/rfc7231#section-4.3.8
 # https://www.owasp.org/index.php/Cross_Site_Tracing
 # https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)
-# https://httpd.apache.org/docs/current/mod/core.html#traceenable
+# https://httpd.apache.org/docs/current/mod/core.php#traceenable
 
 # TraceEnable Off
 
@@ -785,7 +785,7 @@ AddDefaultCharset utf-8
 # information about the server to the server-generated documents
 # (e.g.: error messages, directory listings, etc.)
 #
-# https://httpd.apache.org/docs/current/mod/core.html#serversignature
+# https://httpd.apache.org/docs/current/mod/core.php#serversignature
 
 ServerSignature Off
 
@@ -798,7 +798,7 @@ ServerSignature Off
 # (!) The `ServerTokens` directive will only work in the main server
 # configuration file, so don't try to enable it in the `.htaccess` file!
 #
-# https://httpd.apache.org/docs/current/mod/core.html#servertokens
+# https://httpd.apache.org/docs/current/mod/core.php#servertokens
 
 # ServerTokens Prod
 
@@ -828,7 +828,7 @@ ServerSignature Off
 
     # Compress all output labeled with one of the following media types.
     #
-    # https://httpd.apache.org/docs/current/mod/mod_filter.html#addoutputfilterbytype
+    # https://httpd.apache.org/docs/current/mod/mod_filter.php#addoutputfilterbytype
 
     <IfModule mod_filter.c>
         AddOutputFilterByType DEFLATE "application/atom+xml" \
@@ -886,7 +886,7 @@ ServerSignature Off
     # content.
     #
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding
-    # https://httpd.apache.org/docs/current/mod/mod_mime.html#addencoding
+    # https://httpd.apache.org/docs/current/mod/mod_mime.php#addencoding
 
     <IfModule mod_mime.c>
         AddEncoding gzip              svgz
@@ -909,7 +909,7 @@ ServerSignature Off
 # to request brotli-compressed resources.
 # https://www.chromestatus.com/feature/5420797577396224
 #
-# https://httpd.apache.org/docs/current/mod/mod_brotli.html#precompressed
+# https://httpd.apache.org/docs/current/mod/mod_brotli.php#precompressed
 
 # <IfModule mod_headers.c>
 
@@ -959,14 +959,14 @@ ServerSignature Off
 # files by your own. Enabling this part will not auto-generate
 # gziped files.
 #
-# https://httpd.apache.org/docs/current/mod/mod_deflate.html#precompressed
+# https://httpd.apache.org/docs/current/mod/mod_deflate.php#precompressed
 #
 # (1)
 # Removing default MIME Type for .gz files allowing to add custom
 # sub-types.
-# You may prefer using less generic extensions such as .html_gz in
+# You may prefer using less generic extensions such as .php_gz in
 # order to keep default behavior regarding .gz files.
-# https://httpd.apache.org/docs/current/mod/mod_mime.html#removetype
+# https://httpd.apache.org/docs/current/mod/mod_mime.php#removetype
 
 # <IfModule mod_headers.c>
 
@@ -1039,7 +1039,7 @@ ServerSignature Off
 # Remove `ETags` as resources are sent with far-future expires headers.
 #
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag
-# https://developer.yahoo.com/performance/rules.html#etags
+# https://developer.yahoo.com/performance/rules.php#etags
 # https://tools.ietf.org/html/rfc7232#section-2.3
 
 # `FileETag None` doesn't work in all cases.
@@ -1061,7 +1061,7 @@ FileETag None
 #
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires
-# https://httpd.apache.org/docs/current/mod/mod_expires.html
+# https://httpd.apache.org/docs/current/mod/mod_expires.php
 
 <IfModule mod_expires.c>
 

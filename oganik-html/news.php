@@ -44,7 +44,7 @@
             <div class="topbar">
                 <div class="container">
                     <div class="main-logo">
-                        <a href="index.html" class="logo">
+                        <a href="index.php" class="logo">
                             <img src="assets/images/logo-dark.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -86,40 +86,40 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.html">Home</a>
+                            <a href="index.php">Home</a>
                             <ul>
                                 <li>
-                                    <a href="index.html">Home One</a>
+                                    <a href="index.php">Home One</a>
                                 </li>
-                                <li><a href="index-2.html">Home Two</a></li>
+                                <li><a href="index-2.php">Home Two</a></li>
                                 <li class="dropdown">
                                     <a href="#">Header Styles</a>
                                     <ul>
-                                        <li><a href="index.html">Header One</a></li>
-                                        <li><a href="index-2.html">Header Two</a></li>
+                                        <li><a href="index.php">Header One</a></li>
+                                        <li><a href="index-2.php">Header Two</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="about.html">About</a>
+                            <a href="about.php">About</a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.html">Shop</a>
+                            <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.html">Shop</a></li>
-                                <li><a href="product-details.html">Product Details</a></li>
-                                <li><a href="cart.html">Cart Page</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="products.php">Shop</a></li>
+                                <li><a href="product-details.php">Product Details</a></li>
+                                <li><a href="cart.php">Cart Page</a></li>
+                                <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.html">News</a>
+                        <li class="dropdown"><a href="news.php">News</a>
                             <ul>
-                                <li><a href="news.html">News</a></li>
-                                <li><a href="news-details.html">News Details</a></li>
+                                <li><a href="news.php">News</a></li>
+                                <li><a href="news-details.php">News Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="contact.php">Contact</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -144,7 +144,7 @@
             <div class="container">
                 <h2>Blog</h2>
                 <ul class="thm-breadcrumb list-unstyled">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li>/</li>
                     <li><span>Blog</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
@@ -159,14 +159,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-1.png" alt="How to Findout Healthy Food For Body">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">How to Findout Healthy Food For Body</a></h3>
+                                <h3><a href="news-details.php">How to Findout Healthy Food For Body</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -176,14 +176,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-2.png" alt="Leverage agile frameworks to provide">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">Leverage agile frameworks to provide</a></h3>
+                                <h3><a href="news-details.php">Leverage agile frameworks to provide</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -193,14 +193,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-3.png" alt="Organically grow the holistic world view">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">Organically grow the holistic world view</a></h3>
+                                <h3><a href="news-details.php">Organically grow the holistic world view</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -210,14 +210,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-4.png" alt="Bring to the table win-win survival">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">Bring to the table win-win survival</a></h3>
+                                <h3><a href="news-details.php">Bring to the table win-win survival</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -227,14 +227,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-5.png" alt="At the end of the day, going forward">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">At the end of the day, going forward</a></h3>
+                                <h3><a href="news-details.php">At the end of the day, going forward</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -244,14 +244,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-6.png" alt="User generated content in real-time">
-                                <a href="news-details.html"></a>
+                                <a href="news-details.php"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.html">User generated content in real-time</a></h3>
+                                <h3><a href="news-details.php">User generated content in real-time</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -275,7 +275,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-widget footer-widget__about-widget">
-                            <a href="index.html" class="footer-widget__logo">
+                            <a href="index.php" class="footer-widget__logo">
                                 <img src="assets/images/logo-light.png" alt="" width="105" height="43">
                             </a>
                             <p class="thm-text-dark">Atiam rhoncus sit amet adip
@@ -309,19 +309,19 @@
                             <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__links">
                                 <li>
-                                    <a href="index.html">Top Sellers</a>
+                                    <a href="index.php">Top Sellers</a>
                                 </li>
                                 <li>
-                                    <a href="products.html">Shopping</a>
+                                    <a href="products.php">Shopping</a>
                                 </li>
                                 <li>
-                                    <a href="about.html">About Store</a>
+                                    <a href="about.php">About Store</a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">Contact</a>
+                                    <a href="contact.php">Contact</a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">Help</a>
+                                    <a href="contact.php">Help</a>
                                 </li>
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
@@ -331,16 +331,16 @@
                             <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__links">
                                 <li>
-                                    <a href="products.html">New Products</a>
+                                    <a href="products.php">New Products</a>
                                 </li>
                                 <li>
-                                    <a href="checkout.html">My Account</a>
+                                    <a href="checkout.php">My Account</a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">Support</a>
+                                    <a href="contact.php">Support</a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">FAQs</a>
+                                    <a href="contact.php">FAQs</a>
                                 </li>
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
@@ -382,7 +382,7 @@
             <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
 
             <div class="logo-box">
-                <a href="index.html" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
             </div>
             <!-- /.logo-box -->
             <div class="mobile-nav__container"></div>
@@ -431,7 +431,7 @@
                 <img src="assets/images/products/cart-1-1.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.html">Banana</a></h3>
+                        <h3><a href="product-details.php">Banana</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -445,7 +445,7 @@
                 <img src="assets/images/products/cart-1-2.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.html">Tomato</a></h3>
+                        <h3><a href="product-details.php">Tomato</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -459,7 +459,7 @@
                 <img src="assets/images/products/cart-1-3.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.html">Bread</a></h3>
+                        <h3><a href="product-details.php">Bread</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -469,7 +469,7 @@
                     </div>
                 </div><!-- /.mini-cart__item-content -->
             </div><!-- /.mini-cart__item -->
-            <a href="checkout.html" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
         </div><!-- /.mini-cart__content -->
     </div><!-- /.cart-toggler -->
 

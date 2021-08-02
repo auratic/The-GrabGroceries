@@ -144,7 +144,7 @@
                             <input type="password" placeholder="Password" name="psw" size="8" required>
                         <div class="clearfix">
                             <button onclick="window.location.href='index.php';" class="signinbtn">
-                                sign in
+                                Login
                             </button>
                             <a href="forgetpwd.php" class="fgtpwd">Forget Password?</a>
                         </div>

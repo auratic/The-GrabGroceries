@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home || TheGrabGroceries</title>
+    <title>Home One || Oganik || HTML Template For Organic Stores</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -45,7 +45,7 @@
             <div class="topbar">
                 <div class="container">
                     <div class="main-logo">
-                        <a href="index.php" class="logo">
+                        <a href="index.html" class="logo">
                             <img src="assets/images/logo-dark.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -87,40 +87,40 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php">Home</a>
+                            <a href="index.html">Home</a>
                             <ul>
                                 <li>
-                                    <a href="index.php">Home One</a>
+                                    <a href="index.html">Home One</a>
                                 </li>
-                                <li><a href="index-2.php">Home Two</a></li>
+                                <li><a href="index-2.html">Home Two</a></li>
                                 <li class="dropdown">
                                     <a href="#">Header Styles</a>
                                     <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
+                                        <li><a href="index.html">Header One</a></li>
+                                        <li><a href="index-2.html">Header Two</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="about.php">About</a>
+                            <a href="about.html">About</a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php">Shop</a>
+                            <a href="products.html">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
+                                <li><a href="products.html">Shop</a></li>
+                                <li><a href="product-details.html">Product Details</a></li>
+                                <li><a href="cart.html">Cart Page</a></li>
+                                <li><a href="checkout.html">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
+                        <li class="dropdown"><a href="news.html">News</a>
                             <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
+                                <li><a href="news.html">News</a></li>
+                                <li><a href="news-details.html">News Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -135,21 +135,21 @@
             </nav>
             <div class="containe">
                 <form action="#">
-                    <div class="loginbox">
+                    <div class="formbox">
                         <h1>Login to </h1>
                         <h2>
                             TheGrabGroceries
-                        </h2>    
-                            <input type="text"  placeholder="Username" name="usrname" size="20" maxlength="50" required>
+                        </h2>
+                            <input type="text" placeholder="Username" name="usrname" size="20" maxlength="50" required>
                             <input type="password" placeholder="Password" name="psw" size="8" required>
                         <div class="clearfix">
-                            <button onclick="window.location.href='index.php';" class="signinbtn">
-                                Login
+                            <button onclick="window.location.href='index.html';" class="signinbtn">
+                                sign in
                             </button>
-                            <a href="forgetpwd.php" class="fgtpwd">Forget Password?</a>
+                            <a href="forgetpwd.html" class="fgtpwd">Forget Password?</a>
                         </div>
                         <p>
-                            New User? <a href="signup.php" class="signupbtn"> Register Now</a>
+                            New User? <a href="signup.html" class="signupbtn"> Register Now</a>
                         </p>
                     </div>
                 </form>

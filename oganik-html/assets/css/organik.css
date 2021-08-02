@@ -1309,6 +1309,7 @@
 }
 
 body {
+  background-image: url("assets/images/wallpaper.jpg");
   font-family: var(--thm-font);
   color: var(--thm-color);
   font-size: 16px;
@@ -7764,6 +7765,7 @@ h6 {
 {
     margin-left: 550px;
     margin-top: 10px;
+    background-repeat:no-repeat; 
 }
 
 .loginbox

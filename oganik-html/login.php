@@ -1,63 +1,3 @@
-<?php
-// Initialize the session
-session_start();
- 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    //header("location: index.php");
-    //exit;
-}
- 
-// Include config file
-require_once "config.php";
- 
-// Define variables and initialize with empty values
-$username = $password = "";
-$username_err = $password_err = $login_err = "";
- 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    // Check if username is empty
-    if(empty(trim($_POST["username"]))) {
-        $username_err = "Please enter username.";
-    } else{
-        $username = trim($_POST["username"]);
-    }
-    
-    // Check if password is empty
-    if(empty($_POST["password"])){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = $_POST["password"];
-    }
-    
-    // Validate credentials
-    if(empty($username_err) && empty($password_err)){
-        // Prepare a select statement
-        $sql = "SELECT id, username, password FROM user WHERE username = '$username' AND password = '$password'";
-        $result = mysqli_query($link, $sql);
-
-        if (mysqli_num_rows($result) == 1) {
-            echo "Login successful.";
-            header("location: index.php");
-            
-            session_start();
-            $_SESSION["username"] = $username;
-            $_SESSION["loggedin"] = true;
-
-          } else {
-            $username_err = "Username or password is invalid";
-            //echo "Error: " . $sql . "<br>" . mysqli_error($link);
-  
-        }
-    }
-    
-    // Close connection
-    mysqli_close($link);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,13 +33,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
-    <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/93/26/Stkyof.gif")
-        }
-        .signup-form{ width: 360px; padding: 20px; }
-    </style>
 </head>
 
 <body>
@@ -108,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <header class="main-header">
+        <header class="main-header"> 
             <div class="topbar">
                 <div class="container">
                     <div class="main-logo">
@@ -202,7 +135,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </nav>
             <div class="containe">
                 <form action="#">
-                    <div class="formbox">
+                    <div class="loginbox">
                         <h1>Login to </h1>
                         <h2>
                             TheGrabGroceries

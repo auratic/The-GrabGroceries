@@ -3,7 +3,7 @@
   Database credentials. Assuming you are running MySQL
   server with default setting (user 'root' with no password) 
 
-  https://www.tutorialrepublic.com/php-tutorial/php-mysql-login-system.php
+  https://www.tutorialrepublic.com/php-tutorial/php-mysql-login-system.html
   */
 
   define('DB_SERVER', 'remotemysql.com');

@@ -1,6 +1,6 @@
 <?php
   // Include config file
-  require_once "config.php";
+  require_once "config.html";
  
   // Define variables and initialize with empty values
   $username = $password = $confirm_password = "";
@@ -65,7 +65,7 @@
         
         if (mysqli_query($link, $sql)) {
           echo "New record created successfully";
-          header("location: login.php");
+          header("location: login.html");
 
         } else {
           echo "Error: " . $sql . "<br>" . mysqli_error($link);
@@ -115,7 +115,7 @@
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Already have an account? <a href="login.html">Login here</a>.</p>
         </form>
     </div>    
 </body>

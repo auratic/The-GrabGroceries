@@ -44,7 +44,7 @@
 			<div class="topbar">
 				<div class="container">
 					<div class="main-logo">
-						<a href="index.php" class="logo">
+						<a href="index.html" class="logo">
 							<img src="assets/images/logo-dark.png" width="105" alt="">
 						</a>
 						<div class="mobile-nav__buttons">
@@ -86,41 +86,41 @@
 					</div><!-- /.main-menu__login -->
 					<ul class="main-menu__list">
 						<li class="dropdown">
-							<a href="index.php">Home</a>
+							<a href="index.html">Home</a>
 							<ul>
 								<li>
-									<a href="index.php">Home One</a>
+									<a href="index.html">Home One</a>
 								</li>
-								<li><a href="index-2.php">Home Two</a></li>
+								<li><a href="index-2.html">Home Two</a></li>
 								<li class="dropdown">
 									<a href="#">Header Styles</a>
 									<ul>
-										<li><a href="index.php">Header One</a></li>
-										<li><a href="index-2.php">Header Two</a></li>
+										<li><a href="index.html">Header One</a></li>
+										<li><a href="index-2.html">Header Two</a></li>
 									</ul>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a href="about.php">About</a>
+							<a href="about.html">About</a>
 						</li>
 						<li class="dropdown">
-							<a href="products.php">Shop</a>
+							<a href="products.html">Shop</a>
 							<ul>
-								<li><a href="products.php">Shop</a></li>
-								<li><a href="product-details.php">Product Details</a></li>
-								<li><a href="cart.php">Cart Page</a></li>
-								<li><a href="checkout.php">Checkout</a></li>
+								<li><a href="products.html">Shop</a></li>
+								<li><a href="product-details.html">Product Details</a></li>
+								<li><a href="cart.html">Cart Page</a></li>
+								<li><a href="checkout.html">Checkout</a></li>
 							</ul>
 						</li>
-						<li class="dropdown"><a href="news.php">News</a>
+						<li class="dropdown"><a href="news.html">News</a>
 							<ul>
-								<li><a href="news.php">News</a></li>
-								<li><a href="news-details.php">News Details</a></li>
+								<li><a href="news.html">News</a></li>
+								<li><a href="news-details.html">News Details</a></li>
 							</ul>
 						</li>
-						<li><a href="contact.php">Contact2</a></li>
-						<li><a href="contact.php">Contact3</a></li>
+						<li><a href="contact.html">Contact2</a></li>
+						<li><a href="contact.html">Contact3</a></li>
 					</ul>
 					<div class="main-menu__language">
 						<img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -145,7 +145,7 @@
 			<div class="container">
 				<h2>Checkout</h2>
 				<ul class="thm-breadcrumb list-unstyled">
-					<li><a href="index.php">Home</a></li>
+					<li><a href="index.html">Home</a></li>
 					<li>/</li>
 					<li><span>Checkout</span></li>
 				</ul><!-- /.thm-breadcrumb list-unstyled -->
@@ -316,7 +316,7 @@
 							</ul>
 						</div><!-- /.order-payment -->
 						<div class="text-right">
-							<a href="checkout.php" class="thm-btn">Place Your Order</a>
+							<a href="checkout.html" class="thm-btn">Place Your Order</a>
 						</div><!-- /.text-right -->
 					</div><!-- /.col-md-6 -->
 				</div><!-- /.row -->
@@ -330,7 +330,7 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
 						<div class="footer-widget footer-widget__about-widget">
-							<a href="index.php" class="footer-widget__logo">
+							<a href="index.html" class="footer-widget__logo">
 								<img src="assets/images/logo-light.png" alt="" width="105" height="43">
 							</a>
 							<p class="thm-text-dark">Atiam rhoncus sit amet adip
@@ -364,19 +364,19 @@
 							<h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
 							<ul class="list-unstyled footer-widget__links">
 								<li>
-									<a href="index.php">Top Sellers</a>
+									<a href="index.html">Top Sellers</a>
 								</li>
 								<li>
-									<a href="products.php">Shopping</a>
+									<a href="products.html">Shopping</a>
 								</li>
 								<li>
-									<a href="about.php">About Store</a>
+									<a href="about.html">About Store</a>
 								</li>
 								<li>
-									<a href="contact.php">Contact</a>
+									<a href="contact.html">Contact</a>
 								</li>
 								<li>
-									<a href="contact.php">Help</a>
+									<a href="contact.html">Help</a>
 								</li>
 							</ul><!-- /.list-unstyled footer-widget__contact -->
 						</div><!-- /.footer-widget -->
@@ -386,16 +386,16 @@
 							<h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
 							<ul class="list-unstyled footer-widget__links">
 								<li>
-									<a href="products.php">New Products</a>
+									<a href="products.html">New Products</a>
 								</li>
 								<li>
-									<a href="checkout.php">My Account</a>
+									<a href="checkout.html">My Account</a>
 								</li>
 								<li>
-									<a href="contact.php">Support</a>
+									<a href="contact.html">Support</a>
 								</li>
 								<li>
-									<a href="contact.php">FAQs</a>
+									<a href="contact.html">FAQs</a>
 								</li>
 							</ul><!-- /.list-unstyled footer-widget__contact -->
 						</div><!-- /.footer-widget -->
@@ -437,7 +437,7 @@
 			<span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
 
 			<div class="logo-box">
-				<a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+				<a href="index.html" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
 			</div>
 			<!-- /.logo-box -->
 			<div class="mobile-nav__container"></div>
@@ -486,7 +486,7 @@
 				<img src="assets/images/products/cart-1-1.jpg" alt="">
 				<div class="mini-cart__item-content">
 					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Banana</a></h3>
+						<h3><a href="product-details.html">Banana</a></h3>
 						<p>$9.99</p>
 					</div><!-- /.mini-cart__item-top -->
 					<div class="quantity-box">
@@ -500,7 +500,7 @@
 				<img src="assets/images/products/cart-1-2.jpg" alt="">
 				<div class="mini-cart__item-content">
 					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Tomato</a></h3>
+						<h3><a href="product-details.html">Tomato</a></h3>
 						<p>$9.99</p>
 					</div><!-- /.mini-cart__item-top -->
 					<div class="quantity-box">
@@ -514,7 +514,7 @@
 				<img src="assets/images/products/cart-1-3.jpg" alt="">
 				<div class="mini-cart__item-content">
 					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Bread</a></h3>
+						<h3><a href="product-details.html">Bread</a></h3>
 						<p>$9.99</p>
 					</div><!-- /.mini-cart__item-top -->
 					<div class="quantity-box">
@@ -524,7 +524,7 @@
 					</div>
 				</div><!-- /.mini-cart__item-content -->
 			</div><!-- /.mini-cart__item -->
-			<a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+			<a href="checkout.html" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
 		</div><!-- /.mini-cart__content -->
 	</div><!-- /.cart-toggler -->
 

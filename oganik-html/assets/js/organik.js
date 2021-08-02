@@ -232,14 +232,14 @@
       var odo = $(".odometer");
       odo.each(function () {
         var countNumber = $(this).attr("data-count");
-        $(this).php(countNumber);
+        $(this).html(countNumber);
       });
     });
   }
 
   if ($(".dynamic-year").length) {
     let date = new Date();
-    $(".dynamic-year").php(date.getFullYear());
+    $(".dynamic-year").html(date.getFullYear());
   }
 
   if ($(".wow").length) {

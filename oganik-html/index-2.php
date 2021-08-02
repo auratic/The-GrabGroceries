@@ -69,7 +69,7 @@
             <nav class="main-menu main-menu__two">
                 <div class="container">
                     <div class="main-logo">
-                        <a href="index.php" class="logo">
+                        <a href="index.html" class="logo">
                             <img src="assets/images/logo-light.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -80,40 +80,40 @@
                     </div><!-- /.main-logo -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php">Home</a>
+                            <a href="index.html">Home</a>
                             <ul>
                                 <li>
-                                    <a href="index.php">Home One</a>
+                                    <a href="index.html">Home One</a>
                                 </li>
-                                <li><a href="index-2.php">Home Two</a></li>
+                                <li><a href="index-2.html">Home Two</a></li>
                                 <li class="dropdown">
                                     <a href="#">Header Styles</a>
                                     <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
+                                        <li><a href="index.html">Header One</a></li>
+                                        <li><a href="index-2.html">Header Two</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="about.php">About</a>
+                            <a href="about.html">About</a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php">Shop</a>
+                            <a href="products.html">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
+                                <li><a href="products.html">Shop</a></li>
+                                <li><a href="product-details.html">Product Details</a></li>
+                                <li><a href="cart.html">Cart Page</a></li>
+                                <li><a href="checkout.html">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
+                        <li class="dropdown"><a href="news.html">News</a>
                             <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
+                                <li><a href="news.html">News</a></li>
+                                <li><a href="news-details.html">News Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                     <!-- /.main-menu__list -->
                     <div class="topbar__buttons">
@@ -153,7 +153,7 @@
                                         <span class="line-one">Organic</span> <br>
                                         <span class="line-two">Products</span>
                                     </h2>
-                                    <a href="products.php" class=" thm-btn">Order Now</a>
+                                    <a href="products.html" class=" thm-btn">Order Now</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
                             </div><!-- /.row -->
@@ -170,7 +170,7 @@
                                         <span class="line-one">Organic</span> <br>
                                         <span class="line-two">Products</span>
                                     </h2>
-                                    <a href="products.php" class=" thm-btn">Order Now</a>
+                                    <a href="products.html" class=" thm-btn">Order Now</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
                             </div><!-- /.row -->
@@ -228,31 +228,31 @@
                         <div class="swiper-slide">
                             <div class="featured-category__box">
                                 <i class="organik-icon-harvest"></i>
-                                <h3><a href="products.php">Vagetables</a></h3>
+                                <h3><a href="products.html">Vagetables</a></h3>
                             </div><!-- /.featured-category__box -->
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide">
                             <div class="featured-category__box">
                                 <i class="organik-icon-fruits"></i>
-                                <h3><a href="products.php">Fruits</a></h3>
+                                <h3><a href="products.html">Fruits</a></h3>
                             </div><!-- /.featured-category__box -->
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide">
                             <div class="featured-category__box">
                                 <i class="organik-icon-dairy-products"></i>
-                                <h3><a href="products.php">Dairy</a></h3>
+                                <h3><a href="products.html">Dairy</a></h3>
                             </div><!-- /.featured-category__box -->
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide">
                             <div class="featured-category__box">
                                 <i class="organik-icon-boiled"></i>
-                                <h3><a href="products.php">Chicken</a></h3>
+                                <h3><a href="products.html">Chicken</a></h3>
                             </div><!-- /.featured-category__box -->
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide">
                             <div class="featured-category__box">
                                 <i class="organik-icon-fish"></i>
-                                <h3><a href="products.php">Fish</a></h3>
+                                <h3><a href="products.html">Fish</a></h3>
                             </div><!-- /.featured-category__box -->
                         </div><!-- /.swiper-slide -->
                     </div><!-- /.swiper-wrapper -->
@@ -309,11 +309,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Banana</a></h3>
+                                    <h3><a href="product-details.html">Banana</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -333,11 +333,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Olive Oil</a></h3>
+                                    <h3><a href="product-details.html">Olive Oil</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -357,11 +357,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Eggs</a></h3>
+                                    <h3><a href="product-details.html">Eggs</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -381,11 +381,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Tamatos</a></h3>
+                                    <h3><a href="product-details.html">Tamatos</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -405,11 +405,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Bread</a></h3>
+                                    <h3><a href="product-details.html">Bread</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -429,11 +429,11 @@
                                     <div class="product-card__two-image-content">
                                         <a href="#"><i class="organik-icon-visibility"></i></a>
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__two-image-content -->
                                 </div><!-- /.product-card__two-image -->
                                 <div class="product-card__two-content">
-                                    <h3><a href="product-details.php">Apples</a></h3>
+                                    <h3><a href="product-details.html">Apples</a></h3>
                                     <div class="product-card__two-stars">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -456,7 +456,7 @@
                     <div class="swiper-button-next" id="featured-product__swiper-button-prev"><i class="organik-icon-right-arrow"></i></div>
                 </div><!-- /.featured-product__nav -->
                 <div class="text-center load-more">
-                    <a href="products.php" class="thm-btn">View All Products</a><!-- /.thm-btn -->
+                    <a href="products.html" class="thm-btn">View All Products</a><!-- /.thm-btn -->
                 </div><!-- /.text-center -->
             </div><!-- /.container -->
         </section><!-- /.featured-products -->
@@ -562,12 +562,12 @@
                                     <img src="assets/images/products/product-1-1.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Banana</a></h3>
+                                        <h3><a href="product-details.html">Banana</a></h3>
                                         <p>$1.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -586,12 +586,12 @@
                                     <img src="assets/images/products/product-1-2.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Tomatoes</a></h3>
+                                        <h3><a href="product-details.html">Tomatoes</a></h3>
                                         <p>$3.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -610,12 +610,12 @@
                                     <img src="assets/images/products/product-1-3.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Bread</a></h3>
+                                        <h3><a href="product-details.html">Bread</a></h3>
                                         <p>$2.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -634,12 +634,12 @@
                                     <img src="assets/images/products/product-1-4.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Apples</a></h3>
+                                        <h3><a href="product-details.html">Apples</a></h3>
                                         <p>$5.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -658,12 +658,12 @@
                                     <img src="assets/images/products/product-1-5.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Olive Oil</a></h3>
+                                        <h3><a href="product-details.html">Olive Oil</a></h3>
                                         <p>$6.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -682,12 +682,12 @@
                                     <img src="assets/images/products/product-1-6.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Eggs</a></h3>
+                                        <h3><a href="product-details.html">Eggs</a></h3>
                                         <p>$4.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -706,12 +706,12 @@
                                     <img src="assets/images/products/product-1-7.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Honey</a></h3>
+                                        <h3><a href="product-details.html">Honey</a></h3>
                                         <p>$9.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -730,12 +730,12 @@
                                     <img src="assets/images/products/product-1-8.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Onions</a></h3>
+                                        <h3><a href="product-details.html">Onions</a></h3>
                                         <p>$2.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -754,12 +754,12 @@
                                     <img src="assets/images/products/product-1-9.jpg" alt="">
                                     <div class="product-card__image-content">
                                         <a href="#"><i class="organik-icon-heart"></i></a>
-                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                        <a href="cart.html"><i class="organik-icon-shopping-cart"></i></a>
                                     </div><!-- /.product-card__image-content -->
                                 </div><!-- /.product-card__image -->
                                 <div class="product-card__content">
                                     <div class="product-card__left">
-                                        <h3><a href="product-details.php">Cabbage</a></h3>
+                                        <h3><a href="product-details.html">Cabbage</a></h3>
                                         <p>$3.00</p>
                                     </div><!-- /.product-card__left -->
                                     <div class="product-card__right">
@@ -798,7 +798,7 @@
                             <ul class="countdown-one__list list-unstyled">
                                 <!-- content loading via js -->
                             </ul><!-- /.coundown-one__list -->
-                            <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
+                            <a href="products.html" class="thm-btn">Order Now</a><!-- /.thm-btn -->
                         </div><!-- /.call-to-action-four__content -->
                     </div><!-- /.col-sm-12 -->
                 </div><!-- /.row -->
@@ -817,7 +817,7 @@
                             <div class="call-to-action-three__content">
                                 <h3>Natural Healthy
                                     Vegetables</h3>
-                                <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
+                                <a href="products.html" class="thm-btn">Order Now</a><!-- /.thm-btn -->
                             </div><!-- /.call-to-action-three__content -->
                         </div><!-- /.col-md-12 -->
                     </div><!-- /.row -->
@@ -864,14 +864,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-1.png" alt="How to Findout Healthy Food For Body">
-                                <a href="news-details.php"></a>
+                                <a href="news-details.html"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.php">How to Findout Healthy Food For Body</a></h3>
+                                <h3><a href="news-details.html">How to Findout Healthy Food For Body</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -881,14 +881,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-2.png" alt="Bring to the table win-win survival">
-                                <a href="news-details.php"></a>
+                                <a href="news-details.html"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.php">Bring to the table win-win survival</a></h3>
+                                <h3><a href="news-details.html">Bring to the table win-win survival</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -898,14 +898,14 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
                                 <img src="assets/images/blog/blog-1-3.png" alt="At the end of the day, going forward">
-                                <a href="news-details.php"></a>
+                                <a href="news-details.html"></a>
                             </div><!-- /.blog-card__image -->
                             <div class="blog-card__content">
                                 <div class="blog-card__meta">
-                                    <a href="news-details.php"><i class="far fa-user-circle"></i> by Admin</a>
-                                    <a href="news-details.php"><i class="far fa-comments"></i> 2 Comments</a>
+                                    <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
+                                    <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
                                 </div><!-- /.blog-card__meta -->
-                                <h3><a href="news-details.php">At the end of the day, going forward</a></h3>
+                                <h3><a href="news-details.html">At the end of the day, going forward</a></h3>
                                 <p>Lorem ipsum is simply free text used by copytyping refreshing.</p>
                             </div><!-- /.blog-card__content -->
                         </div><!-- /.blog-card -->
@@ -1015,7 +1015,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-widget footer-widget__about-widget">
-                            <a href="index.php" class="footer-widget__logo">
+                            <a href="index.html" class="footer-widget__logo">
                                 <img src="assets/images/logo-light.png" alt="" width="105" height="43">
                             </a>
                             <p class="thm-text-dark">Atiam rhoncus sit amet adip
@@ -1049,19 +1049,19 @@
                             <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__links">
                                 <li>
-                                    <a href="index.php">Top Sellers</a>
+                                    <a href="index.html">Top Sellers</a>
                                 </li>
                                 <li>
-                                    <a href="products.php">Shopping</a>
+                                    <a href="products.html">Shopping</a>
                                 </li>
                                 <li>
-                                    <a href="about.php">About Store</a>
+                                    <a href="about.html">About Store</a>
                                 </li>
                                 <li>
-                                    <a href="contact.php">Contact</a>
+                                    <a href="contact.html">Contact</a>
                                 </li>
                                 <li>
-                                    <a href="contact.php">Help</a>
+                                    <a href="contact.html">Help</a>
                                 </li>
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
@@ -1071,16 +1071,16 @@
                             <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__links">
                                 <li>
-                                    <a href="products.php">New Products</a>
+                                    <a href="products.html">New Products</a>
                                 </li>
                                 <li>
-                                    <a href="checkout.php">My Account</a>
+                                    <a href="checkout.html">My Account</a>
                                 </li>
                                 <li>
-                                    <a href="contact.php">Support</a>
+                                    <a href="contact.html">Support</a>
                                 </li>
                                 <li>
-                                    <a href="contact.php">FAQs</a>
+                                    <a href="contact.html">FAQs</a>
                                 </li>
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
@@ -1122,7 +1122,7 @@
             <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
 
             <div class="logo-box">
-                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+                <a href="index.html" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
             </div>
             <!-- /.logo-box -->
             <div class="mobile-nav__container"></div>
@@ -1171,7 +1171,7 @@
                 <img src="assets/images/products/cart-1-1.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.php">Banana</a></h3>
+                        <h3><a href="product-details.html">Banana</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -1185,7 +1185,7 @@
                 <img src="assets/images/products/cart-1-2.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <h3><a href="product-details.html">Tomato</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -1199,7 +1199,7 @@
                 <img src="assets/images/products/cart-1-3.jpg" alt="">
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
-                        <h3><a href="product-details.php">Bread</a></h3>
+                        <h3><a href="product-details.html">Bread</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">
@@ -1209,7 +1209,7 @@
                     </div>
                 </div><!-- /.mini-cart__item-content -->
             </div><!-- /.mini-cart__item -->
-            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+            <a href="checkout.html" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
         </div><!-- /.mini-cart__content -->
     </div><!-- /.cart-toggler -->
 

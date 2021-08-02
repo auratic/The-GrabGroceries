@@ -82,7 +82,7 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="login.html"><i class="organik-icon-user"></i>Login / Register</a>
+                        <a href="login.php"><i class="organik-icon-user"></i>Login / Register</a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
@@ -1095,7 +1095,7 @@
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="login.html"><i class="organik-icon-user"></i>Login / Register</a>
+                    <a href="login.php"><i class="organik-icon-user"></i>Login / Register</a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->
 

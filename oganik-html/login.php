@@ -135,12 +135,12 @@
             </nav>
             <div class="containe">
                 <form action="#">
-                    <div class="formbox">
+                    <div class="loginbox">
                         <h1>Login to </h1>
                         <h2>
                             TheGrabGroceries
-                        </h2>
-                            <input type="text" placeholder="Username" name="usrname" size="20" maxlength="50" required>
+                        </h2>    
+                            <input type="text"  placeholder="Username" name="usrname" size="20" maxlength="50" required>
                             <input type="password" placeholder="Password" name="psw" size="8" required>
                         <div class="clearfix">
                             <button onclick="window.location.href='index.php';" class="signinbtn">

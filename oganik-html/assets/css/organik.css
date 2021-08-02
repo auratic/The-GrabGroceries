@@ -7766,12 +7766,12 @@ h6 {
     margin-top: 10px;
 }
 
-.formbox
+.loginbox
 {
     width: 40%;
     text-align: center;
-    background-color:white;
-    border-radius: 10px;
+    border-radius: 5px;
+    border-style: double;
     justify-content: center;
     padding: 50px;
 }
@@ -7790,10 +7790,10 @@ input[type=text], input[type=password]
 
 input[type=text]
 {
-	background-image:url(.../images/login/user.jpg);
+	background-image:url(images/user.png);
 	background-size:30px;
 	background-repeat:no-repeat; 
-    background-position:center left;
+  background-position:center left;
 }
 
 input[type=password]

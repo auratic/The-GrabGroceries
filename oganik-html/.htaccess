@@ -459,7 +459,7 @@ AddDefaultCharset utf-8
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
 # https://tools.ietf.org/html/rfc7034
 # https://blogs.msdn.microsoft.com/ieinternals/2010/03/30/combating-clickjacking-with-x-frame-options/
-# https://www.owasp.org/index.php/Clickjacking
+# https://www.owasp.org/index.html/Clickjacking
 
 # <IfModule mod_headers.c>
 
@@ -676,7 +676,7 @@ AddDefaultCharset utf-8
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 # https://blogs.msdn.microsoft.com/ie/2008/07/02/ie8-security-part-iv-the-xss-filter/
 # https://blogs.msdn.microsoft.com/ieinternals/2011/01/31/controlling-the-xss-filter/
-# https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29
+# https://www.owasp.org/index.html/Cross-site_Scripting_%28XSS%29
 
 # <IfModule mod_headers.c>
 
@@ -747,8 +747,8 @@ AddDefaultCharset utf-8
 # configuration file, so don't try to enable it in the `.htaccess` file!
 #
 # https://tools.ietf.org/html/rfc7231#section-4.3.8
-# https://www.owasp.org/index.php/Cross_Site_Tracing
-# https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)
+# https://www.owasp.org/index.html/Cross_Site_Tracing
+# https://www.owasp.org/index.html/Test_HTTP_Methods_(OTG-CONFIG-006)
 # https://httpd.apache.org/docs/current/mod/core.html#traceenable
 
 # TraceEnable Off
@@ -771,7 +771,7 @@ AddDefaultCharset utf-8
 # language / framework level (e.g.: for PHP, you can do that by setting
 # `expose_php = off` in `php.ini`)
 #
-# https://php.net/manual/en/ini.core.php#ini.expose-php
+# https://php.net/manual/en/ini.core.html#ini.expose-php
 
 <IfModule mod_headers.c>
     Header unset X-Powered-By

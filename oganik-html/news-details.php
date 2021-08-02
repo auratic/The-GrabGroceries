@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Page || Oganik || HTML Template For Organic Stores</title>
+    <title>Blog Details Page || Oganik || HTML Template For Organic Stores</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -142,114 +142,210 @@
             <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2>Contact</h2>
+                <h2>Blog Details</h2>
                 <ul class="thm-breadcrumb list-unstyled">
                     <li><a href="index.html">Home</a></li>
                     <li>/</li>
-                    <li><span>Contact</span></li>
+                    <li><span>Blog Details</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
 
-
-        <section class="contact-one">
-            <img src="assets/images/shapes/contact-bg-1-1.png" alt="" class="contact-one__shape-1">
-            <img src="assets/images/shapes/contact-bg-1-2.png" alt="" class="contact-one__shape-2">
+        <section class="blog-details">
             <div class="container">
-                <div class="block-title text-center">
-                    <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                    <p>Get in Touch With Us</p>
-                    <h3>Do You’ve Any Question? <br>
-                        Write us a Message</h3>
-                </div><!-- /.block-title -->
-                <form action="assets/inc/sendemail.php" class="contact-form-validated contact-one__form">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="text" name="name" placeholder="Your Name">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Email Address" name="email">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Phone Number" name="phone">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Subject" name="subject">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-12">
-                            <textarea placeholder="Write a Message" name="message"></textarea>
-                        </div><!-- /.col-md-12 -->
-                        <div class="col-md-12 text-center">
-                            <button type="submit" class="thm-btn">Send a Message</button>
-                        </div><!-- /.col-md-12 -->
-                    </div><!-- /.row -->
-                </form>
-            </div><!-- /.container -->
-        </section><!-- /.contact-one -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="blog-card__image blog-details__image">
+                            <div class="blog-card__date">18 Nov</div><!-- /.blog-card__date -->
+                            <img src="assets/images/blog/blog-d-1-1.jpg" class="img-fluid" alt="">
+                        </div><!-- /.blog-card__image -->
+                        <div class="blog-card__meta">
+                            <a href="news-details.html"><i class="far fa-user-circle"></i> by Admin</a>
+                            <a href="news-details.html"><i class="far fa-comments"></i> 2 Comments</a>
+                        </div><!-- /.blog-card__meta -->
+                        <div class="blog-details__content blog-card__content">
+                            <h3>How to Findout Healthy Food For Body</h3>
+                            <p>Lorem ipsum is simply free text used by copytyping refreshing. Neque porro est qui dolorem ipsum
+                                quia
+                                quaed inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Aelltes port
+                                lacus
+                                quis enim var sed efficitur turpis gilla sed sit amet finibus eros. Lorem Ipsum is simply dummy
+                                text
+                                of the printing and typesetting industry. Lorem Ipsum has been the ndustry standard dummy text
+                                ever
+                                since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                                specimen book. It has survived not only five centuries. Lorem Ipsum is simply dummy text of the
+                                new
+                                design printng and type setting Ipsum Take a look at our round up of the best shows coming soon
+                                to
+                                your telly box has been the is industrys. Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry. Lorem Ipsum has industr standard dummy text ever since the 1500s, when an
+                                unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived
+                                not only five centuries, but also the leap into electronic typesetting, remaining essentially
+                                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+                                Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+                                including
+                                versions of.</p>
+                            <p>Neque porro est qui dolorem ipsum quia quaed inventore veritatis et quasi architecto beatae vitae
+                                dicta sunt explicabo. Aelltes port lacus quis enim var sed efficitur turpis gilla sed sit amet
+                                finibus eros. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                Ipsum
+                                has been the ndustry stan printer took a galley.</p>
+                        </div><!-- /.blog-details__content -->
+                        <div class="blog-details__meta">
+                            <p class="blog-details__tags"><span>Tags:</span><a href="#">Oragnic,</a><a href="#">Healthy,</a><a href="#">Recipes</a></p>
+                            <div class="blog-details__social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-square"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                            </div><!-- /.blog-details__social -->
+                        </div><!-- /.blog-details__meta -->
 
-        <section class="contact-infos">
-            <div class="container">
-                <div class="thm-tiny__slider" id="contact-infos-box" data-tiny-options='{
-            "container": "#contact-infos-box",
-            "items": 1,
-            "slideBy": "page",
-            "gutter": 0,
-            "mouseDrag": true,
-            "autoplay": true,
-            "nav": false,
-            "controlsPosition": "bottom",
-            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-            "autoplayButtonOutput": false,
-            "responsive": {
-                "640": {
-                  "items": 2,
-                  "gutter": 30
-                },
-                "992": {
-                  "gutter": 30,
-                  "items": 3
-                },
-                "1200": {
-                  "disable": true
-                }
-              }
-        }'>
-                    <div>
-                        <div class="contact-infos__single">
-                            <i class="organik-icon-location"></i>
-                            <h3>Visit Anytime</h3>
-                            <p>66 Broklyn Golden Street, <br>
-                                New York. USA</p>
-                        </div><!-- /.contact-infos__single -->
-                    </div>
-                    <div>
-                        <div class="contact-infos__single">
-                            <i class="organik-icon-email"></i>
-                            <h3>Send Email</h3>
-                            <p>
-                                <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
-                                <br>
-                                <a href="mailto:info@company.com">info@company.com</a>
-                            </p>
-                        </div><!-- /.contact-infos__single -->
-                    </div>
-                    <div>
-                        <div class="contact-infos__single">
-                            <i class="organik-icon-calling"></i>
-                            <h3>Call Center</h3>
-                            <p><a href="tel:92-666-888-0000">92 666 888 0000</a> <br>
-                                <a href="tel:666-000-6666">666 000 6666</a>
-                            </p>
-                        </div><!-- /.contact-infos__single -->
-                    </div>
-                </div>
-            </div><!-- /.container -->
-        </section><!-- /.contact-infos -->
+                        <div class="blog-author">
+                            <div class="blog-author__image">
+                                <img src="assets/images/blog/blog-author-1-1.jpg" alt="">
+                            </div><!-- /.blog-author__image -->
+                            <div class="blog-author__content">
+                                <h3>Curtis Swanson</h3>
+                                <p>Lorem ipsum is simply free text used by copytyping refreshing. Neque porro est qui dolorem
+                                    ipsum quia quaed veritatis et quasi architecto.</p>
+                            </div><!-- /.blog-author__content -->
+                        </div><!-- /.blog-author -->
+                        <div class="blog-comment">
+                            <h2>2 Comments</h2>
+                            <div class="blog-comment__box">
+                                <div class="blog-comment__image">
+                                    <img src="assets/images/blog/blog-comment-1-1.jpg" alt="">
+                                </div><!-- /.blog-comment__image -->
+                                <div class="blog-comment__content">
+                                    <div class="blog-comment__content-top">
+                                        <h3>Jessica Brown</h3>
+                                        <span>28 Nov, 2020</span>
+                                    </div><!-- /.blog-comment__content-top -->
+                                    <p>Lorem ipsum is simply free text used by copytyping refreshing. Neque porro est qui
+                                        dolorem ipsum quia quaed inventore veritatis et quasi architecto beatae vitae dicta sunt
+                                        explicabo.</p>
+                                    <a href="#" class="thm-btn">Reply</a><!-- /.thm-btn -->
+                                </div><!-- /.blog-comment__content -->
+                            </div><!-- /.blog-comment__box -->
+                            <div class="blog-comment__box">
+                                <div class="blog-comment__image">
+                                    <img src="assets/images/blog/blog-comment-1-2.jpg" alt="">
+                                </div><!-- /.blog-comment__image -->
+                                <div class="blog-comment__content">
+                                    <div class="blog-comment__content-top">
+                                        <h3>Jessica Brown</h3>
+                                        <span>28 Nov, 2020</span>
+                                    </div><!-- /.blog-comment__content-top -->
+                                    <p>Lorem ipsum is simply free text used by copytyping refreshing. Neque porro est qui
+                                        dolorem ipsum quia quaed inventore veritatis et quasi architecto beatae vitae dicta sunt
+                                        explicabo.</p>
+                                    <a href="#" class="thm-btn">Reply</a><!-- /.thm-btn -->
+                                </div><!-- /.blog-comment__content -->
+                            </div><!-- /.blog-comment__box -->
+                        </div><!-- /.blog-comment -->
+                        <div class="comment-form">
+                            <h2>Leave a Comments</h2>
 
-        <div class="google-map__default">
-            <iframe title="template google map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd" class="map__default" allowfullscreen></iframe>
-        </div>
-        <!-- /.google-map -->
+                            <form action="assets/inc/sendemail.html" class="contact-one__form contact-form-validated">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <input type="text" name="name" placeholder="Full Name">
+                                    </div><!-- /.col-lg-6 -->
+                                    <div class="col-lg-6">
+                                        <input type="text" name="email" placeholder="Email Address">
+                                    </div><!-- /.col-lg-6 -->
+                                    <div class="col-lg-6">
+                                        <input type="text" name="phone" placeholder="Phone Number">
+                                    </div><!-- /.col-lg-6 -->
+                                    <div class="col-lg-6">
+                                        <input type="text" name="subject" placeholder="Subject">
+                                    </div><!-- /.col-lg-6 -->
+                                    <div class="col-lg-12">
+                                        <textarea name="message" placeholder="Write Message"></textarea>
+                                    </div><!-- /.col-lg-12 -->
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="thm-btn">Submit Comment</button><!-- /.thm-btn -->
+                                    </div><!-- /.col-lg-12 -->
+                                </div><!-- /.row -->
+                            </form>
+                        </div><!-- /.comment-form -->
+                    </div><!-- /.col-md-12 col-lg-9 -->
+                    <div class="col-md-12 col-lg-4">
+                        <div class="blog-sidebar">
+                            <div class="blog-sidebar__search">
+                                <form action="#">
+                                    <input type="text" placeholder="Search">
+                                    <button type="submit"><i class="organik-icon-magnifying-glass"></i></button>
+                                </form>
+                            </div><!-- /.blog-sidebar__search -->
+                            <div class="blog-sidebar__posts">
+                                <h3>Recent Posts</h3>
+                                <ul>
+                                    <li>
+                                        <img src="assets/images/blog/lp-1-1.jpg" alt="">
+                                        <span>20 Nov, 2020</span>
+                                        <h4><a href="news-details.html">Healthy Farm Diary
+                                                Products</a></h4>
+                                    </li>
+                                    <li>
+                                        <img src="assets/images/blog/lp-1-2.jpg" alt="">
+                                        <span>20 Nov, 2020</span>
+                                        <h4><a href="news-details.html">Healthy Farm Diary
+                                                Products</a></h4>
+                                    </li>
+                                    <li>
+                                        <img src="assets/images/blog/lp-1-3.jpg" alt="">
+                                        <span>20 Nov, 2020</span>
+                                        <h4><a href="news-details.html">Healthy Farm Diary
+                                                Products</a></h4>
+                                    </li>
+                                </ul>
+                            </div><!-- /.blog-sidebar__posts -->
+                            <div class="blog-sidebar__categories">
+                                <h3>Catgories</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">Agriculture <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+
+                                            Organic Food <i class="fa fa-angle-right"></i></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Dairy Farm <i class="fa fa-angle-right"></i></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Economy Solution <i class="fa fa-angle-right"></i></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Harvests Innovations <i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div><!-- /.blog-sidebar__categories -->
+                            <div class="blog-sidebar__tags">
+                                <h3>Tags</h3>
+                                <div class="blog-sidebar__tags-links">
+                                    <a href="#">Agriculture,</a>
+                                    <a href="#">Food,</a>
+                                    <a href="#">Healthy,</a>
+                                    <a href="#">Dairy,</a>
+                                    <a href="#">Organic,</a>
+                                    <a href="#">Farm,</a>
+                                    <a href="#">Economy</a>
+                                </div><!-- /.blog-sidebar__tags-links -->
+                            </div><!-- /.blog-sidebar__tags -->
+                        </div><!-- /.blog-sidebar -->
+                    </div><!-- /.col-md-12 col-lg-9 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.blog-details -->
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">

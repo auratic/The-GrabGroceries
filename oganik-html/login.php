@@ -225,7 +225,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <input type="submit" class="btn btn-primary signinbtn" value="Login">
                 </div>
                 <a href="forgotpass.php">Forgot password? </a>
-                <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+                <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
               </form>
             </div>
 

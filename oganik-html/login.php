@@ -64,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home || TheGrabGroceries</title>
+    <title>Login || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <style>
         body { 
           font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/93/26/Stkyof.gif")
+          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
         .signup-form{ width: 360px; padding: 20px; }
     </style>
@@ -125,19 +125,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-facebook-square"></a>
-                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:info@organik.com">info@organik.com</a></p>
+                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+92-666-888-0000">92 666 888 0000</a></p>
+                            <p>Phone <a href="tel:+92-666-888-0000">+60123456789</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -201,7 +201,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div><!-- /.container -->
             </nav>
             <div class="container signup-form loginbox">
-              <h2>Login to GrabGroceries</h2>
+              <h2>Login to TheGrabGroceries</h2>
               <p>Please fill in your credentials to login.</p>
 
               <?php 
@@ -212,12 +212,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group">
-                  <label>Username</label> </br>
+                  <label><b>Username</b>    </label> </br>
                   <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                   <span class="invalid-feedback"><?php echo $username_err; ?></span>
                 </div>    
                 <div class="form-group">
-                  <label>Password</label> </br>
+                  <label><b>Password</b></label> </br>
                   <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                   <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>

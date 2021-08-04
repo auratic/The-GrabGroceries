@@ -84,7 +84,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home || TheGrabGroceries</title>
+    <title>Register || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -116,7 +116,7 @@
     <style>
         body { 
           font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/93/26/Stkyof.gif")
+          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
         .signup-form{ width: 360px; padding: 20px; }
     </style>
@@ -145,19 +145,19 @@
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-facebook-square"></a>
-                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:info@organik.com">info@organik.com</a></p>
+                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+92-666-888-0000">92 666 888 0000</a></p>
+                            <p>Phone <a href="tel:+92-666-888-0000">+60123456789</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>

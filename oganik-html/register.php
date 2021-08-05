@@ -170,7 +170,18 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="#"><i class="organik-icon-user"></i>Login / Register</a>
+                        <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                            <i class="organik-icon-user"></i>
+                                <?php 
+
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
+                        </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">

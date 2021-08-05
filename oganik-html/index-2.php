@@ -1,3 +1,7 @@
+<?php
+  session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +56,18 @@
                     </div><!-- /.topbar-two__left -->
                     <div class="topbar-two__right">
                         <div class="main-menu__login">
-                            <a href="#"><i class="organik-icon-user"></i>Login / Register</a>
+                        <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                            <i class="organik-icon-user"></i>
+                                <?php 
+
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
+                        </a>
                         </div><!-- /.main-menu__login -->
                         <div class="main-menu__language">
                             <img src="assets/images/resources/flag-1-1.jpg" alt="">

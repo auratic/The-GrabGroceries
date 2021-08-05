@@ -150,7 +150,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="#"><i class="organik-icon-user"></i>Login / Register</a>
+                        <a href="#">
+                            <i class="organik-icon-user"></i>
+                                <?php 
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
+                        </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">

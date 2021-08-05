@@ -407,7 +407,18 @@
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="#"><i class="organik-icon-user"></i>Login / Register</a>
+                    <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <i class="organik-icon-user"></i>
+                                <?php 
+
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
+                    </a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->
 

@@ -1310,6 +1310,8 @@
 
 body {
   background-image: url("assets/images/wallpaper.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   font-family: var(--thm-font);
   color: var(--thm-color);
   font-size: 16px;

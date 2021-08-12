@@ -157,6 +157,9 @@
             </nav>
 
             <div class="container" style="margin: auto;">
+                <button style="height: 100px; width: 250px;">Add item</button>
+                <button style="height: 100px; width: 250px;">Update item</button>
+                <button style="height: 100px; width: 250px;"></button>
                 <a href="logout.php">
                   <button style="height: 100px; width: 250px;">Logout</button>
                 </a>

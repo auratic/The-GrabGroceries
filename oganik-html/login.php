@@ -35,19 +35,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, username, password FROM user WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) == 1) {
-            echo "Login successful.";
-            header("location: index.php");
             
             session_start();
             $_SESSION["username"] = $username;
             $_SESSION["loggedin"] = true;
+            while($row = mysqli_fetch_assoc($result)) {
+                $_SESSION["mode"] = $row["mode"];
+            }
+
+            echo "Login successful.";
+            if($_SESSION["mode"] == "admin"){
+                header("location: adminprofile.php");
+
+            } else {
+                header("location: profile.php");
+
+            }
 
           } else {
-            $username_err = "Username or password is invalid";
+            $login_err = "Username or password is invalid";
             //echo "Error: " . $sql . "<br>" . mysqli_error($link);
   
         }
@@ -221,12 +231,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               ?>
 
               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group">
+                <div class="form-group" style="text-align: left">
                   <label><b>Username</b>    </label> </br>
                   <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                   <span class="invalid-feedback"><?php echo $username_err; ?></span>
                 </div>    
-                <div class="form-group">
+                <div class="form-group" style="text-align: left">
                   <label><b>Password</b></label> </br>
                   <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                   <span class="invalid-feedback"><?php echo $password_err; ?></span>

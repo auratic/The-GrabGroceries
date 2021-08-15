@@ -123,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="container">
                     <div class="main-logo">
                         <a href="index.php" class="logo">
-                            <img src="assets/images/logo-dark.png" width="105" alt="">
+                            <img src="assets/images/Logo6.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -175,19 +175,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <ul class="main-menu__list">
                         <li class="dropdown">
                             <a href="index.php">Home</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="about.php">About</a>

@@ -52,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: adminprofile.php");
 
             } else {
-                header("location: profile.php");
+                header("location: index.php");
 
             }
 

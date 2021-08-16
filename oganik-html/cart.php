@@ -50,7 +50,7 @@
                 <div class="container">
                     <div class="main-logo">
                         <a href="index.php" class="logo">
-                            <img src="assets/images/logo-dark.png" width="105" alt="">
+                            <img src="assets/images/Logo6.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>

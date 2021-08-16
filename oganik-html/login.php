@@ -62,6 +62,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   
         }
     }
+
+    //reCAPTCHA
+    if(isset($_POST['g-recaptcha-response'])) {
+        // RECAPTCHA SETTINGS
+        $captcha = $_POST['g-recaptcha-response'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+     
+        // RECAPTCH RESPONSE
+        $recaptcha_response = file_get_contents($url.'?secret='.$key.'&response='.$captcha.'&remoteip='.$ip);
+        $data = json_decode($recaptcha_response);
+     
+        if(isset($data->success) &&  $data->success === true) {
+        }
+        else {
+           die('Your account has been logged as a spammer, you cannot continue!');
+        }
+      }
     
     // Close connection
     mysqli_close($link);
@@ -110,6 +129,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         .signup-form{ width: 360px; padding: 20px; }
     </style>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script> 
+
 </head>
 
 <body>
@@ -219,7 +241,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group" style="text-align: left">
-                  <label><b>Username</b>    </label> </br>
+                  <label><b>Full Name</b>    </label> </br>
                   <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                   <span class="invalid-feedback"><?php echo $username_err; ?></span>
                 </div>    
@@ -228,6 +250,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                   <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6LcwLAQcAAAAAMhvxlQCfVC7rHJl0BRtHxa4zR17"></div>
                 <div class="form-group">
                   <input type="submit" class="btn btn-primary signinbtn" value="Login">
                 </div>

@@ -49,7 +49,7 @@
 				<div class="container">
 					<div class="main-logo">
 						<a href="index.php" class="logo">
-							<img src="assets/images/logo-dark.png" width="105" alt="">
+							<img src="assets/images/Logo6.png" width="105" alt="">
 						</a>
 						<div class="mobile-nav__buttons">
 							<a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -134,8 +134,7 @@
 								<li><a href="news-details.php">News Details</a></li>
 							</ul>
 						</li>
-						<li><a href="contact.php">Contact2</a></li>
-						<li><a href="contact.php">Contact3</a></li>
+						<li><a href="contact.php">Contact</a></li>
 					</ul>
 					<div class="main-menu__language">
 						<img src="assets/images/resources/flag-1-1.jpg" alt="">

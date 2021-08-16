@@ -237,17 +237,17 @@
                 <form 
                 action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
                 method="post">
-                    <div class="form-group">
-                        <label>Username</label> </br>
+                    <div class="form-group " style="text-align: left">
+                        <label>Full Name</label> </br>
                         <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                         <span class="invalid-feedback"><?php echo $username_err; ?></span>
                     </div>    
-                    <div class="form-group">
+                    <div class="form-group" style="text-align: left">
                         <label>Password</label> </br>
                         <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                         <span class="invalid-feedback"><?php echo $password_err; ?></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="text-align: left">
                         <label>Confirm Password</label> </br>
                         <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>

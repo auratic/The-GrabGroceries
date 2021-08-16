@@ -145,7 +145,7 @@
 
             <div class="container" style="margin: auto;">
                 <a href="logout.php">
-                  <button style="height: 100px; width: 250px;">Logout</button>
+                  <button style="height: 25px; width: 100px;">Logout</button>
                 </a>
             </div>
 

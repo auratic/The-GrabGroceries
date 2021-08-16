@@ -3,13 +3,21 @@
   require_once "config.php";
  
   // Define variables and initialize with empty values
-  $username = $password = $confirm_password = "";
-  $username_err = $password_err = $confirm_password_err = "";
+  $email = $fname = $lname = $password = $confirm_password = "";
+  $fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = "";
  
+  function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
   // Processing form data when form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Returns the request method used to access the page (such as POST)
  
     // Validate username
+    /*
     if (empty(trim($_POST["username"]))) {
 
         $username_err = "Please enter a username.";
@@ -30,7 +38,52 @@
             $username = trim($_POST["username"]);
         }
     }
-    
+    */
+
+    // Validate first name
+    if (empty($_POST["fname"])) {
+        $fname_err = "Name is required";
+
+    } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["fname"]))) {
+        $fname_err = "Only letters and white space allowed";
+
+    } else {
+        $fname = test_input($_POST["fname"]);
+    }
+
+    // Validate last name
+    if (empty($_POST["lname"])) {
+        $lname_err = "Name is required";
+
+    } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["lname"]))) {
+        $lname_err = "Only letters and white space allowed";
+
+    } else {
+        $lname = test_input($_POST["lname"]);
+    }
+
+    // Validate email
+    if (empty($_POST["email"])) {
+        $email_err = "Email is required";
+
+    } else if (!filter_var(test_input($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+          $email_err = "Invalid email format";
+          
+    } else {
+        // Prepare a select statement
+
+        $sql = "SELECT id FROM user WHERE email = '" . test_input($_POST["email"]) . "'";
+        $result = mysqli_query($link, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $email_err = "Email is taken";
+
+        } else {
+            $email = test_input($_POST["email"]);
+
+        }
+    }
+
     // Validate password
     if (empty($_POST["password"])) {
         $password_err = "Please enter a password.";    
@@ -57,18 +110,24 @@
     }
     
     // Check input errors before inserting in database
-    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+    if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
         
         // Prepare an insert statement
-        $sql = "INSERT INTO user (username, password, mode) VALUES ('$username', '$password', 'customer');";
+        $sql = "INSERT INTO user (email, password, mode, firstname, lastname) VALUES ('$email', '$password', 'customer', '$fname', '$lname');";
          
         
         if (mysqli_query($link, $sql)) {
-          echo "New record created successfully";
-          header("location: login.php");
+          echo "
+          <script>
+            alert('New account created');
+            location.href = 'login.php';
+          </script>";
 
         } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($link);
+          echo "
+          <script>
+            alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
+          </script>";
 
         }
     }
@@ -118,7 +177,7 @@
           font: 14px sans-serif; 
           background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
+        .signup-form{ width: 500px; padding: 20px; }
     </style>
 </head>
 
@@ -170,12 +229,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
-                                if(isset($_SESSION["username"])) { 
-                                    echo $_SESSION['username'];
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -236,12 +295,28 @@
                 <p>Please fill this form to create an account.</p>
                 <form 
                 action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
-                method="post">
+                method="post"
+                style="text-align: left">
                     <div class="form-group">
-                        <label>Username</label> </br>
-                        <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                        <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                        <label>E-mail</label> </br>
+                        <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
+                        <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                    </div> 
+                    
+                    <div class="form-group" style="display: flex; justify-content: space-between">
+                      <div>
+                        <label>First Name</label> </br>
+                        <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
+                        <span class="invalid-feedback"><?php echo $fname_err; ?></span>
+                      </div>   
+                      
+                      <div>
+                        <label>Last Name</label> </br>
+                        <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
+                        <span class="invalid-feedback"><?php echo $lname_err; ?></span>
+                      </div>    
                     </div>    
+
                     <div class="form-group">
                         <label>Password</label> </br>
                         <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">

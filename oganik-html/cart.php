@@ -87,12 +87,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
-                                if(isset($_SESSION["username"])) { 
-                                    echo $_SESSION['username'];
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -402,12 +402,12 @@
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
-                                if(isset($_SESSION["username"])) { 
-                                    echo $_SESSION['username'];
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
                                 } else { 
                                     echo "Login / Register";
                                 }

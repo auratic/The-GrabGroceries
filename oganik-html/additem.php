@@ -206,12 +206,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
-                                if(isset($_SESSION["username"])) { 
-                                    echo $_SESSION['username'];
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -220,21 +220,8 @@
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
-                        <li class="dropdown">
+                        <li>
                             <a href="adminprofile.php">Profile</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="additem.php">Add item</a>

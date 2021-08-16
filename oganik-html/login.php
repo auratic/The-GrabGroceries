@@ -12,17 +12,17 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$username = $password = "";
-$username_err = $password_err = $login_err = "";
+$email = $password = "";
+$email_err = $password_err = $login_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Check if username is empty
-    if(empty(trim($_POST["username"]))) {
-        $username_err = "Please enter username.";
+    // Check if email is empty
+    if(empty(trim($_POST["email"]))) {
+        $email_err = "Please enter email.";
     } else{
-        $username = trim($_POST["username"]);
+        $email = trim($_POST["email"]);
     }
     
     // Check if password is empty
@@ -33,18 +33,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Validate credentials
-    if(empty($username_err) && empty($password_err)){
+    if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) == 1) {
             
             session_start();
-            $_SESSION["username"] = $username;
             $_SESSION["loggedin"] = true;
             while($row = mysqli_fetch_assoc($result)) {
                 $_SESSION["mode"] = $row["mode"];
+                $_SESSION["lname"] = $row["lastname"];
             }
 
             echo "Login successful.";
@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
           } else {
-            $login_err = "Username or password is invalid";
+            $login_err = "Email or password is invalid";
             //echo "Error: " . $sql . "<br>" . mysqli_error($link);
   
         }
@@ -163,8 +163,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <a href="#">
                             <i class="organik-icon-user"></i>
                                 <?php 
-                                if(isset($_SESSION["username"])) { 
-                                    echo $_SESSION['username'];
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -219,9 +219,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group" style="text-align: left">
-                  <label><b>Username</b>    </label> </br>
-                  <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                  <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                  <label><b>Email</b>    </label> </br>
+                  <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+                  <span class="invalid-feedback"><?php echo $email_err; ?></span>
                 </div>    
                 <div class="form-group" style="text-align: left">
                   <label><b>Password</b></label> </br>

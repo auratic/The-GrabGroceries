@@ -7815,6 +7815,7 @@ input[type=password]
     text-transform: capitalize;
     height: 30px;
     width: 100px;
+    margin-top: 10px;
     margin-right: 10px;
     border: none;
     border-radius: 3px;

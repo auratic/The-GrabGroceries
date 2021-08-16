@@ -322,7 +322,7 @@
                         <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                         <span class="invalid-feedback"><?php echo $password_err; ?></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="text-align: left">
                         <label>Confirm Password</label> </br>
                         <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>

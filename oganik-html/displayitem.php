@@ -10,108 +10,6 @@
   }
 
   require "config.php";
-
-  $item_name;
-  $category;
-  $desc;
-  $cost;
-  $stock;
-  $exp_date;
-
-  if(isset($_POST["add-item"])){
-
-    $exp_err = $cost_err = $img_err = $category_err = $name_err = $desc_err = $stock_err = "";
-            
-      if($_FILES['image']['size'] == 0) {
-        $img_err = "Please upload an image.";
-      } else {
-        $filename = $_FILES["image"]["name"];
-        $tempname = $_FILES["image"]["tmp_name"];    
-        $folder = "assets/images/items/".$filename;
-
-      }
-      
-      if(empty(trim($_POST["item-name"]))) {
-        $name_err = "Please enter name";
-      } else {
-          $item_name = ucwords(trim($_POST["item-name"]));
-      }
-
-      if(empty(trim($_POST["category"]))) {
-        $category_err = "Please select a category";
-      } else {
-          $category = trim($_POST["category"]);
-      }
-      
-      if(empty(trim($_POST["desc"]))) {
-        $desc_err = "Please fill in the description";
-      } else {
-          $desc = ucfirst(trim($_POST["desc"]));
-      }
-
-      if(empty(trim($_POST["cost"]))) {
-        $cost_err = "Please enter cost";
-      } else {
-          $cost = trim($_POST["cost"]);
-      }
-
-      if(empty(trim($_POST["stock"]))) {
-        $stock_err = "Please enter stock";
-      } else {
-        $stock = trim($_POST["stock"]);
-      }
-
-      if(empty(trim($_POST["exp-date"]))) {
-        $exp_err = "Please enter expire date";
-      } else {
-          $exp_date = trim($_POST["exp-date"]);
-      }
-
-
-        // Get all the submitted data from the form
-        //$sql = "INSERT INTO image (filename) VALUES ('$filename')";
-        // Execute query
-        //mysqli_query($db, $sql);
-          
-      if($name_err == "" &&
-         $category_err == "" &&
-         $desc_err == "" &&
-         $img_err == "" &&
-         $cost_err == "" &&
-         $stock_err == "" &&
-         $exp_err == "") {
-
-         $sql = "INSERT INTO item (item, category, description, stock, img, cost, expdate)
-                 VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
-
-                  
-         if (move_uploaded_file($tempname, $folder))  {
-
-         } else {
-           echo "
-            <script>
-              alert('Something went wrong uploading image');
-              location.href = 'additem.php'
-            </script>";
-         }
-
-         if (mysqli_query($link, $sql)) {
-           echo "
-            <script>
-              alert('Items added successfully');
-              location.href = 'additem.php'
-            </script>";
-         } else {
-           echo "
-            <script>
-              alert('Something went wrong uploading data to database');
-              location.href = 'additem.php'
-            </script>";
-         }
-
-      }
-  }
-
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +52,12 @@
           font: 14px sans-serif; 
           background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 500px; padding: 20px; background-color: azure}
+        .signup-form{ 
+          padding: 20px; 
+          margin: 20px;
+          background-color: azure;
+          overflow: auto;
+        }
     </style>
 </head>
 
@@ -249,61 +152,45 @@
                 </div><!-- /.container -->
             </nav>
 
-            <div class="container signup-form" style="margin: auto;">
-              <h4>Add item</h4>
-              <form action="" method="post" enctype="multipart/form-data">
+            <div class="signup-form">
+              <table class="table table-bordered table-striped table-hover table-condensed">
+                <tr>
+                  <th>ID</th>
+                  <th>Item name</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Stock</th>
+                  <th>Image</th>
+                  <th>Cost</th>
+                  <th>Expiry Date</th>
+                  <th></th>
+                </tr>
+                <?php
+                  $sql = "SELECT * from item";
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Item name</b></label> </br>
-                    <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc.">
-                  <span class="invalid-feedback"><?php echo $name_err; ?></span>
-                </div>    
+                  if ($result = mysqli_query($link, $sql)) {
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Category</b></label> </br>
-                    <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" >
-                    <option value="Fruit & Vegetables">Fruit & Vegetables</option>
-                    <option value="Meat">Meat</option>
-                    <option value="Seafood">Seafood</option>
-                    <option value="Snack">Snack</option>
-                  </select>
-                  <span class="invalid-feedback"><?php echo $category_err; ?></span>
-                </div>    
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Description</b></label> </br>
-                    <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!">
-                  <span class="invalid-feedback"><?php echo $desc_err; ?></span>
-                </div>    
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Cost</b></label> </br>
-                    <input type="text" name="cost" class="form-control <?php echo (!empty($cost_err)) ? 'is-invalid' : ''; ?>" placeholder="10.99 etc.">
-                  <span class="invalid-feedback"><?php echo $cost_err; ?></span>
-                </div>    
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Stock</b></label> </br>
-                  <input type="text" name="stock" class="form-control <?php echo (!empty($stock_err)) ? 'is-invalid' : ''; ?>" placeholder="999">
-                  <span class="invalid-feedback"><?php echo $stock_err; ?></span>
-                </div>
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Expiry Date</b></label> </br>
-                  <input type="text" name="exp-date" class="form-control <?php echo (!empty($exp_err)) ? 'is-invalid' : ''; ?>" placeholder="Format: 2021-05-21">
-                  <span class="invalid-feedback"><?php echo $exp_err; ?></span>
-                </div>    
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Image</b></label> </br>
-                  <input type="file" name="image" class="form-control <?php echo (!empty($img_err)) ? 'is-invalid' : ''; ?>">
-                  <span class="invalid-feedback"><?php echo $img_err; ?></span>
-                </div>    
-
-                <div class="form-group">
-                  <input type="submit" name="add-item" class="btn btn-info btn-lg" value="Submit">
-                </div>
-              </form>
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      echo '
+                        <tr>
+                          <td>'.$row['id'].'</td>
+                          <td>'.$row['item'].'</td>
+                          <td>'.$row['category'].'</td>
+                          <td>'.$row['description'].'</td>
+                          <td>'.$row['stock'].'</td>
+                          <td><img src="assets/images/items/'.$row['img'].'"</td>
+                          <td>RM'.$row['cost'].'</td>
+                          <td>'.$row['expdate'].'</td>
+                          <td>
+                            <a href="updateitem.php?id='.$row['id'].'">
+                              <button class="btn btn-info btn-sm">Edit</button>
+                            </a>
+                          </td>
+                        </tr>';
+                    }
+                  } 
+                ?>
+              <table>
             </div>
 
     <!-- /.search-popup -->

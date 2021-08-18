@@ -48,7 +48,7 @@
         $fname_err = "Only letters and white space allowed";
 
     } else {
-        $fname = test_input($_POST["fname"]);
+        $fname = ucwords(test_input($_POST["fname"]));
     }
 
     // Validate last name
@@ -59,7 +59,7 @@
         $lname_err = "Only letters and white space allowed";
 
     } else {
-        $lname = test_input($_POST["lname"]);
+        $lname = ucwords(test_input($_POST["lname"]));
     }
 
     // Validate email

@@ -11,20 +11,52 @@
 
   require "config.php";
 
+  $id;
   $item_name;
   $category;
   $desc;
   $cost;
+  $img;
   $stock;
   $exp_date;
 
-  if(isset($_POST["add-item"])){
+  $upload_img = false;
 
-    $exp_err = $cost_err = $img_err = $category_err = $name_err = $desc_err = $stock_err = "";
+  if(isset($_GET['id'])){
+      $id = $_GET['id'];
+      
+      $sql = "SELECT * from item where id = ".$id;
+      $result = mysqli_query($link, $sql);
+
+      if (mysqli_num_rows($result) == 1) {
+          while($row = mysqli_fetch_assoc($result)) {
+              $id = $row['id'];
+              $item_name = $row['item'];
+              $category = $row['category'];
+              $desc = $row['description'];
+              $stock = $row['stock'];
+              $img = $row["img"];
+              $cost = $row['cost'];
+              $exp_date = $row['expdate'];
+          }
+
+      } else {
+          echo "
+          <script>
+            alert('Item ID could not be found');
+            location.href = 'displayitem.php'
+          </script>";
+      }
+  }
+
+  if(isset($_POST["update-item"])){
+
+    $id_err = $exp_err = $cost_err = $img_err = $category_err = $name_err = $desc_err = $stock_err = "";
             
       if($_FILES['image']['size'] == 0) {
-        $img_err = "Please upload an image.";
+          
       } else {
+        $upload_img = true;
         $filename = $_FILES["image"]["name"];
         $tempname = $_FILES["image"]["tmp_name"];    
         $folder = "assets/images/items/".$filename;
@@ -34,25 +66,25 @@
       if(empty(trim($_POST["item-name"]))) {
         $name_err = "Please enter name";
       } else {
-          $item_name = ucwords(trim($_POST["item-name"]));
+        $item_name = ucwords(trim($_POST["item-name"]));
       }
 
       if(empty(trim($_POST["category"]))) {
         $category_err = "Please select a category";
       } else {
-          $category = trim($_POST["category"]);
+        $category = trim($_POST["category"]);
       }
       
       if(empty(trim($_POST["desc"]))) {
         $desc_err = "Please fill in the description";
       } else {
-          $desc = ucfirst(trim($_POST["desc"]));
+        $desc = ucfirst(trim($_POST["desc"]));
       }
 
       if(empty(trim($_POST["cost"]))) {
         $cost_err = "Please enter cost";
       } else {
-          $cost = trim($_POST["cost"]);
+        $cost = trim($_POST["cost"]);
       }
 
       if(empty(trim($_POST["stock"]))) {
@@ -67,13 +99,8 @@
           $exp_date = trim($_POST["exp-date"]);
       }
 
-
-        // Get all the submitted data from the form
-        //$sql = "INSERT INTO image (filename) VALUES ('$filename')";
-        // Execute query
-        //mysqli_query($db, $sql);
-          
-      if($name_err == "" &&
+      if($id_err == "" &&
+         $name_err == "" &&
          $category_err == "" &&
          $desc_err == "" &&
          $img_err == "" &&
@@ -81,31 +108,39 @@
          $stock_err == "" &&
          $exp_err == "") {
 
-         $sql = "INSERT INTO item (item, category, description, stock, img, cost, expdate)
-                 VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
+         if($upload_img == true) {
+            $sql = "UPDATE item
+                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', img = '$filename', cost = '$cost', expdate = '$exp_date'
+                    WHERE id = '$id'";
+            
+            if (move_uploaded_file($tempname, $folder))  {
 
-                  
-         if (move_uploaded_file($tempname, $folder))  {
+            } else {
+            echo "
+                <script>
+                    alert('Something went wrong uploading image');
+                    location.href = 'updateitem.php'
+                </script>";
+            }
 
          } else {
-           echo "
-            <script>
-              alert('Something went wrong uploading image');
-              location.href = 'additem.php'
-            </script>";
+            $sql = "UPDATE item
+                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', cost = '$cost', expdate = '$exp_date'
+                    WHERE id = '$id'";
+
          }
 
          if (mysqli_query($link, $sql)) {
            echo "
             <script>
-              alert('Items added successfully');
-              location.href = 'additem.php'
+              alert('Updated successfully');
+              location.href = 'displayitem.php'
             </script>";
          } else {
            echo "
             <script>
-              alert('Something went wrong uploading data to database');
-              location.href = 'additem.php'
+              alert('Something went wrong uploading data');
+              location.href = 'updateitem.php'
             </script>";
          }
 
@@ -120,7 +155,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Item || TheGrabGroceries</title>
+    <title>Update Item || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -250,18 +285,26 @@
             </nav>
 
             <div class="container signup-form" style="margin: auto;">
-              <h4>Add item</h4>
+
+              <h4>Update Item Details</h4>
+
               <form action="" method="post" enctype="multipart/form-data">
 
                 <div class="form-group" style="text-align: left">
+                  <label><b>ID</b></label> </br>
+                    <input type="text" name="item-name" class="form-control <?php echo (!empty($id_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $id; ?>" disabled>
+                  <span class="invalid-feedback"><?php echo $id_err; ?></span>
+                </div>    
+
+                <div class="form-group" style="text-align: left">
                   <label><b>Item name</b></label> </br>
-                    <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc.">
+                    <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>">
                   <span class="invalid-feedback"><?php echo $name_err; ?></span>
                 </div>    
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Category</b></label> </br>
-                    <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" >
+                    <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $category; ?>">
                     <option value="Fruit & Vegetables">Fruit & Vegetables</option>
                     <option value="Meat">Meat</option>
                     <option value="Seafood">Seafood</option>
@@ -272,38 +315,41 @@
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Description</b></label> </br>
-                    <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!">
+                    <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!" value="<?php echo $desc; ?>">
                   <span class="invalid-feedback"><?php echo $desc_err; ?></span>
                 </div>    
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Cost</b></label> </br>
-                    <input type="text" name="cost" class="form-control <?php echo (!empty($cost_err)) ? 'is-invalid' : ''; ?>" placeholder="10.99 etc.">
+                    <input type="text" name="cost" class="form-control <?php echo (!empty($cost_err)) ? 'is-invalid' : ''; ?>" placeholder="10.99 etc." value="<?php echo $cost; ?>">
                   <span class="invalid-feedback"><?php echo $cost_err; ?></span>
                 </div>    
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Stock</b></label> </br>
-                  <input type="text" name="stock" class="form-control <?php echo (!empty($stock_err)) ? 'is-invalid' : ''; ?>" placeholder="999">
+                  <input type="text" name="stock" class="form-control <?php echo (!empty($stock_err)) ? 'is-invalid' : ''; ?>" placeholder="999" value="<?php echo $stock; ?>">
                   <span class="invalid-feedback"><?php echo $stock_err; ?></span>
                 </div>
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Expiry Date</b></label> </br>
-                  <input type="text" name="exp-date" class="form-control <?php echo (!empty($exp_err)) ? 'is-invalid' : ''; ?>" placeholder="Format: 2021-05-21">
+                  <input type="text" name="exp-date" class="form-control <?php echo (!empty($exp_err)) ? 'is-invalid' : ''; ?>" placeholder="Format: 2021-05-21" value="<?php echo $exp_date; ?>"> 
                   <span class="invalid-feedback"><?php echo $exp_err; ?></span>
                 </div>    
 
                 <div class="form-group" style="text-align: left">
                   <label><b>Image</b></label> </br>
-                  <input type="file" name="image" class="form-control <?php echo (!empty($img_err)) ? 'is-invalid' : ''; ?>">
+                  <img src="assets/images/items/<?php echo $img; ?>">
+                  <input type="file" name="image" class="form-control <?php echo (!empty($img_err)) ? 'is-invalid' : ''; ?>" >
                   <span class="invalid-feedback"><?php echo $img_err; ?></span>
                 </div>    
 
                 <div class="form-group">
-                  <input type="submit" name="add-item" class="btn btn-info btn-lg" value="Submit">
+                  <input type="submit" name="update-item" class="btn btn-info btn-lg" value="Update">
                 </div>
+
               </form>
+
             </div>
 
     <!-- /.search-popup -->

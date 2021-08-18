@@ -116,33 +116,14 @@
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
-                        <li class="dropdown">
+                        <li>
                             <a href="adminprofile.php">Profile</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="additem.php">Add item</a>
                         </li>
-                        <li class="dropdown">
-                            <a href="products.php">Update Item</a>
-                            <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                            </ul>
+                        <li>
+                            <a href="displayitem.php">Update Item</a>
                         </li>
                         <li class="dropdown"><a href="news.php">Transactions</a>
                             <ul>

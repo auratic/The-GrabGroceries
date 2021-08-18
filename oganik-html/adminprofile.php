@@ -148,9 +148,7 @@
             <div class="container" style="margin: auto;">
 
                 <!-- Modal Add Item -->
-                <button type="button" class="btn btn-info btn-lg">Add Item</button>
-
-                <button class="btn btn-info btn-lg">Update item</button>
+                
                 <a href="logout.php">
                   <button class="btn btn-info btn-lg">Logout</button>
                 </a>

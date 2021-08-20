@@ -53,8 +53,8 @@
           background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
         .signup-form{ 
-          padding: 20px; 
-          margin: 20px;
+          padding: 50px; 
+          margin: 20px 50px 20px 50px;
           background-color: azure;
           overflow: auto;
         }
@@ -178,7 +178,7 @@
                           <td>'.$row['category'].'</td>
                           <td>'.$row['description'].'</td>
                           <td>'.$row['stock'].'</td>
-                          <td><img src="assets/images/items/'.$row['img'].'"</td>
+                          <td><img src="assets/images/items/'.$row['img'].'" style="width:100%;height:200px;object-fit:contain;"></td>
                           <td>RM'.$row['cost'].'</td>
                           <td>'.$row['expdate'].'</td>
                           <td>

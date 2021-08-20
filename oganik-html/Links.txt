@@ -10,3 +10,9 @@ Uploading files using POST - https://www.w3schools.com/tags/att_form_enctype.asp
 Bootstrap / CSS
 //////////////////////////////////////////
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
+
+
+//////////////////////////////////////////
+Tools
+//////////////////////////////////////////
+Image hosting - https://imgbb.com/

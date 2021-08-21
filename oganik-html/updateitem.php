@@ -334,9 +334,12 @@
                       
                       <div class="form-group col-md-12" style="text-align: left">
                         <label><b>Description</b></label> </br>
-                          <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!" value="<?php echo $desc; ?>">
+                        <textarea name="desc" 
+                          class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" 
+                          rows="4" cols="50"
+                          placeholder="High-quality salmon from Africa!"><?php echo $desc; ?></textarea>
                         <span class="invalid-feedback"><?php echo $desc_err; ?></span>
-                      </div>    
+                      </div>  
 
                     </div>
 

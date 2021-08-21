@@ -182,7 +182,7 @@
                                                         class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
-                                                <a id="pills-order-tab" class="link--icon-left" data-toggle="pill" href="#pills-order" role="tab"
+                                                <a href="order.php" id="pills-order-tab" class="link--icon-left" data-toggle="pill" role="tab"
                                                     aria-controls="pills-order" aria-selected="false"><i
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>

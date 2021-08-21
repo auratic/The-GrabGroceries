@@ -45,6 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             while($row = mysqli_fetch_assoc($result)) {
                 $_SESSION["mode"] = $row["mode"];
                 $_SESSION["lname"] = $row["lastname"];
+                $_SESSION["userid"] = $row["id"];
             }
 
             echo "Login successful.";

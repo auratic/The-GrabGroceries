@@ -10,7 +10,6 @@
    }
 
    require "config.php"
-   
 ?>
 
 <!DOCTYPE html>
@@ -182,7 +181,7 @@
                                                         class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
-                                                <a id="pills-order-tab" class="link--icon-left" data-toggle="pill" href="#pills-order" role="tab"
+                                                <a  href="order.php" id="pills-order-tab" class="link--icon-left" data-toggle="pill" role="tab"
                                                     aria-controls="pills-order" aria-selected="false"><i
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
@@ -213,34 +212,6 @@
                                     </div>
 
                                 </div>
-                                <div class="col-xl-8 col-md-8">
-                                    <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
-                                            aria-labelledby="pills-dashboard-tab">
-                                            <div class="my-account-dashboard account-wrapper">
-                                                <h4 class="account-title">Dashboard</h4>
-                                                <div class="welcome-dashboard m-t-30">
-                                                    <p>Hello, (If not<strong>
-                                                        <?php 
-                                                            $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                            $result = mysqli_query($link, $sql);
-                                                    
-                                                            while($row=mysqli_fetch_assoc($result)) 
-                                                            {
-                                                                $fname = $row['firstname'];
-                                                                $lname = $row['lastname'];
-                                                            }
-                                                            echo "<strong>  ".$fname." ".$lname."</strong>"
-                                                        ?>
-                                                        
-                                                        please <a href="logout.php">Logout</a> )
-                                                    </p>
-                                                </div>
-                                                <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
-                                                    recent orders, manage your shipping and billing addresses and edit your password and
-                                                    account details.</p>
-                                            </div>
-                                        </div>
                                         <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab">
                                             <div class="my-account-order account-wrapper">
                                                 <h4 class="account-title">Orders</h4>

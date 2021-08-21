@@ -7843,6 +7843,12 @@ a:hover
     text-decoration: underline;
 }
 
+a.active
+{
+   color: blue;
+   text-decoration: underline;
+}
+
 .signupbtn
 {
     color: darkblue;
@@ -7866,15 +7872,6 @@ a:hover
 {   margin-left: 100px;
     margin-top: 30px;
     height: 5px;
-}
-
-.vl {
-  border-left: 1px solid black;
-  height: 470px;
-  position: absolute;
-  left: 50%;
-  margin-left: 150px;
-  top: 0;
 }
 
 .btn

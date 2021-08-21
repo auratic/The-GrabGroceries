@@ -371,38 +371,38 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <div class="form-box__single-group">
-                                                                <input type="text" placeholder="Display Name">
+                                                            <div class="form-box__single-group" style="margin-top: 10px";>
+                                                                <input type="text" placeholder="Phone Number">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <div class="form-box__single-group">
+                                                            <div class="form-box__single-group" style="margin-top: 10px";>
                                                                 <input type="text" placeholder="Email address">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-box__single-group">
-                                                                <h5 class="title">Password change</h5>
+                                                                <h5 class="title" style="margin-top: 10px";>Password change</h5>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <div class="form-box__single-group">
+                                                            <div class="form-box__single-group" style="margin-top: 10px">
                                                                 <input type="password" placeholder="Current Password">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-box__single-group">
+                                                        <div class="col-md-6" >
+                                                            <div class="form-box__single-group" style="margin-top: 10px";>
                                                                 <input type="password" placeholder="New Password">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-box__single-group">
+                                                        <div class="col-md-12">
+                                                            <div class="form-box__single-group" style="margin-top: 10px">
                                                                 <input type="password" placeholder="Confirm Password">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <div class="form-box__single-group">
-                                                                <button class="btn btn--box btn--radius btn--small btn--black btn--black-hover-green btn--uppercase font--bold">Save Change</button>
+                                                            <div class="form-box__single-group" style="margin-top: 20px";>
+                                                                <button class="btn">Save Change</button>
                                                             </div>
                                                         </div>
                                                     </div>

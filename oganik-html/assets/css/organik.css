@@ -7876,4 +7876,10 @@ a:hover
   margin-left: 150px;
   top: 0;
 }
+
+.btn
+{
+    border-radius: 5px;
+ /* btn--box btn--radius btn--small btn--black btn--black-hover-green btn--uppercase font--bold*/
+}
 /*# sourceMappingURL=organik.css.map */

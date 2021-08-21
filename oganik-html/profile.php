@@ -177,13 +177,11 @@
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
-                                                <a class="active link--icon-left" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard"
-                                                    role="tab" aria-controls="pills-dashboard" aria-selected="true" ><i
+                                                <a href="profile.php"><i
                                                         class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
-                                                <a href="order.php" id="pills-order-tab" class="link--icon-left" data-toggle="pill" role="tab"
-                                                    aria-controls="pills-order" aria-selected="false"><i
+                                                <a href="order.php"><i
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
@@ -197,13 +195,11 @@
                                                         class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
                                             <li>
-                                                <a id="pills-address-tab" class="link--icon-left" data-toggle="pill" href="#pills-address" role="tab"
-                                                    aria-controls="pills-address" aria-selected="false"><i
-                                                        class="fas fa-map-marker-alt"></i> Address</a>
+                                                <a href="address.php"><i
+                                                    class="fas fa-map-marker-alt"></i> Address</a>
                                             </li>
                                             <li>
-                                                <a id="pills-account-tab" class="link--icon-left" data-toggle="pill" href="#pills-account" role="tab"
-                                                    aria-controls="pills-account" aria-selected="false"><i class="fas fa-user"></i>
+                                                <a href="accdetails.php" ><i class="fas fa-user"></i>
                                                     Account Details</a>
                                             </li>
                                             <li>
@@ -215,27 +211,26 @@
                                 </div>
                                 <div class="col-xl-8 col-md-8">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
-                                            aria-labelledby="pills-dashboard-tab">
+                                        <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-dashboard-tab">
                                             <div class="my-account-dashboard account-wrapper">
                                                 <h4 class="account-title">Dashboard</h4>
-                                                <div class="welcome-dashboard m-t-30">
-                                                    <p>Hello, (If not<strong>
-                                                        <?php 
-                                                            $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                            $result = mysqli_query($link, $sql);
-                                                    
-                                                            while($row=mysqli_fetch_assoc($result)) 
-                                                            {
-                                                                $fname = $row['firstname'];
-                                                                $lname = $row['lastname'];
-                                                            }
-                                                            echo "<strong>  ".$fname." ".$lname."</strong>"
-                                                        ?>
+                                                    <div class="welcome-dashboard m-t-30">
+                                                        <p>Hello, (If not<strong>
+                                                            <?php 
+                                                                $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                                $result = mysqli_query($link, $sql);
                                                         
-                                                        please <a href="logout.php">Logout</a> )
-                                                    </p>
-                                                </div>
+                                                                while($row=mysqli_fetch_assoc($result)) 
+                                                                {
+                                                                    $fname = $row['firstname'];
+                                                                    $lname = $row['lastname'];
+                                                                }
+                                                                echo "<strong>  ".$fname." ".$lname."</strong>"
+                                                            ?>
+                                                            
+                                                            please <a href="logout.php">Logout</a> )
+                                                        </p>
+                                                    </div>
                                                 <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
                                                     recent orders, manage your shipping and billing addresses and edit your password and
                                                     account details.</p>

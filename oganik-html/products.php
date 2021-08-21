@@ -1,5 +1,7 @@
 <?php
-  session_start()
+  session_start();
+
+  require "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -155,9 +157,13 @@
 
 
         <section class="products-page">
+
             <div class="container">
+
                 <div class="row">
+
                     <div class="col-sm-12 col-md-12 col-lg-3">
+
                         <div class="product-sidebar">
                             <div class="product-sidebar__single product-sidebar__search-widget">
                                 <form action="#">
@@ -193,7 +199,9 @@
                             </div><!-- /.product-sidebar__single -->
                         </div><!-- /.product-sidebar -->
                     </div><!-- /.col-sm-12 col-md-12 col-lg-3 -->
+
                     <div class="col-sm-12 col-md-12 col-lg-9">
+
                         <div class="product-sorter">
                             <p>Showing 1–9 of 12 results</p>
                             <div class="product-sorter__select">
@@ -205,223 +213,46 @@
                                 </select>
                             </div><!-- /.product-sorter__select -->
                         </div><!-- /.product-sorter -->
+
                         <div class="row">
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-1.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Banana</a></h3>
-                                            <p>$1.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-2.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Tomatoes</a></h3>
-                                            <p>$3.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-3.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Bread</a></h3>
-                                            <p>$2.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-4.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Apples</a></h3>
-                                            <p>$5.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-5.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Olive Oil</a></h3>
-                                            <p>$6.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-6.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Eggs</a></h3>
-                                            <p>$4.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-7.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Honey</a></h3>
-                                            <p>$9.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-8.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Onions</a></h3>
-                                            <p>$2.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
-                                    <div class="product-card__image">
-                                        <img src="assets/images/products/product-1-9.jpg" alt="">
-                                        <div class="product-card__image-content">
-                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                        </div><!-- /.product-card__image-content -->
-                                    </div><!-- /.product-card__image -->
-                                    <div class="product-card__content">
-                                        <div class="product-card__left">
-                                            <h3><a href="product-details.php">Cabbage</a></h3>
-                                            <p>$3.00</p>
-                                        </div><!-- /.product-card__left -->
-                                        <div class="product-card__right">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div><!-- /.product-card__right -->
-                                    </div><!-- /.product-card__content -->
-                                </div><!-- /.product-card -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
+
+                            <?php
+                                $sql = "SELECT * from item";
+
+                                if ($result = mysqli_query($link, $sql)) {
+
+                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                        echo'
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="product-card">
+                                                <div class="product-card__image">
+                                                    <img src="assets/images/items/'.$row['img'].'" alt="">
+                                                    <div class="product-card__image-content">
+                                                        <a href="#"><i class="organik-icon-heart"></i></a>
+                                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                                    </div><!-- /.product-card__image-content -->
+                                                </div><!-- /.product-card__image -->
+                                                <div class="product-card__content">
+                                                    <div class="product-card__left">
+                                                        <h3><a href="product-details.php">'.$row['item'].'</a></h3>
+                                                        <p>RM'.$row['cost'].'</p>
+                                                    </div><!-- /.product-card__left -->
+                                                    <div class="product-card__right">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div><!-- /.product-card__right -->
+                                                </div><!-- /.product-card__content -->
+                                            </div><!-- /.product-card -->
+                                        </div>';
+                                    }
+                                } 
+
+                            ?>
+                            <!-- /.col-md-6 col-lg-4 -->
                         </div><!-- /.row -->
                         <div class="text-center">
                             <a href="#" class="thm-btn products__load-more">Load More</a><!-- /.thm-btn -->

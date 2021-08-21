@@ -1,5 +1,13 @@
 <?php
-  session_start()
+  session_start();
+  
+  if(!isset($_SESSION["loggedin"])) {
+    echo "
+     <script>
+       alert('Please login');
+       location.href='login.php';
+     </script>";
+   }
 ?>
 
 <!DOCTYPE html>

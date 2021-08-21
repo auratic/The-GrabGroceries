@@ -154,7 +154,12 @@
           font: 14px sans-serif; 
           background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 500px; padding: 20px; background-color: azure}
+        .signup-form{ 
+          padding: 20px; 
+          margin: 20px 50px 20px 50px;
+          background-color: azure;
+          overflow: auto;
+        }
     </style>
 </head>
 
@@ -249,61 +254,89 @@
                 </div><!-- /.container -->
             </nav>
 
-            <div class="container signup-form" style="margin: auto;">
+            <div class="signup-form">
+
               <h4>Add item</h4>
+
               <form action="" method="post" enctype="multipart/form-data">
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Item name</b></label> </br>
-                    <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc.">
-                  <span class="invalid-feedback"><?php echo $name_err; ?></span>
-                </div>    
+                <div class="row">
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Category</b></label> </br>
-                    <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" >
-                    <option value="Fruit & Vegetables">Fruit & Vegetables</option>
-                    <option value="Meat">Meat</option>
-                    <option value="Seafood">Seafood</option>
-                    <option value="Snack">Snack</option>
-                  </select>
-                  <span class="invalid-feedback"><?php echo $category_err; ?></span>
-                </div>    
+                  <div class="col-md-9">
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Description</b></label> </br>
-                    <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!">
-                  <span class="invalid-feedback"><?php echo $desc_err; ?></span>
-                </div>    
+                    <div class="row">
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Cost</b></label> </br>
-                    <input type="text" name="cost" class="form-control <?php echo (!empty($cost_err)) ? 'is-invalid' : ''; ?>" placeholder="10.99 etc.">
-                  <span class="invalid-feedback"><?php echo $cost_err; ?></span>
-                </div>    
+                      <div class="form-group col-md-8" style="text-align: left">
+                        <label><b>Item name</b></label> </br>
+                          <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc.">
+                        <span class="invalid-feedback"><?php echo $name_err; ?></span>
+                      </div>   
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Stock</b></label> </br>
-                  <input type="text" name="stock" class="form-control <?php echo (!empty($stock_err)) ? 'is-invalid' : ''; ?>" placeholder="999">
-                  <span class="invalid-feedback"><?php echo $stock_err; ?></span>
+                      <div class="form-group col-md-4" style="text-align: left">
+                        <label><b>Category</b></label> </br>
+                          <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" >
+                          <option value="Fruit & Vegetables">Fruit & Vegetables</option>
+                          <option value="Meat">Meat</option>
+                          <option value="Seafood">Seafood</option>
+                          <option value="Snack">Snack</option>
+                        </select>
+                        <span class="invalid-feedback"><?php echo $category_err; ?></span>
+                      </div>     
+
+                    </div>
+
+                    <div class="form-group" style="text-align: left">
+                      <label><b>Description</b></label> </br>
+                        <input type="text" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" placeholder="High-quality salmon from Africa!">
+                      <span class="invalid-feedback"><?php echo $desc_err; ?></span>
+                    </div>    
+
+                    <div class="row">
+
+                      <div class="form-group col-md-4" style="text-align: left">
+                        <label><b>Cost</b></label> </br>
+                          <input type="text" name="cost" class="form-control <?php echo (!empty($cost_err)) ? 'is-invalid' : ''; ?>" placeholder="10.99 etc.">
+                        <span class="invalid-feedback"><?php echo $cost_err; ?></span>
+                      </div>    
+
+                      <div class="form-group col-md-4" style="text-align: left">
+                        <label><b>Stock</b></label> </br>
+                        <input type="text" name="stock" class="form-control <?php echo (!empty($stock_err)) ? 'is-invalid' : ''; ?>" placeholder="999">
+                        <span class="invalid-feedback"><?php echo $stock_err; ?></span>
+                      </div>
+
+                      <div class="form-group col-md-4" style="text-align: left">
+                        <label><b>Expiry Date</b></label> </br>
+                        <input type="text" name="exp-date" class="form-control <?php echo (!empty($exp_err)) ? 'is-invalid' : ''; ?>" placeholder="Format: 2021-05-21">
+                        <span class="invalid-feedback"><?php echo $exp_err; ?></span>
+                      </div>    
+
+                    </div>
+
+                    <div class="row">
+
+                      <div class="form-group col-md-3" style="text-align: left">
+                        <label><b>Image</b></label> </br>
+                        <input type="file" name="image" class="form-control <?php echo (!empty($img_err)) ? 'is-invalid' : ''; ?>">
+                        <span class="invalid-feedback"><?php echo $img_err; ?></span>
+                      </div>    
+
+                    </div>
+
+                    <div class="form-group" style="margin-top: 50px">
+                      <input type="submit" name="add-item" class="btn btn-info btn-lg" value="Submit">
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-3">
+                    <img src="assets/images/Logo3.png" style="width: 100%; object-fit: contain; border-radius: 25px;">
+                  </div>
+                  
                 </div>
 
-                <div class="form-group" style="text-align: left">
-                  <label><b>Expiry Date</b></label> </br>
-                  <input type="text" name="exp-date" class="form-control <?php echo (!empty($exp_err)) ? 'is-invalid' : ''; ?>" placeholder="Format: 2021-05-21">
-                  <span class="invalid-feedback"><?php echo $exp_err; ?></span>
-                </div>    
-
-                <div class="form-group" style="text-align: left">
-                  <label><b>Image</b></label> </br>
-                  <input type="file" name="image" class="form-control <?php echo (!empty($img_err)) ? 'is-invalid' : ''; ?>">
-                  <span class="invalid-feedback"><?php echo $img_err; ?></span>
-                </div>    
-
-                <div class="form-group">
-                  <input type="submit" name="add-item" class="btn btn-info btn-lg" value="Submit">
-                </div>
               </form>
+            
             </div>
 
     <!-- /.search-popup -->

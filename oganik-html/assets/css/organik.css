@@ -7850,4 +7850,36 @@ a:hover
     font-weight: bold;
 }
 
+.account-title
+{
+    margin-top: 25px;
+    height: 50px;
+    text-decoration: underline;
+}
+
+.my-account-area
+{
+    margin-bottom: 150px;
+}
+
+.fas
+{   margin-left: 100px;
+    margin-top: 30px;
+    height: 5px;
+}
+
+.vl {
+  border-left: 1px solid black;
+  height: 470px;
+  position: absolute;
+  left: 50%;
+  margin-left: 150px;
+  top: 0;
+}
+
+.btn
+{
+    border-radius: 5px;
+ /* btn--box btn--radius btn--small btn--black btn--black-hover-green btn--uppercase font--bold*/
+}
 /*# sourceMappingURL=organik.css.map */

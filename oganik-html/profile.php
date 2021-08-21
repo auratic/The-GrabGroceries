@@ -170,7 +170,7 @@
                         <!-- :::::::::: Start My Account Section :::::::::: -->
                         <div class="my-account-area">
                             <div class="row">
-                                <div class="col-xl-3 col-md-4">
+                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
@@ -208,8 +208,6 @@
                                             </li>
                                         </ul>
                                     </div>
-
-                                    <div class="vl"></div>
 
                                 </div>
                                 <div class="col-xl-8 col-md-8">
@@ -360,50 +358,81 @@
 
                                                 <div class="account-details">
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-box__single-group">
-                                                                <input type="text" placeholder="First Name">
+                                                        <div class="col-md-8">
+
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <div class="form-box__single-group">
+                                                                        <input type="text" placeholder="First Name" style="width:100%">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <div class="form-box__single-group">
+                                                                        <input type="text" placeholder="Last Name" style="width:100%">
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
+                                                                        <input type="text" placeholder="Phone Number">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
+                                                                        <input type="text" placeholder="Email address">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-box__single-group">
+                                                                        <h5 class="title" style="margin-top: 10px";>Password change</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-box__single-group" style="margin-top: 10px">
+                                                                        <input type="password" placeholder="Current Password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-6" >
+                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
+                                                                        <input type="password" placeholder="New Password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-box__single-group" style="margin-top: 10px">
+                                                                        <input type="password" placeholder="Confirm Password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-box__single-group" style="margin-top: 20px";>
+                                                                        <button class="btn">Save Change</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-box__single-group">
-                                                                <input type="text" placeholder="Last Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                <input type="text" placeholder="Phone Number">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                <input type="text" placeholder="Email address">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-box__single-group">
-                                                                <h5 class="title" style="margin-top: 10px";>Password change</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-box__single-group" style="margin-top: 10px">
-                                                                <input type="password" placeholder="Current Password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6" >
-                                                            <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                <input type="password" placeholder="New Password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-box__single-group" style="margin-top: 10px">
-                                                                <input type="password" placeholder="Confirm Password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-box__single-group" style="margin-top: 20px";>
-                                                                <button class="btn">Save Change</button>
-                                                            </div>
+
+                                                        <div class="col-md-4">
+                                                            <img src="assets/images/Logo3.png" style="width: 100%; object-fit: contain; border-radius: 25px;">
                                                         </div>
                                                     </div>
                                                 </div>

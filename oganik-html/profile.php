@@ -55,10 +55,12 @@
         .containerr
         {
             background-color:white;
-            margin-top:150px;
+            margin-top: 50px;
             margin-left: 50px;
+            margin-bottom: 50px;
             border-radius: 5px;
             border-style: double;
+            width: 1430px;
         }
     </style>
 </head>
@@ -173,7 +175,7 @@
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
                                                 <a class="active link--icon-left" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard"
-                                                    role="tab" aria-controls="pills-dashboard" aria-selected="true"><i
+                                                    role="tab" aria-controls="pills-dashboard" aria-selected="true" ><i
                                                         class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
@@ -202,10 +204,13 @@
                                                     Account Details</a>
                                             </li>
                                             <li>
-                                                <a class="link--icon-left" href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                             </li>
                                         </ul>
                                     </div>
+
+                                    <div class="vl"></div>
+
                                 </div>
                                 <div class="col-xl-8 col-md-8">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
@@ -214,8 +219,28 @@
                                             <div class="my-account-dashboard account-wrapper">
                                                 <h4 class="account-title">Dashboard</h4>
                                                 <div class="welcome-dashboard m-t-30">
-                                                    <p>Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong> <a
-                                                            href="#">Logout</a> )</p>
+                                                    <p>Hello, <strong><?php 
+
+                                                        if(isset($_SESSION["lname"])) { 
+                                                            echo $_SESSION['lname'];
+                                                        } else { 
+                                                            echo "Login / Register";
+                                                        }
+
+                                                        ?>
+                                                        </strong> (If not <strong>
+                                                            <?php 
+
+                                                            if(isset($_SESSION["lname"])) { 
+                                                                echo $_SESSION['lname'];
+                                                            } else { 
+                                                                echo "Login / Register";
+                                                            }
+                                                        
+                                                            ?>
+                                                        </strong> 
+                                                        please <a href="logout.php">Logout</a> )
+                                                    </p>
                                                 </div>
                                                 <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
                                                     recent orders, manage your shipping and billing addresses and edit your password and
@@ -309,9 +334,19 @@
                                         <div class="tab-pane fade" id="pills-address" role="tabpanel"
                                             aria-labelledby="pills-address-tab">
                                             <div class="my-account-address account-wrapper">
-                                                <h4 class="account-title">Payment Method</h4>
+                                                <h4 class="account-title">Address</h4>
                                                 <div class="account-address m-t-30">
-                                                    <h6 class="name">Alex Tuntuni</h6>
+                                                    <h6 class="name">
+                                                    <?php 
+
+                                                        if(isset($_SESSION["lname"])) { 
+                                                            echo $_SESSION['lname'];
+                                                        } else { 
+                                                            echo "Login / Register";
+                                                        }
+
+                                                    ?>
+                                                    </h6>
                                                     <p>1355 Market St, Suite 900 <br> San Francisco, CA 94103</p>
                                                     <p>Mobile: (123) 456-7890</p>
                                                     <a class="box-btn m-t-25 " href="#"><i class="far fa-edit"></i> Edit Address</a>
@@ -382,11 +417,6 @@
                 </div>
             </div>
         </main> 
-            <div class="container" style="margin: auto;">
-                <a href="logout.php">
-                  <button style="height: 25px; width: 100px;">Logout</button>
-                </a>
-            </div>
 
     <!-- /.search-popup -->
 

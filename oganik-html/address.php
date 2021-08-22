@@ -185,13 +185,11 @@
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
-                                                <a id="pills-download-tab" class="link--icon-left" data-toggle="pill" href="#pills-download" role="tab"
-                                                    aria-controls="pills-download" aria-selected="false"><i
+                                                <a href="download.php"><i
                                                         class="fas fa-cloud-download-alt"></i> Download</a>
                                             </li>
                                             <li>
-                                                <a id="pills-payment-tab" class="link--icon-left" data-toggle="pill" href="#pills-payment" role="tab"
-                                                    aria-controls="pills-payment" aria-selected="false"><i
+                                                <a href="payment.php"><i
                                                         class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
                                             <li>
@@ -211,7 +209,7 @@
                                 </div>
                                 <div class="col-xl-8 col-md-8">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="tab-pane fade" id="pills-address" role="tabpanel" aria-labelledby="pills-address-tab">
+                                        <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
                                             <div class="my-account-address account-wrapper">
                                                 <h4 class="account-title">Address</h4>
                                                     <div class="account-address m-t-30">

@@ -210,104 +210,37 @@
                                 <div class="col-xl-8 col-md-8">
 
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
-                                            <div class="my-account-details account-wrapper">
-                                                <h4 class="account-title">Account Details</h4>
-
-                                                <div class="account-details">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <div class="form-box__single-group">
-                                                                    <?php 
-                                                                        $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                                        $result = mysqli_query($link, $sql);
-                                                                
-                                                                        while($row=mysqli_fetch_assoc($result)) 
-                                                                        {
-                                                                            $fname = $row['firstname'];
-                                                                            $lname = $row['lastname'];
-                                                                        }
-                                                                    ?>
-                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>">
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                    <div class="form-box__single-group">
-                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="text" placeholder="Phone Number">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                                
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="text" placeholder="Email address">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group">
-                                                                        <h5 class="title" style="margin-top: 10px";>Password change</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Current Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6" >
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="password" placeholder="New Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Confirm Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-box__single-group" style="margin-top: 20px";>
-                                                                        <button class="btn" name="edit">Save Change</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <img src="assets/images/Logo5.png" style="width: 100%; object-fit: contain; border-radius: 25px;">
-                                                        </div>
-                                                    </div>
+                                    <div class="#" id="pills-download" aria-labelledby="pills-download-tab">
+                                            <div class="my-account-download account-wrapper">
+                                                <h4 class="account-title">Download</h4>
+                                                <div class="account-table text-center m-t-30 table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="name">Product</th>
+                                                                <th class="date">Date</th>
+                                                                <th class="status">Expire</th>
+                                                                <th class="action">Download</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Mostarizing Oil</td>
+                                                                <td>Aug 22, 2020</td>
+                                                                <td>Yes</td>
+                                                                <td><a href="#">Download File</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Katopeno Altuni</td>
+                                                                <td>July 22, 2020</td>
+                                                                <td>Never</td>
+                                                                <td><a href="#">Download File</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div><!-- :::::::::: End My Account Section :::::::::: -->

@@ -1,92 +1,15 @@
 <?php
-// Initialize the session
-session_start();
- 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
-    exit;
-}
- 
-// Include config file
-require_once "config.php";
- 
-// Define variables and initialize with empty values
-$email = $password = "";
-$email_err = $password_err = $login_err = "";
- 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    // Check if email is empty
-    if(empty(trim($_POST["email"]))) {
-        $email_err = "Please enter email.";
-    } else{
-        $email = trim($_POST["email"]);
-    }
-    
-    // Check if password is empty
-    if(empty($_POST["password"])){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = $_POST["password"];
-    }
-    
-    // Validate credentials
-    if(empty($email_err) && empty($password_err)){
-        // Prepare a select statement
-        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
-        $result = mysqli_query($link, $sql);
-
-        if (mysqli_num_rows($result) == 1) {
-            
-            session_start();
-            $_SESSION["loggedin"] = true;
-            while($row = mysqli_fetch_assoc($result)) {
-                $_SESSION["mode"] = $row["mode"];
-                $_SESSION["lname"] = $row["lastname"];
-                $_SESSION["userid"] = $row["id"];
-                $_SESSION["verified"] = $row["verified"];
-            }
-
-            echo "Login successful.";
-            if($_SESSION["mode"] == "admin"){
-                header("location: adminprofile.php");
-
-            } else {
-                header("location: index.php");
-
-            }
-
-          } else {
-            $login_err = "Email or password is invalid";
-            //echo "Error: " . $sql . "<br>" . mysqli_error($link);
+  session_start();
   
-        }
-    }
+  if(!isset($_SESSION["loggedin"])) {
+    echo "
+     <script>
+       alert('Please login');
+       location.href='login.php';
+     </script>";
+   }
 
-    //reCAPTCHA
-    if(isset($_POST['g-recaptcha-response'])) {
-        // RECAPTCHA SETTINGS
-        $captcha = $_POST['g-recaptcha-response'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-     
-        // RECAPTCH RESPONSE
-        $recaptcha_response = file_get_contents($url.'?secret='.$key.'&response='.$captcha.'&remoteip='.$ip);
-        $data = json_decode($recaptcha_response);
-     
-        if(isset($data->success) &&  $data->success === true) {
-        }
-        else {
-           die('Your account has been logged as a spammer, you cannot continue!');
-        }
-      }
-    
-    // Close connection
-    mysqli_close($link);
-}
+   require "config.php"
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login || TheGrabGroceries</title>
+    <title>Profile || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -130,10 +53,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
         .signup-form{ width: 360px; padding: 20px; }
+
+        .containerr
+        {
+            background-color:white;
+            margin-top: 50px;
+            margin-left: 50px;
+            margin-bottom: 50px;
+            border-radius: 5px;
+            border-style: double;
+            width: 1430px;
+        }
     </style>
-
-    <script src="https://www.google.com/recaptcha/api.js"></script> 
-
 </head>
 
 <body>
@@ -184,9 +115,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="#">
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
+
                                 if(isset($_SESSION["lname"])) { 
                                     echo $_SESSION['lname'];
                                 } else { 
@@ -231,35 +163,105 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            <div class="container signup-form loginbox">
-              <h2>Login to TheGrabGroceries</h2>
-              <p>Please fill in your credentials to login.</p>
+            
+            <!-- :::::::::: Profile :::::::::: -->
+            <main id="main-container" class="main-container">
+            <div class="containerr">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- :::::::::: Start My Account Section :::::::::: -->
+                        <div class="my-account-area">
+                            <div class="row">
+                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                    <div class="my-account-menu">
+                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
+                                            <li>
+                                                <a href="profile.php"><i
+                                                        class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a  href="order.php"><i
+                                                        class="fas fa-shopping-cart"></i> Order</a>
+                                            </li>
+                                            <li>
+                                                <a  href="#"><i
+                                                        class="fas fa-cloud-download-alt"></i> Download</a>
+                                            </li>
+                                            <li>
+                                                <a  href="#"><i
+                                                        class="fas fa-credit-card"></i> Payment Method</a>
+                                            </li>
+                                            <li>
+                                                <a  href="order.php"><i
+                                                        class="fas fa-map-marker-alt"></i> Address</a>
+                                            </li>
+                                            <li>
+                                                <a id="pills-account-tab" class="link--icon-left" data-toggle="pill" href="#pills-account" role="tab"
+                                                    aria-controls="pills-account" aria-selected="false"><i class="fas fa-user"></i>
+                                                    Account Details</a>
+                                            </li>
+                                            <li>
+                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
 
-              <?php 
-              if(!empty($login_err)){
-                  echo '<div class="alert alert-danger">' . $login_err . '</div>';
-              }        
-              ?>
-
-              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group" style="text-align: left">
-                  <label><b>Email</b>    </label> </br>
-                  <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-                  <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                </div>    
-                <div class="form-group" style="text-align: left">
-                  <label><b>Password</b></label> </br>
-                  <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                  <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                                </div>
+                                <div class="col-xl-8 col-md-8">
+                                    <div class="tab-content my-account-tab" id="pills-tabContent">
+                                        <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab">
+                                            <div class="my-account-order account-wrapper">
+                                                <h4 class="account-title">Orders</h4>
+                                                    <div class="account-table text-center m-t-30 table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="no">No</th>
+                                                                    <th class="name">Name</th>
+                                                                    <th class="date">Date</th>
+                                                                    <th class="status">Status</th>
+                                                                    <th class="total">Total</th>
+                                                                    <th class="action">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Mostarizing Oil</td>
+                                                                    <td>Aug 22, 2020</td>
+                                                                    <td>Pending</td>
+                                                                    <td>$100</td>
+                                                                    <td><a href="#">View</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Katopeno Altuni</td>
+                                                                    <td>July 22, 2020</td>
+                                                                    <td>Approved</td>
+                                                                    <td>$45</td>
+                                                                    <td><a href="#">View</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Murikhete Paris</td>
+                                                                    <td>June 22, 2020</td>
+                                                                    <td>On Hold</td>
+                                                                    <td>$99</td>
+                                                                    <td><a href="#">View</a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- :::::::::: End My Account Section :::::::::: -->
+                    </div>
                 </div>
-                <div class="g-recaptcha" data-sitekey="6LcwLAQcAAAAAMhvxlQCfVC7rHJl0BRtHxa4zR17"></div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary signinbtn" value="Login">
-                </div>
-                <a href="forgotpass.php">Forgot password? </a>
-                <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
-              </form>
             </div>
+        </main> 
 
     <!-- /.search-popup -->
 

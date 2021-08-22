@@ -316,7 +316,7 @@
                           <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>">
                         <span class="invalid-feedback"><?php echo $name_err; ?></span>
                       </div>    
-
+                              
                       <div class="form-group col-md-4" style="text-align: left">
                         <label><b>Category</b></label> </br>
                           <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $category; ?>">

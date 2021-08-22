@@ -1,92 +1,139 @@
 <?php
-// Initialize the session
-session_start();
- 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
-    exit;
-}
- 
-// Include config file
-require_once "config.php";
- 
-// Define variables and initialize with empty values
-$email = $password = "";
-$email_err = $password_err = $login_err = "";
- 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    // Check if email is empty
-    if(empty(trim($_POST["email"]))) {
-        $email_err = "Please enter email.";
-    } else{
-        $email = trim($_POST["email"]);
-    }
-    
-    // Check if password is empty
-    if(empty($_POST["password"])){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = $_POST["password"];
-    }
-    
-    // Validate credentials
-    if(empty($email_err) && empty($password_err)){
-        // Prepare a select statement
-        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
-        $result = mysqli_query($link, $sql);
+  session_start();
 
-        if (mysqli_num_rows($result) == 1) {
-            
-            session_start();
-            $_SESSION["loggedin"] = true;
-            while($row = mysqli_fetch_assoc($result)) {
-                $_SESSION["mode"] = $row["mode"];
-                $_SESSION["lname"] = $row["lastname"];
-                $_SESSION["userid"] = $row["id"];
-                $_SESSION["verified"] = $row["verified"]; //$row["verified"];
-            }
+  require "config.php";
 
-            echo "Login successful.";
-            if($_SESSION["mode"] == "admin"){
-                header("location: adminprofile.php");
+  if(!isset($_SESSION["loggedin"])) {
+    echo "
+     <script>
+       alert('Please login');
+       location.href='login.php';
+     </script>";
+   } else if ($_SESSION["verified"] == "true") {
+    echo "
+     <script>
+       alert('This account is already verified');
+       location.href='index.php';
+     </script>";
+      
+   }
 
-            } else {
-                header("location: index.php");
+  $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
 
-            }
+  if($pageWasRefreshed ) {
+    //do something because page was refreshed;
+    // header("location: verify.php");
+  } else {
+    //do nothing;
+  }
 
-          } else {
-            $login_err = "Email or password is invalid";
-            //echo "Error: " . $sql . "<br>" . mysqli_error($link);
   
-        }
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $ver_err = '';
+
+    if(empty($_POST["ver_code"])) {
+        $ver_err = 'Please enter your verification code';
+    } else if(trim(strtoupper($_POST["ver_code"])) != $_SESSION["ver_code"]) {
+        $ver_err = 'Wrong verification code';
     }
 
-    //reCAPTCHA
-    if(isset($_POST['g-recaptcha-response'])) {
-        // RECAPTCHA SETTINGS
-        $captcha = $_POST['g-recaptcha-response'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-     
-        // RECAPTCH RESPONSE
-        $recaptcha_response = file_get_contents($url.'?secret='.$key.'&response='.$captcha.'&remoteip='.$ip);
-        $data = json_decode($recaptcha_response);
-     
-        if(isset($data->success) &&  $data->success === true) {
+    if(empty($ver_err)) {
+        $sql = "
+            UPDATE user
+            SET verified = 'true'
+            WHERE id = " .$_SESSION["userid"];
+        
+        if(mysqli_query($link, $sql)){
+            $_SESSION["verified"] = "true";
+            echo "
+            <script>
+                alert('Account successfully verified');
+                location.href = 'index.php'
+            </script>";
+        } else {
+            echo "
+            <script>
+                alert('Something went wrong verifying your account');
+                location.href = 'index.php'
+            </script>";
         }
-        else {
-           die('Your account has been logged as a spammer, you cannot continue!');
-        }
+    }
+  }
+
+  $n=6;
+  function getName($n) {
+      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $randomString = '';
+    
+      for ($i = 0; $i < $n; $i++) {
+          $index = rand(0, strlen($characters) - 1);
+          $randomString .= $characters[$index];
       }
     
-    // Close connection
-    mysqli_close($link);
-}
+      return $randomString;
+  }
+
+  if(isset($_GET["message"])) {
+       
+    $_SESSION["ver_code"] = getName($n);
+    $to      = "1191201218@student.mmu.edu.my"; // Send email to our user
+    $subject = 'Signup | Verification'; // Give the email a subject 
+    $message = '
+    <html>
+        <body style="
+            padding:20px; 
+            background-color:gray;
+            width: 500px;
+            height: 600px;
+            color: white;"
+            >
+        <h1>Dear '. $_SESSION["lname"] . ',</h1>
+        <br>
+        
+        <p style="color: white;">Thanks for signing up with us! Here is your verification code:</p>
+        <br>
+        <br>
+
+        <h1 style="
+            padding:20px; 
+            font-size:40px; 
+            width: 400px; 
+            height: 50px; 
+            text-align: center;
+            background-color:seagreen;
+            color:white;
+            border-radius:25px;
+            font-family:Arial, Helvetica, sans-serif;
+            margin: auto"
+            >
+            '.$_SESSION["ver_code"].'
+        </h1>
+        <br>
+        <br>
+        
+        <p style="color: white;">Enjoy your stay on TheGrabGroceries website!</p>
+        
+        <p style="color: white;">If this is not sent by you, please ignore this email</p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p style="color: white;">Best Regards</p></br>
+        <p style="color: white;">TheGrabGroceries Staff</p>
+        </body>
+    </html>
+    ';
+                            
+    $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
+    $headers .= 'MIME-Version: 1.0' . "\r\n"; 
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
+    mail($to, $subject, $message, $headers); // Send our email
+  }
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +142,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login || TheGrabGroceries</title>
+    <title>Verify || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -127,13 +174,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <style>
         body { 
           font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
         }
         .signup-form{ width: 360px; padding: 20px; }
     </style>
-
-    <script src="https://www.google.com/recaptcha/api.js"></script> 
-
 </head>
 
 <body>
@@ -147,7 +191,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="container">
                     <div class="main-logo">
                         <a href="index.php" class="logo">
-                            <img src="assets/images/Logo6.png" width="105" alt="">
+                            <img src="assets/images/logo-dark.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -184,9 +228,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="#">
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
+
                                 if(isset($_SESSION["lname"])) { 
                                     echo $_SESSION['lname'];
                                 } else { 
@@ -197,22 +242,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
-                        <li class="dropdown">
-                            <a href="index.php">Home</a>
+                        <li>
+                            <a href="adminprofile.php">Profile</a>
                         </li>
                         <li>
-                            <a href="about.php">About</a>
+                            <a href="additem.php">Add item</a>
                         </li>
-                        <li class="dropdown">
-                            <a href="products.php">Shop</a>
-                            <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                            </ul>
+                        <li>
+                            <a href="displayitem.php">Update Item</a>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
+                        <li class="dropdown"><a href="news.php">Transactions</a>
                             <ul>
                                 <li><a href="news.php">News</a></li>
                                 <li><a href="news-details.php">News Details</a></li>
@@ -231,36 +270,76 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            <div class="container signup-form loginbox">
-              <h2>Login to TheGrabGroceries</h2>
-              <p>Please fill in your credentials to login.</p>
 
-              <?php 
-              if(!empty($login_err)){
-                  echo '<div class="alert alert-danger">' . $login_err . '</div>';
-              }        
-              ?>
+            <div class="container" style="margin: auto; margin-top: 50px; padding: 20px; background-color:azure; width:80%">
+                <h4 style="margin-bottom: 20px">Verify</h4>
+                <p>
+                    Click <b>Send Verification Email</b> button to receive verification code </br>
+                </p>
+                <p id="try-again" style="visibility: hidden;">
+                    You can resend the email in <span>60</span> seconds.
+                </p> 
+                    
+                <button type="button" class="btn btn-md btn-info" id="verify-btn" style="margin-top:20px; margin-bottom:20px">Send Verification Email</button>
+                <p id="sent" style="color:crimson; margin: 0;"></p>
 
-              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group" style="text-align: left">
-                  <label><b>Email</b>    </label> </br>
-                  <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-                  <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                </div>    
-                <div class="form-group" style="text-align: left">
-                  <label><b>Password</b></label> </br>
-                  <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                  <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                </div>
-                <div class="g-recaptcha" data-sitekey="6LcwLAQcAAAAAMhvxlQCfVC7rHJl0BRtHxa4zR17"></div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary signinbtn" value="Login">
-                </div>
-                <a href="forgotpass.php">Forgot password? </a>
-                <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
-              </form>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <div class="form-group" style="text-align: left">
+                        <label><b>Please enter your verification code</b></label> </br>
+                        <input type="text" name="ver_code" class="form-control <?php echo (!empty($ver_err)) ? 'is-invalid' : ''; ?>" style="width:200px">
+                        <span class="invalid-feedback"><?php echo $ver_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Verify">
+                    </div>
+                </form>
             </div>
 
+            <script>
+                var try_again = document.querySelector("#try-again");
+                var verify_btn = document.querySelector("#verify-btn");
+                var sent_status = document.querySelector("#sent");
+                var count; 
+
+                verify_btn.onclick = () => {
+
+                    try_again.style.visibility = "visible";
+                    sent_status.innerHTML = "";
+
+                    var xhttp = new XMLHttpRequest();
+                    
+                    xhttp.open("GET", "verify.php?message=true", true);
+                    xhttp.send();
+                    xhttp.onreadystatechange = function() {
+
+                        if (this.readyState == 4 && this.status == 200) {
+                            sent_status.innerHTML = "<i>Email sent. Check spam folder if you did not see the email.</i>" //this.responseText;
+
+                        } else {
+                            sent_status.innerHTML = "<i>Fail to send email</i>";
+
+                        }
+                    }
+
+                    if(document.querySelector("#try-again > span").innerHTML != -1) {
+
+                       count = setInterval(() => {
+                            document.querySelector("#try-again > span").innerHTML -= 1;
+                            verify_btn.disabled = true;
+
+                            if (document.querySelector("#try-again > span").innerHTML == -1) {
+                                clearInterval(count);
+                                try_again.style.visibility = "hidden";
+                                document.querySelector("#try-again > span").innerHTML = 60;
+                                sent_status.innerHTML = "<i>You can resend the verification email</i>";
+                                verify_btn.disabled = false;
+
+                            }
+                        }, 1000);
+
+                    } 
+                }
+            </script>
     <!-- /.search-popup -->
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>

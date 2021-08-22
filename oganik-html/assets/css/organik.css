@@ -7883,3 +7883,37 @@ a:hover
  /* btn--box btn--radius btn--small btn--black btn--black-hover-green btn--uppercase font--bold*/
 }
 /*# sourceMappingURL=organik.css.map */
+
+/*
+ * Pop-up
+ */
+
+#snackbar {
+  z-index: 999;
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 80%;
+  background-color: #333;
+  color: #fff;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  left: 10%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#verified-btn {
+  background-color:white;
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

@@ -5,6 +5,9 @@ Login pages example - https://www.tutorialrepublic.com/php-tutorial/php-mysql-lo
 Upload Images to Database - https://www.geeksforgeeks.org/how-to-upload-image-into-database-and-display-it-using-php/
 PHP Form Validation - https://www.w3schools.com/php/php_form_url_email.asp
 Uploading files using POST - https://www.w3schools.com/tags/att_form_enctype.asp
+Setting up mail server with XAMPP- https://www.youtube.com/watch?v=3mCRD4-tU2o
+Randomized string - https://www.geeksforgeeks.org/generating-random-string-using-php/
+Email verification - https://code.tutsplus.com/tutorials/how-to-implement-email-verification-for-new-members--net-3824
 
 //////////////////////////////////////////
 Bootstrap / CSS
@@ -16,3 +19,9 @@ Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_mod
 Tools
 //////////////////////////////////////////
 Image hosting - https://imgbb.com/
+
+
+//////////////////////////////////////////
+JS
+//////////////////////////////////////////
+AJAX allows submit data without refreshing page - https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp

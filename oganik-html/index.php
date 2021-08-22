@@ -1187,9 +1187,41 @@
         <!-- /.search-popup__content -->
     </div>
     <!-- /.search-popup -->
+    
+    <p id="verified" style="display: none;"><?php echo (isset($_SESSION["loggedin"]) && (isset($_SESSION["verified"]) && $_SESSION["verified"] == "false")) ? "false" : "true"; ?></p>
+
+    <div id="snackbar">
+        <div>
+            <h4 style="color: var(--thm-base)">Verify email</h4>
+            <p>Verify email enable transaction functionality</p>
+        </div>
+        <div>
+            <a href="verify.php">
+                <button type="button" class="btn btn-default" style="background-color: var(--thm-base)">Verify</button>
+            </a>
+            <button type="button" class="btn btn-default" id="verified-btn">Close</button>
+        </div>
+    </div>
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
+    <script>
+        var verified = document.querySelector("#verified").innerHTML;
+        var snackbar = document.querySelector("#snackbar");
+
+        if(verified == "false") {
+            snackbar.style.display = "flex";
+        }
+
+        document.querySelector("#verified-btn").onclick = () => {
+            snackbar.style.animation = "fadeout 1s";
+
+            setTimeout(() => {
+                snackbar.style.display = "none";
+
+            }, 900);
+        }
+    </script>
 
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>

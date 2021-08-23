@@ -184,11 +184,11 @@
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
-                                                <a  href="#"><i
+                                                <a  href="download.php"><i
                                                         class="fas fa-cloud-download-alt"></i> Download</a>
                                             </li>
                                             <li>
-                                                <a  href="#"><i
+                                                <a href="payment.php"><i
                                                         class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
                                             <li>
@@ -196,8 +196,7 @@
                                                         class="fas fa-map-marker-alt"></i> Address</a>
                                             </li>
                                             <li>
-                                                <a id="pills-account-tab" class="link--icon-left" data-toggle="pill" href="#pills-account" role="tab"
-                                                    aria-controls="pills-account" aria-selected="false"><i class="fas fa-user"></i>
+                                                <a href="accdetails.php"><i class="fas fa-user"></i>
                                                     Account Details</a>
                                             </li>
                                             <li>
@@ -209,7 +208,7 @@
                                 </div>
                                 <div class="col-xl-8 col-md-8">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab">
+                                        <div class="#" id="pills-order" aria-labelledby="pills-order-tab">
                                             <div class="my-account-order account-wrapper">
                                                 <h4 class="account-title">Orders</h4>
                                                     <div class="account-table text-center m-t-30 table-responsive">

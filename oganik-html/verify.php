@@ -45,6 +45,7 @@
         
         if(mysqli_query($link, $sql)){
             $_SESSION["verified"] = "true";
+            $_SESSION["ver_code"] = "";
             echo "
             <script>
                 alert('Account successfully verified');

@@ -215,17 +215,21 @@
                                                     <div class="account-address m-t-30">
                                                         <h6 class="name">
                                                             <?php 
-
-                                                                if(isset($_SESSION["lname"])) { 
-                                                                    echo $_SESSION['lname'];
-                                                                } else { 
-                                                                    echo "Login / Register";
+                                                                $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                                $result = mysqli_query($link, $sql);
+                                                        
+                                                                while($row=mysqli_fetch_assoc($result)) 
+                                                                {
+                                                                    $fname = $row['firstname'];
+                                                                    $lname = $row['lastname'];
+                                                                    $address = $row['address'];
+                                                                    $phone = $row['phone'];
                                                                 }
-
                                                             ?>
                                                         </h6>
-                                                        <p>1355 Market St, Suite 900 <br> San Francisco, CA 94103</p>
-                                                        <p>Mobile: (123) 456-7890</p>
+                                                        <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
+                                                        <p><?php echo $address?></p>
+                                                        <p>Contact: <?php echo $phone?></p>
                                                         <a class="box-btn m-t-25 " href="editaddress.php"><i class="far fa-edit"></i> Edit</a>
                                                     </div>
                                             </div>

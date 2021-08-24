@@ -47,7 +47,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $_SESSION["lname"] = $row["lastname"];
                 $_SESSION["userid"] = $row["id"];
                 $_SESSION["verified"] = $row["verified"];
-                $_SESSION["emailaddress"] = $row["email"];
             }
 
             echo "Login successful.";

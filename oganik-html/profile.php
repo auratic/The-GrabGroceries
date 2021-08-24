@@ -213,7 +213,7 @@
                                             <div class="my-account-dashboard account-wrapper">
                                                 <h4 class="account-title">Dashboard</h4>
                                                     <div class="welcome-dashboard m-t-30">
-                                                        <p>Hello, (If not<strong>
+                                                        <p>Hello, (If not
                                                             <?php 
                                                                 $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
                                                                 $result = mysqli_query($link, $sql);

@@ -11,9 +11,7 @@
 
    require "config.php";
 
-   $address;
-   $phone_num;
-   $confirm_phnum;
+   $address = $phone_num = $confirm_phnum = "";
 
    $ph_err = $add_err = $confirm_ph_err = "";
    
@@ -45,8 +43,7 @@
 
         if($ph_err == "" && $add_err == "" && $confirm_ph_err == "")
         {
-            $sql = "INSERT INTO user (phone, address)
-            VALUES ('$phone_num', '$email')";
+            $sql = "UPDATE user set phone = '$phone_num',  address = '$address' WHERE id = '".$_SESSION['userid']."'";
 
         if (mysqli_query($link, $sql)) {
             echo "
@@ -230,6 +227,7 @@
                     action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" 
                     method="post"
                     style="text-align: left">
+                    
                     <div class="form-group">
                         <label>New Address</label> </br>
                         <input type="text" name="address" class="form-control <?php echo (!empty($add_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
@@ -238,12 +236,12 @@
 
                     <div class="form-group">
                         <label>Phone Number</label> </br>
-                        <input type="tel" name="phnum" class="form-control <?php echo (!empty($ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone_num; ?>">
+                        <input type="tel" pattern="[0-9]{3}-[0-9]{7}" name="phnum" placeholder="012-3456789"class="form-control <?php echo (!empty($ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone_num; ?>">
                         <span class="invalid-feedback"></span><?php echo $ph_err; ?></span>
                     </div>
-                    <div class="form-group" style="text-align: left">
+                    <div class="form-group">
                         <label>Confirm Phone Number</label> </br>
-                        <input type="text" name="confirm_phnum" class="form-control <?php echo (!empty($comfirm_ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_phnum; ?>">
+                        <input type="tel" pattern="[0-9]{3}-[0-9]{7}" name="confirm_phnum" placeholder="012-3456789" class="form-control <?php echo (!empty($comfirm_ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_phnum; ?>">
                         <span class="invalid-feedback"> </span><?php echo $confirm_ph_err; ?></span>
                     </div>
                     <div class="form-group">

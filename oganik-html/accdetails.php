@@ -231,26 +231,27 @@
                                                                             $fname = $row['firstname'];
                                                                             $lname = $row['lastname'];
                                                                             $email = $row['email'];
+                                                                            $phone = $row['phone'];
                                                                         }
                                                                     ?>
                                                                         <span><b>First Name</b></span> 
-                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" disabled="disabled">
+                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>">
                                                                         
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <div class="form-box__single-group">
                                                                         <span><b>Last Name</b></span> 
-                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" disabled="disabled">
+                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-5">
                                                                     <div class="form-box__single-group" style="margin-top: 10px";>
                                                                         <span><b>Phone Number</b></span> 
-                                                                        <input type="text" name="phnum" placeholder="Phone Number">
+                                                                        <input type="text" placeholder="Phone Number" style="width:100%" value="<?php echo $phone?>" disabled="disabled">
                                                                     </div>
                                                                 </div>
                                                             </div>

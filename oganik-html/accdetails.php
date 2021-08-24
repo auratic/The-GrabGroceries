@@ -9,8 +9,35 @@
      </script>";
    }
 
-   require "config.php"
+   require "config.php";
    
+   $email;
+   $phone_num;
+
+   if(isset($_POST["edit"])){
+
+        $ph_err = $email_err = "" ;
+
+        if(empty(trim($_POST["phnum"]))) {
+            $ph_err = "Please phone number";
+        } else {
+            $phone_num = ucwords(trim($_POST["phnum"]));
+        }
+
+        if(empty(trim($_POST["email"]))) {
+            $email_err = "Please email address";
+        } else {
+            $email = ucwords(trim($_POST["email"]));
+        }
+   
+
+        if($ph_err == "" && $email_err == "")
+        {
+            $sql = "INSERT INTO user (phone, address)
+            VALUES ('$phone_num', '$email')";
+        }
+
+   }
 ?>
 
 <!DOCTYPE html>
@@ -229,31 +256,36 @@
                                                                         {
                                                                             $fname = $row['firstname'];
                                                                             $lname = $row['lastname'];
+                                                                            $email = $row['email'];
                                                                         }
                                                                     ?>
-                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>">
+                                                                        <span><b>First Name</b></span> 
+                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" disabled="disabled">
                                                                         
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <div class="form-box__single-group">
-                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>">
+                                                                        <span><b>Last Name</b></span> 
+                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" disabled="disabled">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             
                                                             <div class="row">
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-6">
                                                                     <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="text" placeholder="Phone Number">
+                                                                        <span><b>Phone Number</b></span> 
+                                                                        <input type="text" name="phnum" placeholder="Phone Number">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                                 
                                                             <div class="row">
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-10">
                                                                     <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="text" placeholder="Email address">
+                                                                    <span><b>Email Address</b></span> 
+                                                                        <input type="text" placeholder="Email" style="width:100%" value="<?php echo $email?>" disabled="disabled">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -293,7 +325,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-box__single-group" style="margin-top: 20px";>
-                                                                        <button class="btn" name="edit">Save Change</button>
+                                                                        <input type="submit" name="edit" class="btn" value="Save Change">
                                                                     </div>
                                                                 </div>
                                                             </div>

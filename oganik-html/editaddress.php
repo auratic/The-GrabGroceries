@@ -9,7 +9,10 @@
      </script>";
    }
 
-   require "config.php"
+   require "config.php";
+
+   $address;
+   $phone_num;
    
 ?>
 
@@ -165,79 +168,36 @@
                 </div><!-- /.container -->
             </nav>
             
-            <!-- :::::::::: Profile :::::::::: -->
-            <main id="main-container" class="main-container">
-            <div class="containerr">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- :::::::::: Start My Account Section :::::::::: -->
-                        <div class="my-account-area">
-                            <div class="row">
-                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
-                                    <div class="my-account-menu">
-                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                            <li>
-                                                <a href="profile.php"><i
-                                                    class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="order.php"><i
-                                                        class="fas fa-shopping-cart"></i> Order</a>
-                                            </li>
-                                            <li>
-                                                <a href="download.php"><i
-                                                        class="fas fa-cloud-download-alt"></i> Download</a>
-                                            </li>
-                                            <li>
-                                                <a href="payment.php"><i
-                                                        class="fas fa-credit-card"></i> Payment Method</a>
-                                            </li>
-                                            <li>
-                                                <a href="address.php"><i
-                                                    class="fas fa-map-marker-alt"></i> Address</a>
-                                            </li>
-                                            <li>
-                                                <a href="accdetails.php" ><i class="fas fa-user"></i>
-                                                    Account Details</a>
-                                            </li>
-                                            <li>
-                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+            <!-- :::::::::: Edit Address :::::::::: -->
+            <div class="edtaddress container">
+                <h2>New Address</h2>
+                <p>Please enter your new information.</p>
+                <form 
+                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
+                method="post"
+                style="text-align: left">
+                    <div class="form-group">
+                        <label>New Address</label> </br>
+                        <input type="text" name="address" class="form-control ">
+                    </div> 
 
-                                </div>
-                                <div class="col-xl-8 col-md-8">
-                                    <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
-                                            <div class="my-account-address account-wrapper">
-                                                <h4 class="account-title">Address</h4>
-                                                    <div class="account-address m-t-30">
-                                                        <h6 class="name">
-                                                            <?php 
-
-                                                                if(isset($_SESSION["lname"])) { 
-                                                                    echo $_SESSION['lname'];
-                                                                } else { 
-                                                                    echo "Login / Register";
-                                                                }
-
-                                                            ?>
-                                                        </h6>
-                                                        <p>1355 Market St, Suite 900 <br> San Francisco, CA 94103</p>
-                                                        <p>Mobile: (123) 456-7890</p>
-                                                        <a class="box-btn m-t-25 " href="editaddress.php"><i class="far fa-edit"></i> Edit</a>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- :::::::::: End My Account Section :::::::::: -->
+                    <div class="form-group">
+                        <label>Phone Number</label> </br>
+                        <input type="password" name="password" class="form-control">
+                        <span class="invalid-feedback"></span>
                     </div>
-                </div>
-            </div>
-        </main> 
+                    <div class="form-group" style="text-align: left">
+                        <label>Confirm Phone Number</label> </br>
+                        <input type="password" name="confirm_password" class="form-control">
+                        <span class="invalid-feedback"> </span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                        <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                    </div>
+                    
+                </form>
+            </div>    
 
     <!-- /.search-popup -->
 

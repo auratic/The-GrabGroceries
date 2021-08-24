@@ -7772,6 +7772,18 @@ h6 {
     background-repeat:no-repeat; 
 }
 
+.edtaddress
+{
+    width: 40%;
+    text-align: center;
+    border-radius: 5px;
+    border-style: double;
+    border-color: black;
+    background-color: white;
+    justify-content: center;
+    padding: 50px;
+}
+
 .loginbox
 {
     width: 40%;
@@ -7843,7 +7855,7 @@ a:hover
     text-decoration: underline;
 }
 
-a.active
+a:active
 {
    color: blue;
    text-decoration: underline;

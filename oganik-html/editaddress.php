@@ -13,6 +13,60 @@
 
    $address;
    $phone_num;
+   $confirm_phnum;
+
+   $ph_err = $add_err = $confirm_ph_err = "";
+   
+   if(isset($_POST["update"])){
+
+        if(empty(trim($_POST["address"]))) {
+            $add_err = "Please enter address";
+        } else {
+            $address = ucwords(trim($_POST["address"]));
+        }
+
+        if(empty(trim($_POST["phnum"]))) {
+            $ph_err = "Please enter phone number";
+        } else {
+            $phone_num = ucwords(trim($_POST["phnum"]));
+        }
+
+        if (empty($_POST["confirm_phnum"])) {
+            $confirm_ph_err = "Please confirm phone number.";     
+    
+        } else {
+            $confirm_phnum = $_POST["confirm_phnum"];
+    
+            if (empty($ph_err) && ($phone_num != $confirm_phnum)) {
+                $confirm_ph_err = "Phone number did not match.";
+    
+            }
+        }
+
+        if($ph_err == "" && $add_err == "" && $confirm_ph_err == "")
+        {
+            $sql = "INSERT INTO user (phone, address)
+            VALUES ('$phone_num', '$email')";
+
+        if (mysqli_query($link, $sql)) {
+            echo "
+            <script>
+            alert('Address updated!');
+            location.href = 'profile.php';
+            </script>";
+
+        } else {
+            echo "
+            <script>
+            alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
+            </script>";
+
+            }
+        }
+        // Close connection
+        mysqli_close($link);
+    }
+
    
 ?>
 
@@ -173,26 +227,27 @@
                 <h2>New Address</h2>
                 <p>Please enter your new information.</p>
                 <form 
-                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
-                method="post"
-                style="text-align: left">
+                    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" 
+                    method="post"
+                    style="text-align: left">
                     <div class="form-group">
                         <label>New Address</label> </br>
-                        <input type="text" name="address" class="form-control ">
-                    </div> 
+                        <input type="text" name="address" class="form-control <?php echo (!empty($add_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
+                        <span class="invalid-feedback"></span><?php echo $add_err; ?></span>
+                    </div>
 
                     <div class="form-group">
                         <label>Phone Number</label> </br>
-                        <input type="password" name="password" class="form-control">
-                        <span class="invalid-feedback"></span>
+                        <input type="tel" name="phnum" class="form-control <?php echo (!empty($ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone_num; ?>">
+                        <span class="invalid-feedback"></span><?php echo $ph_err; ?></span>
                     </div>
                     <div class="form-group" style="text-align: left">
                         <label>Confirm Phone Number</label> </br>
-                        <input type="password" name="confirm_password" class="form-control">
-                        <span class="invalid-feedback"> </span>
+                        <input type="text" name="confirm_phnum" class="form-control <?php echo (!empty($comfirm_ph_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_phnum; ?>">
+                        <span class="invalid-feedback"> </span><?php echo $confirm_ph_err; ?></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                        <input type="submit" name="update" class="btn btn-primary" value="Submit">
                         <input type="reset" class="btn btn-secondary ml-2" value="Reset">
                     </div>
                     

@@ -11,33 +11,7 @@
 
    require "config.php";
    
-   $email;
-   $phone_num;
-
-   if(isset($_POST["edit"])){
-
-        $ph_err = $email_err = "" ;
-
-        if(empty(trim($_POST["phnum"]))) {
-            $ph_err = "Please phone number";
-        } else {
-            $phone_num = ucwords(trim($_POST["phnum"]));
-        }
-
-        if(empty(trim($_POST["email"]))) {
-            $email_err = "Please email address";
-        } else {
-            $email = ucwords(trim($_POST["email"]));
-        }
    
-
-        if($ph_err == "" && $email_err == "")
-        {
-            $sql = "INSERT INTO user (phone, address)
-            VALUES ('$phone_num', '$email')";
-        }
-
-   }
 ?>
 
 <!DOCTYPE html>

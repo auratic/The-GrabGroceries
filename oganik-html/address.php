@@ -9,8 +9,30 @@
      </script>";
    }
 
-   require "config.php"
+   require "config.php";
    
+   $fname = $lname = $address = $phone = "";
+
+   if(isset($_POST["details"])) {
+        
+        $sql = "
+        UPDATE user 
+        SET address = '".ucwords($_POST['address'])."', phone = '".$_POST["phone"]."'
+        WHERE id = ".$_SESSION["userid"];
+
+        if(mysqli_query($link, $sql)) {
+            echo "
+            <script>
+                alert('Details updated..');
+            </script>";
+
+        } else {
+            echo "
+            <script>
+                alert('Something went wrong, please try again');
+            </script>";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +86,28 @@
             border-radius: 5px;
             border-style: double;
             width: 1430px;
+        }
+        
+        .modal {
+			background-color: rgba(0,0,0,0.5);
+        }
+        .modal > div {
+            padding: 10px;
+        }
+		.modal-content {
+            border-radius: 25px;
+		}
+
+        .modal-header {
+            border-radius: 25px 25px 0 0;
+        }
+
+        .modal-footer {
+            border-radius: 0 0 25px 25px;
+        }
+
+        #edit-address {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -167,12 +211,15 @@
             
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
+
             <div class="containerr">
                 <div class="row">
                     <div class="col-12">
                         <!-- :::::::::: Start My Account Section :::::::::: -->
                         <div class="my-account-area">
+
                             <div class="row">
+
                                 <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
@@ -205,44 +252,104 @@
                                             </li>
                                         </ul>
                                     </div>
-
                                 </div>
+                                
+                                <!-- :::::::::: Page Content :::::::::: -->
+
                                 <div class="col-xl-8 col-md-8">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
                                         <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
                                             <div class="my-account-address account-wrapper">
                                                 <h4 class="account-title">Address</h4>
-                                                    <div class="account-address m-t-30">
-                                                        <h6 class="name">
-                                                            <?php 
-                                                                $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                                $result = mysqli_query($link, $sql);
-                                                        
-                                                                while($row=mysqli_fetch_assoc($result)) 
-                                                                {
-                                                                    $fname = $row['firstname'];
-                                                                    $lname = $row['lastname'];
-                                                                    $address = $row['address'];
-                                                                    $phone = $row['phone'];
-                                                                }
-                                                            ?>
-                                                        </h6>
-                                                        <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
-                                                        <p><?php echo $address?></p>
-                                                        <p>Contact: <?php echo $phone?></p>
-                                                        <a class="box-btn m-t-25 " href="editaddress.php"><i class="far fa-edit"></i> Edit</a>
-                                                    </div>
+                                                <div class="account-address m-t-30">
+                                                    <h6 class="name">
+                                                        <?php 
+                                                            $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                            $result = mysqli_query($link, $sql);
+                                                    
+                                                            while($row=mysqli_fetch_assoc($result)) 
+                                                            {
+                                                                $fname = $row['firstname'];
+                                                                $lname = $row['lastname'];
+                                                                $address = $row['address'];
+                                                                $phone = $row['phone'];
+                                                            }
+                                                        ?>
+                                                    </h6>
+                                                    <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
+                                                    <p><?php echo $address?></p>
+                                                    <p>Contact: <?php echo $phone?></p>
+                                                    <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i> Edit</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+                            
                         </div><!-- :::::::::: End My Account Section :::::::::: -->
                     </div>
                 </div>
             </div>
+
         </main> 
 
+        <div class="modal" id="address-modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+                
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:var(--thm-base)">
+					<h4 class="modal-title">Edit Details</h4>
+					<!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+				</div> 
+				<!-- Modal Header-->
+
+				<div class="modal-body">
+				
+					<form> 
+								
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Address</label>
+									<input type="" name="address" id="address" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
+									<span class="new-pass-err" style="color:crimson"></span>
+								</div>
+							</div>
+						</div>
+								
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Phone</label>
+									<input type="" name="phone" id="phone" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone; ?>">
+									<span class="con-pass-err" style="color:crimson"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-2">
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress();">
+								</div>
+							</div>
+						</div>
+                    </form>
+
+				</div>
+				<!-- Modal Body-->
+
+				<div class="modal-footer" style="background-color:var(--thm-base)">
+                    <button type="button" class="btn btn-default" id="close" style="background-color: azure;">Close</button>
+				</div> 
+				<!-- Modal Footer-->
+			</div>
+                
+        </div>
+    </div>
     <!-- /.search-popup -->
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
@@ -267,6 +374,39 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+
+    <script>
+        document.getElementById("edit-address").onclick = () => {
+			$('#address-modal').fadeIn();
+        }
+
+        document.querySelector("#close").onclick = () => {
+			$('#address-modal').fadeOut();
+        }
+
+        function updateAddress() {
+            var address = document.getElementById("address").value;
+            var phone = document.getElementById("phone").value;
+
+            if(address != "" && phone != "") {
+                $.ajax({
+                    type: "post",
+                    url: "address.php",
+                    data: {  
+                        'details': true,
+                        'address': address,
+                        'phone': phone
+                    },
+                    cache: false,
+                    success: function (html) {
+                        alert('Details updated');
+                        location.reload();
+                    }
+                });
+            }
+            return false;
+        }
+    </script>
 </body>
 
 </html>

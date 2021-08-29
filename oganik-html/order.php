@@ -200,6 +200,10 @@
                                                     Account Details</a>
                                             </li>
                                             <li>
+                                                <a href="password.php" >
+                                                    <i class="fas fa-lock"></i> Password Changes</a>
+                                            </li>
+                                            <li>
                                                 <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                             </li>
                                         </ul>

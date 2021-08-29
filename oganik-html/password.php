@@ -1,6 +1,6 @@
 <?php
   session_start();
-  
+
   if(!isset($_SESSION["loggedin"])) {
     echo "
      <script>
@@ -10,7 +10,18 @@
    }
 
    require "config.php";
-   
+
+    if (count($_POST) > 0)
+    {
+        $result = mysqli_query($query,$link "SELECT * from user WHERE id='" . $_SESSION["userid"] . "'");
+        $row = mysqli_fetch_array($result);
+        if ($_POST["currentPassword"] == $row["password"]) 
+        {
+            mysqli_query("UPDATE users set password='" . $_POST["newPassword"] . "' WHERE userId='" . $_SESSION["userId"] . "'");
+            $message = "Password Changed";
+        } else
+            $message = "Current Password is not correct";
+    }
    
 ?>
 
@@ -67,6 +78,44 @@
             width: 1430px;
         }
     </style>
+
+    <script>
+        function validatePassword() 
+        {
+            var currentPassword,newPassword,confirmPassword,output = true;
+
+            currentPassword = document.frmChange.currentPassword;
+            newPassword = document.frmChange.newPassword;
+            confirmPassword = document.frmChange.confirmPassword;
+
+            if(!currentPassword.value) {
+                currentPassword.focus();
+                document.getElementById("currentPassword").innerHTML = "required";
+                output = false;
+            }
+            else if(!newPassword.value) {
+                newPassword.focus();
+                document.getElementById("newPassword").innerHTML = "required";
+                output = false;
+            }
+            else if(!confirmPassword.value) {
+                confirmPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "required";
+                output = false;
+            }
+
+            if(newPassword.value != confirmPassword.value) 
+            {
+                newPassword.value="";
+                confirmPassword.value="";
+                newPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "not same";
+                output = false;
+            } 	
+            
+            return output;
+        }
+    </script>
 </head>
 
 <body>
@@ -217,105 +266,37 @@
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
                                         <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
                                             <div class="my-account-details account-wrapper">
-                                                <h4 class="account-title">Account Details</h4>
+                                                <h4 class="account-title">Password Changes</h4>
 
-                                                <div class="account-details">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <div class="form-box__single-group">
-                                                                    <?php 
-                                                                        $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                                        $result = mysqli_query($link, $sql);
-                                                                
-                                                                        while($row=mysqli_fetch_assoc($result)) 
-                                                                        {
-                                                                            $fname = $row['firstname'];
-                                                                            $lname = $row['lastname'];
-                                                                            $email = $row['email'];
-                                                                            $phone = $row['phone'];
-                                                                        }
-                                                                    ?>
-                                                                        <span><b>First Name</b></span> 
-                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>">
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                    <div class="form-box__single-group">
-                                                                        <span><b>Last Name</b></span> 
-                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <span><b>Phone Number</b></span> 
-                                                                        <input type="text" placeholder="Phone Number" style="width:100%" value="<?php echo $phone?>" disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                                
-                                                            <div class="row">
-                                                                <div class="col-md-10">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                    <span><b>Email Address</b></span> 
-                                                                        <input type="text" placeholder="Email" style="width:100%" value="<?php echo $email?>" disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group">
-                                                                        <h5 class="title" style="margin-top: 10px";>Password change</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Current Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6" >
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="password" placeholder="New Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Confirm Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-box__single-group" style="margin-top: 20px";>
-                                                                        <input type="submit" name="edit" class="btn" value="Save Change">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <img src="assets/images/Logo5.png" style="width: 100%; object-fit: contain; border-radius: 25px;">
-                                                        </div>
+                                                <form name="frmChange" method="post" action=""
+                                                    onSubmit="return validatePassword()">
+                                                    <div style="width: 500px;">
+                                                        <div class="message"><?php if(isset($message)) { echo $message; } ?></div>
+                                                        <table class="tblSaveForm">
+                                                            <tr>
+                                                                <td width="40%"><label>Current Password</label></td>
+                                                                <td width="60%"><input type="password"
+                                                                    name="currentPassword" class="txtField" /><span
+                                                                    id="currentPassword" class="required"></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><label>New Password</label></td>
+                                                                <td><input type="password" name="newPassword"
+                                                                    class="txtField" /><span id="newPassword"
+                                                                    class="required"></span></td>
+                                                            </tr>
+                                                            <td><label>Confirm Password</label></td>
+                                                            <td><input type="password" name="confirmPassword"
+                                                                class="txtField" /><span id="confirmPassword"
+                                                                class="required"></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"><input type="submit" name="submit"
+                                                                    value="Submit" class="btnSubmit"></td>
+                                                            </tr>
+                                                        </table>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

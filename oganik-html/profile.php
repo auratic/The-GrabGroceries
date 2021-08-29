@@ -177,28 +177,32 @@
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
-                                                <a href="profile.php"><i
-                                                        class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                                <a href="profile.php">
+                                                    <i class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
-                                                <a href="order.php"><i
-                                                        class="fas fa-shopping-cart"></i> Order</a>
+                                                <a href="order.php">
+                                                    <i class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
-                                                <a href="download.php"><i
-                                                        class="fas fa-cloud-download-alt"></i> Download</a>
+                                                <a href="download.php">
+                                                    <i class="fas fa-cloud-download-alt"></i> Download</a>
                                             </li>
                                             <li>
-                                                <a href="payment.php"><i
-                                                        class="fas fa-credit-card"></i> Payment Method</a>
+                                                <a href="payment.php">
+                                                    <i class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
                                             <li>
-                                                <a href="address.php"><i
-                                                    class="fas fa-map-marker-alt"></i> Address</a>
+                                                <a href="address.php">
+                                                    <i class="fas fa-map-marker-alt"></i> Address</a>
                                             </li>
                                             <li>
-                                                <a href="accdetails.php" ><i class="fas fa-user"></i>
-                                                    Account Details</a>
+                                                <a href="accdetails.php" >
+                                                    <i class="fas fa-user"></i> Account Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="password.php" >
+                                                    <i class="fas fa-lock"></i> Password Changes</a>
                                             </li>
                                             <li>
                                                 <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -269,6 +273,7 @@
     <script src="assets/vendors/wow/wow.js"></script>
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
+    
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
 </body>

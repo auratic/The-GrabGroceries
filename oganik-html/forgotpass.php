@@ -316,19 +316,6 @@ if(isset($_POST["new-pass"])) {
 					<ul class="main-menu__list">
 						<li class="dropdown">
 							<a href="index.php">Home</a>
-							<ul>
-								<li>
-									<a href="index.php">Home One</a>
-								</li>
-								<li><a href="index-2.php">Home Two</a></li>
-								<li class="dropdown">
-									<a href="#">Header Styles</a>
-									<ul>
-										<li><a href="index.php">Header One</a></li>
-										<li><a href="index-2.php">Header Two</a></li>
-									</ul>
-								</li>
-							</ul>
 						</li>
 						<li>
 							<a href="about.php">About</a>

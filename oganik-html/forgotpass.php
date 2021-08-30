@@ -236,6 +236,7 @@ if(isset($_POST["new-pass"])) {
     <style>
         body{
             background-color: var(--thm-base);
+			background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
         .forgot-password {
             background-color: white;

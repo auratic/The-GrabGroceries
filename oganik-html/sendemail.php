@@ -27,7 +27,7 @@
   if ($address) {$body .= 'Address: '. $address . "\r\n"; }
   if ($website) {$body .= 'Website: '. $website . "\r\n"; }
 
-  $body .= 'message: ' . "\r\n" . $message;
+  $body .= 'Message: ' . "\r\n" . $message;
 
 
 

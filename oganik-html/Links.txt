@@ -24,6 +24,7 @@ Image hosting - https://imgbb.com/
 //////////////////////////////////////////
 JS
 //////////////////////////////////////////
+Check if page is reloaded - https://stackoverflow.com/questions/5004978/check-if-page-gets-reloaded-or-refreshed-in-javascript
 AJAX allows submit data without refreshing page - https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
 jQuery AJAX - https://stackoverflow.com/questions/2866063/submit-form-without-page-reloading
 AJAX to same file - https://stackoverflow.com/questions/27634131/jquery-ajax-post-to-php-in-the-same-file-not-working

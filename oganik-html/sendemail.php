@@ -36,9 +36,15 @@
     $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
     $headers = "From: " . $name . " <" . $senderEmail . ">";  
     $success = mail( $recipient, $mail_subject, $body, $headers );
-    echo "<div class='inner success'><p class='success'>Thanks for contacting us. We will contact you ASAP!</p></div><!-- /.inner -->";
+    echo "
+    <script>
+      Thanks for contacting us. We will contact you ASAP!
+    </script>";
   }else {
-    echo "<div class='inner error'><p class='error'>Something went wrong. Please try again.</p></div><!-- /.inner -->";
+    echo "
+    <script>
+      Something went wrong. Please try again.
+    </script>";
   }
 
 ?>

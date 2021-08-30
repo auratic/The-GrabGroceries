@@ -13,11 +13,11 @@
 
     if (count($_POST) > 0)
     {
-        $result = mysqli_query($query,$link "SELECT * from user WHERE id='" . $_SESSION["userid"] . "'");
+        $result = mysqli_query($link, "SELECT * from user WHERE id='" . $_SESSION["userid"] . "'");
         $row = mysqli_fetch_array($result);
         if ($_POST["currentPassword"] == $row["password"]) 
         {
-            mysqli_query("UPDATE users set password='" . $_POST["newPassword"] . "' WHERE userId='" . $_SESSION["userId"] . "'");
+            mysqli_query($link, "UPDATE user set password='" . $_POST["newPassword"] . "' WHERE id='" . $_SESSION["userid"] . "'");
             $message = "Password Changed";
         } else
             $message = "Current Password is not correct";
@@ -90,17 +90,17 @@
 
             if(!currentPassword.value) {
                 currentPassword.focus();
-                document.getElementById("currentPassword").innerHTML = "required";
+                document.getElementById("currentPassword").innerHTML = "Required";
                 output = false;
             }
             else if(!newPassword.value) {
                 newPassword.focus();
-                document.getElementById("newPassword").innerHTML = "required";
+                document.getElementById("newPassword").innerHTML = "Required";
                 output = false;
             }
             else if(!confirmPassword.value) {
                 confirmPassword.focus();
-                document.getElementById("confirmPassword").innerHTML = "required";
+                document.getElementById("confirmPassword").innerHTML = "Required";
                 output = false;
             }
 
@@ -109,7 +109,7 @@
                 newPassword.value="";
                 confirmPassword.value="";
                 newPassword.focus();
-                document.getElementById("confirmPassword").innerHTML = "not same";
+                document.getElementById("confirmPassword").innerHTML = "Did not match";
                 output = false;
             } 	
             
@@ -268,8 +268,7 @@
                                             <div class="my-account-details account-wrapper">
                                                 <h4 class="account-title">Password Changes</h4>
 
-                                                <form name="frmChange" method="post" action=""
-                                                    onSubmit="return validatePassword()">
+                                                <form name="frmChange" method="post" action="" onSubmit="return validatePassword()">
                                                     <div style="width: 500px;">
                                                         <div class="message"><?php if(isset($message)) { echo $message; } ?></div>
                                                         <table class="tblSaveForm">
@@ -292,7 +291,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="2"><input type="submit" name="submit"
-                                                                    value="Submit" class="btnSubmit"></td>
+                                                                    value="Submit" class="btnSubmit" ></td>
                                                             </tr>
                                                         </table>
                                                     </div>

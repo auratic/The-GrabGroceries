@@ -51,12 +51,15 @@
     <style>
         body { 
           font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
+          color:black;
+          background-color:white
         }
         .signup-form{ width: 360px; padding: 20px; }
 
         .containerr
         {
+            color:black;
             background-color:white;
             margin-top: 50px;
             margin-left: 50px;
@@ -64,6 +67,23 @@
             border-radius: 5px;
             border-style: double;
             width: 1430px;
+        }
+
+        .dark-mode 
+        {
+            background-color: black;
+            color: white;
+        }
+
+        .mode
+        {
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            text-align:center;
+            font-size: 16px;
+            margin-left: 20px;
         }
     </style>
 </head>
@@ -162,6 +182,9 @@
                             <option value="arabic">Arabic</option>
                         </select>
                     </div><!-- /.main-menu__language -->
+                    <div>
+                        <button class="mode" onclick="myFunction()">Mode</button>
+                    </div>
                 </div><!-- /.container -->
             </nav>
             
@@ -276,6 +299,14 @@
     
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+
+    <script>
+        function myFunction() 
+        {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+    </script>
 </body>
 
 </html>

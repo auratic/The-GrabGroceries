@@ -239,14 +239,14 @@
                                                                         }
                                                                     ?>
                                                                         <span><b>First Name</b></span> 
-                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>">
+                                                                        <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" disabled="disabled">
                                                                         
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <div class="form-box__single-group">
                                                                         <span><b>Last Name</b></span> 
-                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>">
+                                                                        <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" disabled="disabled">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -268,47 +268,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group">
-                                                                        <h5 class="title" style="margin-top: 10px";>Password change</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Current Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6" >
-                                                                    <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <input type="password" placeholder="New Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-box__single-group" style="margin-top: 10px">
-                                                                        <input type="password" placeholder="Confirm Password">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-box__single-group" style="margin-top: 20px";>
-                                                                        <input type="submit" name="edit" class="btn" value="Save Change">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
                                                         </div>
 
                                                         <div class="col-md-4">

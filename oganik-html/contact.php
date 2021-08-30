@@ -1,5 +1,5 @@
 <?php
-  session_start()
+  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -164,28 +164,28 @@
                     <h3>Do You’ve Any Question? <br>
                         Write us a Message</h3>
                 </div><!-- /.block-title -->
-                <form action="assets/inc/sendemail.html" class="contact-form-validated contact-one__form">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="text" name="name" placeholder="Your Name">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Email Address" name="email">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Phone Number" name="phone">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Subject" name="subject">
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-12">
-                            <textarea placeholder="Write a Message" name="message"></textarea>
-                        </div><!-- /.col-md-12 -->
-                        <div class="col-md-12 text-center">
-                            <button type="submit" class="thm-btn">Send a Message</button>
-                        </div><!-- /.col-md-12 -->
-                    </div><!-- /.row -->
-                </form>
+                    <form action="sendemail.php" class="contact-form-validated contact-one__form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div><!-- /.col-md-6 -->
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Email Address" name="email" required>
+                            </div><!-- /.col-md-6 -->
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Phone Number" name="phone" required>
+                            </div><!-- /.col-md-6 -->
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Subject" name="subject" required>
+                            </div><!-- /.col-md-6 -->
+                            <div class="col-md-12">
+                                <textarea placeholder="Write a Message" name="message" required></textarea>
+                            </div><!-- /.col-md-12 -->
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="thm-btn">Send a Message</button>
+                            </div><!-- /.col-md-12 -->
+                        </div><!-- /.row -->    
+                    </form>
             </div><!-- /.container -->
         </section><!-- /.contact-one -->
 
@@ -220,8 +220,7 @@
                         <div class="contact-infos__single">
                             <i class="organik-icon-location"></i>
                             <h3>Visit Anytime</h3>
-                            <p>66 Broklyn Golden Street, <br>
-                                New York. USA</p>
+                            <p>66 Melaka Street, Melaka. Malaysia</p>
                         </div><!-- /.contact-infos__single -->
                     </div>
                     <div>
@@ -229,18 +228,15 @@
                             <i class="organik-icon-email"></i>
                             <h3>Send Email</h3>
                             <p>
-                                <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
-                                <br>
-                                <a href="mailto:info@company.com">info@company.com</a>
+                                <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
                             </p>
                         </div><!-- /.contact-infos__single -->
                     </div>
                     <div>
                         <div class="contact-infos__single">
                             <i class="organik-icon-calling"></i>
-                            <h3>Call Center</h3>
-                            <p><a href="tel:92-666-888-0000">92 666 888 0000</a> <br>
-                                <a href="tel:666-000-6666">666 000 6666</a>
+                            <h3>Contact Us</h3>
+                            <p><a href="tel:92-666-888-0000">+60123456789</a> <br>
                             </p>
                         </div><!-- /.contact-infos__single -->
                     </div>
@@ -249,7 +245,7 @@
         </section><!-- /.contact-infos -->
 
         <div class="google-map__default">
-            <iframe title="template google map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd" class="map__default" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7973.782605444915!2d102.23828442413114!3d2.1948269936007874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d1f1c323a61f9d%3A0x6f5f4f8fb415adee!2sTaman%20Kota%20Laksamana%2C%2075200%20Malacca!5e0!3m2!1sen!2smy!4v1630305293445!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" class="map__default" allowfullscreen></iframe>
         </div>
         <!-- /.google-map -->
 

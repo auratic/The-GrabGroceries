@@ -60,7 +60,7 @@
 
 <body>
     <div class="preloader">
-        <img class="preloader__image" width="55" src="assets/images/loader.png" alt="" />
+        <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">

@@ -1,5 +1,5 @@
 <?php
-  session_start()
+  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +36,26 @@
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
+
+    <style>
+    .mode
+    {
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        text-align:center;
+        font-size: 16px;
+        margin-left: 20px;
+    }
+
+    .dark-mode 
+    {
+        background-color: black;
+        color: white;
+    }
+
+    </style>
 </head>
 
 <body>
@@ -61,9 +81,9 @@
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
@@ -132,6 +152,9 @@
                             <option value="arabic">Arabic</option>
                         </select>
                     </div><!-- /.main-menu__language -->
+                    <div>
+                        <button style="outline: none;" class="mode" onclick="myFunction()">Mode</button>
+                    </div>
                 </div><!-- /.container -->
             </nav>
             <!-- /.main-menu -->
@@ -144,17 +167,17 @@
 
         <section class="main-slider">
             <div class="swiper-container thm-swiper__slider" data-swiper-options='{
-    "slidesPerView": 1,
-    "loop": true,
-    "effect": "fade",
-    "autoplay": {
-        "delay": 5000
-    },
-    "navigation": {
-        "nextEl": "#main-slider__swiper-button-next",
-        "prevEl": "#main-slider__swiper-button-prev"
-    }
-    }'>
+                "slidesPerView": 1,
+                "loop": true,
+                "effect": "fade",
+                "autoplay": {
+                    "delay": 5000
+                },
+                "navigation": {
+                    "nextEl": "#main-slider__swiper-button-next",
+                    "prevEl": "#main-slider__swiper-button-prev"
+                }
+                }'>
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="image-layer" style="background-image: url(assets/images/main-slider/main-slider-1-1.jpg);">
@@ -964,35 +987,32 @@
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-widget footer-widget__about-widget">
                             <a href="index.php" class="footer-widget__logo">
-                                <img src="assets/images/logo-light.png" alt="" width="105" height="43">
+                                <img src="assets/images/tgg.png" alt="" width="150" height="150">
                             </a>
-                            <p class="thm-text-dark">Atiam rhoncus sit amet adip
-                                scing sed ipsum. Lorem ipsum
-                                dolor sit amet adipiscing <br>
-                                sem neque.</p>
+                            <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
                         </div><!-- /.footer-widget -->
                     </div><!-- /.col-sm-12 col-md-6 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-widget footer-widget__contact-widget">
                             <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__contact">
                                 <li>
                                     <i class="fa fa-phone-square"></i>
-                                    <a href="tel:666-888-0000">666 888 0000</a>
+                                    <a href="tel:666-888-0000">60123456789</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="mailto:info@company.com">info@company.com</a>
+                                    <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-map-marker-alt"></i>
-                                    <a href="#">66 top broklyn street.
-                                        New York</a>
+                                    <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
+                                        Malacca Malaysia</a>
                                 </li>
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
                     </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-widget footer-widget__links-widget">
                             <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
                             <ul class="list-unstyled footer-widget__links">
@@ -1003,7 +1023,7 @@
                                     <a href="products.php">Shopping</a>
                                 </li>
                                 <li>
-                                    <a href="about.php">About Store</a>
+                                    <a href="about.php">About</a>
                                 </li>
                                 <li>
                                     <a href="contact.php">Contact</a>
@@ -1022,7 +1042,7 @@
                                     <a href="products.php">New Products</a>
                                 </li>
                                 <li>
-                                    <a href="checkout.php">My Account</a>
+                                    <a href="profile.php">My Account</a>
                                 </li>
                                 <li>
                                     <a href="contact.php">Support</a>
@@ -1033,16 +1053,6 @@
                             </ul><!-- /.list-unstyled footer-widget__contact -->
                         </div><!-- /.footer-widget -->
                     </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget">
-                            <h3 class="footer-widget__title">Newsletter</h3><!-- /.footer-widget__title -->
-                            <form action="#" data-url="YOUR_MAILCHIMP_URL" class="mc-form">
-                                <input type="email" name="EMAIL" id="mc-email" placeholder="Email Address">
-                                <button type="submit">Subscribe</button>
-                            </form>
-                            <div class="mc-form__response"></div><!-- /.mc-form__response -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
                 </div><!-- /.row -->
             </div><!-- /.container -->
             <div class="bottom-footer">
@@ -1050,11 +1060,11 @@
                     <hr>
                     <div class="inner-container text-center">
                         <div class="bottom-footer__social">
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-facebook-square"></a>
-                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.bottom-footer__social -->
-                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by Company.com</p>
+                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
                     </div><!-- /.inner-container -->
                 </div><!-- /.container -->
             </div><!-- /.bottom-footer -->
@@ -1202,7 +1212,8 @@
             <button type="button" class="btn btn-default" id="verified-btn">Close</button>
         </div>
     </div>
-
+    
+    <!--back to top!-->
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
     <script>
@@ -1242,6 +1253,14 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+
+    <script>
+        function myFunction() 
+        {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+    </script>
 </body>
 
 </html>

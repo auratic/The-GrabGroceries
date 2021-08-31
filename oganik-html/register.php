@@ -333,7 +333,103 @@
                     </div>
                     <p>Already have an account? <a href="login.php">Login here</a>.</p>
                 </form>
-            </div>    
+            </div> 
+        </header>
+
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
+
+        <footer class="site-footer background-black-2">
+            <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
+            <img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__about-widget">
+                            <a href="index.php" class="footer-widget__logo">
+                                <img src="assets/images/tgg.png" alt="" width="150" height="150">
+                            </a>
+                            <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__contact-widget">
+                            <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__contact">
+                                <li>
+                                    <i class="fa fa-phone-square"></i>
+                                    <a href="tel:666-888-0000">60123456789</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope"></i>
+                                    <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
+                                        Malacca Malaysia</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__links-widget">
+                            <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__links">
+                                <li>
+                                    <a href="index.php">Top Sellers</a>
+                                </li>
+                                <li>
+                                    <a href="products.php">Shopping</a>
+                                </li>
+                                <li>
+                                    <a href="about.php">About</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Help</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__links">
+                                <li>
+                                    <a href="products.php">New Products</a>
+                                </li>
+                                <li>
+                                    <a href="profile.php">My Account</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Support</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">FAQs</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+            <div class="bottom-footer">
+                <div class="container">
+                    <hr>
+                    <div class="inner-container text-center">
+                        <div class="bottom-footer__social">
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
+                        </div><!-- /.bottom-footer__social -->
+                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
+                    </div><!-- /.inner-container -->
+                </div><!-- /.container -->
+            </div><!-- /.bottom-footer -->
+        </footer><!-- /.site-footer -->   
 
     <!-- /.search-popup -->
 

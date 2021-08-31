@@ -80,9 +80,9 @@
         .containerr
         {
             background-color:white;
-            margin-top: 50px;
+            margin-top: 70px;
             margin-left: 50px;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
             border-radius: 5px;
             border-style: double;
             width: 1430px;
@@ -211,93 +211,187 @@
             
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
+                <div class="containerr">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- :::::::::: Start My Account Section :::::::::: -->
+                            <div class="my-account-area">
 
-            <div class="containerr">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- :::::::::: Start My Account Section :::::::::: -->
-                        <div class="my-account-area">
+                                <div class="row">
 
-                            <div class="row">
-
-                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
-                                    <div class="my-account-menu">
-                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                            <li>
-                                                <a href="profile.php"><i
-                                                    class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="order.php"><i
-                                                        class="fas fa-shopping-cart"></i> Order</a>
-                                            </li>
-                                            <li>
-                                                <a href="download.php"><i
-                                                        class="fas fa-cloud-download-alt"></i> Download</a>
-                                            </li>
-                                            <li>
-                                                <a href="payment.php"><i
-                                                        class="fas fa-credit-card"></i> Payment Method</a>
-                                            </li>
-                                            <li>
-                                                <a href="address.php"><i
-                                                    class="fas fa-map-marker-alt"></i> Address</a>
-                                            </li>
-                                            <li>
-                                                <a href="accdetails.php" ><i class="fas fa-user"></i>
-                                                    Account Details</a>
-                                            </li>
-                                            <li>
-                                                <a href="password.php" >
-                                                    <i class="fas fa-lock"></i> Password Changes</a>
-                                            </li>
-                                            <li>
-                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                            </li>
-                                        </ul>
+                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                        <div class="my-account-menu">
+                                            <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
+                                                <li>
+                                                    <a href="profile.php"><i
+                                                        class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                                </li>
+                                                <li>
+                                                    <a href="order.php"><i
+                                                            class="fas fa-shopping-cart"></i> Order</a>
+                                                </li>
+                                                <li>
+                                                    <a href="download.php"><i
+                                                            class="fas fa-cloud-download-alt"></i> Download</a>
+                                                </li>
+                                                <li>
+                                                    <a href="payment.php"><i
+                                                            class="fas fa-credit-card"></i> Payment Method</a>
+                                                </li>
+                                                <li>
+                                                    <a href="address.php"><i
+                                                        class="fas fa-map-marker-alt"></i> Address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="accdetails.php" ><i class="fas fa-user"></i>
+                                                        Account Details</a>
+                                                </li>
+                                                <li>
+                                                    <a href="password.php" >
+                                                        <i class="fas fa-lock"></i> Password Changes</a>
+                                                </li>
+                                                <li>
+                                                    <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <!-- :::::::::: Page Content :::::::::: -->
+                                    
+                                    <!-- :::::::::: Page Content :::::::::: -->
 
-                                <div class="col-xl-8 col-md-8">
-                                    <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
-                                            <div class="my-account-address account-wrapper">
-                                                <h4 class="account-title">Address</h4>
-                                                <div class="account-address m-t-30">
-                                                    <h6 class="name">
-                                                        <?php 
-                                                            $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
-                                                            $result = mysqli_query($link, $sql);
-                                                    
-                                                            while($row=mysqli_fetch_assoc($result)) 
-                                                            {
-                                                                $fname = $row['firstname'];
-                                                                $lname = $row['lastname'];
-                                                                $address = $row['address'];
-                                                                $phone = $row['phone'];
-                                                            }
-                                                        ?>
-                                                    </h6>
-                                                    <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
-                                                    <p><?php echo $address?></p>
-                                                    <p>Contact: <?php echo $phone?></p>
-                                                    <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i> Edit</a>
+                                    <div class="col-xl-8 col-md-8">
+                                        <div class="tab-content my-account-tab" id="pills-tabContent">
+                                            <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
+                                                <div class="my-account-address account-wrapper">
+                                                    <h4 class="account-title">Address</h4>
+                                                    <div class="account-address m-t-30">
+                                                        <h6 class="name">
+                                                            <?php 
+                                                                $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                                $result = mysqli_query($link, $sql);
+                                                        
+                                                                while($row=mysqli_fetch_assoc($result)) 
+                                                                {
+                                                                    $fname = $row['firstname'];
+                                                                    $lname = $row['lastname'];
+                                                                    $address = $row['address'];
+                                                                    $phone = $row['phone'];
+                                                                }
+                                                            ?>
+                                                        </h6>
+                                                        <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
+                                                        <p><?php echo $address?></p>
+                                                        <p>Contact: <?php echo $phone?></p>
+                                                        <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i> Edit</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                            
-                        </div><!-- :::::::::: End My Account Section :::::::::: -->
+                                </div>
+                                
+                            </div><!-- :::::::::: End My Account Section :::::::::: -->
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main> 
+        </header>
+        
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
 
-        </main> 
+        <footer class="site-footer background-black-2">
+            <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
+            <img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__about-widget">
+                            <a href="index.php" class="footer-widget__logo">
+                                <img src="assets/images/tgg.png" alt="" width="150" height="150">
+                            </a>
+                            <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__contact-widget">
+                            <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__contact">
+                                <li>
+                                    <i class="fa fa-phone-square"></i>
+                                    <a href="tel:666-888-0000">60123456789</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope"></i>
+                                    <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
+                                        Malacca Malaysia</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-widget footer-widget__links-widget">
+                            <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__links">
+                                <li>
+                                    <a href="index.php">Top Sellers</a>
+                                </li>
+                                <li>
+                                    <a href="products.php">Shopping</a>
+                                </li>
+                                <li>
+                                    <a href="about.php">About</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Help</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
+                            <ul class="list-unstyled footer-widget__links">
+                                <li>
+                                    <a href="products.php">New Products</a>
+                                </li>
+                                <li>
+                                    <a href="profile.php">My Account</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">Support</a>
+                                </li>
+                                <li>
+                                    <a href="contact.php">FAQs</a>
+                                </li>
+                            </ul><!-- /.list-unstyled footer-widget__contact -->
+                        </div><!-- /.footer-widget -->
+                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+            <div class="bottom-footer">
+                <div class="container">
+                    <hr>
+                    <div class="inner-container text-center">
+                        <div class="bottom-footer__social">
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
+                        </div><!-- /.bottom-footer__social -->
+                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
+                    </div><!-- /.inner-container -->
+                </div><!-- /.container -->
+            </div><!-- /.bottom-footer -->
+        </footer><!-- /.site-footer -->
 
         <div class="modal" id="address-modal" role="dialog">
         <div class="modal-dialog modal-lg">

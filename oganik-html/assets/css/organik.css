@@ -7794,6 +7794,8 @@ h6 {
     background-color: white;
     justify-content: center;
     padding: 50px;
+    margin-top: 35px;
+    margin-bottom: 37px;
 }
 
 input[type=text], input[type=password] 

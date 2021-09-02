@@ -186,9 +186,9 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 text-center">
-                                    <h2><span>Oragnic</span> <br>
-                                        Food Market</h2>
-                                    <a href="products.php" class=" thm-btn">Order Now</a>
+                                    <h2><span>The</span> <br>
+                                        Grab Groceries</h2>
+                                    <a href="products.php" class=" thm-btn">Shop Now</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
                             </div><!-- /.row -->
@@ -201,9 +201,9 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 text-center">
-                                    <h2><span>Oragnic</span> <br>
-                                        Food Market</h2>
-                                    <a href="products.php" class=" thm-btn">Order Now</a>
+                                    <h2><span>The</span> <br>
+                                        Grab Groceries</h2>
+                                    <a href="about.php" class=" thm-btn">About Us</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
                             </div><!-- /.row -->

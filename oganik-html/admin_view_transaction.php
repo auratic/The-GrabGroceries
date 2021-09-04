@@ -39,6 +39,15 @@
         <script>alert('Something went wrong')</script>";
     }
   }
+
+  $sql_receipt = "SELECT receipt_id FROM cust_receipt";
+  $receipt_array = array();
+
+  if($receipt_result = mysqli_query($link, $sql_receipt)) {
+    while($receipt_row = mysqli_fetch_assoc($receipt_result)) {
+        array_push($receipt_array, $receipt_row["receipt_id"]);
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -306,111 +315,110 @@
                     </div>
                     
                     <?php
-                        $sql = "SELECT * FROM cust_transaction 
-                                        INNER JOIN user ON cust_transaction.user_id = user.id 
-                                        INNER JOIN cust_receipt ON cust_transaction.receipt_id = cust_receipt.receipt_id
-                                        INNER JOIN item ON cust_transaction.item_id = item.id;
-                                        ";
-                        $counter = 0;
+                    
+                        foreach($receipt_array as $x => $x_value) {
 
-                        if ($result = mysqli_query($link, $sql)) {
+                            $display_sql = "SELECT * FROM cust_transaction 
+                                            INNER JOIN user ON cust_transaction.user_id = user.id 
+                                            INNER JOIN cust_receipt ON cust_transaction.receipt_id = cust_receipt.receipt_id
+                                            INNER JOIN item ON cust_transaction.item_id = item.id
+                                            WHERE cust_transaction.receipt_id = '$x_value';
+                                            ";
+                            $counter = 0;
 
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $current_receipt = $row["receipt_id"];
+                            if ($display_result = mysqli_query($link, $display_sql)) {
 
-                                if($counter == 0) {
-                                    $prev_receipt = $current_receipt; 
-                                    $end_receipt = $current_receipt;
-                                }
-                                
-                                if($end_receipt != $current_receipt) {
-                                    $end_receipt = $current_receipt;
-                                    echo '
-                                    </table>
-                                    </div>
-                                    </div>';
-                                }
+                                while ($display_row = mysqli_fetch_assoc($display_result)) {
 
-                                if($current_receipt != $prev_receipt || $counter == 0) {
-                                    $prev_receipt = $current_receipt;
-                                    $counter .= 1; 
-                                    echo '
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <form method="get" action="admin_view_transaction.php">
-                                            <div class="row">
-                                                <input type="" hidden value="'.$row["receipt_id"].'" name="receipt"></input>
-                                                <div class="col-md-2">
-                                                    <h4 class="panel-title">
-                                                        Receipt ID: '.$row["receipt_id"].'
-                                                    </h4>
-                                                </div>
+                                    if($counter == 0) {
+                                        echo '
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <form method="get" action="admin_view_transaction.php">
+                                                <div class="row">
+                                                    <input type="" hidden value="'.$display_row["receipt_id"].'" name="receipt"></input>
+                                                    <div class="col-md-2">
+                                                        <h4 class="panel-title">
+                                                            Receipt ID: '.$display_row["receipt_id"].'
+                                                        </h4>
+                                                    </div>
 
-                                                <div class="col-md-2">
-                                                    <h4>Transaction Date: </h4>
-                                                    <p>'.$row["trans_date"].'</p>
-                                                </div>
+                                                    <div class="col-md-2">
+                                                        <h4>Transaction Date: </h4>
+                                                        <p>'.$display_row["trans_date"].'</p>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-2">
+                                                        <h4>Delivery Date: </h4>
+                                                        <p>'.$display_row["delivery_date"].'</p>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-2">
+                                                        <h4>Receive Date: </h4>
+                                                        <p>'.$display_row["receive_date"].'</p>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-2">
+                                                        <h4>Status: </h4>
+                                                        <select id="status" name="status">
+                                                            <option value="'.$display_row["product_status"].'" selected disabled hidden>'.$display_row["product_status"].'</option>
+                                                            <option value="Not Set">Not set</option>
+                                                            <option value="Preparing">Preparing</option>
+                                                            <option value="Delivering">Delivering</option>
+                                                            <option value="Received">Received</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-2" style="display: flex; flex-direction: column; align-items: flex-end;">
+                                                        <button class="btn btn-default btn-lg" type="submit" style="background-color:azure">Update Status</button>
+                                                    </div>
+                                                </div> 
+                                                </form>
                                                 
-                                                <div class="col-md-2">
-                                                    <h4>Delivery Date: </h4>
-                                                    <p>'.$row["delivery_date"].'</p>
-                                                </div>
-                                                
-                                                <div class="col-md-2">
-                                                    <h4>Receive Date: </h4>
-                                                    <p>'.$row["receive_date"].'</p>
-                                                </div>
-                                                
-                                                <div class="col-md-2">
-                                                    <h4>Status: </h4>
-                                                    <select id="status" name="status">
-                                                        <option value="'.$row["product_status"].'" selected disabled hidden>'.$row["product_status"].'</option>
-                                                        <option value="Not Set">Not set</option>
-                                                        <option value="Preparing">Preparing</option>
-                                                        <option value="Delivering">Delivering</option>
-                                                        <option value="Received">Received</option>
-                                                    </select>
-                                                </div>
+                                                <hr>
 
-                                                <div class="col-md-2" style="display: flex; flex-direction: column; align-items: flex-end;">
-                                                    <button class="btn btn-default btn-lg" type="submit" style="background-color:azure">Update Status</button>
+                                                <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#'.$display_row["receipt_id"].'">
+                                                    <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
                                                 </div>
-                                            </div> 
-                                            </form>
-                                            
-                                            <hr>
-
-                                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#'.$row["receipt_id"].'">
-                                                <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
                                             </div>
-                                        </div>
 
-                                        <div id="'.$row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
-                                            <p>Name: '.$row["firstname"]." ".$row["lastname"].'</p>
-                                            <p>Email: '.$row["email"].'</p>
-                                            <p>Phone: '.$row["phone"].'</p>
-                                            <p>Address: '.$row["address"].'</p>
-                                            <p>Payment Method: Visa ****-****-****-1448</p>
-                                            <p>Payment Made: '.$row["payment_made"].'</p>
-                                            <p>Products Purchased:</p>
-                                            <table class="table table-bordered table-striped table-hover table-condensed">
-                                                <tr>
-                                                    <th>Item ID</th>
-                                                    <th>Item Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Cost Rer Product</th>
-                                                    <th>Total Cost</th>
-                                                </tr>';
+                                            <div id="'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
+                                                <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
+                                                <p>Email: '.$display_row["email"].'</p>
+                                                <p>Phone: '.$display_row["phone"].'</p>
+                                                <p>Address: '.$display_row["address"].'</p>
+                                                <p>Payment Method: Visa ****-****-****-1448</p>
+                                                <p>Payment Made: '.$display_row["payment_made"].'</p>
+                                                <p>Products Purchased:</p>
+                                                <table class="table table-bordered table-striped table-hover table-condensed">
+                                                    <tr>
+                                                        <th>Item ID</th>
+                                                        <th>Item Name</th>
+                                                        <th>Amount</th>
+                                                        <th>Cost Rer Product</th>
+                                                        <th>Total Cost</th>
+                                                    </tr>';
+                                    }
+                                    echo '
+                                        <tr>
+                                            <td>'.$display_row['item_id'].'</td>
+                                            <td>'.$display_row['item'].'</td>
+                                            <td>'.$display_row['amount'].'</td>
+                                            <td>'.$display_row['cost'].'</td>
+                                            <td>'.$display_row['trans_cost'].'</td>
+                                        </tr>
+                                        ';
+                                        
+                                    
+                                    $counter++;
+                                    if($counter == mysqli_num_rows ( $display_result )) {
+                                        echo '
+                                        </table>
+                                        </div>
+                                        </div>';
+                                    }
+                                    
                                 }
-                                echo '
-                                    <tr>
-                                        <td>'.$row['item_id'].'</td>
-                                        <td>'.$row['item'].'</td>
-                                        <td>'.$row['amount'].'</td>
-                                        <td>'.$row['cost'].'</td>
-                                        <td>'.$row['trans_cost'].'</td>
-                                    </tr>
-                                    ';
                             }
                         }
                                     
@@ -430,7 +438,7 @@
                 }
                 console.info(performance.navigation.type);
                 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-                    location.href("admin_view_transaction.php");
+                    location.href = "admin_view_transaction.php";
                 } else {
                     console.info( "This page is not reloaded");
                 }

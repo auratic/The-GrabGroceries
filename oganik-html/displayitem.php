@@ -132,11 +132,8 @@
                         <li>
                             <a href="displayitem.php">Update Item</a>
                         </li>
-                        <li class="dropdown"><a href="news.php">Transactions</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="admin_view_transaction.php">Transactions</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>

@@ -249,6 +249,18 @@ if(isset($_POST["new-pass"])) {
 		.modal {
 			background-color: rgba(0,0,0,0.5);
 		}
+
+		.modal-content {
+			border-radius: 25px;
+		}
+
+		.modal-header {
+			border-radius: 25px 25px 0 0;
+		}
+
+		.modal-footer {
+			border-radius: 0 0 25px 25px;
+		}
     </style>
 </head>
 
@@ -393,34 +405,7 @@ if(isset($_POST["new-pass"])) {
 
                         </form>
                         
-                        <hr><br>
-
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Key in your code</label>
-                                        <input type="text" name="ver-code" id="ver-code" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
-                                        <span class="invalid-feedback"><?php echo $code_err; ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <input type="submit" name="confirm-code" id="verify-btn" class="btn btn-primary" value="Enter">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <p id="verify-status"  style='color:var(--thm-base)'><?php echo $verify_status; ?></p>
-                                </div>
-                            </div>
-
-                        </form>
+                        <hr>
 
                     </div>
                 </div>
@@ -646,16 +631,67 @@ if(isset($_POST["new-pass"])) {
 	</div>
 	<!-- /.search-popup -->
 
+
+	<div class="modal" id="ver-modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+                
+		<!-- Modal content-->
+			<div class="modal-content ver-modal">
+				<div class="modal-header" style="background-color:var(--thm-base)">
+					<h4 class="modal-title">Verify PIN</h4>
+				</div> 
+				<!-- Modal Header-->
+
+				<div class="modal-body">
+					<h5>Email Sent. Check your email to get your PIN</h5>
+	
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+                            
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Key in your code</label>
+                                    <input type="text" name="ver-code" id="ver-code" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
+                                    <span class="invalid-feedback"><?php echo $code_err; ?></span>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="submit" name="confirm-code" id="verify-btn" class="btn btn-primary" value="Enter">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p id="verify-status"  style='color:var(--thm-base)'><?php echo $verify_status; ?></p>
+                            </div>
+                        </div>
+
+                    </form>
+
+				</div><!-- Modal Body-->
+
+				<div class="modal-footer" style="background-color:var(--thm-base)">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div> 
+				<!-- Modal Footer-->
+			</div>
+                
+        </div>
+    </div>
+	<!-- /.modal -->
+
+
 	<div class="modal" id="reset-modal" role="dialog">
         <div class="modal-dialog modal-lg">
                 
 		<!-- Modal content-->
 			<div class="modal-content reset-modal">
 				<div class="modal-header" style="background-color:var(--thm-base)">
-					<!--
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Modal Header</h4>
-					-->
+					<h4 class="modal-title">Reset Password</h4>
 				</div> 
 				<!-- Modal Header-->
 
@@ -733,6 +769,7 @@ if(isset($_POST["new-pass"])) {
 
 		if(sent_status.innerHTML == "Email sent") {
 
+			$('#ver-modal').fadeIn();
 			/*
 			$.ajax({
 				type:"post",
@@ -767,11 +804,6 @@ if(isset($_POST["new-pass"])) {
 
 		if(ver_status.innerHTML == "Correct PIN entered") {
 			$('#reset-modal').fadeIn();
-		}
-
-		function resetComplete () {
-			alert("Password updated");
-  			location.href="login.php";
 		}
 
 		function passReset() {

@@ -244,7 +244,7 @@
                                                             class="fas fa-tachometer-alt"></i> Dashboard</a>
                                                 </li>
                                                 <li>
-                                                    <a href="order.php"><i
+                                                    <a href="view_order.php"><i
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>

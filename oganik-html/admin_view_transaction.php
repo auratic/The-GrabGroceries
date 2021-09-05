@@ -316,21 +316,18 @@
                     
                     <?php
                     
+                    if(count($receipt_array) == 0) {
+                        echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
+                    } else {
                         foreach($receipt_array as $x => $x_value) {
-
-                            $display_sql = "SELECT * FROM cust_transaction 
-                                            INNER JOIN user ON cust_transaction.user_id = user.id 
-                                            INNER JOIN cust_receipt ON cust_transaction.receipt_id = cust_receipt.receipt_id
-                                            INNER JOIN item ON cust_transaction.item_id = item.id
-                                            WHERE cust_transaction.receipt_id = '$x_value';
-                                            ";
-                            $counter = 0;
+                            $display_sql = "SELECT * FROM cust_receipt 
+                            INNER JOIN user ON cust_receipt.user_id = user.id 
+                            WHERE cust_receipt.receipt_id = '$x_value';
+                            ";
 
                             if ($display_result = mysqli_query($link, $display_sql)) {
 
                                 while ($display_row = mysqli_fetch_assoc($display_result)) {
-
-                                    if($counter == 0) {
                                         echo '
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
@@ -398,29 +395,39 @@
                                                         <th>Cost Rer Product</th>
                                                         <th>Total Cost</th>
                                                     </tr>';
-                                    }
-                                    echo '
-                                        <tr>
-                                            <td>'.$display_row['item_id'].'</td>
-                                            <td>'.$display_row['item'].'</td>
-                                            <td>'.$display_row['amount'].'</td>
-                                            <td>'.$display_row['cost'].'</td>
-                                            <td>'.$display_row['trans_cost'].'</td>
-                                        </tr>
-                                        ';
-                                        
-                                    
-                                    $counter++;
-                                    if($counter == mysqli_num_rows ( $display_result )) {
-                                        echo '
-                                        </table>
-                                        </div>
-                                        </div>';
-                                    }
-                                    
                                 }
                             }
+
+                            $trans_sql = "SELECT * FROM cust_transaction
+                                          INNER JOIN item ON cust_transaction.item_id = item.id
+                                          WHERE cust_transaction.receipt_id = '$x_value';";
+                                          
+                            if ($trans_result = mysqli_query($link, $trans_sql)) {
+
+                                while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+
+                                    echo '
+                                        <tr>
+                                            <td>'.$trans_row['item_id'].'</td>
+                                            <td>'.$trans_row['item'].'</td>
+                                            <td>'.$trans_row['amount'].'</td>
+                                            <td>'.$trans_row['cost'].'</td>
+                                            <td>'.$trans_row['trans_cost'].'</td>
+                                        </tr>
+                                        ';
+                                }
+
+                            }
+                                        
+                            echo '
+                            </table>
+                            </div>
+                            </div>';
                         }
+                                    
+                    }
+                            
+                        
                                     
                     ?>
 

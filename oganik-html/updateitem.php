@@ -25,19 +25,19 @@
   if(isset($_GET['id'])){
       $id = $_GET['id'];
       
-      $sql = "SELECT * from item where id = ".$id;
+      $sql = "SELECT * from item where item_id = ".$id;
       $result = mysqli_query($link, $sql);
 
       if (mysqli_num_rows($result) == 1) {
           while($row = mysqli_fetch_assoc($result)) {
-              $id = $row['id'];
+              $id = $row['item_id'];
               $item_name = $row['item'];
               $category = $row['category'];
               $desc = $row['description'];
               $stock = $row['stock'];
-              $img = $row["img"];
+              $img = $row["image"];
               $cost = $row['cost'];
-              $exp_date = $row['expdate'];
+              $exp_date = $row['exp_date'];
           }
 
       } else {
@@ -110,8 +110,8 @@
 
          if($upload_img == true) {
             $sql = "UPDATE item
-                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', img = '$filename', cost = '$cost', expdate = '$exp_date'
-                    WHERE id = '$id'";
+                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', image = '$filename', cost = '$cost', exp_date = '$exp_date'
+                    WHERE item_id = '$id'";
             
             if (move_uploaded_file($tempname, $folder))  {
 
@@ -125,8 +125,8 @@
 
          } else {
             $sql = "UPDATE item
-                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', cost = '$cost', expdate = '$exp_date'
-                    WHERE id = '$id'";
+                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', cost = '$cost', exp_date = '$exp_date'
+                    WHERE item_id = '$id'";
 
          }
 

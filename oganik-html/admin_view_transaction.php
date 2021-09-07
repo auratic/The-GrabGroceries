@@ -48,6 +48,29 @@
         array_push($receipt_array, $receipt_row["receipt_id"]);
     }
   }
+
+  if(isset($_POST["filter"])) {
+
+    unset($receipt_array);
+    $receipt_array = array();
+
+    $search_id = "";
+    $date_from = "";
+    $date_to = "";
+
+    $id_error = $date_from_error = $date_to_error = "";
+
+    if(isset($_POST["search-id"])) {
+        
+    }
+
+    if($id_error == "" && $date_from_error = "" && $date_to_error == "") {
+
+        if($search_id == "" && $date_from == "" && $date_to == "") {
+            $sql_receipt = "SELECT receipt_id FROM cust_receipt";
+        }
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -214,29 +237,31 @@
 
             <div class="signup-form fluid-container">
 
-                <h4 style="margin: 0px 0px 1% 1.5%;">Customer's Transactions</h4>
+                <form action="admin_view_transaction.php" method="post">
+                    <h4 style="margin: 0px 0px 1% 1.5%;">Customer's Transactions</h4>
 
-                <div style="background-color:var(--thm-base); margin:1%; padding:2%; border-radius:25px;">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>Search by Receipt ID</label>
-                            <input type="text"></input>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Minimize View</label><input type="checkbox"></input>
-                            <label>View Details</label><input type="checkbox"></input>
-                        </div>
-                        <div class="col-md-3">
-                            <label>From</label><input type="date"></input>
-                            <br>
-                            <label>To</label><input type="date"></input>
-                        </div>
+                    <div style="background-color:var(--thm-base); margin:1%; padding:2%; border-radius:25px;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Search by Receipt ID</label>
+                                <input type="text" name="search-id"></input>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Minimize View</label><input type="checkbox"></input>
+                                <label>View Details</label><input type="checkbox"></input>
+                            </div>
+                            <div class="col-md-3">
+                                <label>From</label><input type="date" name="date-from"></input>
+                                <br>
+                                <label>To</label><input type="date" name="date-to"></input>
+                            </div>
 
-                        <div class="col-md-3">
-                            <button class="btn btn-default btn-md">Filter</button>
+                            <div class="col-md-3">
+                                <input class="btn btn-default btn-md" value="Filter" name="filter"></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
                 <div class="panel-group" id="accordion">
 
@@ -321,7 +346,7 @@
                     } else {
                         foreach($receipt_array as $x => $x_value) {
                             $display_sql = "SELECT * FROM cust_receipt 
-                            INNER JOIN user ON cust_receipt.user_id = user.id 
+                            INNER JOIN users ON cust_receipt.user_id = user.user_id 
                             WHERE cust_receipt.receipt_id = '$x_value';
                             ";
 

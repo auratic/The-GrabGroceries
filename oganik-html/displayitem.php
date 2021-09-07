@@ -170,16 +170,16 @@
                     while ($row = mysqli_fetch_assoc($result)) {
                       echo '
                         <tr>
-                          <td>'.$row['id'].'</td>
+                          <td>'.$row['item_id'].'</td>
                           <td>'.$row['item'].'</td>
                           <td>'.$row['category'].'</td>
                           <td>'.$row['description'].'</td>
                           <td>'.$row['stock'].'</td>
-                          <td><img src="assets/images/items/'.$row['img'].'" style="width:100%;height:200px;object-fit:contain;"></td>
+                          <td><img src="assets/images/items/'.$row['image'].'" style="width:100%;height:200px;object-fit:contain;"></td>
                           <td>RM'.$row['cost'].'</td>
-                          <td>'.$row['expdate'].'</td>
+                          <td>'.$row['exp_date'].'</td>
                           <td>
-                            <a href="updateitem.php?id='.$row['id'].'">
+                            <a href="updateitem.php?id='.$row['item_id'].'">
                               <button class="btn btn-info btn-sm">Edit</button>
                             </a>
                           </td>

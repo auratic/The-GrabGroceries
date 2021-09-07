@@ -39,9 +39,9 @@
 
     if(empty($ver_err)) {
         $sql = "
-            UPDATE user
+            UPDATE users
             SET verified = 'true'
-            WHERE id = " .$_SESSION["userid"];
+            WHERE user_id = '".$_SESSION["userid"]."'";
         
         if(mysqli_query($link, $sql)){
             $_SESSION["verified"] = "true";
@@ -182,6 +182,7 @@
 </head>
 
 <body>
+    <?php echo "<div>". $_SESSION["userid"]."</div>"; ?>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>

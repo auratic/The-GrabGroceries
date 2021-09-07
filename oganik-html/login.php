@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) == 1) {
@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             while($row = mysqli_fetch_assoc($result)) {
                 $_SESSION["mode"] = $row["mode"];
                 $_SESSION["lname"] = $row["lastname"];
-                $_SESSION["userid"] = $row["id"];
+                $_SESSION["userid"] = $row["user_id"];
                 $_SESSION["verified"] = $row["verified"];
             }
 

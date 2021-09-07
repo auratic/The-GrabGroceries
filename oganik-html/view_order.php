@@ -259,7 +259,7 @@
                                                                     foreach($receipt_array as $x => $x_value) {
 
                                                                         $display_sql = "SELECT * FROM cust_receipt 
-                                                                                        INNER JOIN user ON cust_receipt.user_id = user.id 
+                                                                                        INNER JOIN users ON cust_receipt.user_id = users.user_id 
                                                                                         WHERE cust_receipt.receipt_id = '$x_value';
                                                                                         ";
 

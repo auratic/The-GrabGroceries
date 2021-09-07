@@ -20,6 +20,7 @@ Set default <select> element - https://stackoverflow.com/questions/3518002/how-c
 Bootstrap / CSS
 //////////////////////////////////////////
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
+Collapses - https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
 
 
 //////////////////////////////////////////

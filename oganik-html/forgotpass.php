@@ -54,13 +54,13 @@ if(isset($_POST["send-email"])) {
     }
 
 	// Prepare a select statement
-	$sql = "SELECT * FROM user WHERE email = '$email'";
+	$sql = "SELECT * FROM users WHERE email = '$email'";
 	$result = mysqli_query($link, $sql);
 
 	if (mysqli_num_rows($result) == 1) {
 		
 		while($row = mysqli_fetch_assoc($result)) {
-			$_SESSION["resetid"] = $row["id"];
+			$_SESSION["resetid"] = $row["user_id"];
 			$_SESSION["resetemail"] = $row["email"];
 		}
 	} else {
@@ -158,9 +158,9 @@ if(isset($_POST["confirm-code"])) {
 
 if(isset($_POST["new-pass"])) {
 	
-	$sql = "UPDATE user 
+	$sql = "UPDATE users
 			SET password = '".$_POST['new-pass']."' 
-			WHERE id = ".$_SESSION["resetid"];
+			WHERE user_id = ".$_SESSION["resetid"];
 	
 	if(mysqli_query($link, $sql)) {
 		echo "

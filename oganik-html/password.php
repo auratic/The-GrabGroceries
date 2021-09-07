@@ -13,11 +13,11 @@
 
     if (count($_POST) > 0)
     {
-        $result = mysqli_query($link, "SELECT * from user WHERE id='" . $_SESSION["userid"] . "'");
+        $result = mysqli_query($link, "SELECT * from users WHERE user_id=" . $_SESSION["userid"]);
         $row = mysqli_fetch_array($result);
         if ($_POST["currentPassword"] == $row["password"]) 
         {
-            mysqli_query($link, "UPDATE user set password='" . $_POST["newPassword"] . "' WHERE id='" . $_SESSION["userid"] . "'");
+            mysqli_query($link, "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"]);
             $message = "Password Changed";
         } else
             $message = "Current Password is not correct";

@@ -81,7 +81,7 @@
          $stock_err == "" &&
          $exp_err == "") {
 
-         $sql = "INSERT INTO item (item, category, description, stock, img, cost, expdate)
+         $sql = "INSERT INTO item (item, category, description, stock, image, cost, exp_date)
                  VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
 
                   

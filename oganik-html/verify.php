@@ -182,7 +182,6 @@
 </head>
 
 <body>
-    <?php echo "<div>". $_SESSION["userid"]."</div>"; ?>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>

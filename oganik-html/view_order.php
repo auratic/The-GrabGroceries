@@ -260,7 +260,7 @@
 
                                                                         $display_sql = "SELECT * FROM cust_receipt 
                                                                                         INNER JOIN users ON cust_receipt.user_id = users.user_id 
-                                                                                        WHERE cust_receipt.receipt_id = '$x_value';
+                                                                                        WHERE cust_receipt.receipt_id = $x_value;
                                                                                         ";
 
                                                                         if ($display_result = mysqli_query($link, $display_sql)) {
@@ -281,7 +281,7 @@
 
                                                                                                 <div class="col-md-2">
                                                                                                     <h5>Transaction Date: </h5>
-                                                                                                    <p>'.$display_row["trans_date"].'</p>
+                                                                                                    <p>'.$display_row["receipt_date"].'</p>
                                                                                                 </div>
                                                                                                         
                                                                                                 <div class="col-md-2">
@@ -302,18 +302,18 @@
                                                                                                     
                                                                                             <hr>
 
-                                                                                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#'.$display_row["receipt_id"].'">
+                                                                                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#R'.$display_row["receipt_id"].'">
                                                                                                 <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        <div id="'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
+                                                                                        <div id="R'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
                                                                                             <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
                                                                                             <p>Email: '.$display_row["email"].'</p>
                                                                                             <p>Phone: '.$display_row["phone"].'</p>
-                                                                                            <p>Address: '.$display_row["address"].'</p>
-                                                                                            <p>Payment Method: Visa ****-****-****-1448</p>
-                                                                                            <p>Payment Made: '.$display_row["payment_made"].'</p>
+                                                                                            <p>Address: '.$display_row["address1"].'</p>
+                                                                                            <p>Payment Method: '.$display_row["payment_method"].'</p>
+                                                                                            <p>Payment Made: '.$display_row["payment_cost"].'</p>
                                                                                             <p>Products Purchased:</p>
                                                                                             <table class="table table-bordered table-striped table-hover table-condensed">
                                                                                                 <tr>
@@ -327,7 +327,7 @@
                                                                         }
 
                                                                         $trans_sql = "SELECT * FROM cust_transaction
-                                                                                      INNER JOIN item ON cust_transaction.item_id = item.id
+                                                                                      INNER JOIN item ON cust_transaction.item_id = item.item_id
                                                                                       WHERE cust_transaction.receipt_id = '$x_value';";
                                                                                             
                                                                         if ($trans_result = mysqli_query($link, $trans_sql)) {
@@ -340,7 +340,7 @@
                                                                                         <td>'.$trans_row['item'].'</td>
                                                                                         <td>'.$trans_row['amount'].'</td>
                                                                                         <td>'.$trans_row['cost'].'</td>
-                                                                                        <td>'.$trans_row['trans_cost'].'</td>
+                                                                                        <td>'.$trans_row['total_cost'].'</td>
                                                                                     </tr>
                                                                                     ';
                                                                             }

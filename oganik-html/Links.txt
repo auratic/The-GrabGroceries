@@ -8,11 +8,19 @@ Uploading files using POST - https://www.w3schools.com/tags/att_form_enctype.asp
 Setting up mail server with XAMPP- https://www.youtube.com/watch?v=3mCRD4-tU2o
 Randomized string - https://www.geeksforgeeks.org/generating-random-string-using-php/
 Email verification - https://code.tutsplus.com/tutorials/how-to-implement-email-verification-for-new-members--net-3824
+Set Date and Timezone - https://stackoverflow.com/questions/19583592/how-to-i-can-show-time-with-php-code-with-malaysia-timezone
+
+//////////////////////////////////////////
+HTML
+//////////////////////////////////////////
+
+Set default <select> element - https://stackoverflow.com/questions/3518002/how-can-i-set-the-default-value-for-an-html-select-element
 
 //////////////////////////////////////////
 Bootstrap / CSS
 //////////////////////////////////////////
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
+Collapses - https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
 
 
 //////////////////////////////////////////

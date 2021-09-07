@@ -39,9 +39,9 @@
 
     if(empty($ver_err)) {
         $sql = "
-            UPDATE user
+            UPDATE users
             SET verified = 'true'
-            WHERE id = " .$_SESSION["userid"];
+            WHERE user_id = '".$_SESSION["userid"]."'";
         
         if(mysqli_query($link, $sql)){
             $_SESSION["verified"] = "true";

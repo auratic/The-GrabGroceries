@@ -182,7 +182,7 @@
                                                             class="fas fa-tachometer-alt"></i> Dashboard</a>
                                                 </li>
                                                 <li>
-                                                    <a href="order.php"><i
+                                                    <a href="view_order.php"><i
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
@@ -227,7 +227,7 @@
                                                                     <div class="col-md-5">
                                                                         <div class="form-box__single-group">
                                                                         <?php 
-                                                                            $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                                            $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
                                                                             $result = mysqli_query($link, $sql);
                                                                     
                                                                             while($row=mysqli_fetch_assoc($result)) 

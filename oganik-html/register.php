@@ -72,7 +72,7 @@
     } else {
         // Prepare a select statement
 
-        $sql = "SELECT id FROM user WHERE email = '" . test_input($_POST["email"]) . "'";
+        $sql = "SELECT user_id FROM users WHERE email = '" . test_input($_POST["email"]) . "'";
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -113,7 +113,7 @@
     if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
         
         // Prepare an insert statement
-        $sql = "INSERT INTO user (email, password, mode, firstname, lastname) VALUES ('$email', '$password', 'customer', '$fname', '$lname');";
+        $sql = "INSERT INTO users (email, password, mode, firstname, lastname) VALUES ('$email', '$password', 'customer', '$fname', '$lname');";
          
         
         if (mysqli_query($link, $sql)) {

@@ -227,7 +227,7 @@
                                                         class="fas fa-tachometer-alt"></i> Dashboard</a>
                                                 </li>
                                                 <li>
-                                                    <a href="order.php"><i
+                                                    <a href="view_order.php"><i
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
@@ -267,14 +267,14 @@
                                                     <div class="account-address m-t-30">
                                                         <h6 class="name">
                                                             <?php 
-                                                                $sql = "SELECT * FROM user WHERE id = '".$_SESSION['userid']."'";
+                                                                $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
                                                                 $result = mysqli_query($link, $sql);
                                                         
                                                                 while($row=mysqli_fetch_assoc($result)) 
                                                                 {
                                                                     $fname = $row['firstname'];
                                                                     $lname = $row['lastname'];
-                                                                    $address = $row['address'];
+                                                                    $address = $row['address1'];
                                                                     $phone = $row['phone'];
                                                                 }
                                                             ?>

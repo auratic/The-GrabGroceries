@@ -81,7 +81,7 @@
          $stock_err == "" &&
          $exp_err == "") {
 
-         $sql = "INSERT INTO item (item, category, description, stock, img, cost, expdate)
+         $sql = "INSERT INTO item (item, category, description, stock, image, cost, exp_date)
                  VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
 
                   
@@ -234,11 +234,8 @@
                         <li>
                             <a href="displayitem.php">Update Item</a>
                         </li>
-                        <li class="dropdown"><a href="news.php">Transactions</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="admin_view_transaction.php">Transactions</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>

@@ -153,8 +153,13 @@
             border-radius: 0 0 25px 25px;
         }
 
-        #edit-address, #edit-address1{
+        #edit-address, #edit-address1, #edit-address2, #edit-address3, #edit-address4, #edit-address5{
             cursor: pointer;
+        }
+
+        .div1
+        {
+            border: 2px solid var(--thm-base);
         }
     </style>
 
@@ -314,7 +319,7 @@
                                             <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
                                                 <div class="my-account-address account-wrapper">
                                                     <h4 class="account-title">Address</h4>
-                                                    <div class="account-address m-t-30">
+                                                    <div class="account-address m-t-30 div1">
                                                         <?php 
                                                             $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
                                                             $result = mysqli_query($link, $sql);
@@ -329,20 +334,20 @@
 
                                                             echo'
                                                                 <div class="row">
-                                                                    <div class="col-4" style="margin-top: 5%;">
-                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white;">Default</span></p>
-                                                                        <p>Address  : '.$default_address.'</p>
-                                                                        <p>Contact  : '.$default_phone.'</p>
-                                                                        <a class="box-btn m-t-25 " id="edit-address0" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
+                                                                    <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
+                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span></p>
+                                                                        <p>Address  : <span style="font-style:italic;">'.$default_address.'</span> </p>
+                                                                        <p>Contact  : <span style="font-style:italic;">'.$default_phone.'</span></p>
+                                                                        <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
                                                                     </div>';
                                                                     $counterr = 0;
                                                                     for($x=0; $x<5; $x++) {
                                                                         $counterr++;
                                                                         echo'
-                                                                            <div class="col-4" style="margin-top: 5%;">
+                                                                            <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                                 <p>Full name: <strong>  '.$name[$x].'</strong></p>
-                                                                                <p>Address  : '.$address[$x].'</p>
-                                                                                <p>Contact  : '.$phone[$x].'</p>
+                                                                                <p>Address  : <span style="font-style:italic;">'.$address[$x].'</span></p>
+                                                                                <p>Contact  : <span style="font-style:italic;">'.$phone[$x].'</span></p>
                                                                                 <a class="box-btn m-t-25 " id="edit-address'.$counterr.'" onclick="return edit('.$counterr.')" ><i class="far fa-edit"></i>Edit</a>
                                                                             </div>';
                                                                     }

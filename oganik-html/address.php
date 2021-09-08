@@ -19,13 +19,24 @@
 
    if(isset($_POST["details"])) {
         
-        $sql = "
-        UPDATE users
-        SET 
-        address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
-        phone".$_POST["no"]."= '".$_POST["phone"]."', 
-        name".$_POST["no"]." = '".$_POST["name"]."'
-        WHERE user_id = ".$_SESSION["userid"];
+
+        if($_POST["no"] == 0) {
+            $sql = "
+            UPDATE users
+            SET 
+            address = '".ucwords($_POST['address'])."', 
+            phone= '".$_POST["phone"]."'
+            WHERE user_id = ".$_SESSION["userid"];
+
+        } else {
+            $sql = "
+                UPDATE cust_address
+                SET 
+                address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
+                phone".$_POST["no"]."= '".$_POST["phone"]."', 
+                name".$_POST["no"]." = '".$_POST["name"]."'
+                WHERE user_id = ".$_SESSION["userid"];
+        }
 
         if(mysqli_query($link, $sql)) {
             echo "
@@ -322,11 +333,10 @@
                                                                         <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white;">Default</span></p>
                                                                         <p>Address  : '.$default_address.'</p>
                                                                         <p>Contact  : '.$default_phone.'</p>
-                                                                        <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i>Edit</a>
+                                                                        <a class="box-btn m-t-25 " id="edit-address0" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
                                                                     </div>';
                                                                     $counterr = 0;
-                                                                    for($x=0; $x<5; $x++)
-                                                                    {
+                                                                    for($x=0; $x<5; $x++) {
                                                                         $counterr++;
                                                                         echo'
                                                                             <div class="col-4" style="margin-top: 5%;">
@@ -450,10 +460,76 @@
         </footer><!-- /.site-footer -->
 
         <?php
+            echo'
+                <div class="modal" id="address-modal0" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:var(--thm-base)">
+                                <h4 class="modal-title">Edit Details</h4>
+                                <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                            </div> 
+                            <!-- Modal Header-->
+
+                            <div class="modal-body">
+                            
+                                <form> 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="" name="name0" id="name0" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$fname.' '.$lname.'" disabled>
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>    
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input type="" name="address0" id="address0" class="form-control '.((!empty($code_err)) ? "is-invalid" : '').'" value="'.$default_address.'">
+                                                <span class="new-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="" name="phone0" id="phone0" class="form-control '.((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_phone.'">
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress(0);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!-- Modal Body-->
+
+                            <div class="modal-footer" style="background-color:var(--thm-base)">
+                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(0)">Close</button>
+                            </div> 
+                            <!-- Modal Footer-->
+                        </div>
+                    </div>
+                        
+                </div>
+            ';
         $counter = 0;
-        for($x=0; $x<5; $x++)
-        {
+        for($x=0; $x<5; $x++) {
             $counter++;
+
             echo'
                 <div class="modal" id="address-modal'.$counter.'" role="dialog">
                     <div class="modal-dialog modal-lg">
@@ -473,7 +549,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : '' .'" value="'.$name.' ">
+                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].' ">
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -483,7 +559,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : ''.'" value="'.$address .'">
+                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($code_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'">
                                                 <span class="new-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -493,7 +569,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : '' .'" value="'.$phone.' ">
+                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].' ">
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -508,13 +584,13 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <!-- Modal Body-->
+                            <!-- Modal Body-->
 
-                        <div class="modal-footer" style="background-color:var(--thm-base)">
-                            <button type="button" class="btn btn-default" id="close" style="background-color: azure;">Close</button>
-                        </div> 
-                        <!-- Modal Footer-->
+                            <div class="modal-footer" style="background-color:var(--thm-base)">
+                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal('.$counter.')">Close</button>
+                            </div> 
+                            <!-- Modal Footer-->
+                        </div>
                     </div>
                 </div>';
         }
@@ -531,13 +607,6 @@
     <script src="assets/js/organik.js"></script>
 
     <script>
-        document.getElementById("edit-address").onclick = () => {
-			$('#address-modal').fadeIn();
-        }
-
-        document.querySelector("#close").onclick = () => {
-			$('#address-modal').fadeOut();
-        }
 
         function updateAddress(counter) {
             var address = document.getElementById("address"+counter).value;
@@ -565,10 +634,15 @@
             return false;
         }
 
-        function edit(counterr)
+        function edit(counter)
         {
-            console.log(counterr);
-			$('#address-modal'+counterr).fadeIn();
+			$('#address-modal'+counter).fadeIn();
+            return false;
+        }
+
+        function closeModal(counter) {
+
+			$('#address-modal'+counter).fadeOut();
             return false;
         }
 

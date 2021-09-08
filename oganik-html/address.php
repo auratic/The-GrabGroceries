@@ -458,7 +458,7 @@
                 <div class="modal" id="address-modal'.$counter.'" role="dialog">
                     <div class="modal-dialog modal-lg">
                         
-                    <!-- Modal content-->
+                        <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
                                 <h4 class="modal-title">Edit Details</h4>
@@ -507,8 +507,8 @@
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
+                        </div>
                         <!-- Modal Body-->
 
                         <div class="modal-footer" style="background-color:var(--thm-base)">
@@ -516,7 +516,6 @@
                         </div> 
                         <!-- Modal Footer-->
                     </div>
-                        
                 </div>';
         }
         ?>

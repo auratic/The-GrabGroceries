@@ -184,7 +184,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="#">
+                        <a href="login.php">
                             <i class="organik-icon-user"></i>
                                 <?php 
                                 if(isset($_SESSION["lname"])) { 

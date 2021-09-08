@@ -88,7 +88,8 @@
             text-decoration: none;
             padding: 5px 15px;
             margin-top: 10px;
-            margin-left: 195px;
+            outline: none; 
+            border: none;
         }
     </style>
 
@@ -304,7 +305,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td colspan="2"><input type="submit" name="submit"
-                                                                            value="Submit" class="btnSubmit" ></td>
+                                                                            value="Submit" class="btnSubmit"></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>

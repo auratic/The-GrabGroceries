@@ -11,13 +11,20 @@
 
    require "config.php";
    
-   $fname = $lname = $address = $phone = "";
+   $fname = $lname = $default_address = $default_phone ="";
+   $name = array();
+   $address= array();
+   $phone= array();
+
 
    if(isset($_POST["details"])) {
         
         $sql = "
-        UPDATE users 
-        SET address1 = '".ucwords($_POST['address'])."', phone = '".$_POST["phone"]."'
+        UPDATE users
+        SET 
+        address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
+        phone".$_POST["no"]."= '".$_POST["phone"]."', 
+        name".$_POST["no"]." = '".$_POST["name"]."'
         WHERE user_id = ".$_SESSION["userid"];
 
         if(mysqli_query($link, $sql)) {
@@ -31,6 +38,17 @@
             <script>
                 alert('Something went wrong, please try again');
             </script>";
+        }
+    }
+
+    $sql = "SELECT * FROM cust_address where user_id = ".$_SESSION["userid"];
+    if($result = mysqli_query($link, $sql))
+    {
+        while($row=mysqli_fetch_assoc($result))
+        {
+            array_push($name,    $row['name1']   , $row['name2']   , $row['name3']   , $row['name4']   , $row['name5']);
+            array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
+            array_push($phone,   $row['phone1']  , $row['phone2']  , $row['phone3']  , $row['phone4']  , $row['phone5']);
         }
     }
 ?>
@@ -67,6 +85,24 @@
     <link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
     <link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
     <link rel="stylesheet" type="assets/css" href="css/organik.css">
+
+    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
+    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
+    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
+    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
+    <script src="assets/vendors/odometer/odometer.min.js"></script>
+    <script src="assets/vendors/swiper/swiper.min.js"></script>
+    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
+    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
+    <script src="assets/vendors/wow/wow.js"></script>
+    <script src="assets/vendors/isotope/isotope.js"></script>
+    <script src="assets/vendors/countdown/countdown.min.js"></script>
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
@@ -106,10 +142,13 @@
             border-radius: 0 0 25px 25px;
         }
 
-        #edit-address {
+        #edit-address, #edit-address1{
             cursor: pointer;
         }
     </style>
+
+    
+
 </head>
 
 <body>
@@ -265,24 +304,41 @@
                                                 <div class="my-account-address account-wrapper">
                                                     <h4 class="account-title">Address</h4>
                                                     <div class="account-address m-t-30">
-                                                        <h6 class="name">
-                                                            <?php 
-                                                                $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
-                                                                $result = mysqli_query($link, $sql);
-                                                        
-                                                                while($row=mysqli_fetch_assoc($result)) 
-                                                                {
-                                                                    $fname = $row['firstname'];
-                                                                    $lname = $row['lastname'];
-                                                                    $address = $row['address1'];
-                                                                    $phone = $row['phone'];
-                                                                }
-                                                            ?>
-                                                        </h6>
-                                                        <p><?php echo "<strong>  ".$fname." ".$lname."</strong>"?></p>
-                                                        <p><?php echo $address?></p>
-                                                        <p>Contact: <?php echo $phone?></p>
-                                                        <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i> Edit</a>
+                                                        <?php 
+                                                            $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
+                                                            $result = mysqli_query($link, $sql);
+                                                    
+                                                            while($row=mysqli_fetch_assoc($result)) 
+                                                            {
+                                                                $fname = $row['firstname'];
+                                                                $lname = $row['lastname'];
+                                                                $default_address = $row['address'];
+                                                                $default_phone = $row['phone'];
+                                                            }
+
+                                                            echo'
+                                                                <div class="row">
+                                                                    <div class="col-4" style="margin-top: 5%;">
+                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white;">Default</span></p>
+                                                                        <p>Address  : '.$default_address.'</p>
+                                                                        <p>Contact  : '.$default_phone.'</p>
+                                                                        <a class="box-btn m-t-25 " id="edit-address"><i class="far fa-edit"></i>Edit</a>
+                                                                    </div>';
+                                                                    $counterr = 0;
+                                                                    for($x=0; $x<5; $x++)
+                                                                    {
+                                                                        $counterr++;
+                                                                        echo'
+                                                                            <div class="col-4" style="margin-top: 5%;">
+                                                                                <p>Full name: <strong>  '.$name[$x].'</strong></p>
+                                                                                <p>Address  : '.$address[$x].'</p>
+                                                                                <p>Contact  : '.$phone[$x].'</p>
+                                                                                <a class="box-btn m-t-25 " id="edit-address'.$counterr.'" onclick="return edit('.$counterr.')" ><i class="far fa-edit"></i>Edit</a>
+                                                                            </div>';
+                                                                    }
+
+                                                                    echo"</div>";
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -393,83 +449,85 @@
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
 
-        <div class="modal" id="address-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-                
-		<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" style="background-color:var(--thm-base)">
-					<h4 class="modal-title">Edit Details</h4>
-					<!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
-				</div> 
-				<!-- Modal Header-->
+        <?php
+        $counter = 0;
+        for($x=0; $x<5; $x++)
+        {
+            $counter++;
+            echo'
+                <div class="modal" id="address-modal'.$counter.'" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        
+                    <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:var(--thm-base)">
+                                <h4 class="modal-title">Edit Details</h4>
+                                <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                            </div> 
+                            <!-- Modal Header-->
 
-				<div class="modal-body">
-				
-					<form> 
-								
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Address</label>
-									<input type="" name="address" id="address" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
-									<span class="new-pass-err" style="color:crimson"></span>
-								</div>
-							</div>
-						</div>
-								
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Phone</label>
-									<input type="" name="phone" id="phone" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone; ?>">
-									<span class="con-pass-err" style="color:crimson"></span>
-								</div>
-							</div>
-						</div>
+                            <div class="modal-body">
+                            
+                                <form> 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : '' .'" value="'.$name.' ">
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>    
 
-						<div class="row">
-							<div class="col-md-2">
-								<div class="form-group">
-									<input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress();">
-								</div>
-							</div>
-						</div>
-                    </form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : ''.'" value="'.$address .'">
+                                                <span class="new-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.(!empty($code_err)) ? "is-invalid" : '' .'" value="'.$phone.' ">
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
 
-				</div>
-				<!-- Modal Body-->
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress('.$counter.');">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
 
-				<div class="modal-footer" style="background-color:var(--thm-base)">
-                    <button type="button" class="btn btn-default" id="close" style="background-color: azure;">Close</button>
-				</div> 
-				<!-- Modal Footer-->
-			</div>
-                
-        </div>
+                            </div>
+                        <!-- Modal Body-->
+
+                        <div class="modal-footer" style="background-color:var(--thm-base)">
+                            <button type="button" class="btn btn-default" id="close" style="background-color: azure;">Close</button>
+                        </div> 
+                        <!-- Modal Footer-->
+                    </div>
+                        
+                </div>';
+        }
+        ?>
+
     </div>
     <!-- /.search-popup -->
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
 
-    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
-    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
-    <script src="assets/vendors/odometer/odometer.min.js"></script>
-    <script src="assets/vendors/swiper/swiper.min.js"></script>
-    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
-    <script src="assets/vendors/wow/wow.js"></script>
-    <script src="assets/vendors/isotope/isotope.js"></script>
-    <script src="assets/vendors/countdown/countdown.min.js"></script>
+    
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
 
@@ -482,16 +540,19 @@
 			$('#address-modal').fadeOut();
         }
 
-        function updateAddress() {
-            var address = document.getElementById("address").value;
-            var phone = document.getElementById("phone").value;
+        function updateAddress(counter) {
+            var address = document.getElementById("address"+counter).value;
+            var phone = document.getElementById("phone"+counter).value;
+            var name = document.getElementById("name"+counter).value;
 
-            if(address != "" && phone != "") {
+            if(address != "" && phone != "" && name != "") {
                 $.ajax({
                     type: "post",
                     url: "address.php",
                     data: {  
                         'details': true,
+                        'no' : counter,
+                        'name' : name,
                         'address': address,
                         'phone': phone
                     },
@@ -504,7 +565,18 @@
             }
             return false;
         }
+
+        function edit(counterr)
+        {
+            console.log(counterr);
+			$('#address-modal'+counterr).fadeIn();
+            return false;
+        }
+
     </script>
+
+    
+
 </body>
 
 </html>

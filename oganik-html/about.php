@@ -61,9 +61,9 @@
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
@@ -307,62 +307,47 @@
                     <h3>Meet the Team</h3>
                 </div><!-- /.block-title -->
                 <div class="row">
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-sm-4">
                         <div class="team-card">
                             <div class="team-card__image">
                                 <img src="assets/images/team/team-1-1.png" alt="">
                             </div><!-- /.team-card__image -->
                             <div class="team-card__content">
-                                <h3>Ray Luna</h3>
+                                <h3>Liyu Guang Jie</h3>
                                 <div class="team-card__social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://facebook.com/"  target="_blank"><i class="fab fa-facebook-square"></i></a>
+                                    <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
                                 </div><!-- /.team-card__social -->
                             </div><!-- /.team-card__content -->
                         </div><!-- /.team-card -->
                     </div><!-- /.col-md-6 col-lg-3 -->
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-sm-4">
                         <div class="team-card">
                             <div class="team-card__image">
                                 <img src="assets/images/team/team-1-2.png" alt="">
                             </div><!-- /.team-card__image -->
                             <div class="team-card__content">
-                                <h3>Ora McLaughlin</h3>
+                                <h3>Ley Chin Chong</h3>
                                 <div class="team-card__social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://twitter.com/"  target="_blank"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://facebook.com/"  target="_blank"><i class="fab fa-facebook-square"></i></a>
+                                    <a href="https://instagram.com/"  target="_blank"><i class="fab fa-instagram"></i></a>
                                 </div><!-- /.team-card__social -->
                             </div><!-- /.team-card__content -->
                         </div><!-- /.team-card -->
                     </div><!-- /.col-md-6 col-lg-3 -->
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-sm-4">
                         <div class="team-card">
                             <div class="team-card__image">
                                 <img src="assets/images/team/team-1-3.png" alt="">
                             </div><!-- /.team-card__image -->
                             <div class="team-card__content">
-                                <h3>Peter Ramsey</h3>
+                                <h3>Chan, Mingwai</h3>
                                 <div class="team-card__social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div><!-- /.team-card__social -->
-                            </div><!-- /.team-card__content -->
-                        </div><!-- /.team-card -->
-                    </div><!-- /.col-md-6 col-lg-3 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="team-card">
-                            <div class="team-card__image">
-                                <img src="assets/images/team/team-1-4.png" alt="">
-                            </div><!-- /.team-card__image -->
-                            <div class="team-card__content">
-                                <h3>Eric Miller</h3>
-                                <div class="team-card__social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                                    <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
                                 </div><!-- /.team-card__social -->
                             </div><!-- /.team-card__content -->
                         </div><!-- /.team-card -->

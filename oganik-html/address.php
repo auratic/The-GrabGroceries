@@ -16,9 +16,9 @@
    if(isset($_POST["details"])) {
         
         $sql = "
-        UPDATE user 
-        SET address = '".ucwords($_POST['address'])."', phone = '".$_POST["phone"]."'
-        WHERE id = ".$_SESSION["userid"];
+        UPDATE users 
+        SET address1 = '".ucwords($_POST['address'])."', phone = '".$_POST["phone"]."'
+        WHERE user_id = ".$_SESSION["userid"];
 
         if(mysqli_query($link, $sql)) {
             echo "

@@ -472,7 +472,7 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title">Edit Details</h4>
+                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->
@@ -542,7 +542,7 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title">Edit Details</h4>
+                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->

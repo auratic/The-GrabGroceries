@@ -227,7 +227,7 @@
                                         <div class="col-md-6 col-lg-4">
                                             <div class="product-card">
                                                 <div class="product-card__image">
-                                                    <img src="assets/images/items/'.$row['img'].'" alt="">
+                                                    <img src="assets/images/items/'.$row['image'].'" alt="">
                                                     <div class="product-card__image-content">
                                                         <a href="#"><i class="organik-icon-heart"></i></a>
                                                         <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>

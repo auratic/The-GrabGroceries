@@ -15,6 +15,7 @@
    $name = array();
    $address= array();
    $phone= array();
+   $email = array();
 
 
    if(isset($_POST["details"])) {
@@ -34,7 +35,8 @@
                 SET 
                 address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
                 phone".$_POST["no"]."= '".$_POST["phone"]."', 
-                name".$_POST["no"]." = '".$_POST["name"]."'
+                name".$_POST["no"]." = '".$_POST["name"]."',
+                email".$_POST["no"]." = '".$_POST["email"]."'
                 WHERE user_id = ".$_SESSION["userid"];
         }
 
@@ -60,6 +62,7 @@
             array_push($name,    $row['name1']   , $row['name2']   , $row['name3']   , $row['name4']   , $row['name5']);
             array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
             array_push($phone,   $row['phone1']  , $row['phone2']  , $row['phone3']  , $row['phone4']  , $row['phone5']);
+            array_push($email,   $row['email1']  , $row['email2']  , $row['email3']  , $row['email4']  , $row['email5']);
         }
     }
 ?>
@@ -330,12 +333,14 @@
                                                                 $lname = $row['lastname'];
                                                                 $default_address = $row['address'];
                                                                 $default_phone = $row['phone'];
+                                                                $default_email = $row['email'];
                                                             }
 
                                                             echo'
                                                                 <div class="row">
                                                                     <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                         <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span></p>
+                                                                        <p>Email    : '.$default_email.'</span></p>
                                                                         <p>Address  : <span style="font-style:italic;">'.$default_address.'</span> </p>
                                                                         <p>Contact  : <span style="font-style:italic;">'.$default_phone.'</span></p>
                                                                         <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
@@ -346,6 +351,7 @@
                                                                         echo'
                                                                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                                 <p>Full name: <strong>  '.$name[$x].'</strong></p>
+                                                                                <p>Email    : '.$email[$x].'</span></p>
                                                                                 <p>Address  : <span style="font-style:italic;">'.$address[$x].'</span></p>
                                                                                 <p>Contact  : <span style="font-style:italic;">'.$phone[$x].'</span></p>
                                                                                 <a class="box-btn m-t-25 " id="edit-address'.$counterr.'" onclick="return edit('.$counterr.')" ><i class="far fa-edit"></i>Edit</a>
@@ -488,7 +494,17 @@
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div> 
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="" name="email0" id="email0" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_email.'" disabled>
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -558,7 +574,17 @@
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div>  
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].' ">
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>  
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -617,8 +643,9 @@
             var address = document.getElementById("address"+counter).value;
             var phone = document.getElementById("phone"+counter).value;
             var name = document.getElementById("name"+counter).value;
+            var email = document.getElementById("email"+counter).value;
 
-            if(address != "" && phone != "" && name != "") {
+            if(address != "" && phone != "" && name != "" && email != "") {
                 $.ajax({
                     type: "post",
                     url: "address.php",
@@ -627,7 +654,8 @@
                         'no' : counter,
                         'name' : name,
                         'address': address,
-                        'phone': phone
+                        'phone': phone,
+                        'email': email
                     },
                     cache: false,
                     success: function (html) {

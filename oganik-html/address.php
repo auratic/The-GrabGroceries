@@ -15,6 +15,7 @@
    $name = array();
    $address= array();
    $phone= array();
+   $email = array();
 
 
    if(isset($_POST["details"])) {
@@ -34,7 +35,8 @@
                 SET 
                 address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
                 phone".$_POST["no"]."= '".$_POST["phone"]."', 
-                name".$_POST["no"]." = '".$_POST["name"]."'
+                name".$_POST["no"]." = '".$_POST["name"]."',
+                email".$_POST["no"]." = '".$_POST["email"]."'
                 WHERE user_id = ".$_SESSION["userid"];
         }
 
@@ -60,6 +62,7 @@
             array_push($name,    $row['name1']   , $row['name2']   , $row['name3']   , $row['name4']   , $row['name5']);
             array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
             array_push($phone,   $row['phone1']  , $row['phone2']  , $row['phone3']  , $row['phone4']  , $row['phone5']);
+            array_push($email,   $row['email1']  , $row['email2']  , $row['email3']  , $row['email4']  , $row['email5']);
         }
     }
 ?>
@@ -153,8 +156,13 @@
             border-radius: 0 0 25px 25px;
         }
 
-        #edit-address, #edit-address1{
+        #edit-address, #edit-address1, #edit-address2, #edit-address3, #edit-address4, #edit-address5{
             cursor: pointer;
+        }
+
+        .div1
+        {
+            border: 2px solid var(--thm-base);
         }
     </style>
 
@@ -314,7 +322,7 @@
                                             <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
                                                 <div class="my-account-address account-wrapper">
                                                     <h4 class="account-title">Address</h4>
-                                                    <div class="account-address m-t-30">
+                                                    <div class="account-address m-t-30 div1">
                                                         <?php 
                                                             $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
                                                             $result = mysqli_query($link, $sql);
@@ -325,24 +333,27 @@
                                                                 $lname = $row['lastname'];
                                                                 $default_address = $row['address'];
                                                                 $default_phone = $row['phone'];
+                                                                $default_email = $row['email'];
                                                             }
 
                                                             echo'
                                                                 <div class="row">
-                                                                    <div class="col-4" style="margin-top: 5%;">
-                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white;">Default</span></p>
-                                                                        <p>Address  : '.$default_address.'</p>
-                                                                        <p>Contact  : '.$default_phone.'</p>
-                                                                        <a class="box-btn m-t-25 " id="edit-address0" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
+                                                                    <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
+                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span></p>
+                                                                        <p>Email    : '.$default_email.'</span></p>
+                                                                        <p>Address  : <span style="font-style:italic;">'.$default_address.'</span> </p>
+                                                                        <p>Contact  : <span style="font-style:italic;">'.$default_phone.'</span></p>
+                                                                        <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
                                                                     </div>';
                                                                     $counterr = 0;
                                                                     for($x=0; $x<5; $x++) {
                                                                         $counterr++;
                                                                         echo'
-                                                                            <div class="col-4" style="margin-top: 5%;">
+                                                                            <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                                 <p>Full name: <strong>  '.$name[$x].'</strong></p>
-                                                                                <p>Address  : '.$address[$x].'</p>
-                                                                                <p>Contact  : '.$phone[$x].'</p>
+                                                                                <p>Email    : '.$email[$x].'</span></p>
+                                                                                <p>Address  : <span style="font-style:italic;">'.$address[$x].'</span></p>
+                                                                                <p>Contact  : <span style="font-style:italic;">'.$phone[$x].'</span></p>
                                                                                 <a class="box-btn m-t-25 " id="edit-address'.$counterr.'" onclick="return edit('.$counterr.')" ><i class="far fa-edit"></i>Edit</a>
                                                                             </div>';
                                                                     }
@@ -467,7 +478,7 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title">Edit Details</h4>
+                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->
@@ -483,7 +494,17 @@
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div> 
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="" name="email0" id="email0" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_email.'" disabled>
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -537,7 +558,7 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title">Edit Details</h4>
+                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->
@@ -553,7 +574,17 @@
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div>  
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].' ">
+                                                <span class="con-pass-err" style="color:crimson"></span>
+                                            </div>
+                                        </div>
+                                    </div>  
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -583,7 +614,6 @@
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
                             <!-- Modal Body-->
 
@@ -593,7 +623,6 @@
                             <!-- Modal Footer-->
                         </div>
                     </div>
-                        
                 </div>';
         }
         ?>
@@ -614,8 +643,9 @@
             var address = document.getElementById("address"+counter).value;
             var phone = document.getElementById("phone"+counter).value;
             var name = document.getElementById("name"+counter).value;
+            var email = document.getElementById("email"+counter).value;
 
-            if(address != "" && phone != "" && name != "") {
+            if(address != "" && phone != "" && name != "" && email != "") {
                 $.ajax({
                     type: "post",
                     url: "address.php",
@@ -624,7 +654,8 @@
                         'no' : counter,
                         'name' : name,
                         'address': address,
-                        'phone': phone
+                        'phone': phone,
+                        'email': email
                     },
                     cache: false,
                     success: function (html) {

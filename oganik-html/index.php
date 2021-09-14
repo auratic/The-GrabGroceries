@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  session_start();  
+
+  require "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -287,7 +289,7 @@
                 <div class="new-products__top">
                     <div class="block-title ">
                         <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                        <p>Recently Added</p>
+                        <p id="p2">Recently Added</p>
                         <h3>New Products</h3>
                     </div><!-- /.block-title -->
 
@@ -304,151 +306,44 @@
                         </li>
                     </ul>
                 </div><!-- /.new-products__top -->
-                <div class="row filter-layout">
-                    <div class="col-lg-4 col-md-6 filter-item dairy">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
-                                <span class="product-card__two-sale">sale</span>
-                                <img src="assets/images/products/product-2-1.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Banana</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$1.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4 col-md-6 filter-item pantry">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
+                <div class="row">
+                    <?php
+                        $sql = "SELECT * from item";
 
-                                <img src="assets/images/products/product-2-2.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Olive Oil</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$9.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4 col-md-6 filter-item meat">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
+                        if ($result = mysqli_query($link, $sql)) 
+                        {
 
-                                <img src="assets/images/products/product-2-3.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Eggs</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$3.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4 col-md-6 filter-item dairy">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
+                            while ($row = mysqli_fetch_assoc($result)) 
+                            {
 
-                                <img src="assets/images/products/product-2-4.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Tamatos</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$1.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4 col-md-6 filter-item fruits">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
-
-                                <img src="assets/images/products/product-2-5.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Bread</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$2.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4 col-md-6 filter-item veg">
-                        <div class="product-card__two">
-                            <div class="product-card__two-image">
-                                <span class="product-card__two-sale">sale</span>
-                                <img src="assets/images/products/product-2-6.jpg" alt="">
-                                <div class="product-card__two-image-content">
-                                    <a href="#"><i class="organik-icon-visibility"></i></a>
-                                    <a href="#"><i class="organik-icon-heart"></i></a>
-                                    <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                </div><!-- /.product-card__two-image-content -->
-                            </div><!-- /.product-card__two-image -->
-                            <div class="product-card__two-content">
-                                <h3><a href="product-details.php">Apples</a></h3>
-                                <div class="product-card__two-stars">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div><!-- /.product-card__two-stars -->
-                                <p>$2.00</p>
-                            </div><!-- /.product-card__two-content -->
-                        </div><!-- /.product-card__two -->
-                    </div><!-- /.col-lg-4 -->
+                                echo'
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="product-card">
+                                        <div class="product-card__image">
+                                            <img src="assets/images/items/'.$row['image'].'" alt="">
+                                            <div class="product-card__image-content">
+                                                <a href="#"><i class="organik-icon-heart"></i></a>
+                                                <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                            </div><!-- /.product-card__image-content -->
+                                        </div><!-- /.product-card__image -->
+                                        <div class="product-card__content">
+                                            <div class="product-card__left">
+                                                <h3><a href="product-details.php">'.$row['item'].'</a></h3>
+                                                <p>RM'.$row['cost'].'</p>
+                                            </div><!-- /.product-card__left -->
+                                            <div class="product-card__right">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div><!-- /.product-card__right -->
+                                        </div><!-- /.product-card__content -->
+                                    </div><!-- /.product-card -->
+                                </div>';
+                            }
+                        } 
+                    ?>
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </section><!-- /.new-products -->
@@ -459,8 +354,8 @@
                     <div class="col-md-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
                         <div class="offer-banner__box" style="background-image: url(assets/images/resources/offer-banner-1-1.jpg);">
                             <div class="offer-banner__content">
-                                <h3><span>100%</span> <br>Organic</h3>
-                                <p>Quality Organic Food Store</p>
+                                <h3><span>100%</span> <br>Original</h3>
+                                <p>Best quality products</p>
                                 <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
                             </div><!-- /.offer-banner__content -->
                         </div><!-- /.offer-banner__box -->
@@ -527,8 +422,9 @@
                                 <p>Shopping Store</p>
                                 <h3>Organic Food Only</h3>
                             </div><!-- /.block-title -->
-                            <p>There are many variations of passages of lorem ipsum available but the majority have suffered
-                                alteration in some form by injected humor or random word.</p>
+                            <p><i>TheGrabGroceries</i> is a low-cost online general store that gets items crosswise over classifications like 
+                                grocery, natural products and vegetables, excellence and health, family unit care, infant care, pet consideration 
+                                and meats and fish conveyed to your doorstep.</p>
                             <div class="call-to-action__wrap">
                                 <div class="row no-gutters">
                                     <div class="col-md-6">
@@ -672,30 +568,30 @@
                             </div><!-- /.block-title -->
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4>Duis aute irure dolor in reprehen in derit.</h4>
-                                    <p>Voluptate velit essects quis tempor orci. Suspendisse that potenti faucibus.</p>
+                                    <h4>Look no further! We got everything for you.</h4>
+                                    <p>Browse more than 5,000 items at costs lower than markets each day!</p>
                                 </div><!-- /.col-md-6 -->
                                 <div class="col-md-6">
                                     <ul class="list-unstyled">
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                            Refresing to get such a touch
+                                                We focus on what you need.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                            Duis aute irure dolor in
+                                                Amazing finds only here!
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                            Reprehenderit in voluptate
+                                                Exciting treats available daily.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                            Velit esse cillum dolore eu
+                                                Make delicious creations.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                            Fugiat nulla pariatur
+                                                Stocked for your needs.
                                         </li>
                                     </ul><!-- /.list-unstyled -->
                                 </div><!-- /.col-md-6 -->
@@ -750,8 +646,8 @@
                                 <img src="assets/images/resources/testi-1-1.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <p>Great independent grocery store with a wide variety of gourmet items and hard to find food stuffs. 
+                                    A great butcher offering local seafood and grass fed meats.</p>
                                 <h3>Winnie Collier</h3>
                                 <span>Customer</span>
                             </div><!-- /.testimonials-one__content -->
@@ -763,8 +659,8 @@
                                 <img src="assets/images/resources/testi-1-2.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <p>Staff is the best in a health food store and locally owned. I only get my supplements from Staff 
+                                    because they have a knowledgeable staff.</p>
                                 <h3>Helen Woods</h3>
                                 <span>Customer</span>
                             </div><!-- /.testimonials-one__content -->
@@ -776,8 +672,8 @@
                                 <img src="assets/images/resources/testi-1-3.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <p>Staff allows me to live out my dreams of becoming a zero-waster. The best bulk selection around. 
+                                    Organic, beautiful produce.</p>
                                 <h3>Ethan Thomas</h3>
                                 <span>Customer</span>
                             </div><!-- /.testimonials-one__content -->
@@ -1259,7 +1155,9 @@
         {
             var element = document.body;
             element.classList.toggle("dark-mode");
+            document.querySelector("#p2").style.color = "white";
         }
+        
     </script>
 </body>
 

@@ -168,21 +168,20 @@
                                 <h3>We’re Selling Quality
                                     Products</h3>
                             </div><!-- /.block-title -->
-                            <p>There are many variations of passages of available but the majority have suffered alteration in
-                                some form, by injected humou or words even slightly believable.</p>
-                            <p>There are many variations of passages of available but the majority have suffered alteration in
-                                some form, by injected humou or words even slightly believable.</p>
+                            <p>Spare more with TheGrabGroceries ! We give you the most minimal costs 
+                                on the entirety of your grocery needs.</p>
+                            <p>TheGrabGroceries is a low-cost online general store that gets items crosswise 
+                                over classifications like grocery, natural products and vegetables, excellence and health, 
+                                family unit care, infant care, pet consideration and meats and fish conveyed to your doorstep.</p>
                             <div class="row">
                                 <div class="col-md-6 col-lg-6">
                                     <div class="about-one__box">
-                                        <h3><i class="fa fa-check-circle"></i> Magnis Dis Nascet</h3>
-                                        <p>Lorem ipsum is free do sit</p>
+                                        <h3><i class="fa fa-check-circle"></i>No base request amount required.</h3>
                                     </div><!-- /.about-one__box -->
                                 </div><!-- /.col-md-6 -->
                                 <div class="col-md-6 col-lg-6">
                                     <div class="about-one__box">
-                                        <h3><i class="fa fa-check-circle"></i> Libero id Ege</h3>
-                                        <p>Lorem ipsum is free do sit</p>
+                                        <h3><i class="fa fa-check-circle"></i>Free Shipping on requests above RM200</h3>
                                     </div><!-- /.about-one__box -->
                                 </div><!-- /.col-md-6 -->
                             </div><!-- /.row -->

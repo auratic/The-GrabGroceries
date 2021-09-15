@@ -114,14 +114,37 @@
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (email, password, mode, firstname, lastname) VALUES ('$email', '$password', 'customer', '$fname', '$lname');";
+        $sql_get_id = "SELECT user_id FROM users WHERE email = '$email' and password = '$password'";
          
         
         if (mysqli_query($link, $sql)) {
-          echo "
-          <script>
-            alert('New account created');
-            location.href = 'login.php';
-          </script>";
+
+            if($id_result = mysqli_query($link, $sql_get_id)) {
+
+                while($row = mysqli_fetch_assoc($id_result)) {
+
+                    $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (".$row['user_id'].")";
+
+                    if(mysqli_query($link, $sql_insert_address)) {
+                        echo "
+                        <script>
+                        alert('New account created');
+                        location.href = 'login.php';
+                        </script>";
+
+                    } else {
+                        echo "
+                        <script>
+                          alert('Error: " . $sql_insert_address . "\n" . mysqli_error($link) . "')
+                        </script>";
+                    }
+                }
+            } else {
+                echo "
+                <script>
+                  alert('Error: " . $sql_get_id . "\n" . mysqli_error($link) . "')
+                </script>";
+            }
 
         } else {
           echo "

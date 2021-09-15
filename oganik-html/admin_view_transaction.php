@@ -1,4 +1,5 @@
 <?php
+
   session_start();
 
   date_default_timezone_set("Asia/Kuala_Lumpur");
@@ -408,7 +409,7 @@
                                                 <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
                                                 <p>Email: '.$display_row["email"].'</p>
                                                 <p>Phone: '.$display_row["phone"].'</p>
-                                                <p>Address: '.$display_row["address1"].'</p>
+                                                <p>Address: '.$display_row["receipt_address"].'</p>
                                                 <p>Payment Method: '.$display_row["payment_method"].'</p>
                                                 <p>Payment Cost: '.$display_row["payment_cost"].'</p>
                                                 <p>Products Purchased:</p>

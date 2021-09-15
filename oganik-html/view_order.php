@@ -311,7 +311,7 @@
                                                                                             <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
                                                                                             <p>Email: '.$display_row["email"].'</p>
                                                                                             <p>Phone: '.$display_row["phone"].'</p>
-                                                                                            <p>Address: '.$display_row["address1"].'</p>
+                                                                                            <p>Address: '.$display_row["receipt_address"].'</p>
                                                                                             <p>Payment Method: '.$display_row["payment_method"].'</p>
                                                                                             <p>Payment Made: '.$display_row["payment_cost"].'</p>
                                                                                             <p>Products Purchased:</p>

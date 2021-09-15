@@ -228,7 +228,8 @@
                                             <div class="product-card">
                                                 <div class="product-card__image">
                                                     <img src="assets/images/items/'.$row['image'].'" alt="">
-                                                    <div class="product-card__image-content">
+                                                    <div class="product-card__image-content" style="cursor:pointer;"
+                                                        onclick="location.href = `product-details.php?item_id='.$row['item_id'].'`">
                                                         <a href="#"><i class="organik-icon-heart"></i></a>
                                                         <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
                                                     </div><!-- /.product-card__image-content -->
@@ -482,8 +483,7 @@
     </div>
     <!-- /.search-popup -->
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
-
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>                         
 
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>

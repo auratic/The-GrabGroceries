@@ -1,6 +1,6 @@
 <?php
   // Include config file
-  require_once "config.php";
+  require "config.php";
  
   // Define variables and initialize with empty values
   $email = $fname = $lname = $password = $confirm_password = "";
@@ -78,9 +78,9 @@
         if (mysqli_num_rows($result) > 0) {
             $email_err = "Email is taken";
 
-        } else {
+        } else 
+        {
             $email = test_input($_POST["email"]);
-
         }
     }
 

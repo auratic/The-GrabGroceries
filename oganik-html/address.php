@@ -20,7 +20,6 @@
 
    if(isset($_POST["details"])) {
         
-
         if($_POST["no"] == 0) {
             $sql = "
             UPDATE users

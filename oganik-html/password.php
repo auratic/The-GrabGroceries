@@ -15,12 +15,17 @@
     {
         $result = mysqli_query($link, "SELECT * from users WHERE user_id=" . $_SESSION["userid"]);
         $row = mysqli_fetch_array($result);
-        if ($_POST["currentPassword"] == $row["password"]) 
+
+        if (strlen(trim($_POST["newPassword"])) < 6) 
+        {
+            $message = "<span style='color: red;'>Password must have atleast 6 characters.</span>";
+        }
+        else if ($_POST["currentPassword"] == $row["password"]) 
         {
             mysqli_query($link, "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"]);
             $message = "Password Changed";
         } else
-            $message = "Current Password is not correct";
+            $message = "<span style='color: red;'>Current Password is not correct</span>";
     }
    
 ?>

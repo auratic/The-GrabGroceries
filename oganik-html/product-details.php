@@ -1,5 +1,18 @@
 <?php
-  session_start()
+  session_start();
+  
+  require "config.php";
+
+  if(isset($_GET["item_id"])) {
+    $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
+  } else {
+    $sql = "SELECT * FROM item WHERE item_id = 200000001";
+  }
+
+  if($result = mysqli_query($link, $sql)) {
+    $row = mysqli_fetch_assoc($result);
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -172,15 +185,15 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6">
                         <div class="product_detail_image">
-                            <img src="assets/images/products/product-d-1.jpg" alt="">
+                            <img src="<?php echo "assets/images/items/".$row["image"]; ?>" alt="">
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="product_detail_content">
-                            <h2>Apples</h2>
+                            <h2><?php echo $row["item"] ?></h2>
                             <div class="product_detail_review_box">
                                 <div class="product_detail_price_box">
-                                    <p>$9.98</p>
+                                    <p>RM<?php echo $row["cost"] ?></p>
                                 </div>
                                 <div class="product_detail_review">
                                     <a href="#"><i class="fa fa-star"></i></a>
@@ -192,9 +205,7 @@
                                 </div>
                             </div>
                             <div class="product_detail_text">
-                                <p>Aliquam hendrerit a augue insuscipit. Etiam aliquam massa quis des mauris commodo
-                                    venenatis ligula commodo leez sed blandit convallis dignissim onec vel pellentesque
-                                    neque.</p>
+                                <p><?php echo $row["description"] ?></p>
                             </div>
                             <ul class="list-unstyled product_detail_address">
                                 <li>REF. 4231/406</li>
@@ -214,8 +225,7 @@
                                 </div>
                             </div>
                             <ul class="list-unstyled category_tag_list">
-                                <li><span>Category:</span> Food</li>
-                                <li><span>Tags:</span> Vegetables, Fruits</li>
+                                <li><span>Category:</span> <?php echo $row["category"] ?></li>
                             </ul>
                             <div class="product_detail_share_box">
                                 <div class="share_box_title">
@@ -263,9 +273,10 @@
 
                                 <div class="tab" id="addi__info">
                                     <ul class="additionali_nfo list-unstyled">
-                                        <li><span>Weight:</span>3kg</li>
-                                        <li><span>Category:</span>Food</li>
-                                        <li><span>Tags:</span>Vegetables, Fruits</li>
+                                        <li><span>Name:</span><?php echo $row["item"] ?></li>
+                                        <li><span>Expiry Date:</span><?php echo $row["exp_date"] ?></li>
+                                        <li><span>Category:</span><?php echo $row["category"] ?></li>
+                                        <li><span>Stock:</span><?php echo $row["stock"] ?></li>
                                     </ul>
                                 </div>
 
@@ -372,30 +383,30 @@
                     <h3>Similar Products</h3>
                 </div><!-- /.block-title -->
                 <div class="thm-tiny__slider" id="product-two__carousel" data-tiny-options='{
-            "container": "#product-two__carousel",
-            "items": 1,
-            "slideBy": "page",
-            "gutter": 0,
-            "mouseDrag": true,
-            "autoplay": true,
-            "nav": false,
-            "controlsPosition": "bottom",
-            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-            "autoplayButtonOutput": false,
-            "responsive": {
-                "640": {
-                  "items": 2,
-                  "gutter": 30
-                },
-                "992": {
-                  "gutter": 30,
-                  "items": 3
-                },
-                "1200": {
-                  "disable": true
-                }
-              }
-        }'>
+                    "container": "#product-two__carousel",
+                    "items": 1,
+                    "slideBy": "page",
+                    "gutter": 0,
+                    "mouseDrag": true,
+                    "autoplay": true,
+                    "nav": false,
+                    "controlsPosition": "bottom",
+                    "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
+                    "autoplayButtonOutput": false,
+                    "responsive": {
+                        "640": {
+                        "items": 2,
+                        "gutter": 30
+                        },
+                        "992": {
+                        "gutter": 30,
+                        "items": 3
+                        },
+                        "1200": {
+                        "disable": true
+                        }
+                    }
+                    }'>
                     <div>
                         <div class="product-card__two">
                             <div class="product-card__two-image">

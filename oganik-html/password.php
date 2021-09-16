@@ -11,11 +11,11 @@
 
    require "config.php";
 
-   $newPassword_err = $currentPassword_err = $confirmPassword_err = "";
+   $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
 
     if (count($_POST) > 0)
     {
-        $newPassword_err = $currentPassword_err = $confirmPassword_err = "";
+        $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
         
         $result = mysqli_query($link, "SELECT * from users WHERE user_id=" . $_SESSION["userid"]);
         $row = mysqli_fetch_array($result);
@@ -32,14 +32,29 @@
         {
             $confirmPassword_err = "Password did not match";
         }
-
-        if ($newPassword_err == "" && $currentPassword_err == "" && $confirmPassword_err = "") 
+        else if($_POST["currentPassword"] == $_POST["newPassword"])
         {
-            mysqli_query($link, "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"]);
-            echo" 
+            $samePassword_err = "Please use a new password";
+        }
+
+        if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
+        {
+            $sql_update_password = "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"];
+
+            if(mysqli_query($link, $sql_update_password))
+            {
+                echo" 
                 <script>
-                alert('Password Changed');
-                </script>;";
+                alert('Your password have updated!');
+                </script>";
+            }
+            else
+            {
+                echo "
+                <script>
+                  alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                </script>";
+            }
         }
     }
    
@@ -267,7 +282,7 @@
                                                             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
                                                             method="post"
                                                             style="text-align: left">
-                                                            <div class="form-group">
+                                                            <div class="form-group">    
                                                                 <label>Current Password</label> </br>
                                                                 <input type="password" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" >
                                                                 <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
@@ -276,7 +291,7 @@
                                                             <div class="form-group">
                                                                 <label>New Password</label> </br>
                                                                 <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>">
-                                                                <span class="invalid-feedback"><?php echo $newPassword_err; ?></span> 
+                                                                <span class="invalid-feedback"><?php echo $newPassword_err = $samePassword_err; ?></span> 
                                                             </div>
                                                             <div>
                                                                 <label>Confirm Password</label> </br>

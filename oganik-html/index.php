@@ -132,7 +132,6 @@
                             <a href="products.php">Shop</a>
                             <ul>
                                 <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
@@ -321,10 +320,11 @@
                                     <div class="product-card">
                                         <div class="product-card__image">
                                             <img src="assets/images/items/'.$row['image'].'" alt="">
-                                            <div class="product-card__image-content">
+                                            <div class="product-card__image-content" style="cursor:pointer;"
+                                                onclick="location.href = `product-details.php?item_id='.$row['item_id'].'`">
                                                 <a href="#"><i class="organik-icon-heart"></i></a>
                                                 <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                            </div><!-- /.product-card__image-content -->
+                                                </div><!-- /.product-card__image-content -->
                                         </div><!-- /.product-card__image -->
                                         <div class="product-card__content">
                                             <div class="product-card__left">
@@ -1103,7 +1103,7 @@
         </div>
         <div>
             <a href="verify.php">
-                <button type="button" class="btn btn-default" style="background-color: var(--thm-base)">Verify</button>
+                <button type="button" class="btn btn-default" style="background-color: var(--thm-base); color: white;">Verify</button>
             </a>
             <button type="button" class="btn btn-default" id="verified-btn">Close</button>
         </div>

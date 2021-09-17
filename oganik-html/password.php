@@ -11,16 +11,51 @@
 
    require "config.php";
 
+   $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+
     if (count($_POST) > 0)
     {
+        $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+        
         $result = mysqli_query($link, "SELECT * from users WHERE user_id=" . $_SESSION["userid"]);
         $row = mysqli_fetch_array($result);
-        if ($_POST["currentPassword"] == $row["password"]) 
+
+        if($_POST["currentPassword"] != $row["password"]) 
         {
-            mysqli_query($link, "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"]);
-            $message = "Password Changed";
-        } else
-            $message = "Current Password is not correct";
+            $currentPassword_err = "Current Password is not correct";
+        }
+        else if (strlen(trim($_POST["newPassword"])) < 6) 
+        {
+            $newPassword_err = "Password must have atleast 6 characters.";
+        }
+        else if($_POST["newPassword"] != $_POST["confirmPassword"])
+        {
+            $confirmPassword_err = "Password did not match";
+        }
+        else if($_POST["currentPassword"] == $_POST["newPassword"])
+        {
+            $samePassword_err = "Please use a new password";
+        }
+
+        if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
+        {
+            $sql_update_password = "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"];
+
+            if(mysqli_query($link, $sql_update_password))
+            {
+                echo" 
+                <script>
+                alert('Your password have updated!');
+                </script>";
+            }
+            else
+            {
+                echo "
+                <script>
+                  alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                </script>";
+            }
+        }
     }
    
 ?>
@@ -92,44 +127,6 @@
             border: none;
         }
     </style>
-
-    <script>
-        function validatePassword() 
-        {
-            var currentPassword,newPassword,confirmPassword,output = true;
-
-            currentPassword = document.frmChange.currentPassword;
-            newPassword = document.frmChange.newPassword;
-            confirmPassword = document.frmChange.confirmPassword;
-
-            if(!currentPassword.value) {
-                currentPassword.focus();
-                document.getElementById("currentPassword").innerHTML = "Required";
-                output = false;
-            }
-            else if(!newPassword.value) {
-                newPassword.focus();
-                document.getElementById("newPassword").innerHTML = "Required";
-                output = false;
-            }
-            else if(!confirmPassword.value) {
-                confirmPassword.focus();
-                document.getElementById("confirmPassword").innerHTML = "Required";
-                output = false;
-            }
-
-            if(newPassword.value != confirmPassword.value) 
-            {
-                newPassword.value="";
-                confirmPassword.value="";
-                newPassword.focus();
-                document.getElementById("confirmPassword").innerHTML = "Did not match";
-                output = false;
-            } 	
-            
-            return output;
-        }
-    </script>
 </head>
 
 <body>
@@ -281,36 +278,32 @@
                                             <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
                                                 <div class="my-account-details account-wrapper">
                                                     <h4 class="account-title">Password Changes</h4>
-
-                                                    <form name="frmChange" method="post" action="" onSubmit="return validatePassword()">
-                                                        <div style="width: 500px;">
-                                                            <div class="message"><?php if(isset($message)) { echo $message; } ?></div>
-                                                                <table class="tblSaveForm">
-                                                                    <tr>
-                                                                        <td width="40%"><label>Current Password</label></td>
-                                                                        <td width="60%"><input type="password"
-                                                                            name="currentPassword" class="txtField" /><span
-                                                                            id="currentPassword" class="required"></span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><label>New Password</label></td>
-                                                                        <td><input type="password" name="newPassword"
-                                                                            class="txtField" /><span id="newPassword"
-                                                                            class="required"></span></td>
-                                                                    </tr>
-                                                                    <td><label>Confirm Password</label></td>
-                                                                    <td><input type="password" name="confirmPassword"
-                                                                        class="txtField" /><span id="confirmPassword"
-                                                                        class="required"></span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="2"><input type="submit" name="submit"
-                                                                            value="Submit" class="btnSubmit"></td>
-                                                                    </tr>
-                                                                </table>
+                                                        <form 
+                                                            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
+                                                            method="post"
+                                                            style="text-align: left">
+                                                            <div class="form-group">    
+                                                                <label>Current Password</label> </br>
+                                                                <input type="password" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" >
+                                                                <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
+                                                            </div> 
+                                                            
+                                                            <div class="form-group">
+                                                                <label>New Password</label> </br>
+                                                                <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>">
+                                                                <span class="invalid-feedback"><?php echo $newPassword_err = $samePassword_err; ?></span> 
                                                             </div>
-                                                        </div>
-                                                    </form>
+                                                            <div>
+                                                                <label>Confirm Password</label> </br>
+                                                                <input type="password" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>">
+                                                                <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
+                                                            </div>    
+                                                                
+                                                            <div class="form-group" style="margin: 1%;">
+                                                                <input type="submit" class="btn btn-primary" value="Submit">
+                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                                                            </div>  
+                                                        </form>
                                                 </div>
                                             </div>
                                         </div>

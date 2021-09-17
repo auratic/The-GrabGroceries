@@ -7928,3 +7928,6 @@ a:active
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
+
+/**Payment**/
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Ubuntu:wght@300&display=swap');

@@ -262,7 +262,6 @@
                             <a href="products.php">Shop</a>
                             <ul>
                                 <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
@@ -323,18 +322,23 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="contact-one__form" method="post">
                         <div class="row">
                             <div class="col-md-6">
+                                <label><strong>Name</strong></label>
                                 <input type="text" name="name" placeholder="Your Name" required>
                             </div><!-- /.col-md-6 -->
                             <div class="col-md-6">
-                                <input type="email" placeholder="Email Address" name="email" required>
+                                <label><strong>Email Address</strong></label>
+                                <input type="email" placeholder="thegrabgroceries@gmail.com" name="email" required>
                             </div><!-- /.col-md-6 -->
                             <div class="col-md-6">
-                                <input type="text" placeholder="Phone Number" name="phone" required>
+                                <label><strong>Phone Number</strong></label>
+                                <input type="text" placeholder="0123456789" name="phone" required>
                             </div><!-- /.col-md-6 -->
                             <div class="col-md-6">
-                                <input type="text" placeholder="Subject" name="subject" required>
+                                <label><strong>Subject</strong></label>
+                                <input type="text" placeholder="How to order?" name="subject" required>
                             </div><!-- /.col-md-6 -->
                             <div class="col-md-12">
+                                <label><strong>Message</strong></label>
                                 <textarea placeholder="Write a Message" name="message" required></textarea>
                             </div><!-- /.col-md-12 -->
                             <div class="col-md-12 text-center">

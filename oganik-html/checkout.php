@@ -123,7 +123,6 @@
 							<a href="products.php">Shop</a>
 							<ul>
 								<li><a href="products.php">Shop</a></li>
-								<li><a href="product-details.php">Product Details</a></li>
 								<li><a href="cart.php">Cart Page</a></li>
 								<li><a href="checkout.php">Checkout</a></li>
 							</ul>

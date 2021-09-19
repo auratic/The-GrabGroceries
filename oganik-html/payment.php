@@ -1,22 +1,116 @@
 <?php
-  session_start();
+    session_start();
   
-  if(!isset($_SESSION["loggedin"])) {
-    echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
-   }
+    if(!isset($_SESSION["loggedin"])) {
+        echo "
+        <script>
+        alert('Please login');
+        location.href='login.php';
+        </script>";
+    }
 
-   require "config.php";
+    require "config.php";
 
-   $card_name1 = $card_no1 = $card_exp1 = $card_cvv1 = "";
+    $card_name = array();
+    $card_no = array();
+    $card_exp = array();
+    $card_cvv = array();
 
-   if(isset($_POST['detail']))
-   {
-   }
-   
+
+    if(isset($_POST['detail']))
+    {
+        /*if(empty($card_name))
+        {
+            $cname_err = "Please enter a name.";
+        }
+        else if(!preg_match("/^[a-zA-Z-' ]*$/",($_POST["card_name"]))) 
+        {
+            $cname_err = "Only letters and white space allowed";
+        }
+        else
+        {
+            $card_name = ucwords($_POST["card_name"]);
+        }
+
+        if(empty($card_no))
+        {
+            $cno_err = "Please enter card number";
+        }
+        else
+        {
+            $card_no = $_POST["card_no"];
+        }
+
+        if(empty($card_exp))
+        {
+            $cexp_err = "Please enter date.";
+        }
+        else
+        {
+            $card_exp = $_POST["card_exp"];
+        }
+
+        if(empty($card_cvv))
+        {
+            $ccvv_err = "Please enter CVV number";
+        }
+        else
+        {
+            $card_cvv = $_POST["card_cvv"];
+        }*/
+
+        if($_POST["no"] == 0) 
+        {
+            $sql_insert_cc = " 
+            UPDATE cust_card SET 
+            cardName1 = '".ucwords($_POST['card_name'])."',
+            cardNo1   = '".$_POST["card_no"]."',
+            cardExp1  = '".$_POST["card_exp"]."',
+            cardCvv1  = '".$_POST["card_cvv"]."'
+            WHERE user_id = ".$_SESSION["userid"];
+        }
+        else
+        {
+            $sql_insert_cc = "
+                UPDATE cust_address
+                SET 
+                card_name".$_POST["no"]." = '".ucwords($_POST['card_name'])."', 
+                card_no".$_POST["no"]."= '".$_POST["card_no"]."', 
+                card_exp".$_POST["no"]." = '".$_POST["card_exp"]."',
+                card_cvv".$_POST["no"]." = '".$_POST["card_cvv"]."'
+                WHERE user_id = ".$_SESSION["userid"];
+        }
+        
+
+        if(mysqli_query($link, $sql_insert_cc)) 
+        {
+            echo "
+            <script>
+                alert('Payment Method updated!');
+            </script>";
+        } 
+        else 
+        {
+            echo "
+            <script>
+                alert('Something went wrong, please try again');
+            </script>";
+        }
+        
+
+        $sql = "SELECT * FROM cust_card where user_id = ".$_SESSION["userid"];
+        if($result = mysqli_query($link, $sql))
+        {
+            while($row=mysqli_fetch_assoc($result))
+            {
+                array_push($card_name, $row['cardName2']   , $row['cardName3']   , $row['cardName4']   , $row['cardName5']);
+                array_push($card_no  , $row['cardNo2'], $row['cardNo3'], $row['cardNo4'], $row['cardNo5']);
+                array_push($card_cvv , $row['cardCvv2']  , $row['cardCvv3']  , $row['cardCvv4']  , $row['cardCvv5']);
+                array_push($card_exp , $row['cardExp2']  , $row['cardExp23']  , $row['cardExp4']  , $row['cardExp5']);
+            }
+        }
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +146,7 @@
     <link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
     <link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
     <link rel="stylesheet" type="assets/css" href="css/organik.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
@@ -228,10 +323,6 @@
                                                         class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
-                                                <a href="download.php"><i
-                                                        class="fas fa-cloud-download-alt"></i> Download</a>
-                                            </li>
-                                            <li>
                                                 <a href="payment.php"><i
                                                         class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
@@ -252,12 +343,11 @@
                                             </li>
                                         </ul>
                                     </div>
-
                                 </div>
+                                <!-- :::::::::: Page Content :::::::::: -->
                                 <div class="col-xl-8 col-md-8">
-
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
-                                    <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
+                                        <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
                                             <div class="my-account-payment account-wrapper">
                                                 <h4 class="account-title">Payment Method</h4>
                                                 <?php
@@ -266,23 +356,34 @@
 
                                                     while($row=mysqli_fetch_assoc($result)) 
                                                     {
-                                                        $card_name1 = $row['cardName1'];
-                                                        $card_no1 = $row['cardNo1'];
-                                                        $card_exp1 = $row['cardExp1'];
-                                                        $card_cvv1 = $row['cardCvv1'];
+                                                        $card_name = $row['cardName1'];
+                                                        $card_no = $row['cardNo1'];
+                                                        $card_exp = $row['cardExp1'];
+                                                        $card_cvv = $row['cardCvv1'];
                                                     }
 
                                                     echo'
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p>Card Name   :'.$card_name1.' </p>
-                                                                <p>Card Number :'.$card_no1.'</p>
-                                                                <p>Expiry Date :'.$card_exp1.'</p>
-                                                                <p>CVV :'.$card_cvv1.'</p>
+                                                                <p>Card Name   :'.$card_name.' </p>
+                                                                <p>Card Number :'.$card_no.'</span></p>
+                                                                <a class="box-btn m-t-25 " id="add-card" onclick="return addCard(0)"><i class="far fa-edit"></i>Edit</a>
                                                             </div>';
+
+                                                            $counterr = 0;
+                                                            for($x=0; $x<5; $x++) 
+                                                            {
+                                                                $counterr++;
+                                                                echo'
+                                                                <div class="col-4">
+                                                                    <p>Card Name   :'.$card_name[$x].' </p>
+                                                                    <p>Card Number :'.$card_no[$x].'</span></p>
+                                                                    <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
+                                                                </div>';
+                                                            }
                                                         echo"</div>";
                                                 ?>
-                                                <a class="box-btn m-t-25 " id="add-card" onclick="return addCard()"><i class="far fa-edit"></i>Add</a>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -389,73 +490,87 @@
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
 
-        <div class="modal" id="card-modal" role="dialog">
-            <div class="modal-dialog modal-lg">
+        <?php
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color:var(--thm-base)">
-                        <h4 class="modal-title"><span style="color:white;">Credit Cards</span></h4>
-                        <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
-                    </div> 
-                    <!-- Modal Header-->
+            $counter = 0;
+            for($x=0; $x<5; $x++) 
+            {
+                $counter++;
+                echo'
+                <!--Modal-->
+                <div class="modal" id="card-modal'.$counter.'" role="dialog">
+                    <div class="modal-dialog modal-lg">
 
-                    <div class="modal-body">
-                    
-                        <form> 
-                            <div class="row cardd space iconn-relative">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="label"><i class="fas fa-user"> Card Holder</i></label>
-                                        <input type="text" id="card_name" class="form-control" placeholder="Your Name">
-                                    </div>
-                                </div>
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:var(--thm-base)">
+                                <h4 class="modal-title"><span style="color:white;">Credit Cards</span></h4>
+                                <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
+                            <!-- Modal Header-->
+
+                            <div class="modal-body">
                             
-                            <div class="row cardd space iconn-relative">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
-                                        <input type="text" id="card_no" class="form-control" data-mask="0000 0000 0000 0000" placeholder="Card Number">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row space iconn-relative">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="label"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
-                                        <input type="text" id="card_exp" name="expiry-data" class="form-control" data-mask="00 / 00"  placeholder="00 / 00">
-                                    </div>
-                                </div>
+                                <form> 
+                                    <div class="row cardd space iconn-relative">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label"><i class="fas fa-user"> Card Holder</i></label>
+                                                <input type="text" name="card_name'.$counter.'" id="card_name'.$counter.'" placeholder="Your Name" class="form-control '. ((!empty($cname_err)) ? "is-invalid" : '' ).'" value="'.$card_name[$x].'">
+                                                    <span class="invalid-feedback"><?php echo $cname_err; ?></span>
+                                            </div>
+                                        </div>
+                                    </div> 
                                     
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="label"><i class="fas fa-lock"> CVV</i></label>
-                                        <input type="text" id="card_cvv" class="form-control" data-mask="000" placeholder="000">
+                                    <div class="row cardd space iconn-relative">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
+                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
+                                                    <span class="invalid-feedback"><?php echo $cno_err; ?></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary" value="Submit" onclick="return updateCard();">
+                                    <div class="row space iconn-relative">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="label"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
+                                                <input type="text" name="card_exp'.$counter.'" id="card_exp'.$counter.'" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control '. ((!empty($cexp_err)) ? "is-invalid" : '' ).'" value="'.$card_exp[$x].' ">
+                                                <span class="invalid-feedback"><?php echo $cexp_err; ?></span>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="label"><i class="fas fa-lock"> CVV</i></label>
+                                                <input type="text" name="card_cvv'.$counter.'" id="card_cvv'.$counter.'" data-mask="000" placeholder="000" class="form-control '. ((!empty($ccvv_err)) ? "is-invalid" : '' ).'" value="'.$card_cvv[$x].' ">
+                                                <span class="invalid-feedback"><?php echo $ccvv_err ; ?></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </form>
 
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-primary" value="Submit" onclick="return updateCard('.$counter.');">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!-- Modal Body-->
+
+                            <div class="modal-footer" style="background-color:var(--thm-base)">
+                                <button type="button" class="btn btn-danger"  onclick="return closeModal('.$counter.')">Cancel</button>
+                            </div> 
+                            <!-- Modal Footer-->
+                        </div>
                     </div>
-                    <!-- Modal Body-->
-
-                    <div class="modal-footer" style="background-color:var(--thm-base)">
-                        <button type="button" class="btn btn-danger"  onclick="return closeModal()">Cancel</button>
-                    </div> 
-                    <!-- Modal Footer-->
-                </div>
-            </div>
-        </div>
+                </div>';
+            }
+        ?>
     <!-- /.search-popup -->
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
@@ -479,17 +594,18 @@
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
 
     <script>
 
-        function updateCard()
+        function updateCard(counter)
         {
-            var cardName = document.getElementById("card_name").value;
-            var cardNum = document.getElementById("card_no").value;
-            var cardExp = document.getElementById("card_exp").value;
-            var cardCvv = document.getElementById("card_cvv").value;
+            var cardName = document.getElementById("card_name"+counter).value;
+            var cardNum = document.getElementById("card_no"+counter).value;
+            var cardExp = document.getElementById("card_exp"+counter).value;
+            var cardCvv = document.getElementById("card_cvv"+counter).value;
 
             if(cardName != "" && cardNum != "" && cardExp != "" && cardCvv != "")
             {
@@ -498,10 +614,11 @@
                     url : "payment.php",
                     data: {
                         'detail': true,
-                        'card_name': card_name1,
-                        'card_no': card_no1,
-                        'card_exp': card_exp1,
-                        'card_cvv': card_cvv1
+                        'no':counter,
+                        'card_name': cardName,
+                        'card_no': cardNum,
+                        'card_exp': cardExp,
+                        'card_cvv': cardCvv
                     },
                     cache: false,
                     success: function (html) {
@@ -510,19 +627,51 @@
                     }
                 });
             }
+            return false;
         }
         
-        function addCard()
+        function addCard(counter)
         {
-            $('#card-modal').fadeIn();
+            $('#card-modal'+counter).fadeIn();
             return false;
         }
 
-        function closeModal() 
+        function closeModal(counter) 
         {
-            $('#card-modal').fadeOut();
+            $('#card-modal'+counter).fadeOut();
             return false;
         }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#card_no").keyup(function (e) {
+                var CCNValue = $(this).val();
+                CCNValue = CCNValue.replace(/ /g, '');
+
+                var CCNLength = CCNValue.length;
+                var m = 1;
+                var arr = CCNValue.split('');
+                var ccnnewval = "";
+
+                if (arr.length > 0) {
+                    for (var m = 0; m < arr.length; m++) {
+                        if (m == 4 || m == 8 || m == 12) {
+                            ccnnewval = ccnnewval + ' ';
+                        }
+
+                        if (m <= 11) {
+                            ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+                        } else {
+                            ccnnewval = ccnnewval + arr[m];
+                        }
+                    }
+                }
+
+                $("#card_no").val(ccnnewval);
+            });
+        });
     </script>
 </body>
 

@@ -184,11 +184,7 @@
                                                 <li>
                                                     <a href="view_order.php"><i
                                                             class="fas fa-shopping-cart"></i> Order</a>
-                                                </li>
-                                                <li>
-                                                    <a href="download.php"><i
-                                                            class="fas fa-cloud-download-alt"></i> Download</a>
-                                                </li>
+                                                </li>   
                                                 <li>
                                                     <a href="payment.php"><i
                                                             class="fas fa-credit-card"></i> Payment Method</a>
@@ -255,7 +251,7 @@
                                                                     <div class="col-md-5">
                                                                         <div class="form-box__single-group" style="margin-top: 10px";>
                                                                             <span><b>Phone Number</b></span> 
-                                                                            <input type="text" placeholder="Phone Number" style="width:100%" value="<?php echo $phone?>" disabled="disabled">
+                                                                            <input type="text" placeholder="Update at Address" style="width:100%" value="<?php echo $phone?>" disabled="disabled">
                                                                         </div>
                                                                     </div>
                                                                 </div>

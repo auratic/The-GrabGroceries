@@ -246,10 +246,6 @@
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
-                                                    <a href="download.php"><i
-                                                            class="fas fa-cloud-download-alt"></i> Download</a>
-                                                </li>
-                                                <li>
                                                     <a href="payment.php"><i
                                                             class="fas fa-credit-card"></i> Payment Method</a>
                                                 </li>
@@ -291,7 +287,7 @@
                                                             <div class="form-group">
                                                                 <label>New Password</label> </br>
                                                                 <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>">
-                                                                <span class="invalid-feedback"><?php echo $newPassword_err = $samePassword_err; ?></span> 
+                                                                <span class="invalid-feedback"><?php echo $newPassword_err ; ?></span> 
                                                             </div>
                                                             <div>
                                                                 <label>Confirm Password</label> </br>

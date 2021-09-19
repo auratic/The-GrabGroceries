@@ -231,13 +231,17 @@
                         <li>
                             <a href="additem.php">Add item</a>
                         </li>
-                        <li>
-                            <a href="displayitem.php">Update Item</a>
+                        <li class="dropdown">
+                            <a href="displayitem.php">Update product</a>
+                            <ul>
+                                <li><a href="displayitem.php">Update product</a></li>
+                                <li><a href="archiveitem.php">Archive product</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="adminlist.php">Admin</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -250,11 +254,20 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
 
-            <div class="signup-form">
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
 
-              <h4>Add item</h4>
+        <section>
+            <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
 
+              <h1>Add item</h1>
+
+            </div>
+
+            <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
               <form action="" method="post" enctype="multipart/form-data">
 
                 <div class="row">
@@ -336,8 +349,9 @@
                 </div>
 
               </form>
-            
             </div>
+        </section>
+      </div>
 
     <!-- /.search-popup -->
 

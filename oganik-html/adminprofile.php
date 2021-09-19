@@ -122,13 +122,17 @@
                         <li>
                             <a href="additem.php">Add item</a>
                         </li>
-                        <li>
-                            <a href="displayitem.php">Update Item</a>
+                        <li class="dropdown">
+                            <a href="displayitem.php">Update product</a>
+                            <ul>
+                                <li><a href="displayitem.php">Update product</a></li>
+                                <li><a href="archiveitem.php">Archive product</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="adminlist.php">Admin</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -141,16 +145,42 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
 
-            <div class="container" style="margin: auto;">
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
+        
+        <section>
+            <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
 
-                <!-- Modal Add Item -->
-                
-                <a href="logout.php">
-                  <button class="btn btn-info btn-lg">Logout</button>
-                </a>
-                <img src="https://i.ibb.co/kMgd8hL/Capture.png" alt="Capture">
+              <h1>Dashboard</h1>
+            
             </div>
+
+            <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
+                <!-- Modal Add Item -->
+                <div class="row" style="border: solid black 1px; padding:1%">
+                    <div class="col-sm-10">
+                        <a href="logout.php">
+                        <button class="btn btn-info btn-lg">Logout</button>
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <!--
+                        <img src="https://i.ibb.co/kMgd8hL/Capture.png" alt="Capture"style="width:50%">
+                            -->
+                    </div>
+                </div>
+                <div class="row" style="border: solid black 1px; padding:1%">
+                    <div style="object-fit: cover">
+                        <img src="assets/images/digital-dashboard-for-clients.png" style="width:100%">
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
 
     <!-- /.search-popup -->
 

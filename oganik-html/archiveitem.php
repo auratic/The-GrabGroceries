@@ -11,12 +11,12 @@
 
   require "config.php";
 
-  if(isset($_GET["archive"])) {
+  if(isset($_GET["restore"])) {
 
       $item_id = $_GET["item_id"];
 
       for($i = 0; $i < count($item_id) ; $i++) {
-        $sql = "UPDATE item SET item_status = 'Inactive' WHERE item_id = ".$item_id[$i];
+        $sql = "UPDATE item SET item_status = 'Active' WHERE item_id = ".$item_id[$i];
   
         if(mysqli_query($link,$sql)) {
           echo "<script>alert('Updated');</script>";
@@ -71,7 +71,7 @@
         .signup-form{ 
           padding: 20px 50px; 
           margin: 20px 50px 20px 50px;
-          background-color: azure;
+          background-color: beige;
           overflow: auto;
         }
     </style>
@@ -173,13 +173,13 @@
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-        
-        <section>
-                <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
-                    <h1>Your active products</h1>
-                </div>
 
-                <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
+        <section>
+            <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(245,245,220,0.8); text-align:center">
+                <h1>Archive products</h1>
+            </div>
+            
+            <div class="container" style="padding:2%; background-color:rgba(245,245,220,0.8);">
                 <div class="row">
 
                     <div class="col-sm-2" 
@@ -313,7 +313,7 @@
                                         <label for="select-all">Select All</label>
                                     </div>
                                     <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                        <button class="btn btn-info btn-sm" onclick="return archiveItem();">Archive</button>
+                                        <button class="btn btn-info btn-sm" onclick="return restoreItem();">Restore</button>
                                     </div>
                                     <div class="form-group" style="text-align: left">
                                         <button class="btn btn-info btn-sm" onclick="return deleteItem();">Delete</button>
@@ -342,7 +342,7 @@
 
                                     while ($row = mysqli_fetch_assoc($result)) {
 
-                                        if($row["item_status"] == "Active") {
+                                        if($row["item_status"] == "Inactive") {
                                             echo '
                                                 <tr>
                                                 <td>'.$row['item_id'].'</td>
@@ -371,8 +371,9 @@
                     </div>
                 
                 </div>
-                </div>
-            </section>
+            </div>
+        </section>
+    </div>
 
     <!-- /.search-popup -->
 
@@ -397,7 +398,7 @@
             }
         }
 
-        function archiveItem() {
+        function restoreItem() {
             var item_id = [];
 
             for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -405,18 +406,18 @@
                     item_id.push(checkboxes[i].value);
                 }
             }
-            if (confirm("Move to archive? Press 'OK' to continue")) {
+            if (confirm("Restore product? Press 'OK' to continue")) {
 				$.ajax({
 					type: "get",
-					url: "displayitem.php",
+					url: "archiveitem.php",
 					data: {  
-                    'archive' : true,
+                    'restore' : true,
 					'item_id' : item_id
 					},
 					cache: false,
 					success: function (html) {
 						alert('Updated');
-						location.href = 'displayitem.php';
+						location.href = 'archiveitem.php';
 					}
 				});
                 

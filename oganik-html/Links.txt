@@ -15,6 +15,7 @@ HTML
 //////////////////////////////////////////
 
 Set default <select> element - https://stackoverflow.com/questions/3518002/how-can-i-set-the-default-value-for-an-html-select-element
+Select all (checkbox) - https://stackoverflow.com/questions/386281/how-to-implement-select-all-check-box-in-html
 
 //////////////////////////////////////////
 Bootstrap / CSS

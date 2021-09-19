@@ -216,13 +216,17 @@
                         <li>
                             <a href="additem.php">Add item</a>
                         </li>
-                        <li>
-                            <a href="displayitem.php">Update Item</a>
+                        <li class="dropdown">
+                            <a href="displayitem.php">Update product</a>
+                            <ul>
+                                <li><a href="displayitem.php">Update product</a></li>
+                                <li><a href="archiveitem.php">Archive product</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="adminlist.php">Admin</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -235,244 +239,228 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
 
-            <div class="signup-form fluid-container">
+        <div class="stricky-header stricked-menu main-menu">
+            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+        </div><!-- /.stricky-header -->
 
-                <form action="admin_view_transaction.php" method="post">
-                    <h4 style="margin: 0px 0px 1% 1.5%;">Customer's Transactions</h4>
+        <section class="">
+                <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
+                    <h1>Customer's transaction</h1>
+                </div>
 
-                    <div style="background-color:var(--thm-base); margin:1%; padding:2%; border-radius:25px;">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Search by Receipt ID</label>
-                                <input type="text" name="search-id"></input>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Minimize View</label><input type="checkbox"></input>
-                                <label>View Details</label><input type="checkbox"></input>
-                            </div>
-                            <div class="col-md-3">
-                                <label>From</label><input type="date" name="date-from"></input>
-                                <br>
-                                <label>To</label><input type="date" name="date-to"></input>
-                            </div>
+                <div class="container" style="background-color:rgba(255,255,255,0.8); padding: 2%">
+                    <div class="row">
+                        <div class="col-sm-2" style="
+                            border: gray solid 1px;
+                            border-radius: 10px;
+                            padding: 1%;
+                            background-color: lightgray;">
+                            <form action="admin_view_transaction.php" method="post">
 
-                            <div class="col-md-3">
-                                <input class="btn btn-default btn-md" value="Filter" name="filter"></button>
-                            </div>
+                                
+                                    <div class="form-group" style="text-align: left">
+                                        <label>Search by Receipt ID</label> <br>
+                                        <input type="text" name="search-id" class="form-control"></input>
+                                    </div>
+                                            
+                                    <div class="form-group" style="text-align: left">
+                                        <label>Search by email</label> <br>
+                                        <input type="text" name="search-id" class="form-control"></input>
+                                    </div>
+
+                                    <hr>
+
+                                    <label><b>Transaction Date</b></label> </br>
+                                    <div class="form-group" style="text-align: left">
+                                        <p>from</p>           
+                                        <input type="date" name="date-from" class="form-control"></input>
+                                    </div>
+                                    <div class="form-group" style="text-align: left">
+                                        <p>to</p>
+                                        <input type="date" name="date-to" class="form-control"></input>
+                                    </div>
+                                            
+                                    <div class="form-group" style="text-align: left">
+                                        <input class="btn btn-primary" type="submit" value="Filter" name="filter">
+                                    </div>
+                                        
+                            </form>
                         </div>
-                    </div>
-                </form>
 
-                <div class="panel-group" id="accordion">
+                        <div class="col-sm-10">
+                            <div class='row' style="margin: 1%">
+                                <div class="col-sm-6"></div>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            
-                            <form action="admin_view_transaction.php?receipt=R999999999">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <h4 class="panel-title">
-                                            Receipt ID: R999999999
-                                        </h4>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Transaction Date: </h4>
-                                        <p>2010-10-10 10:10:10</p>
-                                    </div>
-                                    
-                                    <div class="col-md-2">
-                                        <h4>Delivery Date: </h4>
-                                        <p>2010-10-10 10:10:10</p>
-                                    </div>
-                                    
-                                    <div class="col-md-2">
-                                        <h4>Receive Date: </h4>
-                                        <p>2010-10-10 10:10:10</p>
-                                    </div>
-                                        <div class="col-md-2">
-                                            <h4>Status: </h4>
-                                            <select id="status" name="status">
-                                                <!-- <option value="" selected disabled hidden>Choose here</option> -->
-                                                <option value="Not Set">Not Set</option>
+                                <div class="col-sm-6">
+                                    <form style="
+                                        display: flex;
+                                        justify-content: flex-end;">
+                                        <!--
+                                        <select id="status" name="status">
+                                            <option value="'.$display_row["product_status"].'" selected disabled hidden>'.$display_row["product_status"].'</option>
+                                            <option value="Not Set">Not set</option>
+                                            <option value="Preparing">Preparing</option>
+                                            <option value="Delivering">Delivering</option>
+                                            <option value="Received">Received</option>
+                                        </select>
+                                        -->
+                                        <div class="form-group" style="text-align: left; margin-right: 1rem">
+                                            <label>Status</label> <br>
+                                            <select id="status" name="status" style="text-align: left; margin-right: 1rem">
+                                                <option value="--Status--" selected disabled hidden>--Status--</option>
+                                                <option value="Not Set">Not set</option>
                                                 <option value="Preparing">Preparing</option>
                                                 <option value="Delivering">Delivering</option>
                                                 <option value="Received">Received</option>
                                             </select>
                                         </div>
-
-                                        <div class="col-md-2" style="display: flex; flex-direction: column; align-items: flex-end;">
-                                                <button class="btn btn-default btn-lg" type="submit" style="background-color:azure">Update Status</button>
+                                        <div class="form-group" style="text-align: left; margin-right: 1rem">
+                                            <label for="select-all">Select All</label> <br>
+                                            <input type="checkbox" id="select-all" />
                                         </div>
-                                </div> 
-                            </form>
-                            <hr>
-                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
-                                <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
+                                        <div class="form-group" style="text-align: left;">
+                                            <button class="btn btn-info btn-sm" onclick="return restoreItem();">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                            <div class="panel-group" id="accordion">
+                                
+                                <?php
+                                
+                                if(count($receipt_array) == 0) {
+                                    echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
+                                } else {
+                                    foreach($receipt_array as $x => $x_value) {
+                                        $display_sql = "SELECT * FROM cust_receipt 
+                                        INNER JOIN users ON cust_receipt.user_id = users.user_id 
+                                        WHERE cust_receipt.receipt_id = $x_value;
+                                        ";
 
-                        <div id="collapse1" class="panel-collapse collapse in" style="margin: 2%;">
-                            <p>Name: mw</p>
-                            <p>Email: mw@gmail.com</p>
-                            <p>Phone: 01234567890</p>
-                            <p>Address: Jalan Bukit Beruang</p>
-                            <p>Payment Method: Visa ****-****-****-1448</p>
-                            <p>Payment Made: RM999.99</p>
-                            <p>Products Purchased:</p>
-                            <table>
-                            <table class="table table-bordered table-striped table-hover table-condensed">
-                                <tr>
-                                    <th>Item ID</th>
-                                    <th>Item Name</th>
-                                    <th>Amount</th>
-                                    <th>Cost Rer Product</th>
-                                    <th>Total Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>'.$row['id'].'</td>
-                                    <td>'.$row['item'].'</td>
-                                    <td>'.$row['category'].'</td>
-                                    <td>'.$row['description'].'</td>
-                                    <td>'.$row['stock'].'</td>
-                                </tr>
-                            </table>
+                                        if ($display_result = mysqli_query($link, $display_sql)) {
+
+                                            while ($display_row = mysqli_fetch_assoc($display_result)) {
+                                                    echo '
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <form method="get" action="admin_view_transaction.php">
+                                                            <div class="row">
+                                                                <input type="" hidden value="'.$display_row["receipt_id"].'" name="receipt"></input>
+                                                                <div class="col-md-3">
+                                                                    <h4 class="panel-title">
+                                                                        Receipt ID: '.$display_row["receipt_id"].'
+                                                                    </h4>
+                                                                </div>
+
+                                                                <div class="col-md-2">
+                                                                    <h4>Transaction Date: </h4>
+                                                                    <p>'.$display_row["receipt_date"].'</p>
+                                                                </div>
+                                                                
+                                                                <div class="col-md-2">
+                                                                    <h4>Delivery Date: </h4>
+                                                                    <p>'.$display_row["delivery_date"].'</p>
+                                                                </div>
+                                                                
+                                                                <div class="col-md-2">
+                                                                    <h4>Receive Date: </h4>
+                                                                    <p>'.$display_row["receive_date"].'</p>
+                                                                </div>
+                                                                
+                                                                <div class="col-md-2">
+                                                                    <h4>Status: </h4>
+                                                                    <p>'.$display_row["product_status"].'</p>
+                                                                </div>
+
+                                                                <div class="col-md-1" style="display: flex; flex-direction: column; align-items: flex-end;">
+                                                                    <input type="checkbox" name="select-item" value="'.$display_row['receipt_id'].'">
+                                                                </div>
+                                                            </div> 
+                                                            </form>
+                                                            
+                                                            <hr>
+
+                                                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#R'.$display_row["receipt_id"].'">
+                                                                <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="R'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
+                                                            <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
+                                                            <p>Email: '.$display_row["email"].'</p>
+                                                            <p>Phone: '.$display_row["phone"].'</p>
+                                                            <p>Address: '.$display_row["receipt_address"].'</p>
+                                                            <p>Payment Method: '.$display_row["payment_method"].'</p>
+                                                            <p>Payment Cost: '.$display_row["payment_cost"].'</p>
+                                                            <p>Products Purchased:</p>
+                                                            <table class="table table-bordered table-striped table-hover table-condensed">
+                                                                <tr>
+                                                                    <th>Item ID</th>
+                                                                    <th>Item Name</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Cost Rer Product</th>
+                                                                    <th>Total Cost</th>
+                                                                </tr>';
+                                            }
+                                        }
+
+                                        $trans_sql = "SELECT * FROM cust_transaction
+                                                    INNER JOIN item ON cust_transaction.item_id = item.item_id
+                                                    WHERE cust_transaction.receipt_id = $x_value;";
+                                                    
+                                        if ($trans_result = mysqli_query($link, $trans_sql)) {
+
+                                            while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+
+                                                echo '
+                                                    <tr>
+                                                        <td>'.$trans_row['item_id'].'</td>
+                                                        <td>'.$trans_row['item'].'</td>
+                                                        <td>'.$trans_row['amount'].'</td>
+                                                        <td>'.$trans_row['cost'].'</td>
+                                                        <td>'.$trans_row['total_cost'].'</td>
+                                                    </tr>
+                                                    ';
+                                            }
+
+                                        }
+                                                    
+                                        echo '
+                                        </table>
+                                        </div>
+                                        </div>';
+                                    }
+                                                
+                                }        
+                                ?>
+
+                            </div> 
+                            </div>
                         </div>
                     </div>
-                    
-                    <?php
-                    
-                    if(count($receipt_array) == 0) {
-                        echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
-                    } else {
-                        foreach($receipt_array as $x => $x_value) {
-                            $display_sql = "SELECT * FROM cust_receipt 
-                            INNER JOIN users ON cust_receipt.user_id = users.user_id 
-                            WHERE cust_receipt.receipt_id = $x_value;
-                            ";
+                </div>
+        </section>
+    </div>
+    <script>
+        //Hide other panel when another collapses
+        $('.more-detail').click( function(e) {
+            $('.collapse').collapse('hide');
+        });
 
-                            if ($display_result = mysqli_query($link, $display_sql)) {
-
-                                while ($display_row = mysqli_fetch_assoc($display_result)) {
-                                        echo '
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <form method="get" action="admin_view_transaction.php">
-                                                <div class="row">
-                                                    <input type="" hidden value="'.$display_row["receipt_id"].'" name="receipt"></input>
-                                                    <div class="col-md-2">
-                                                        <h4 class="panel-title">
-                                                            Receipt ID: '.$display_row["receipt_id"].'
-                                                        </h4>
-                                                    </div>
-
-                                                    <div class="col-md-2">
-                                                        <h4>Transaction Date: </h4>
-                                                        <p>'.$display_row["receipt_date"].'</p>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-2">
-                                                        <h4>Delivery Date: </h4>
-                                                        <p>'.$display_row["delivery_date"].'</p>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-2">
-                                                        <h4>Receive Date: </h4>
-                                                        <p>'.$display_row["receive_date"].'</p>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-2">
-                                                        <h4>Status: </h4>
-                                                        <select id="status" name="status">
-                                                            <option value="'.$display_row["product_status"].'" selected disabled hidden>'.$display_row["product_status"].'</option>
-                                                            <option value="Not Set">Not set</option>
-                                                            <option value="Preparing">Preparing</option>
-                                                            <option value="Delivering">Delivering</option>
-                                                            <option value="Received">Received</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-md-2" style="display: flex; flex-direction: column; align-items: flex-end;">
-                                                        <button class="btn btn-default btn-lg" type="submit" style="background-color:azure">Update Status</button>
-                                                    </div>
-                                                </div> 
-                                                </form>
-                                                
-                                                <hr>
-
-                                                <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#R'.$display_row["receipt_id"].'">
-                                                    <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
-                                                </div>
-                                            </div>
-
-                                            <div id="R'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
-                                                <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
-                                                <p>Email: '.$display_row["email"].'</p>
-                                                <p>Phone: '.$display_row["phone"].'</p>
-                                                <p>Address: '.$display_row["receipt_address"].'</p>
-                                                <p>Payment Method: '.$display_row["payment_method"].'</p>
-                                                <p>Payment Cost: '.$display_row["payment_cost"].'</p>
-                                                <p>Products Purchased:</p>
-                                                <table class="table table-bordered table-striped table-hover table-condensed">
-                                                    <tr>
-                                                        <th>Item ID</th>
-                                                        <th>Item Name</th>
-                                                        <th>Amount</th>
-                                                        <th>Cost Rer Product</th>
-                                                        <th>Total Cost</th>
-                                                    </tr>';
-                                }
-                            }
-
-                            $trans_sql = "SELECT * FROM cust_transaction
-                                          INNER JOIN item ON cust_transaction.item_id = item.item_id
-                                          WHERE cust_transaction.receipt_id = $x_value;";
-                                          
-                            if ($trans_result = mysqli_query($link, $trans_sql)) {
-
-                                while ($trans_row = mysqli_fetch_assoc($trans_result)) {
-
-                                    echo '
-                                        <tr>
-                                            <td>'.$trans_row['item_id'].'</td>
-                                            <td>'.$trans_row['item'].'</td>
-                                            <td>'.$trans_row['amount'].'</td>
-                                            <td>'.$trans_row['cost'].'</td>
-                                            <td>'.$trans_row['total_cost'].'</td>
-                                        </tr>
-                                        ';
-                                }
-
-                            }
-                                        
-                            echo '
-                            </table>
-                            </div>
-                            </div>';
-                        }
-                                    
-                    }        
-                    ?>
-
-                </div> 
-            </div>
-            <script>
-                //Hide other panel when another collapses
-                $('.more-detail').click( function(e) {
-                    $('.collapse').collapse('hide');
-                });
-
-                //check for Navigation Timing API support
-                if (window.performance) {
-                    console.info("window.performance works fine on this browser");
-                }
-                console.info(performance.navigation.type);
-                if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-                    location.href = "admin_view_transaction.php";
-                } else {
-                    console.info( "This page is not reloaded");
-                }
-            </script>
+        //check for Navigation Timing API support
+        if (window.performance) {
+            console.info("window.performance works fine on this browser");
+        }
+        console.info(performance.navigation.type);
+        if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+            location.href = "admin_view_transaction.php";
+        } else {
+            console.info( "This page is not reloaded");
+        }
+    </script>
     <!-- /.search-popup -->
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>

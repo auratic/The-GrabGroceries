@@ -58,30 +58,15 @@
         {
             $card_cvv = $_POST["card_cvv"];
         }*/
-
-        if($_POST["no"] == 0) 
-        {
-            $sql_insert_cc = " 
-            UPDATE cust_card SET 
-            cardName1 = '".ucwords($_POST['card_name'])."',
-            cardNo1   = '".$_POST["card_no"]."',
-            cardExp1  = '".$_POST["card_exp"]."',
-            cardCvv1  = '".$_POST["card_cvv"]."'
+        $sql_insert_cc = "
+            UPDATE cust_card
+            SET 
+            cardName".$_POST["no"]." = '".ucwords($_POST['card_name'])."', 
+            cardNo".$_POST["no"]."= '".$_POST["card_no"]."', 
+            cardExp".$_POST["no"]." = '".$_POST["card_exp"]."',
+            cardCvv".$_POST["no"]." = '".$_POST["card_cvv"]."'
             WHERE user_id = ".$_SESSION["userid"];
-        }
-        else
-        {
-            $sql_insert_cc = "
-                UPDATE cust_address
-                SET 
-                card_name".$_POST["no"]." = '".ucwords($_POST['card_name'])."', 
-                card_no".$_POST["no"]."= '".$_POST["card_no"]."', 
-                card_exp".$_POST["no"]." = '".$_POST["card_exp"]."',
-                card_cvv".$_POST["no"]." = '".$_POST["card_cvv"]."'
-                WHERE user_id = ".$_SESSION["userid"];
-        }
-        
-
+     
         if(mysqli_query($link, $sql_insert_cc)) 
         {
             echo "
@@ -96,18 +81,17 @@
                 alert('Something went wrong, please try again');
             </script>";
         }
-        
+    }
 
-        $sql = "SELECT * FROM cust_card where user_id = ".$_SESSION["userid"];
-        if($result = mysqli_query($link, $sql))
+    $sql = "SELECT * FROM cust_card where user_id = ".$_SESSION["userid"];
+    if($result = mysqli_query($link, $sql))
+    {
+        while($row=mysqli_fetch_assoc($result))
         {
-            while($row=mysqli_fetch_assoc($result))
-            {
-                array_push($card_name, $row['cardName2']   , $row['cardName3']   , $row['cardName4']   , $row['cardName5']);
-                array_push($card_no  , $row['cardNo2'], $row['cardNo3'], $row['cardNo4'], $row['cardNo5']);
-                array_push($card_cvv , $row['cardCvv2']  , $row['cardCvv3']  , $row['cardCvv4']  , $row['cardCvv5']);
-                array_push($card_exp , $row['cardExp2']  , $row['cardExp23']  , $row['cardExp4']  , $row['cardExp5']);
-            }
+            array_push($card_name, $row['cardName1'], $row['cardName2'], $row['cardName3'], $row['cardName4'], $row['cardName5']);
+            array_push($card_no  , $row['cardNo1']  , $row['cardNo2']  , $row['cardNo3']  , $row['cardNo4']  , $row['cardNo5']);
+            array_push($card_cvv , $row['cardCvv1'] , $row['cardCvv2'] , $row['cardCvv3'] , $row['cardCvv4'] , $row['cardCvv5']);
+            array_push($card_exp , $row['cardExp1'] , $row['cardExp2'] , $row['cardExp3'], $row['cardExp4'] , $row['cardExp5']);
         }
     }
     
@@ -350,7 +334,9 @@
                                         <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
                                             <div class="my-account-payment account-wrapper">
                                                 <h4 class="account-title">Payment Method</h4>
+                                                <div class="row">
                                                 <?php
+                                                /*
                                                     $sql = "SELECT * FROM cust_card WHERE user_id = '".$_SESSION['userid']."'";
                                                     $result = mysqli_query($link, $sql);
 
@@ -370,6 +356,7 @@
                                                                 <a class="box-btn m-t-25 " id="add-card" onclick="return addCard(0)"><i class="far fa-edit"></i>Edit</a>
                                                             </div>';
 
+                                                    */
                                                             $counterr = 0;
                                                             for($x=0; $x<5; $x++) 
                                                             {
@@ -381,9 +368,8 @@
                                                                     <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
                                                                 </div>';
                                                             }
-                                                        echo"</div>";
                                                 ?>
-                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -608,7 +594,7 @@
             var cardCvv = document.getElementById("card_cvv"+counter).value;
 
             if(cardName != "" && cardNum != "" && cardExp != "" && cardCvv != "")
-            {
+            {   
                 $.ajax({
                     type: "post",
                     url : "payment.php",

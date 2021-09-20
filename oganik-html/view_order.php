@@ -220,10 +220,6 @@
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
-                                                    <a  href="download.php"><i
-                                                            class="fas fa-cloud-download-alt"></i> Download</a>
-                                                </li>
-                                                <li>
                                                     <a href="payment.php"><i
                                                             class="fas fa-credit-card"></i> Payment Method</a>
                                                 </li>

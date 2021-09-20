@@ -17,10 +17,33 @@
    $phone= array();
    $email = array();
 
+   $name_err = $address_err = $phone_err = $email_err = "";
 
-   if(isset($_POST["details"])) {
+   if(isset($_POST["details"])) 
+   {
         
-        if($_POST["no"] == 0) {
+        if($_POST["no"] == 0) 
+        {
+            /*Not Working (if address modal didnt enter value)
+            if(empty($_POST['address']))
+            {
+                $address_err = "Please enter address";
+            }
+            else
+            {
+                $address = ucwords($_POST["address"]);
+            }
+
+            if(empty($_POST['phone']))
+            {
+                $phone_err = "Please enter phone number";
+            }
+            else
+            {
+                $phone = $_POST["phone"];
+            }*/
+            
+            
             $sql = "
             UPDATE users
             SET 
@@ -53,6 +76,9 @@
         }
     }
 
+    
+
+
     $sql = "SELECT * FROM cust_address where user_id = ".$_SESSION["userid"];
     if($result = mysqli_query($link, $sql))
     {
@@ -64,6 +90,7 @@
             array_push($email,   $row['email1']  , $row['email2']  , $row['email3']  , $row['email4']  , $row['email5']);
         }
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -288,10 +315,6 @@
                                                             class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
-                                                    <a href="download.php"><i
-                                                            class="fas fa-cloud-download-alt"></i> Download</a>
-                                                </li>
-                                                <li>
                                                     <a href="payment.php"><i
                                                             class="fas fa-credit-card"></i> Payment Method</a>
                                                 </li>
@@ -466,7 +489,7 @@
                         <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
                     </div><!-- /.inner-container -->
                 </div><!-- /.container -->
-            </div><!-- /.bottom-footer -->
+            </div><!-- /.bottom-footer --> 
         </footer><!-- /.site-footer -->
 
         <?php
@@ -489,7 +512,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name0" id="name0" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$fname.' '.$lname.'" disabled>
+                                                <input type="" name="name0" id="name0" required class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$fname.' '.$lname.'" disabled>
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -499,7 +522,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="" name="email0" id="email0" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_email.'" disabled>
+                                                <input type="" name="email0" id="email0" required class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_email.'" disabled>
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -509,8 +532,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address0" id="address0" class="form-control '.((!empty($code_err)) ? "is-invalid" : '').'" value="'.$default_address.'">
-                                                <span class="new-pass-err" style="color:crimson"></span>
+                                                <input type="" name="address0" id="address0" required class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$default_address.'">
+                                                <span class="invalid-feedback"><?php echo $address_err; ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -519,8 +542,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone0" id="phone0" class="form-control '.((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_phone.'">
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <input type="" name="phone0" id="phone0" required class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$default_phone.'">
+                                                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -569,8 +592,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].' ">
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].' ">
+                                                <span class="invalid-feedback"><?php echo $name_err; ?></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -579,8 +602,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].' ">
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <input type="" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].' ">
+                                                <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -589,8 +612,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($code_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'">
-                                                <span class="new-pass-err" style="color:crimson"></span>
+                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'">
+                                                <span class="invalid-feedback"><?php echo $address_err; ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -599,8 +622,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].' ">
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].' ">
+                                                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
                                     </div>

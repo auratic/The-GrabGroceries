@@ -226,30 +226,30 @@
             <div class="container">
                 <div class="inner-container wow fadeInUp" data-wow-duration="1500ms">
                     <div class="thm-tiny__slider" id="contact-infos-box" data-tiny-options='{
-            "container": "#contact-infos-box",
-            "items": 1,
-            "slideBy": "page",
-            "gutter": 0,
-            "mouseDrag": true,
-            "autoplay": true,
-            "nav": false,
-            "controlsPosition": "bottom",
-            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-            "autoplayButtonOutput": false,
-            "responsive": {
-                "640": {
-                  "items": 2,
-                  "gutter": 30
-                },
-                "992": {
-                  "gutter": 30,
-                  "items": 3
-                },
-                "1200": {
-                  "disable": true
-                }
-              }
-        }'>
+                        "container": "#contact-infos-box",
+                        "items": 1,
+                        "slideBy": "page",
+                        "gutter": 0,
+                        "mouseDrag": true,
+                        "autoplay": true,
+                        "nav": false,
+                        "controlsPosition": "bottom",
+                        "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
+                        "autoplayButtonOutput": false,
+                        "responsive": {
+                            "640": {
+                            "items": 2,
+                            "gutter": 30
+                            },
+                            "992": {
+                            "gutter": 30,
+                            "items": 3
+                            },
+                            "1200": {
+                            "disable": true
+                            }
+                        }
+                    }'>
                         <div>
                             <div class="feature-box__single">
                                 <i class="organik-icon-global-shipping feature-box__icon"></i>

@@ -286,6 +286,7 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
             
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
@@ -364,6 +365,7 @@
                                                                 echo'
                                                                 <div class="col-4">
                                                                     <p>Card Name   :'.$card_name[$x].' </p>
+                                                                    <!-- <p>Card Number :<span id="card_display_no'.$counterr.'">'.$card_no[$x].'</span></p> -->
                                                                     <p>Card Number :'.$card_no[$x].'</span></p>
                                                                     <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
                                                                 </div>';
@@ -512,7 +514,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
-                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
+                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control card_no'.$counter.' '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
                                                     <span class="invalid-feedback"><?php echo $cno_err; ?></span>
                                             </div>
                                         </div>
@@ -627,37 +629,86 @@
             $('#card-modal'+counter).fadeOut();
             return false;
         }
-    </script>
 
-    <script>
+        function censor(counter) {
+            var CCNValue = $("#card_no"+counter).val();
+            CCNValue = CCNValue.replace(/ /g, '');
+            var CCNLength = CCNValue.length;
+            var m = 1;
+            var arr = CCNValue.split('');
+            var ccnnewval = "";
+
+            if (arr.length > 0) {
+                for (var m = 0; m < arr.length; m++) {
+                    if (m == 4 || m == 8 || m == 12) {
+                        ccnnewval = ccnnewval + ' ';
+                    }
+
+                    if (m <= 11) {
+                        ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+                    } else {
+                        ccnnewval = ccnnewval + arr[m];
+                    }
+                }
+            }
+
+            $("#card_no"+counter).val(ccnnewval);
+        }
+        
+        /*
         $(document).ready(function () {
 
             $("#card_no").keyup(function (e) {
-                var CCNValue = $(this).val();
-                CCNValue = CCNValue.replace(/ /g, '');
-
-                var CCNLength = CCNValue.length;
-                var m = 1;
-                var arr = CCNValue.split('');
-                var ccnnewval = "";
-
-                if (arr.length > 0) {
-                    for (var m = 0; m < arr.length; m++) {
-                        if (m == 4 || m == 8 || m == 12) {
-                            ccnnewval = ccnnewval + ' ';
-                        }
-
-                        if (m <= 11) {
-                            ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
-                        } else {
-                            ccnnewval = ccnnewval + arr[m];
-                        }
-                    }
-                }
-
-                $("#card_no").val(ccnnewval);
+                
             });
         });
+        */
+
+       /*
+        String.prototype.replaceAt = function(index, char) {
+            var a = this.split("");
+            a[index] = char;
+            return a.join("");
+        }
+
+        window.onload = function() {
+            
+            for(var j = 0 ; j < 5 ; j ++) {
+                var card_no = document.getElementById("card_no"+(j+1)).value;
+                
+                if(card_no != "") {
+
+                for(var i = 0 ; i < 15 ; i++) {
+                    var char = "*";
+                    if (i == 4 || i == 9 || i == 14) {
+                        char = " ";
+                    }
+                    card_no = card_no.replaceAt(i, char);
+                }
+                    
+                document.getElementById("card_no"+(j+1)).value = card_no;
+                }
+            }
+
+            for(var j = 0 ; j < 5 ; j ++) {
+
+                var card_no = document.getElementById("card_display_no"+(j+1)).innerHTML;
+                    
+                if(card_no != "") {
+
+                    for(var i = 0 ; i < 15 ; i++) {
+                        var char = "*";
+                        if (i == 4 || i == 9 || i == 14) {
+                            char = " ";
+                        }
+                        card_no = card_no.replaceAt(i, char);
+                    }
+                        
+                    document.getElementById("card_display_no"+(j+1)).innerHTML = card_no;
+                }
+            }
+        }
+       */
     </script>
 </body>
 

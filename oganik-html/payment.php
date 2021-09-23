@@ -153,7 +153,7 @@
             width: 1430px;
         }
 
-        #add-card
+        #add-card1, #add-card2, #add-card3, #add-card4, #add-card5
         {
             cursor: pointer;
         }

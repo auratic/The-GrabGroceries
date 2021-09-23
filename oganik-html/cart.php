@@ -1,5 +1,17 @@
 <?php
-  session_start()
+  session_start();
+  
+  if(!isset($_SESSION["loggedin"])) {
+    echo "
+     <script>
+       alert('Please login');
+       location.href='login.php';
+     </script>";
+   }
+
+  require "config.php";
+
+   
 ?>
 
 <!DOCTYPE html>
@@ -181,50 +193,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if (empty($item)): ?>
                             <tr>
-                                <td>
-                                    <div class="product-box">
-                                        <img src="assets/images/products/cart-1-1.jpg" alt="">
-                                        <h3><a href="product-details.php">Banana</a></h3>
-                                    </div><!-- /.product-box -->
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <div class="quantity-box">
-                                        <button type="button" class="sub">-</button>
-                                        <input type="number" id="2" value="1" />
-                                        <button type="button" class="add">+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    $9.99
-                                </td>
-                                <td>
-                                    <i class="organik-icon-close remove-icon"></i>
-                                </td>
+                                <td colspan="5" style="text-align:center;">You have no items added in your Shopping Cart</td>
                             </tr>
+                            <?php else: ?>
+                            <?php foreach ($item as $item): ?>
                             <tr>
-                                <td>
-                                    <div class="product-box">
-                                        <img src="assets/images/products/cart-1-2.jpg" alt="">
-                                        <h3><a href="product-details.php">Tomatoes</a></h3>
-                                    </div><!-- /.product-box -->
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <div class="quantity-box">
-                                        <button type="button" class="sub">-</button>
-                                        <input type="number" id="2" value="1" />
-                                        <button type="button" class="add">+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    $9.99
-                                </td>
-                                <td>
-                                    <i class="organik-icon-close"></i>
-                                </td>
+                                <?php
+                                if(isset($_POST['add_to_cart']))
+                                {
+                                    
+                                }
+                                ?>
                             </tr>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
 
                     </table><!-- /.table -->

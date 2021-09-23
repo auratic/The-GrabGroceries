@@ -140,8 +140,9 @@
         }
 
         .panel-heading {
-            background-color: var(--thm-base);
-            border-radius: 25px;
+            border: solid var(--thm-base) 1px;
+            box-sizing: border-box;
+            background-color: azure/*var(--thm-base)*/;
             padding: 2%;
             margin: 1%
         }

@@ -512,7 +512,11 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
+<<<<<<< HEAD
                                                 <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
+=======
+                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
+>>>>>>> 883c70fd4b39e81ea9d2f264c109bda9fefbe5b4
                                                     <span class="invalid-feedback"><?php echo $cno_err; ?></span>
                                             </div>
                                         </div>
@@ -629,7 +633,36 @@
         }
     </script>
 
+<<<<<<< HEAD
     <script>
+=======
+        function censor(counter) {
+            var CCNValue = $("#card_no"+counter).val();
+            CCNValue = CCNValue.replace(/ /g, '');
+            var CCNLength = CCNValue.length;
+            var m = 1;
+            var arr = CCNValue.split('');
+            var ccnnewval = "";
+
+            if (arr.length > 0) {
+                for (var m = 0; m < arr.length; m++) {
+                    if (m == 4 || m == 8 || m == 12) {
+                        ccnnewval = ccnnewval + ' ';
+                    }
+
+                    if (m <= 11) {
+                        ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+                    } else {
+                        ccnnewval = ccnnewval + arr[m];
+                    }
+                }
+            }
+
+            $("#card_no"+counter).val(ccnnewval);
+        }
+
+        /*
+>>>>>>> 883c70fd4b39e81ea9d2f264c109bda9fefbe5b4
         $(document).ready(function () {
 
             $("#card_no").keyup(function (e) {

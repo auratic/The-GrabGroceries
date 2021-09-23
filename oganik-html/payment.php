@@ -514,7 +514,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
-                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control card_no'.$counter.' '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
+                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
                                                     <span class="invalid-feedback"><?php echo $cno_err; ?></span>
                                             </div>
                                         </div>
@@ -654,7 +654,7 @@
 
             $("#card_no"+counter).val(ccnnewval);
         }
-        
+
         /*
         $(document).ready(function () {
 

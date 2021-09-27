@@ -50,8 +50,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
             echo "Login successful.";
-            if($_SESSION["mode"] == "admin"){
-                header("location: adminprofile.php");
+            if($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin"){
+                header("location: admin_profile.php");
 
             } else {
                 header("location: index.php");

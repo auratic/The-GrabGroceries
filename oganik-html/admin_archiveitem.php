@@ -1,7 +1,7 @@
 <?php
   session_start();
   
-  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || $_SESSION["mode"] !== "admin") {
+  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
    echo "
     <script>
       alert('You are not authorized to this page');
@@ -125,12 +125,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "admin_profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
                                 if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
+                                    echo $_SESSION['lname'] ." (".$_SESSION['mode'].")";
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -140,22 +140,28 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li>
-                            <a href="adminprofile.php">Profile</a>
+                            <a href="admin_profile.php">Profile</a>
                         </li>
                         <li>
-                            <a href="additem.php">Add item</a>
+                            <a href="admin_additem.php">Add item</a>
                         </li>
                         <li class="dropdown">
-                            <a href="displayitem.php">Update product</a>
+                            <a href="admin_displayitem.php">Update product</a>
                             <ul>
-                                <li><a href="displayitem.php">Update product</a></li>
-                                <li><a href="archiveitem.php">Archive product</a></li>
+                                <li><a href="admin_displayitem.php">Update product</a></li>
+                                <li><a href="admin_archiveitem.php">Archive product</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="adminlist.php">Admin</a></li>
+                        <?php 
+
+                        if($_SESSION["mode"] == "superadmin") {
+                            echo "<li><a href='admin_manage.php'>Manage Admins</a></li>";
+                        }
+                        
+                        ?>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -354,7 +360,7 @@
                                                 <td>RM'.$row['cost'].'</td>
                                                 <td>'.$row['exp_date'].'</td>
                                                 <td>
-                                                    <a href="updateitem.php?id='.$row['item_id'].'">
+                                                    <a href="admin_updateitem.php?id='.$row['item_id'].'">
                                                     <button class="btn btn-info btn-sm">Edit</button>
                                                     </a>
                                                 </td>
@@ -409,7 +415,7 @@
             if (confirm("Restore product? Press 'OK' to continue")) {
 				$.ajax({
 					type: "get",
-					url: "archiveitem.php",
+					url: "admin_archiveitem.php",
 					data: {  
                     'restore' : true,
 					'item_id' : item_id
@@ -417,7 +423,7 @@
 					cache: false,
 					success: function (html) {
 						alert('Updated');
-						location.href = 'archiveitem.php';
+						location.href = 'admin_archiveitem.php';
 					}
 				});
                 
@@ -430,7 +436,7 @@
 
         function deleteItem() {
             if (confirm("Delete permenantly? Press 'OK' to continue")) {
-                alert("Updated");
+                alert("Not working yet");
             } else {
                 
             }

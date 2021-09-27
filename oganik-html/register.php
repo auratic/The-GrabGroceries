@@ -322,55 +322,56 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            <div class="signup-form container loginbox">
-                <h2>Sign Up</h2>
-                <p>Please fill this form to create an account.</p>
-                <form 
-                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
-                method="post"
-                style="text-align: left">
-                    <div class="form-group">
-                        <label>E-mail</label> </br>
-                        <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
-                        <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                    </div> 
-                    
-                    <div class="form-group" style="display: flex; justify-content: space-between">
-                      <div>
-                        <label>First Name</label> </br>
-                        <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
-                        <span class="invalid-feedback"><?php echo $fname_err; ?></span>
-                      </div>   
-                      
-                      <div>
-                        <label>Last Name</label> </br>
-                        <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
-                        <span class="invalid-feedback"><?php echo $lname_err; ?></span>
-                      </div>    
-                    </div>    
-
-                    <div class="form-group">
-                        <label>Password</label> </br>
-                        <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-                        <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <label>Confirm Password</label> </br>
-                        <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-                        <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <input type="reset" class="btn btn-secondary ml-2" value="Reset">
-                    </div>
-                    <p>Already have an account? <a href="login.php">Login here</a>.</p>
-                </form>
-            </div> 
         </header>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
+
+        <div class="signup-form container loginbox">
+            <h2>Sign Up</h2>
+            <p>Please fill this form to create an account.</p>
+            <form 
+            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
+            method="post"
+            style="text-align: left">
+                <div class="form-group">
+                    <label>E-mail</label> </br>
+                    <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
+                    <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                </div> 
+                    
+                <div class="form-group" style="display: flex; justify-content: space-between">
+                  <div>
+                    <label>First Name</label> </br>
+                    <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
+                    <span class="invalid-feedback"><?php echo $fname_err; ?></span>
+                  </div>   
+                      
+                  <div>
+                    <label>Last Name</label> </br>
+                    <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
+                    <span class="invalid-feedback"><?php echo $lname_err; ?></span>
+                  </div>    
+                </div>    
+
+                <div class="form-group">
+                    <label>Password</label> </br>
+                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                    <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                </div>
+                <div class="form-group" style="text-align: left">
+                    <label>Confirm Password</label> </br>
+                    <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+                    <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                </div>
+                <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            </form>
+        </div> 
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">

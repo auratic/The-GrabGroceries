@@ -264,12 +264,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-md-10" style="margin-top:1%;">
-                                                                        <input type="submit" class="btn btn-primary" value="Save">
-                                                                    </div>
-                                                                </div>
                                                             </div>
 
                                                             <div class="col-md-4">

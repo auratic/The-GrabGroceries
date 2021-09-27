@@ -187,6 +187,14 @@
         {
             margin-left:-95px;
         }
+
+        .card
+        {
+            width:290px;
+            height:150px;
+            background:linear-gradient(to left, gray , white);
+            margin-bottom:1%;
+        }
     </style>
 </head>
 
@@ -363,10 +371,11 @@
                                                             {
                                                                 $counterr++;
                                                                 echo'
-                                                                <div class="col-4">
-                                                                    <p>Card Name   :'.$card_name[$x].' </p>
-                                                                    <!-- <p>Card Number :<span id="card_display_no'.$counterr.'">'.$card_no[$x].'</span></p> -->
-                                                                    <p>Card Number :'.$card_no[$x].'</span></p>
+                                                                <div class="col-4" style="margin-bottom:3%">
+                                                                    <div class="card">
+                                                                        <p>Card Name   :'.$card_name[$x].' </p>
+                                                                        <p>Card Number :'.$card_no[$x].'</p>
+                                                                    </div>
                                                                     <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
                                                                 </div>';
                                                             }

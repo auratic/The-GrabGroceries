@@ -297,7 +297,7 @@
                                                                 
                                                             <div class="form-group" style="margin: 1%;">
                                                                 <input type="submit" class="btn btn-primary" value="Submit">
-                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
                                                             </div>  
                                                         </form>
                                                 </div>

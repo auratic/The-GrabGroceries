@@ -18,8 +18,16 @@
     $receipt_id = $_GET["receipt_id"];
     $status = $_GET["status"];
     $date = date('Y-m-d H:i:s');
+    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (". $_SESSION["userid"] .", 'update receipt', '$date', '";
 
     for($i = 0 ; $i < count($receipt_id) ; $i++) {
+
+        if($i < 1) {
+            $activity_sql .= $receipt_id[$i];
+        } else {
+            $activity_sql .= ",".$receipt_id[$i];
+        }
+
         if($status == "Not Set") {
             $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = ".$receipt_id[$i];
 
@@ -41,6 +49,8 @@
             <script>alert('Something went wrong')</script>";
         }
     }
+    $activity_sql .= "')";
+    mysqli_query($link, $activity_sql);
   }
 
   $sql_receipt = "SELECT receipt_id FROM cust_receipt";

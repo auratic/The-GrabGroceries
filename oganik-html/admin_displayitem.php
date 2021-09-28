@@ -1,5 +1,7 @@
 <?php
   session_start();
+
+  date_default_timezone_set("Asia/Kuala_Lumpur");
   
   if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
    echo "
@@ -15,9 +17,18 @@
 
       $item_id = $_GET["item_id"];
 
+      $date = date('Y-m-d H:i:s');
+      $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (". $_SESSION["userid"] .", 'archive item', '$date', '";
+
       for($i = 0; $i < count($item_id) ; $i++) {
         $sql = "UPDATE item SET item_status = 'Inactive' WHERE item_id = ".$item_id[$i];
-  
+        
+        if($i < 1) {
+            $activity_sql .= $item_id[$i];
+        } else {
+            $activity_sql .= ",".$item_id[$i];
+        }
+
         if(mysqli_query($link,$sql)) {
           echo "<script>alert('Updated');</script>";
         } else {
@@ -25,6 +36,8 @@
         }
 
       }
+      $activity_sql .= "')";
+      mysqli_query($link, $activity_sql);
   }
 ?>
 

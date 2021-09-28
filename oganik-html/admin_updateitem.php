@@ -1,6 +1,8 @@
 <?php
   session_start();
   
+  date_default_timezone_set("Asia/Kuala_Lumpur");
+
   if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
    echo "
     <script>
@@ -131,6 +133,11 @@
          }
 
          if (mysqli_query($link, $sql)) {
+           
+           $date = date('Y-m-d H:i:s');
+           $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'update item', '$id', '$date')";
+           mysqli_query($link, $sql);
+
            echo "
             <script>
               alert('Updated successfully');

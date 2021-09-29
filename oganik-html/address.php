@@ -17,17 +17,16 @@
    $phone= array();
    $email = array();
 
-   $name_err = $address_err = $phone_err = $email_err = "";
+   $default_address_err = $default_phone_err = "";
 
    if(isset($_POST["details"])) 
    {
         
         if($_POST["no"] == 0) 
         {
-            /*Not Working (if address modal didnt enter value)
             if(empty($_POST['address']))
             {
-                $address_err = "Please enter address";
+                $default_address_err = "Please enter address";
             }
             else
             {
@@ -36,13 +35,12 @@
 
             if(empty($_POST['phone']))
             {
-                $phone_err = "Please enter phone number";
+                $default_phone_err = "Please enter phone number";
             }
             else
             {
                 $phone = $_POST["phone"];
-            }*/
-            
+            }
             
             $sql = "
             UPDATE users

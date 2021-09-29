@@ -286,20 +286,24 @@
                                                             style="text-align: left">
                                                             <div class="form-group">    
                                                                 <label>Current Password</label> </br>
-                                                                <input type="password" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required >
+                                                                <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required >
                                                                 <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
                                                             </div> 
                                                             
                                                             <div class="form-group">
                                                                 <label>New Password</label> </br>
-                                                                <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required>
+                                                                <input type="password" id="newPwd" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required>
                                                                 <span class="invalid-feedback"><?php echo $newPassword_err ; ?></span> 
                                                             </div>
                                                             <div>
                                                                 <label>Confirm Password</label> </br>
-                                                                <input type="password" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required>
+                                                                <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required>
                                                                 <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
                                                             </div>    
+
+                                                            <div style="margin-top: 10px;">
+                                                                <input type="checkbox" onclick="myFunction()">Show Password
+                                                            </div>
                                                                 
                                                             <div class="form-group" style="margin: 1%;">
                                                                 <input type="submit" class="btn btn-primary" value="Submit">
@@ -437,6 +441,38 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+    <script>
+        function myFunction() 
+        {
+            var x = document.getElementById("curPwd");
+            var y = document.getElementById("newPwd");
+            var z = document.getElementById("cfmPwd");
+
+            if (x.type === "password") 
+            {
+                x.type = "text";
+            } else 
+            {
+                x.type = "password";
+            }
+
+            if (y.type === "password") 
+            {
+                y.type = "text";
+            } else 
+            {
+                y.type = "password";
+            }
+
+            if (z.type === "password") 
+            {
+                z.type = "text";
+            } else 
+            {
+                z.type = "password";
+            }
+        }
+    </script>
 </body>
 
 </html>

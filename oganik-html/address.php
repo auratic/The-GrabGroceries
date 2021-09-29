@@ -17,31 +17,12 @@
    $phone= array();
    $email = array();
 
-   $default_address_err = $default_phone_err = "";
+   $name_err = $address_err = $phone_err = $email_err = "";
 
    if(isset($_POST["details"])) 
    {
-        
         if($_POST["no"] == 0) 
         {
-            if(empty($_POST['address']))
-            {
-                $default_address_err = "Please enter address";
-            }
-            else
-            {
-                $address = ucwords($_POST["address"]);
-            }
-
-            if(empty($_POST['phone']))
-            {
-                $default_phone_err = "Please enter phone number";
-            }
-            else
-            {
-                $phone = $_POST["phone"];
-            }
-            
             $sql = "
             UPDATE users
             SET 
@@ -590,8 +571,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].' ">
-                                                <span class="invalid-feedback"><?php echo $name_err; ?></span>
+                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].'" required placeholder="John Doe">
+                                                <span class="invalid-feedback d-block" id="name_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -600,8 +581,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].' ">
-                                                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                                                <input type="email" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].'" required placeholder="JohnDoe@gmail.com">
+                                                <span class="invalid-feedback d-block" id="email_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -610,8 +591,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'">
-                                                <span class="invalid-feedback"><?php echo $address_err; ?></span>
+                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'" required placeholder="No 1 Tmn Asin 70000">
+                                                <span class="invalid-feedback d-block" id="address_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -620,8 +601,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].' ">
-                                                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
+                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].'" required placeholder="60122228888" maxlength=12>
+                                                <span class="invalid-feedback d-block" id="phone_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -659,13 +640,49 @@
 
     <script>
 
+
         function updateAddress(counter) {
             var address = document.getElementById("address"+counter).value;
             var phone = document.getElementById("phone"+counter).value;
             var name = document.getElementById("name"+counter).value;
             var email = document.getElementById("email"+counter).value;
+            document.getElementById("address_err"+counter).innerHTML = "";
+            document.getElementById("phone_err"+counter).innerHTML = "";
+            document.getElementById("name_err"+counter).innerHTML = "";
+            document.getElementById("email_err"+counter).innerHTML = "";
 
-            if(address != "" && phone != "" && name != "" && email != "") {
+            var pass = true;
+
+            if(address == "") {
+                document.getElementById("address_err"+counter).innerHTML = "Address is required";
+                pass = false;
+            }
+
+            if(phone == "") {
+                document.getElementById("phone_err"+counter).innerHTML = "Phone Number is required";
+                pass = false;
+            } else if (isNaN(phone)) {
+                document.getElementById("phone_err"+counter).innerHTML = "Please enter valid number";
+                pass = false;
+            }
+            
+            if(name == "") {
+                document.getElementById("name_err"+counter).innerHTML = "Name is required";
+                pass = false;
+            } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(name)) {
+                document.getElementById("name_err"+counter).innerHTML = "Please enter valid name";
+                pass = false;
+            }
+
+            if(email == "") {
+                document.getElementById("email_err"+counter).innerHTML = "Email is required";
+                pass = false;
+            } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                document.getElementById("email_err"+counter).innerHTML = "Please enter valid email";
+                pass = false;
+            }
+
+            if(pass) {
                 $.ajax({
                     type: "post",
                     url: "address.php",
@@ -705,4 +722,3 @@
 
 </body>
 
-</html>

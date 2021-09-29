@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set("Asia/Kuala_Lumpur");
+
 // Initialize the session
 session_start();
  
@@ -50,8 +53,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
             echo "Login successful.";
-            if($_SESSION["mode"] == "admin"){
-                header("location: adminprofile.php");
+            if($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin"){
+                
+                $date = date('Y-m-d H:i:s');
+                $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'login', NULL, '$date')";
+                mysqli_query($link, $sql);
+                
+                header("location: admin_profile.php");
 
             } else {
                 header("location: index.php");
@@ -85,7 +93,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       }
     
     // Close connection
-    mysqli_close($link);
 }
 ?>
 

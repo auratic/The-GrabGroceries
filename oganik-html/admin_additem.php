@@ -1,7 +1,9 @@
 <?php
   session_start();
   
-  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || $_SESSION["mode"] !== "admin") {
+  date_default_timezone_set("Asia/Kuala_Lumpur");
+
+  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
    echo "
     <script>
       alert('You are not authorized to this page');
@@ -91,21 +93,26 @@
            echo "
             <script>
               alert('Something went wrong uploading image');
-              location.href = 'additem.php'
+              location.href = 'admin_additem.php'
             </script>";
          }
 
          if (mysqli_query($link, $sql)) {
+           
+           $date = date('Y-m-d H:i:s');
+           $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'add item', '$item_name', '$date')";
+           mysqli_query($link, $sql);
+
            echo "
             <script>
               alert('Items added successfully');
-              location.href = 'additem.php'
+              location.href = 'admin_additem.php'
             </script>";
          } else {
            echo "
             <script>
               alert('Something went wrong uploading data to database');
-              location.href = 'additem.php'
+              location.href = 'admin_additem.php'
             </script>";
          }
 
@@ -211,12 +218,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "admin_profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
                                 if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
+                                  echo $_SESSION['lname'] ." (".$_SESSION['mode'].")";
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -226,22 +233,28 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li>
-                            <a href="adminprofile.php">Profile</a>
+                            <a href="admin_profile.php">Profile</a>
                         </li>
                         <li>
-                            <a href="additem.php">Add item</a>
+                            <a href="admin_additem.php">Add item</a>
                         </li>
                         <li class="dropdown">
-                            <a href="displayitem.php">Update product</a>
+                            <a href="admin_displayitem.php">Update product</a>
                             <ul>
-                                <li><a href="displayitem.php">Update product</a></li>
-                                <li><a href="archiveitem.php">Archive product</a></li>
+                                <li><a href="admin_displayitem.php">Update product</a></li>
+                                <li><a href="admin_archiveitem.php">Archive product</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="adminlist.php">Admin</a></li>
+                        <?php 
+
+                        if($_SESSION["mode"] == "superadmin") {
+                            echo "<li><a href='admin_manage.php'>Manage Admins</a></li>";
+                        }
+                        
+                        ?>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">

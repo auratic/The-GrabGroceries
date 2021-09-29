@@ -32,27 +32,33 @@
         {
             $confirmPassword_err = "Password did not match";
         }
-        else if($_POST["currentPassword"] == $_POST["newPassword"])
-        {
-            $samePassword_err = "Please use a new password";
-        }
 
         if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
         {
-            $sql_update_password = "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"];
-
-            if(mysqli_query($link, $sql_update_password))
+            if($_POST["currentPassword"] != $_POST["newPassword"])
             {
-                echo" 
-                <script>
-                alert('Your password have updated!');
-                </script>";
+                $sql_update_password = "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"];
+
+                if(mysqli_query($link, $sql_update_password))
+                {
+                    echo" 
+                    <script>
+                    alert('Your password have updated!');
+                    </script>";
+                }
+                else
+                {
+                    echo "
+                    <script>
+                    alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                    </script>";
+                }
             }
             else
             {
                 echo "
                 <script>
-                  alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                    alert('Please enter a new password');
                 </script>";
             }
         }
@@ -280,24 +286,24 @@
                                                             style="text-align: left">
                                                             <div class="form-group">    
                                                                 <label>Current Password</label> </br>
-                                                                <input type="password" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" >
+                                                                <input type="password" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required >
                                                                 <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
                                                             </div> 
                                                             
                                                             <div class="form-group">
                                                                 <label>New Password</label> </br>
-                                                                <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>">
+                                                                <input type="password" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required>
                                                                 <span class="invalid-feedback"><?php echo $newPassword_err ; ?></span> 
                                                             </div>
                                                             <div>
                                                                 <label>Confirm Password</label> </br>
-                                                                <input type="password" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>">
+                                                                <input type="password" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required>
                                                                 <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
                                                             </div>    
                                                                 
                                                             <div class="form-group" style="margin: 1%;">
                                                                 <input type="submit" class="btn btn-primary" value="Submit">
-                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
                                                             </div>  
                                                         </form>
                                                 </div>

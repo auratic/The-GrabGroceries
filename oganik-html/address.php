@@ -17,7 +17,6 @@
    $phone= array();
    $email = array();
 
-   $name_err = $address_err = $phone_err = $email_err = "";
 
    if(isset($_POST["details"])) 
    {
@@ -532,7 +531,7 @@
                                             <div class="form-group">
                                                 <label>Address</label>
                                                 <input type="" name="address0" id="address0" required class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$default_address.'">
-                                                <span class="invalid-feedback"><?php echo $address_err; ?></span>
+                                                <span class="invalid-feedback d-block" id="address_err0"><?php echo $address_err; ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -542,7 +541,7 @@
                                             <div class="form-group">
                                                 <label>Phone</label>
                                                 <input type="" name="phone0" id="phone0" required class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$default_phone.'">
-                                                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
+                                                <span class="invalid-feedback d-block" id="phone_err0"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
                                     </div>

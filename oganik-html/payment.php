@@ -153,7 +153,7 @@
             width: 1430px;
         }
 
-        #add-card
+        #add-card1, #add-card2, #add-card3, #add-card4, #add-card5
         {
             cursor: pointer;
         }
@@ -186,6 +186,46 @@
         .label
         {
             margin-left:-95px;
+        }
+
+        .card
+        {
+            width:280px;
+            height:160px;
+            background:linear-gradient(to left, gray , black);
+            margin-bottom:1%;
+            font-family: 'Gemunu Libre';
+        }
+
+        .card_type
+        {
+            color: white;
+            font-size:20px;
+            margin-left: 90px;
+            margin-top:15px;
+
+        }
+
+        .card_numberr
+        {
+            margin-left:35px;
+            margin-top: -15px;
+            color:white;
+            font-size: 25px;
+        }
+
+        .card_expp
+        {
+            margin-left:55px;
+            margin-top: -10px;
+            color:white;
+        }
+
+        .card_namee
+        {
+            color:white;
+            margin-left:45px;
+            margin-top: -5px;
         }
     </style>
 </head>
@@ -363,10 +403,15 @@
                                                             {
                                                                 $counterr++;
                                                                 echo'
-                                                                <div class="col-4">
-                                                                    <p>Card Name   :'.$card_name[$x].' </p>
-                                                                    <!-- <p>Card Number :<span id="card_display_no'.$counterr.'">'.$card_no[$x].'</span></p> -->
-                                                                    <p>Card Number :'.$card_no[$x].'</span></p>
+                                                                <div class="col-4" style="margin-bottom:3%">
+                                                                    <div class="card">
+                                                                        <p class="card_type">Black Card</p>
+                                                                        <img src="assets/images/chippp.png" style="width: 50px; object-fit: contain; margin-top:-30px; margin-left: 23px;">
+                                                                        <p class="card_numberr">'.$card_no[$x].'</p>
+                                                                        <p class="card_expp">'.$card_exp[$x].'</p>
+                                                                        <p class="card_namee">'.$card_name[$x].' </p>
+                                                                        <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px;"></i>
+                                                                    </div>
                                                                     <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
                                                                 </div>';
                                                             }

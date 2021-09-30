@@ -20,26 +20,6 @@
 
    if(isset($_POST["details"])) 
    {
-        /*Not Working (if address modal didnt enter value)
-        if(empty($_POST['address']))
-        {
-            $address_err = "Please enter address";
-        }
-        else
-        {
-            $address = ucwords($_POST["address"]);
-        }
-
-        if(empty($_POST['phone']))
-        {
-            $phone_err = "Please enter phone number";
-        }
-        else
-        {
-            $phone = $_POST["phone"];
-        }
-        */
-        
         if($_POST["no"] == 0) 
         {
             $sql = "
@@ -678,7 +658,7 @@
             }
 
             if(phone == "") {
-                document.getElementById("phone_err"+counter).innerHTML = "Phone is required";
+                document.getElementById("phone_err"+counter).innerHTML = "Phone Number is required";
                 pass = false;
             } else if (isNaN(phone)) {
                 document.getElementById("phone_err"+counter).innerHTML = "Please enter valid number";
@@ -741,4 +721,3 @@
 
 </body>
 
-</html>

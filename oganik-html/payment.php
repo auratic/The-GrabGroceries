@@ -19,45 +19,6 @@
 
     if(isset($_POST['detail']))
     {
-        /*if(empty($card_name))
-        {
-            $cname_err = "Please enter a name.";
-        }
-        else if(!preg_match("/^[a-zA-Z-' ]*$/",($_POST["card_name"]))) 
-        {
-            $cname_err = "Only letters and white space allowed";
-        }
-        else
-        {
-            $card_name = ucwords($_POST["card_name"]);
-        }
-
-        if(empty($card_no))
-        {
-            $cno_err = "Please enter card number";
-        }
-        else
-        {
-            $card_no = $_POST["card_no"];
-        }
-
-        if(empty($card_exp))
-        {
-            $cexp_err = "Please enter date.";
-        }
-        else
-        {
-            $card_exp = $_POST["card_exp"];
-        }
-
-        if(empty($card_cvv))
-        {
-            $ccvv_err = "Please enter CVV number";
-        }
-        else
-        {
-            $card_cvv = $_POST["card_cvv"];
-        }*/
         $sql_insert_cc = "
             UPDATE cust_card
             SET 
@@ -209,7 +170,7 @@
         .card_numberr
         {
             margin-left:35px;
-            margin-top: -15px;
+            margin-top: -10px;
             color:white;
             font-size: 25px;
         }
@@ -550,7 +511,7 @@
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-user"> Card Holder</i></label>
                                                 <input type="text" name="card_name'.$counter.'" id="card_name'.$counter.'" placeholder="Your Name" class="form-control '. ((!empty($cname_err)) ? "is-invalid" : '' ).'" value="'.$card_name[$x].'">
-                                                    <span class="invalid-feedback"><?php echo $cname_err; ?></span>
+                                                <span class="invalid-feedback d-block" id="cname_err'.$counter.'"></span>   <span class="invalid-feedback"><?php echo $cname_err; ?></span>
                                             </div>
                                         </div>
                                     </div> 
@@ -560,7 +521,7 @@
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
                                                 <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
-                                                    <span class="invalid-feedback"><?php echo $cno_err; ?></span>
+                                                <span class="invalid-feedback d-block" id="cno_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -570,7 +531,7 @@
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
                                                 <input type="text" name="card_exp'.$counter.'" id="card_exp'.$counter.'" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control '. ((!empty($cexp_err)) ? "is-invalid" : '' ).'" value="'.$card_exp[$x].' ">
-                                                <span class="invalid-feedback"><?php echo $cexp_err; ?></span>
+                                                <span class="invalid-feedback d-block" id="cexp_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                             
@@ -578,7 +539,7 @@
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-lock"> CVV</i></label>
                                                 <input type="text" name="card_cvv'.$counter.'" id="card_cvv'.$counter.'" data-mask="000" placeholder="000" class="form-control '. ((!empty($ccvv_err)) ? "is-invalid" : '' ).'" value="'.$card_cvv[$x].' ">
-                                                <span class="invalid-feedback"><?php echo $ccvv_err ; ?></span>
+                                                <span class="invalid-feedback d-block" id="ccvv_err'.$counter.'"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -639,8 +600,34 @@
             var cardNum = document.getElementById("card_no"+counter).value;
             var cardExp = document.getElementById("card_exp"+counter).value;
             var cardCvv = document.getElementById("card_cvv"+counter).value;
+            document.getElementById("cname_err"+counter).innerHTML = "";
+            document.getElementById("cno_err"+counter).innerHTML = "";
+            document.getElementById("cexp_err"+counter).innerHTML = "";
+            document.getElementById("ccvv_err"+counter).innerHTML = "";
 
-            if(cardName != "" && cardNum != "" && cardExp != "" && cardCvv != "")
+            var pass = true;
+
+            if(cardName == "") {
+                document.getElementById("cname_err"+counter).innerHTML = "Card Name is required";
+                pass = false;
+            }
+
+            if(cardNum == "") {
+                document.getElementById("cno_err"+counter).innerHTML = "Card Number is required";
+                pass = false;
+            }
+
+            if(cardExp == "") {
+                document.getElementById("cexp_err"+counter).innerHTML = "Card Expiry is required";
+                pass = false;
+            }
+
+            if(cardCvv == "") {
+                document.getElementById("ccvv_err"+counter).innerHTML = "CVV is required";
+                pass = false;
+            }
+
+            if(pass)
             {   
                 $.ajax({
                     type: "post",

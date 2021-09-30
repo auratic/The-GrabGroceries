@@ -1,17 +1,105 @@
 <?php
   session_start();
   
-  if(!isset($_SESSION["loggedin"])) {
-    echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
-   }
+    if(!isset($_SESSION["loggedin"])) {
+        echo "
+        <script>
+        alert('Please login');
+        location.href='login.php';
+        </script>";
+    }
 
-   require "config.php";
-   
-   
+    require "config.php";
+
+    $fname = $lname = $phone = $email = "";
+    $fname_err = $lname_err = $phone_err = $email_err = "";
+
+    function test_input($data) 
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    
+    if($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        if (empty($_POST["fname"])) {
+            $fname_err = "Name is required";
+    
+        } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["fname"]))) {
+            $fname_err = "Only letters and white space allowed";
+    
+        } else {
+            $fname = ucwords(test_input($_POST["fname"]));
+        }
+
+        if (empty($_POST["lname"])) {
+            $lname_err = "Name is required";
+
+        } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["lname"]))) {
+            $lname_err = "Only letters and white space allowed";
+
+        } else {
+            $lname = ucwords(test_input($_POST["lname"]));
+        }
+
+        if(empty($_POST["phone"])) {
+            $phone_err = "Phone number is required";
+        } else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
+            $phone_err = "Please enter valid phone number";
+        } else {
+            $phone = $_POST["phone"];
+        }
+
+        if (empty($_POST["email"])) {
+            $email_err = "Email is required";
+
+        } else if (!filter_var(test_input($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+                $email_err = "Invalid email format";
+                
+        } else {
+            // Prepare a select statement
+
+            $sql = "SELECT user_id FROM users WHERE email = '" . test_input($_POST["email"]) . "'";
+            $result = mysqli_query($link, $sql);
+
+            if (mysqli_num_rows($result) > 0) {
+                $email_err = "Email is taken";
+
+            } else 
+            {
+                $email = test_input($_POST["email"]);
+            }
+        }
+
+        if (empty($fname_err) && empty($lname_err) && empty($phone_err) && empty($email_err)) 
+        {
+            $sql = "
+            UPDATE users SET
+            lastname = '$lname',
+            firstname = '$fname',
+            phone = '$phone',
+            email = '$email'
+            WHERE user_id = ".$_SESSION["userid"];
+
+            if(mysqli_query($link, $sql))
+            {
+                echo"
+                <script>
+                    alert('Your details have been updated!')
+                </script>";
+            }
+            else
+            {
+                echo"
+                <script>
+                    alert('Errors occur!!!')
+                </script>";
+            }
+
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -214,57 +302,70 @@
                                             <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
                                                 <div class="my-account-details account-wrapper">
                                                     <h4 class="account-title">Account Details</h4>
-
                                                     <div class="account-details">
                                                         <div class="row">
                                                             <div class="col-md-8">
-
-                                                                <div class="row">
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-box__single-group">
-                                                                        <?php 
-                                                                            $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
-                                                                            $result = mysqli_query($link, $sql);
-                                                                    
-                                                                            while($row=mysqli_fetch_assoc($result)) 
-                                                                            {
-                                                                                $fname = $row['firstname'];
-                                                                                $lname = $row['lastname'];
-                                                                                $email = $row['email'];
-                                                                                $phone = $row['phone'];
-                                                                            }
-                                                                        ?>
-                                                                            <span><b>First Name</b></span> 
-                                                                            <input type="text" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" disabled="disabled">
+                                                                <form 
+                                                                    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
+                                                                    method="post">
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                            <div class="form-group">
+                                                                                <?php 
+                                                                                    $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
+                                                                                    $result = mysqli_query($link, $sql);
                                                                             
+                                                                                    while($row=mysqli_fetch_assoc($result)) 
+                                                                                    {
+                                                                                        $fname = $row['firstname'];
+                                                                                        $lname = $row['lastname'];
+                                                                                        $email = $row['email'];
+                                                                                        $phone = $row['phone'];
+                                                                                    }
+                                                                                ?>
+                                                                                <span><b>First Name</b></span> 
+                                                                                <input type="text" class="form-control" name="fname" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" >
+                                                                                <span class="invalid-feedback"><?php echo $fname_err; ?></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            <div class="form-group">
+                                                                                <span><b>Last Name</b></span> 
+                                                                                <input type="text" class="form-control" name="lname" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" >
+                                                                                <span class="invalid-feedback"><?php echo $lname_err; ?></span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-box__single-group">
-                                                                            <span><b>Last Name</b></span> 
-                                                                            <input type="text" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" disabled="disabled">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                            <span><b>Phone Number</b></span> 
-                                                                            <input type="text" placeholder="Update at Address" style="width:100%" value="<?php echo $phone?>" disabled="disabled">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
                                                                     
-                                                                <div class="row">
-                                                                    <div class="col-md-10">
-                                                                        <div class="form-box__single-group" style="margin-top: 10px";>
-                                                                        <span><b>Email Address</b></span> 
-                                                                            <input type="text" placeholder="Email" style="width:100%" value="<?php echo $email?>" disabled="disabled">
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                            <div class="form-group">
+                                                                                <span><b>Phone Number</b></span> 
+                                                                                <input type="text" class="form-control" name="phone" placeholder="60123456789" style="width:100%" value="<?php echo $phone?>" >
+                                                                                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                        
+                                                                    <div class="row">
+                                                                        <div class="col-md-10">
+                                                                            <div class="form-group">
+                                                                            <span><b>Email Address</b></span> 
+                                                                                <input type="text" class="form-control" name="email" placeholder="example@gmail.com" style="width:100%" value="<?php echo $email?>" >
+                                                                                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
+                                                                    <div class="row">
+                                                                        <div class="col-md-10">
+                                                                            <div class="form-group">
+                                                                                <input type="submit" name="save" class="btn btn-primary" value="Save">
+                                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
                                                             </div>
 
                                                             <div class="col-md-4">

@@ -170,7 +170,7 @@
         .card_numberr
         {
             margin-left:35px;
-            margin-top: -15px;
+            margin-top: -10px;
             color:white;
             font-size: 25px;
         }

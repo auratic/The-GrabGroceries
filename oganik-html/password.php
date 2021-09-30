@@ -58,7 +58,7 @@
             {
                 echo "
                 <script>
-                    alert('Please enter a new password');
+                    alert('The current password cannot be the same as the new password.');
                 </script>";
             }
         }

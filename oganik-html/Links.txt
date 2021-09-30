@@ -25,6 +25,7 @@ Bootstrap / CSS
 //////////////////////////////////////////
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
 Collapses - https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
+d-block - https://stackoverflow.com/questions/50431450/force-to-show-invalid-feedback-in-bootstrap-4
 
 
 //////////////////////////////////////////

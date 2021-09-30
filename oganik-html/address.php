@@ -590,7 +590,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].'" required placeholder="John Doe">
+                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].'" placeholder="John Doe" required />
                                                 <span class="invalid-feedback d-block" id="name_err'.$counter.'"></span>
                                             </div>
                                         </div>
@@ -600,7 +600,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="email" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].'" required placeholder="JohnDoe@gmail.com">
+                                                <input type="email" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].'" placeholder="JohnDoe@gmail.com" required />
                                                 <span class="invalid-feedback d-block" id="email_err'.$counter.'"></span>
                                             </div>
                                         </div>
@@ -610,7 +610,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'" required placeholder="No 1 Tmn Asin 70000">
+                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'" placeholder="No 1 Tmn Asin 70000" required />
                                                 <span class="invalid-feedback d-block" id="address_err'.$counter.'"></span>
                                             </div>
                                         </div>
@@ -620,7 +620,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].'" required placeholder="60122228888" maxlength=12>
+                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].'" placeholder="60122228888" maxlength=12 required />
                                                 <span class="invalid-feedback d-block" id="phone_err'.$counter.'"></span>
                                             </div>
                                         </div>

@@ -11,8 +11,17 @@
 
     require "config.php";
 
-    $fname = $lname = $phone = $email = "";
-    $fname_err = $lname_err = $phone_err = $email_err = "";
+    $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
+    $result = mysqli_query($link, $sql);
+
+    while($row=mysqli_fetch_assoc($result)) 
+    {
+        $fname = $row['firstname'];
+        $lname = $row['lastname'];
+        $email = $row['email'];
+        $phone = $row['phone'];
+    }
+    
 
     function test_input($data) 
     {
@@ -24,6 +33,9 @@
     
     if($_SERVER["REQUEST_METHOD"] == "POST") 
     {
+        $fname_err = $lname_err = $phone_err = $email_err = "";
+
+
         if (empty($_POST["fname"])) {
             $fname_err = "Name is required";
     
@@ -31,7 +43,7 @@
             $fname_err = "Only letters and white space allowed";
     
         } else {
-            $fname = ucwords(test_input($_POST["fname"]));
+            $new_fname = ucwords(test_input($_POST["fname"]));
         }
 
         if (empty($_POST["lname"])) {
@@ -41,7 +53,7 @@
             $lname_err = "Only letters and white space allowed";
 
         } else {
-            $lname = ucwords(test_input($_POST["lname"]));
+            $new_lname = ucwords(test_input($_POST["lname"]));
         }
 
         if(empty($_POST["phone"])) {
@@ -49,8 +61,10 @@
         } else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
             $phone_err = "Please enter valid phone number";
         } else {
-            $phone = $_POST["phone"];
+            $new_phone = $_POST["phone"];
         }
+
+        $new_email = test_input($_POST["email"]);
 
         if (empty($_POST["email"])) {
             $email_err = "Email is required";
@@ -61,33 +75,33 @@
         } else {
             // Prepare a select statement
 
-            $sql = "SELECT user_id FROM users WHERE email = '" . test_input($_POST["email"]) . "'";
+            $sql = "SELECT user_id FROM users WHERE email = '$new_email'";
             $result = mysqli_query($link, $sql);
 
-            if (mysqli_num_rows($result) > 0) {
-                $email_err = "Email is taken";
+            if($new_email != $email) {
 
-            } else 
-            {
-                $email = test_input($_POST["email"]);
-            }
+                if (mysqli_num_rows($result) > 0) {
+                    $email_err = "Email is taken";
+                }
+            } 
         }
 
-        if (empty($fname_err) && empty($lname_err) && empty($phone_err) && empty($email_err)) 
+        if (empty($fname_err) && empty($lname_err) && empty($phone_err) && empty($email_err))  
         {
             $sql = "
             UPDATE users SET
-            lastname = '$lname',
-            firstname = '$fname',
-            phone = '$phone',
-            email = '$email'
+            lastname = '$new_lname',
+            firstname = '$new_fname',
+            phone = '$new_phone',
+            email = '$new_email'
             WHERE user_id = ".$_SESSION["userid"];
 
             if(mysqli_query($link, $sql))
             {
                 echo"
                 <script>
-                    alert('Your details have been updated!')
+                    alert('Your details have been updated!');
+                    location.href = 'accdetails.php'
                 </script>";
             }
             else
@@ -95,6 +109,7 @@
                 echo"
                 <script>
                     alert('Errors occur!!!')
+                    location.href = 'accdetails.php'
                 </script>";
             }
 
@@ -306,32 +321,20 @@
                                                         <div class="row">
                                                             <div class="col-md-8">
                                                                 <form 
-                                                                    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
+                                                                    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>"   
                                                                     method="post">
                                                                     <div class="row">
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <?php 
-                                                                                    $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
-                                                                                    $result = mysqli_query($link, $sql);
-                                                                            
-                                                                                    while($row=mysqli_fetch_assoc($result)) 
-                                                                                    {
-                                                                                        $fname = $row['firstname'];
-                                                                                        $lname = $row['lastname'];
-                                                                                        $email = $row['email'];
-                                                                                        $phone = $row['phone'];
-                                                                                    }
-                                                                                ?>
                                                                                 <span><b>First Name</b></span> 
-                                                                                <input type="text" class="form-control" name="fname" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" >
+                                                                                <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="First Name" style="width:100%" value="<?php echo $fname?>" >
                                                                                 <span class="invalid-feedback"><?php echo $fname_err; ?></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
                                                                                 <span><b>Last Name</b></span> 
-                                                                                <input type="text" class="form-control" name="lname" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" >
+                                                                                <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="Last Name" style="width:100%" value="<?php echo $lname?>" >
                                                                                 <span class="invalid-feedback"><?php echo $lname_err; ?></span>
                                                                             </div>
                                                                         </div>
@@ -341,7 +344,7 @@
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
                                                                                 <span><b>Phone Number</b></span> 
-                                                                                <input type="text" class="form-control" name="phone" placeholder="60123456789" style="width:100%" value="<?php echo $phone?>" >
+                                                                                <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="60123456789" style="width:100%" value="<?php echo $phone?>" >
                                                                                 <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                                                             </div>
                                                                         </div>
@@ -351,7 +354,7 @@
                                                                         <div class="col-md-10">
                                                                             <div class="form-group">
                                                                             <span><b>Email Address</b></span> 
-                                                                                <input type="text" class="form-control" name="email" placeholder="example@gmail.com" style="width:100%" value="<?php echo $email?>" >
+                                                                                <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="example@gmail.com" style="width:100%" value="<?php echo $email?>" >
                                                                                 <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                                                             </div>
                                                                         </div>

@@ -16,52 +16,68 @@
     if (count($_POST) > 0)
     {
         $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+
+        $curPwd = $_POST["currentPassword"];
+        $newPwd = $_POST["newPassword"];
+        $cfmPwd = $_POST["confirmPassword"];
         
-        $result = mysqli_query($link, "SELECT * from users WHERE user_id=" . $_SESSION["userid"]);
-        $row = mysqli_fetch_array($result);
+        $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
 
-        if($_POST["currentPassword"] != $row["password"]) 
+        //hashing part
+        if(password_verify($curPwd, $row["password"]))
         {
-            $currentPassword_err = "Current Password is not correct";
-        }
-        else if (strlen(trim($_POST["newPassword"])) < 6) 
-        {
-            $newPassword_err = "Password must have atleast 6 characters.";
-        }
-        else if($_POST["newPassword"] != $_POST["confirmPassword"])
-        {
-            $confirmPassword_err = "Password did not match";
-        }
+            $uppercase = preg_match('@[A-Z]@', $newPwd);
+            $lowercase = preg_match('@[a-z]@', $newPwd);
+            $number    = preg_match('@[0-9]@', $newPwd);
+            $specialChars = preg_match('@[^\w]@', $newPwd);
 
-        if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
-        {
-            if($_POST["currentPassword"] != $_POST["newPassword"])
+            if (!$uppercase || !$lowercase || !$number || !$specialChars ||(strlen(trim($newPwd)) < 8))
             {
-                $sql_update_password = "UPDATE users set password='" . $_POST["newPassword"] . "' WHERE user_id=" . $_SESSION["userid"];
+                $newPassword_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+            }
+            else if($_POST["newPassword"] != $_POST["confirmPassword"])
+            {
+                $confirmPassword_err = "Password did not match";
+            }
 
-                if(mysqli_query($link, $sql_update_password))
+            if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
+            {
+                if($curPwd != $newPwd)
                 {
-                    echo" 
-                    <script>
-                    alert('Your password have updated!');
-                    </script>";
+                    $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+
+                    if(mysqli_query($link, $sql_update_password))
+                    {
+                        echo" 
+                        <script>
+                        alert('Your password have updated!');
+                        </script>";
+                    }
+                    else
+                    {
+                        echo "
+                        <script>
+                        alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                        </script>";
+                    }
                 }
                 else
                 {
                     echo "
                     <script>
-                    alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                        alert('The current password cannot be the same as the new password.');
                     </script>";
                 }
             }
-            else
-            {
-                echo "
-                <script>
-                    alert('The current password cannot be the same as the new password.');
-                </script>";
-            }
         }
+        else
+        {
+            $currentPassword_err = "Current Password is not correct";
+        }
+
+        
     }
    
 ?>

@@ -158,6 +158,24 @@
             padding: 2%;
             margin: 1%
         }
+        
+        .modal {
+			background-color: rgba(0,0,0,0.5);
+        }
+        .modal > div {
+            padding: 10px;
+        }
+		.modal-content {
+            border-radius: 25px;
+		}
+
+        .modal-header {
+            border-radius: 25px 25px 0 0;
+        }
+
+        .modal-footer {
+            border-radius: 0 0 25px 25px;
+        }
     </style>
 </head>
 
@@ -461,7 +479,7 @@
                                                                             </a>
 
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$display_row["receipt_id"].'" target="_blank">
+                                                                                <a class="dropdown-item" onclick="openModal('.$display_row["receipt_id"].')" target="_blank" style="cursor:pointer">
                                                                                     View Details
                                                                                  </a>
                                                                                  <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$display_row["receipt_id"].'" target="_blank">
@@ -471,21 +489,93 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <hr>
-
-                                                                <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#R'.$display_row["receipt_id"].'">
-                                                                    <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
-                                                                </div>
                                                             </div>
 
-                                                            <div id="R'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
-                                                                <p>User ID: '.$display_row["user_id"].'</p>
-                                                                <p>Name: '.$display_row["receipt_name"].'</p>
-                                                                <p>Email: '.$display_row["receipt_email"].'</p>
-                                                                <p>Phone: '.$display_row["receipt_phone"].'</p>
-                                                                <p>Address: '.$display_row["receipt_address"].'</p>
-                                                                <p>Payment Method: '.$display_row["payment_method"].'</p>
-                                                                <p>Payment Cost: '.$display_row["payment_cost"].'</p>
+                                                            <div id="receipt-'.$display_row["receipt_id"].'" class="modal" role="dialog">\
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color:var(--thm-base)">
+                                                                            <h4 class="modal-title"><span style="color:white;">Details</span></h4>
+                                                                            <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                                                                        </div> 
+                                                                        <!-- Modal Header-->
+
+                                                                        <div class="modal-body">
+                                                                            <div>
+                                                                                <h4>Receipt Details</h4>
+                                                                                <hr>
+                                                                                <p>Receipt ID: '.$display_row["receipt_id"].'</p>
+                                                                                <p>Payment Method: '.$display_row["payment_method"].'</p>
+                                                                                <p>Payment Cost: '.$display_row["payment_cost"].'</p>
+                                                                                <p>Transaction Date: '.$display_row["receipt_date"].'</p>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <hr>
+                                                                                <h4>Purchased Products</h4>
+                                                                                <hr>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2">
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <p><b>Item name</b></p>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <p><b>Amount</b></p>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <p><b>Unit Cost</b></p>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <p><b>Total Cost</b></p>
+                                                                                    </div>
+                                                                                </div>';
+                                                                                
+                                                                                if ($trans_result = mysqli_query($link, $trans_sql)) {
+
+                                                                                    while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+                
+                                                                                        echo '
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-2">
+                                                                                                <img src="assets/images/items/'.$trans_row['image'].'" style="width:50%;object-fit:contain;">
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <p>'.$trans_row['item'].'</p>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <p>x'.$trans_row['amount'].'</p>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <p>RM'.$trans_row['cost'].'</p>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <p>RM'.$trans_row['total_cost'].'</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        ';
+                                                                                    }
+                
+                                                                                }
+                                                                            echo '
+                                                                            </div>
+                                                                            <div>
+                                                                                <hr>
+                                                                                <h4>Buyer\'s Details</h4>
+                                                                                <hr>
+                                                                                <p>User ID: '.$display_row["user_id"].'</p>
+                                                                                <p>Name: '.$display_row["receipt_name"].'</p>
+                                                                                <p>Email: '.$display_row["receipt_email"].'</p>
+                                                                                <p>Phone: '.$display_row["receipt_phone"].'</p>
+                                                                                <p>Address: '.$display_row["receipt_address"].'</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="modal-footer" style="background-color:var(--thm-base)">
+                                                                            <button type="button" class="btn btn-danger"  onclick="return closeModal('.$display_row["receipt_id"].')">Cancel</button>
+                                                                        </div> 
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         ';
@@ -505,9 +595,16 @@
     </div>
     <script>
         //Hide other panel when another collapses
-        $('.more-detail').click( function(e) {
-            $('.collapse').collapse('hide');
-        });
+        
+
+        function openModal(id) {
+            $('#receipt-'+id).fadeIn();
+            return false;
+        }
+        function closeModal(id) {
+            $('#receipt-'+id).fadeOut();
+            return false;
+        }
 
         //check for Navigation Timing API support
         if (window.performance) {

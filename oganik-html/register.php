@@ -151,7 +151,7 @@
                 }
             } 
             else 
-            {
+                {
                 echo "
                 <script>
                   alert('Error: " . $sql_get_id . "\n" . mysqli_error($link) . "')

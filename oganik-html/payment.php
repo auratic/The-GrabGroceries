@@ -1,61 +1,55 @@
 <?php
-    session_start();
-  
-    if(!isset($_SESSION["loggedin"])) {
-        echo "
+session_start();
+
+if (!isset($_SESSION["loggedin"])) {
+    echo "
         <script>
         alert('Please login');
         location.href='login.php';
         </script>";
-    }
+}
 
-    require "config.php";
+require "config.php";
 
-    $card_name = array();
-    $card_no = array();
-    $card_exp = array();
-    $card_cvv = array();
+$card_name = array();
+$card_no = array();
+$card_exp = array();
+$card_cvv = array();
 
 
-    if(isset($_POST['detail']))
-    {
-        $sql_insert_cc = "
+if (isset($_POST['detail'])) {
+    $sql_insert_cc = "
             UPDATE cust_card
             SET 
-            cardName".$_POST["no"]." = '".ucwords($_POST['card_name'])."', 
-            cardNo".$_POST["no"]."= '".$_POST["card_no"]."', 
-            cardExp".$_POST["no"]." = '".$_POST["card_exp"]."',
-            cardCvv".$_POST["no"]." = '".$_POST["card_cvv"]."'
-            WHERE user_id = ".$_SESSION["userid"];
-     
-        if(mysqli_query($link, $sql_insert_cc)) 
-        {
-            echo "
+            cardName" . $_POST["no"] . " = '" . ucwords($_POST['card_name']) . "', 
+            cardNo" . $_POST["no"] . "= '" . $_POST["card_no"] . "', 
+            cardExp" . $_POST["no"] . " = '" . $_POST["card_exp"] . "',
+            cardCvv" . $_POST["no"] . " = '" . $_POST["card_cvv"] . "'
+            WHERE user_id = " . $_SESSION["userid"];
+
+    if (mysqli_query($link, $sql_insert_cc)) {
+        echo "
             <script>
                 alert('Payment Method updated!');
             </script>";
-        } 
-        else 
-        {
-            echo "
+    } else {
+        echo "
             <script>
                 alert('Something went wrong, please try again');
             </script>";
-        }
     }
+}
 
-    $sql = "SELECT * FROM cust_card where user_id = ".$_SESSION["userid"];
-    if($result = mysqli_query($link, $sql))
-    {
-        while($row=mysqli_fetch_assoc($result))
-        {
-            array_push($card_name, $row['cardName1'], $row['cardName2'], $row['cardName3'], $row['cardName4'], $row['cardName5']);
-            array_push($card_no  , $row['cardNo1']  , $row['cardNo2']  , $row['cardNo3']  , $row['cardNo4']  , $row['cardNo5']);
-            array_push($card_cvv , $row['cardCvv1'] , $row['cardCvv2'] , $row['cardCvv3'] , $row['cardCvv4'] , $row['cardCvv5']);
-            array_push($card_exp , $row['cardExp1'] , $row['cardExp2'] , $row['cardExp3'], $row['cardExp4'] , $row['cardExp5']);
-        }
+$sql = "SELECT * FROM cust_card where user_id = " . $_SESSION["userid"];
+if ($result = mysqli_query($link, $sql)) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        array_push($card_name, $row['cardName1'], $row['cardName2'], $row['cardName3'], $row['cardName4'], $row['cardName5']);
+        array_push($card_no, $row['cardNo1'], $row['cardNo2'], $row['cardNo3'], $row['cardNo4'], $row['cardNo5']);
+        array_push($card_cvv, $row['cardCvv1'], $row['cardCvv2'], $row['cardCvv3'], $row['cardCvv4'], $row['cardCvv5']);
+        array_push($card_exp, $row['cardExp1'], $row['cardExp2'], $row['cardExp3'], $row['cardExp4'], $row['cardExp5']);
     }
-    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -96,16 +90,19 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
 
-        .containerr
-        {
-            color:black;
-            background-color:white;
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
+
+        .containerr {
+            color: black;
+            background-color: white;
             margin-top: 70px;
             margin-left: 50px;
             margin-bottom: 80px;
@@ -114,16 +111,18 @@
             width: 1430px;
         }
 
-        #add-card1, #add-card2, #add-card3, #add-card4, #add-card5
-        {
+        #add-card1,
+        #add-card2,
+        #add-card3,
+        #add-card4,
+        #add-card5 {
             cursor: pointer;
         }
-        
-        .form-control
-        {
+
+        .form-control {
             padding: 13px 0 13px 25px;
             text-align: center;
-            width : 100%;
+            width: 100%;
             border: 2px solid #dddddd;
             border-radius: 5px;
             letter-spacing: 1px;
@@ -133,60 +132,56 @@
             color: #555555;
         }
 
-        .card-grp
-        {
+        .card-grp {
             display: flex;
             justify-content: space-between;
         }
 
-        .space
-        {
+        .space {
             margin-bottom: 20px;
         }
 
-        .label
-        {
-            margin-left:-95px;
+        .label {
+            margin-left: -95px;
         }
 
-        .card
-        {
-            width:280px;
-            height:160px;
-            background:linear-gradient(to left, gray , black);
-            margin-bottom:1%;
+        .card {
+            width: 280px;
+            height: 160px;
+            background: linear-gradient(to left, gray, black);
+            margin-bottom: 1%;
             font-family: 'Gemunu Libre';
         }
 
-        .card_type
-        {
+        .card_type {
             color: white;
-            font-size:20px;
+            font-size: 20px;
             margin-left: 90px;
-            margin-top:15px;
+            margin-top: 15px;
 
         }
 
-        .card_numberr
-        {
-            margin-left:35px;
+        .card_numberr {
+            margin-left: 35px;
             margin-top: -10px;
-            color:white;
+            color: white;
             font-size: 25px;
         }
 
-        .card_expp
-        {
-            margin-left:55px;
+        .card_expp {
+            margin-left: 55px;
             margin-top: -10px;
-            color:white;
+            color: white;
         }
 
-        .card_namee
-        {
-            color:white;
-            margin-left:45px;
+        .card_namee {
+            color: white;
+            margin-left: 45px;
             margin-top: -5px;
+        }
+        .fas
+        {
+            margin-left: 0;
         }
     </style>
 </head>
@@ -239,17 +234,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -288,40 +287,36 @@
                 </div><!-- /.container -->
             </nav>
         </header>
-            
-            <!-- :::::::::: Profile :::::::::: -->
-            <main id="main-container" class="main-container">
-            <div class="containerr">
+
+        <!-- :::::::::: Profile :::::::::: -->
+        <main id="main-container" class="main-container">
+            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
                 <div class="row">
                     <div class="col-12">
                         <!-- :::::::::: Start My Account Section :::::::::: -->
                         <div class="my-account-area">
                             <div class="row">
-                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
-                                                <a href="profile.php"><i
-                                                        class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                                <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                                             </li>
                                             <li>
-                                                <a href="view_order.php"><i
-                                                        class="fas fa-shopping-cart"></i> Order</a>
+                                                <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
                                             </li>
                                             <li>
-                                                <a href="payment.php"><i
-                                                        class="fas fa-credit-card"></i> Payment Method</a>
+                                                <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
                                             </li>
                                             <li>
-                                                <a href="address.php"><i
-                                                        class="fas fa-map-marker-alt"></i> Address</a>
+                                                <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
                                             </li>
                                             <li>
                                                 <a href="accdetails.php"><i class="fas fa-user"></i>
                                                     Account Details</a>
                                             </li>
                                             <li>
-                                                <a href="password.php" >
+                                                <a href="password.php">
                                                     <i class="fas fa-lock"></i> Password Changes</a>
                                             </li>
                                             <li>
@@ -331,14 +326,14 @@
                                     </div>
                                 </div>
                                 <!-- :::::::::: Page Content :::::::::: -->
-                                <div class="col-xl-8 col-md-8">
+                                <div class="col-xl-10 col-md-10">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
                                         <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
                                             <div class="my-account-payment account-wrapper">
                                                 <h4 class="account-title">Payment Method</h4>
                                                 <div class="row">
-                                                <?php
-                                                /*
+                                                    <?php
+                                                    /*
                                                     $sql = "SELECT * FROM cust_card WHERE user_id = '".$_SESSION['userid']."'";
                                                     $result = mysqli_query($link, $sql);
 
@@ -359,24 +354,23 @@
                                                             </div>';
 
                                                     */
-                                                            $counterr = 0;
-                                                            for($x=0; $x<5; $x++) 
-                                                            {
-                                                                $counterr++;
-                                                                echo'
+                                                    $counterr = 0;
+                                                    for ($x = 0; $x < 5; $x++) {
+                                                        $counterr++;
+                                                        echo '
                                                                 <div class="col-4" style="margin-bottom:3%">
                                                                     <div class="card">
                                                                         <p class="card_type">Black Card</p>
                                                                         <img src="assets/images/chippp.png" style="width: 50px; object-fit: contain; margin-top:-30px; margin-left: 23px;">
-                                                                        <p class="card_numberr">'.$card_no[$x].'</p>
-                                                                        <p class="card_expp">'.$card_exp[$x].'</p>
-                                                                        <p class="card_namee">'.$card_name[$x].' </p>
+                                                                        <p class="card_numberr">' . $card_no[$x] . '</p>
+                                                                        <p class="card_expp">' . $card_exp[$x] . '</p>
+                                                                        <p class="card_namee">' . $card_name[$x] . ' </p>
                                                                         <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px;"></i>
                                                                     </div>
-                                                                    <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
+                                                                    <a class="box-btn m-t-25 " id="add-card' . $counterr . '" onclick="return addCard(' . $counterr . ')"><i class="far fa-edit"></i>Edit</a>
                                                                 </div>';
-                                                            }
-                                                ?>
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -387,7 +381,7 @@
                     </div>
                 </div>
             </div>
-        </main> 
+        </main>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
@@ -486,13 +480,12 @@
 
         <?php
 
-            $counter = 0;
-            for($x=0; $x<5; $x++) 
-            {
-                $counter++;
-                echo'
+        $counter = 0;
+        for ($x = 0; $x < 5; $x++) {
+            $counter++;
+            echo '
                 <!--Modal-->
-                <div class="modal" id="card-modal'.$counter.'" role="dialog">
+                <div class="modal" id="card-modal' . $counter . '" role="dialog">
                     <div class="modal-dialog modal-lg">
 
                         <!-- Modal content-->
@@ -510,8 +503,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-user"> Card Holder</i></label>
-                                                <input type="text" name="card_name'.$counter.'" id="card_name'.$counter.'" placeholder="Your Name" class="form-control '. ((!empty($cname_err)) ? "is-invalid" : '' ).'" value="'.$card_name[$x].'">
-                                                <span class="invalid-feedback d-block" id="cname_err'.$counter.'"></span>   <span class="invalid-feedback"><?php echo $cname_err; ?></span>
+                                                <input type="text" name="card_name' . $counter . '" id="card_name' . $counter . '" placeholder="Your Name" class="form-control ' . ((!empty($cname_err)) ? "is-invalid" : '') . '" value="' . $card_name[$x] . '">
+                                                <span class="invalid-feedback d-block" id="cname_err' . $counter . '"></span>   <span class="invalid-feedback"><?php echo $cname_err; ?></span>
                                             </div>
                                         </div>
                                     </div> 
@@ -520,8 +513,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
-                                                <input type="text" name="card_no'.$counter.'" id="card_no'.$counter.'" onkeyup="censor('.$counter.')" placeholder="Card Number" maxlength="19" class="form-control '. ((!empty($cno_err)) ? "is-invalid" : '' ).'" value="'.$card_no[$x].'">
-                                                <span class="invalid-feedback d-block" id="cno_err'.$counter.'"></span>
+                                                <input type="text" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
+                                                <span class="invalid-feedback d-block" id="cno_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -530,16 +523,16 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
-                                                <input type="text" name="card_exp'.$counter.'" id="card_exp'.$counter.'" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control '. ((!empty($cexp_err)) ? "is-invalid" : '' ).'" value="'.$card_exp[$x].' ">
-                                                <span class="invalid-feedback d-block" id="cexp_err'.$counter.'"></span>
+                                                <input type="text" name="card_exp' . $counter . '" id="card_exp' . $counter . '" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control ' . ((!empty($cexp_err)) ? "is-invalid" : '') . '" value="' . $card_exp[$x] . ' ">
+                                                <span class="invalid-feedback d-block" id="cexp_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                             
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="label"><i class="fas fa-lock"> CVV</i></label>
-                                                <input type="text" name="card_cvv'.$counter.'" id="card_cvv'.$counter.'" data-mask="000" placeholder="000" class="form-control '. ((!empty($ccvv_err)) ? "is-invalid" : '' ).'" value="'.$card_cvv[$x].' ">
-                                                <span class="invalid-feedback d-block" id="ccvv_err'.$counter.'"></span>
+                                                <input type="text" name="card_cvv' . $counter . '" id="card_cvv' . $counter . '" data-mask="000" placeholder="000" class="form-control ' . ((!empty($ccvv_err)) ? "is-invalid" : '') . '" value="' . $card_cvv[$x] . ' ">
+                                                <span class="invalid-feedback d-block" id="ccvv_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -547,7 +540,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Submit" onclick="return updateCard('.$counter.');">
+                                                <input type="submit" class="btn btn-primary" value="Submit" onclick="return updateCard(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -557,191 +550,186 @@
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-danger"  onclick="return closeModal('.$counter.')">Cancel</button>
+                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">Cancel</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
                     </div>
                 </div>';
-            }
+        }
         ?>
-    <!-- /.search-popup -->
+        <!-- /.search-popup -->
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+        <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
 
-    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
-    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
-    <script src="assets/vendors/odometer/odometer.min.js"></script>
-    <script src="assets/vendors/swiper/swiper.min.js"></script>
-    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
-    <script src="assets/vendors/wow/wow.js"></script>
-    <script src="assets/vendors/isotope/isotope.js"></script>
-    <script src="assets/vendors/countdown/countdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+        <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
+        <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+        <script src="assets/vendors/jarallax/jarallax.min.js"></script>
+        <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+        <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
+        <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+        <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+        <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
+        <script src="assets/vendors/nouislider/nouislider.min.js"></script>
+        <script src="assets/vendors/odometer/odometer.min.js"></script>
+        <script src="assets/vendors/swiper/swiper.min.js"></script>
+        <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
+        <script src="assets/vendors/wnumb/wNumb.min.js"></script>
+        <script src="assets/vendors/wow/wow.js"></script>
+        <script src="assets/vendors/isotope/isotope.js"></script>
+        <script src="assets/vendors/countdown/countdown.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
-    <!-- template js -->
-    <script src="assets/js/organik.js"></script>
+        <!-- template js -->
+        <script src="assets/js/organik.js"></script>
 
-    <script>
+        <script>
+            function updateCard(counter) {
+                var cardName = document.getElementById("card_name" + counter).value;
+                var cardNum = document.getElementById("card_no" + counter).value;
+                var cardExp = document.getElementById("card_exp" + counter).value;
+                var cardCvv = document.getElementById("card_cvv" + counter).value;
+                document.getElementById("cname_err" + counter).innerHTML = "";
+                document.getElementById("cno_err" + counter).innerHTML = "";
+                document.getElementById("cexp_err" + counter).innerHTML = "";
+                document.getElementById("ccvv_err" + counter).innerHTML = "";
 
-        function updateCard(counter)
-        {
-            var cardName = document.getElementById("card_name"+counter).value;
-            var cardNum = document.getElementById("card_no"+counter).value;
-            var cardExp = document.getElementById("card_exp"+counter).value;
-            var cardCvv = document.getElementById("card_cvv"+counter).value;
-            document.getElementById("cname_err"+counter).innerHTML = "";
-            document.getElementById("cno_err"+counter).innerHTML = "";
-            document.getElementById("cexp_err"+counter).innerHTML = "";
-            document.getElementById("ccvv_err"+counter).innerHTML = "";
+                var pass = true;
 
-            var pass = true;
-
-            if(cardName == "") {
-                document.getElementById("cname_err"+counter).innerHTML = "Card Name is required";
-                pass = false;
-            }
-
-            if(cardNum == "") {
-                document.getElementById("cno_err"+counter).innerHTML = "Card Number is required";
-                pass = false;
-            }
-
-            if(cardExp == "") {
-                document.getElementById("cexp_err"+counter).innerHTML = "Card Expiry is required";
-                pass = false;
-            }
-
-            if(cardCvv == "") {
-                document.getElementById("ccvv_err"+counter).innerHTML = "CVV is required";
-                pass = false;
-            }
-
-            if(pass)
-            {   
-                $.ajax({
-                    type: "post",
-                    url : "payment.php",
-                    data: {
-                        'detail': true,
-                        'no':counter,
-                        'card_name': cardName,
-                        'card_no': cardNum,
-                        'card_exp': cardExp,
-                        'card_cvv': cardCvv
-                    },
-                    cache: false,
-                    success: function (html) {
-                        alert('Payment updated');
-                        location.reload();
-                    }
-                });
-            }
-            return false;
-        }
-        
-        function addCard(counter)
-        {
-            $('#card-modal'+counter).fadeIn();
-            return false;
-        }
-
-        function closeModal(counter) 
-        {
-            $('#card-modal'+counter).fadeOut();
-            return false;
-        }
-
-        function censor(counter) {
-            var CCNValue = $("#card_no"+counter).val();
-            CCNValue = CCNValue.replace(/ /g, '');
-            var CCNLength = CCNValue.length;
-            var m = 1;
-            var arr = CCNValue.split('');
-            var ccnnewval = "";
-
-            if (arr.length > 0) {
-                for (var m = 0; m < arr.length; m++) {
-                    if (m == 4 || m == 8 || m == 12) {
-                        ccnnewval = ccnnewval + ' ';
-                    }
-
-                    if (m <= 11) {
-                        ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
-                    } else {
-                        ccnnewval = ccnnewval + arr[m];
-                    }
+                if (cardName == "") {
+                    document.getElementById("cname_err" + counter).innerHTML = "Card Name is required";
+                    pass = false;
                 }
-            }
 
-            $("#card_no"+counter).val(ccnnewval);
-        }
-
-        /*
-        $(document).ready(function () {
-
-            $("#card_no").keyup(function (e) {
-                
-            });
-        });
-        */
-
-       /*
-        String.prototype.replaceAt = function(index, char) {
-            var a = this.split("");
-            a[index] = char;
-            return a.join("");
-        }
-
-        window.onload = function() {
-            
-            for(var j = 0 ; j < 5 ; j ++) {
-                var card_no = document.getElementById("card_no"+(j+1)).value;
-                
-                if(card_no != "") {
-
-                for(var i = 0 ; i < 15 ; i++) {
-                    var char = "*";
-                    if (i == 4 || i == 9 || i == 14) {
-                        char = " ";
-                    }
-                    card_no = card_no.replaceAt(i, char);
+                if (cardNum == "") {
+                    document.getElementById("cno_err" + counter).innerHTML = "Card Number is required";
+                    pass = false;
                 }
-                    
-                document.getElementById("card_no"+(j+1)).value = card_no;
+
+                if (cardExp == "") {
+                    document.getElementById("cexp_err" + counter).innerHTML = "Card Expiry is required";
+                    pass = false;
                 }
-            }
 
-            for(var j = 0 ; j < 5 ; j ++) {
+                if (cardCvv == "") {
+                    document.getElementById("ccvv_err" + counter).innerHTML = "CVV is required";
+                    pass = false;
+                }
 
-                var card_no = document.getElementById("card_display_no"+(j+1)).innerHTML;
-                    
-                if(card_no != "") {
-
-                    for(var i = 0 ; i < 15 ; i++) {
-                        var char = "*";
-                        if (i == 4 || i == 9 || i == 14) {
-                            char = " ";
+                if (pass) {
+                    $.ajax({
+                        type: "post",
+                        url: "payment.php",
+                        data: {
+                            'detail': true,
+                            'no': counter,
+                            'card_name': cardName,
+                            'card_no': cardNum,
+                            'card_exp': cardExp,
+                            'card_cvv': cardCvv
+                        },
+                        cache: false,
+                        success: function(html) {
+                            alert('Payment updated');
+                            location.reload();
                         }
-                        card_no = card_no.replaceAt(i, char);
-                    }
-                        
-                    document.getElementById("card_display_no"+(j+1)).innerHTML = card_no;
+                    });
                 }
+                return false;
             }
-        }
-       */
-    </script>
+
+            function addCard(counter) {
+                $('#card-modal' + counter).fadeIn();
+                return false;
+            }
+
+            function closeModal(counter) {
+                $('#card-modal' + counter).fadeOut();
+                return false;
+            }
+
+            function censor(counter) {
+                var CCNValue = $("#card_no" + counter).val();
+                CCNValue = CCNValue.replace(/ /g, '');
+                var CCNLength = CCNValue.length;
+                var m = 1;
+                var arr = CCNValue.split('');
+                var ccnnewval = "";
+
+                if (arr.length > 0) {
+                    for (var m = 0; m < arr.length; m++) {
+                        if (m == 4 || m == 8 || m == 12) {
+                            ccnnewval = ccnnewval + ' ';
+                        }
+
+                        if (m <= 11) {
+                            ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+                        } else {
+                            ccnnewval = ccnnewval + arr[m];
+                        }
+                    }
+                }
+
+                $("#card_no" + counter).val(ccnnewval);
+            }
+
+            /*
+            $(document).ready(function () {
+
+                $("#card_no").keyup(function (e) {
+                    
+                });
+            });
+            */
+
+            /*
+             String.prototype.replaceAt = function(index, char) {
+                 var a = this.split("");
+                 a[index] = char;
+                 return a.join("");
+             }
+
+             window.onload = function() {
+                 
+                 for(var j = 0 ; j < 5 ; j ++) {
+                     var card_no = document.getElementById("card_no"+(j+1)).value;
+                     
+                     if(card_no != "") {
+
+                     for(var i = 0 ; i < 15 ; i++) {
+                         var char = "*";
+                         if (i == 4 || i == 9 || i == 14) {
+                             char = " ";
+                         }
+                         card_no = card_no.replaceAt(i, char);
+                     }
+                         
+                     document.getElementById("card_no"+(j+1)).value = card_no;
+                     }
+                 }
+
+                 for(var j = 0 ; j < 5 ; j ++) {
+
+                     var card_no = document.getElementById("card_display_no"+(j+1)).innerHTML;
+                         
+                     if(card_no != "") {
+
+                         for(var i = 0 ; i < 15 ; i++) {
+                             var char = "*";
+                             if (i == 4 || i == 9 || i == 14) {
+                                 char = " ";
+                             }
+                             card_no = card_no.replaceAt(i, char);
+                         }
+                             
+                         document.getElementById("card_display_no"+(j+1)).innerHTML = card_no;
+                     }
+                 }
+             }
+            */
+        </script>
 </body>
 
 </html>

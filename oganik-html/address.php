@@ -1,74 +1,68 @@
 <?php
-  session_start();
-  
-  if(!isset($_SESSION["loggedin"])) {
+session_start();
+
+if (!isset($_SESSION["loggedin"])) {
     echo "
      <script>
        alert('Please login');
        location.href='login.php';
      </script>";
-   }
+}
 
-   require "config.php";
-   
-   $fname = $lname = $default_address = $default_phone ="";
-   $name = array();
-   $address= array();
-   $phone= array();
-   $email = array();
+require "config.php";
+
+$fname = $lname = $default_address = $default_phone = "";
+$name = array();
+$address = array();
+$phone = array();
+$email = array();
 
 
-   if(isset($_POST["details"])) 
-   {
-        if($_POST["no"] == 0) 
-        {
-            $sql = "
+if (isset($_POST["details"])) {
+    if ($_POST["no"] == 0) {
+        $sql = "
             UPDATE users
             SET 
-            address = '".ucwords($_POST['address'])."', 
-            phone= '".$_POST["phone"]."'
-            WHERE user_id = ".$_SESSION["userid"];
-
-        } else {
-            $sql = "
+            address = '" . ucwords($_POST['address']) . "', 
+            phone= '" . $_POST["phone"] . "'
+            WHERE user_id = " . $_SESSION["userid"];
+    } else {
+        $sql = "
                 UPDATE cust_address
                 SET 
-                address".$_POST["no"]." = '".ucwords($_POST['address'])."', 
-                phone".$_POST["no"]."= '".$_POST["phone"]."', 
-                name".$_POST["no"]." = '".$_POST["name"]."',
-                email".$_POST["no"]." = '".$_POST["email"]."'
-                WHERE user_id = ".$_SESSION["userid"];
-        }
+                address" . $_POST["no"] . " = '" . ucwords($_POST['address']) . "', 
+                phone" . $_POST["no"] . "= '" . $_POST["phone"] . "', 
+                name" . $_POST["no"] . " = '" . $_POST["name"] . "',
+                email" . $_POST["no"] . " = '" . $_POST["email"] . "'
+                WHERE user_id = " . $_SESSION["userid"];
+    }
 
-        if(mysqli_query($link, $sql)) {
-            echo "
+    if (mysqli_query($link, $sql)) {
+        echo "
             <script>
                 alert('Details updated..');
             </script>";
-
-        } else {
-            echo "
+    } else {
+        echo "
             <script>
                 alert('Something went wrong, please try again');
             </script>";
-        }
     }
+}
 
-    
 
 
-    $sql = "SELECT * FROM cust_address where user_id = ".$_SESSION["userid"];
-    if($result = mysqli_query($link, $sql))
-    {
-        while($row=mysqli_fetch_assoc($result))
-        {
-            array_push($name,    $row['name1']   , $row['name2']   , $row['name3']   , $row['name4']   , $row['name5']);
-            array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
-            array_push($phone,   $row['phone1']  , $row['phone2']  , $row['phone3']  , $row['phone4']  , $row['phone5']);
-            array_push($email,   $row['email1']  , $row['email2']  , $row['email3']  , $row['email4']  , $row['email5']);
-        }
+
+$sql = "SELECT * FROM cust_address where user_id = " . $_SESSION["userid"];
+if ($result = mysqli_query($link, $sql)) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        array_push($name,    $row['name1'], $row['name2'], $row['name3'], $row['name4'], $row['name5']);
+        array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
+        array_push($phone,   $row['phone1'], $row['phone2'], $row['phone3'], $row['phone4'], $row['phone5']);
+        array_push($email,   $row['email1'], $row['email2'], $row['email3'], $row['email4'], $row['email5']);
     }
-    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -125,15 +119,18 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
 
-        .containerr
-        {
-            background-color:white;
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
+
+        .containerr {
+            background-color: white;
             margin-top: 70px;
             margin-left: 50px;
             margin-bottom: 80px;
@@ -141,16 +138,18 @@
             border-style: double;
             width: 1430px;
         }
-        
+
         .modal {
-			background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
-        .modal > div {
+
+        .modal>div {
             padding: 10px;
         }
-		.modal-content {
+
+        .modal-content {
             border-radius: 25px;
-		}
+        }
 
         .modal-header {
             border-radius: 25px 25px 0 0;
@@ -160,18 +159,23 @@
             border-radius: 0 0 25px 25px;
         }
 
-        #edit-address, #edit-address1, #edit-address2, #edit-address3, #edit-address4, #edit-address5{
+        #edit-address,
+        #edit-address1,
+        #edit-address2,
+        #edit-address3,
+        #edit-address4,
+        #edit-address5 {
             cursor: pointer;
         }
 
-        .div1
-        {
+        .div1 {
             border: 2px solid var(--thm-base);
         }
+        .fas
+        {
+            margin-left: 0;
+        }
     </style>
-
-    
-
 </head>
 
 <body>
@@ -222,17 +226,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -270,111 +278,106 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            
-            <!-- :::::::::: Profile :::::::::: -->
-            <main id="main-container" class="main-container">
-                <div class="containerr">
-                    <div class="row">
-                        <div class="col-12">
-                            <!-- :::::::::: Start My Account Section :::::::::: -->
-                            <div class="my-account-area">
+        </header>
 
-                                <div class="row">
+        <!-- :::::::::: Profile :::::::::: -->
+        <main id="main-container" class="main-container">
+            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- :::::::::: Start My Account Section :::::::::: -->
+                        <div class="my-account-area">
 
-                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
-                                        <div class="my-account-menu">
-                                            <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                                <li>
-                                                    <a href="profile.php"><i
-                                                        class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                                </li>
-                                                <li>
-                                                    <a href="view_order.php"><i
-                                                            class="fas fa-shopping-cart"></i> Order</a>
-                                                </li>
-                                                <li>
-                                                    <a href="payment.php"><i
-                                                            class="fas fa-credit-card"></i> Payment Method</a>
-                                                </li>
-                                                <li>
-                                                    <a href="address.php"><i
-                                                        class="fas fa-map-marker-alt"></i> Address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="accdetails.php" ><i class="fas fa-user"></i>
-                                                        Account Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="password.php" >
-                                                        <i class="fas fa-lock"></i> Password Changes</a>
-                                                </li>
-                                                <li>
-                                                    <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div class="row">
+
+                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
+                                    <div class="my-account-menu">
+                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
+                                            <li>
+                                                <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
+                                            </li>
+                                            <li>
+                                                <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
+                                            </li>
+                                            <li>
+                                                <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
+                                            </li>
+                                            <li>
+                                                <a href="accdetails.php"><i class="fas fa-user"></i>
+                                                    Account Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="password.php">
+                                                    <i class="fas fa-lock"></i> Password Changes</a>
+                                            </li>
+                                            <li>
+                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    
-                                    <!-- :::::::::: Page Content :::::::::: -->
+                                </div>
 
-                                    <div class="col-xl-8 col-md-8">
-                                        <div class="tab-content my-account-tab" id="pills-tabContent">
-                                            <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
-                                                <div class="my-account-address account-wrapper">
-                                                    <h4 class="account-title">Address</h4>
-                                                    <div class="account-address m-t-30 div1">
-                                                        <?php 
-                                                            $sql = "SELECT * FROM users WHERE user_id = '".$_SESSION['userid']."'";
-                                                            $result = mysqli_query($link, $sql);
-                                                    
-                                                            while($row=mysqli_fetch_assoc($result)) 
-                                                            {
-                                                                $fname = $row['firstname'];
-                                                                $lname = $row['lastname'];
-                                                                $default_address = $row['address'];
-                                                                $default_phone = $row['phone'];
-                                                                $default_email = $row['email'];
-                                                            }
+                                <!-- :::::::::: Page Content :::::::::: -->
 
-                                                            echo'
+                                <div class="col-xl-10 col-md-10">
+                                    <div class="tab-content my-account-tab" id="pills-tabContent">
+                                        <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
+                                            <div class="my-account-address account-wrapper">
+                                                <h4 class="account-title">Address</h4>
+                                                <div class="account-address m-t-30 div1">
+                                                    <?php
+                                                    $sql = "SELECT * FROM users WHERE user_id = '" . $_SESSION['userid'] . "'";
+                                                    $result = mysqli_query($link, $sql);
+
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        $fname = $row['firstname'];
+                                                        $lname = $row['lastname'];
+                                                        $default_address = $row['address'];
+                                                        $default_phone = $row['phone'];
+                                                        $default_email = $row['email'];
+                                                    }
+
+                                                    echo '
                                                                 <div class="row">
                                                                     <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                                                        <p>Full name: <strong>  '.$fname.' '.$lname.'</strong> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span></p>
-                                                                        <p>Email    : '.$default_email.'</span></p>
-                                                                        <p>Address  : <span style="font-style:italic;">'.$default_address.'</span> </p>
-                                                                        <p>Contact  : <span style="font-style:italic;">'.$default_phone.'</span></p>
-                                                                        <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a>
+                                                                        <p>Full name: <strong>  ' . $fname . ' ' . $lname . '</strong></p>
+                                                                        <p>Email    : ' . $default_email . '</span></p>
+                                                                        <p>Address  : <span style="font-style:italic;">' . $default_address . '</span> </p>
+                                                                        <p>Contact  : <span style="font-style:italic;">' . $default_phone . '</span></p>
+                                                                        <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span>
                                                                     </div>';
-                                                                    $counterr = 0;
-                                                                    for($x=0; $x<5; $x++) {
-                                                                        $counterr++;
-                                                                        echo'
+                                                    $counterr = 0;
+                                                    for ($x = 0; $x < 5; $x++) {
+                                                        $counterr++;
+                                                        echo '
                                                                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                                                                <p>Full name: <strong>  '.$name[$x].'</strong></p>
-                                                                                <p>Email    : '.$email[$x].'</span></p>
-                                                                                <p>Address  : <span style="font-style:italic;">'.$address[$x].'</span></p>
-                                                                                <p>Contact  : <span style="font-style:italic;">'.$phone[$x].'</span></p>
-                                                                                <a class="box-btn m-t-25 " id="edit-address'.$counterr.'" onclick="return edit('.$counterr.')" ><i class="far fa-edit"></i>Edit</a>
+                                                                                <p>Full name: <strong>  ' . $name[$x] . '</strong></p>
+                                                                                <p>Email    : ' . $email[$x] . '</span></p>
+                                                                                <p>Address  : <span style="font-style:italic;">' . $address[$x] . '</span></p>
+                                                                                <p>Contact  : <span style="font-style:italic;">' . $phone[$x] . '</span></p>
+                                                                                <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>Edit</a>
                                                                             </div>';
-                                                                    }
+                                                    }
 
-                                                                    echo"</div>";
-                                                        ?>
-                                                    </div>
+                                                    echo "</div>";
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                
-                            </div><!-- :::::::::: End My Account Section :::::::::: -->
-                        </div>
+
+                            </div>
+
+                        </div><!-- :::::::::: End My Account Section :::::::::: -->
                     </div>
                 </div>
-            </main> 
-        </header>
-        
+            </div>
+        </main>
+
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
@@ -467,11 +470,11 @@
                         <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
                     </div><!-- /.inner-container -->
                 </div><!-- /.container -->
-            </div><!-- /.bottom-footer --> 
+            </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
 
         <?php
-            echo'
+        echo '
                 <div class="modal" id="address-modal0" role="dialog">
                     <div class="modal-dialog modal-lg">
                         
@@ -490,7 +493,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name0" id="name0" required class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$fname.' '.$lname.'" disabled>
+                                                <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname . ' ' . $lname . '" disabled>
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -500,7 +503,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="" name="email0" id="email0" required class="form-control '. ((!empty($code_err)) ? "is-invalid" : '' ).'" value="'.$default_email.'" disabled>
+                                                <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" disabled>
                                                 <span class="con-pass-err" style="color:crimson"></span>
                                             </div>
                                         </div>
@@ -510,7 +513,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address0" id="address0" required class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$default_address.'">
+                                                <input type="" name="address0" id="address0" required class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $default_address . '">
                                                 <span class="invalid-feedback d-block" id="address_err0"><?php echo $address_err; ?></span>
                                             </div>
                                         </div>
@@ -520,7 +523,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone0" id="phone0" required class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$default_phone.'">
+                                                <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '">
                                                 <span class="invalid-feedback d-block" id="phone_err0"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
@@ -548,11 +551,11 @@
                 </div>
             ';
         $counter = 0;
-        for($x=0; $x<5; $x++) {
+        for ($x = 0; $x < 5; $x++) {
             $counter++;
 
-            echo'
-                <div class="modal" id="address-modal'.$counter.'" role="dialog">
+            echo '
+                <div class="modal" id="address-modal' . $counter . '" role="dialog">
                     <div class="modal-dialog modal-lg">
                         
                         <!-- Modal content-->
@@ -570,8 +573,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="" name="name'.$counter.'" id="name'.$counter.'" class="form-control '. ((!empty($name_err)) ? "is-invalid" : '' ).'" value="'.$name[$x].'" placeholder="John Doe" required />
-                                                <span class="invalid-feedback d-block" id="name_err'.$counter.'"></span>
+                                                <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John Doe" required />
+                                                <span class="invalid-feedback d-block" id="name_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -580,8 +583,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="email" name="email'.$counter.'" id="email'.$counter.'" class="form-control '. ((!empty($email_err)) ? "is-invalid" : '' ).'" value="'.$email[$x].'" placeholder="JohnDoe@gmail.com" required />
-                                                <span class="invalid-feedback d-block" id="email_err'.$counter.'"></span>
+                                                <input type="email" name="email' . $counter . '" id="email' . $counter . '" class="form-control ' . ((!empty($email_err)) ? "is-invalid" : '') . '" value="' . $email[$x] . '" placeholder="JohnDoe@gmail.com" required />
+                                                <span class="invalid-feedback d-block" id="email_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>  
@@ -590,8 +593,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="" name="address'.$counter.'" id="address'.$counter.'" class="form-control '.((!empty($address_err)) ? "is-invalid" : '').'" value="'.$address[$x] .'" placeholder="No 1 Tmn Asin 70000" required />
-                                                <span class="invalid-feedback d-block" id="address_err'.$counter.'"></span>
+                                                <input type="" name="address' . $counter . '" id="address' . $counter . '" class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $address[$x] . '" placeholder="No 1 Tmn Asin 70000" required />
+                                                <span class="invalid-feedback d-block" id="address_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -600,8 +603,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone'.$counter.'" id="phone'.$counter.'" class="form-control '.((!empty($phone_err)) ? "is-invalid" : '' ).'" value="'.$phone[$x].'" placeholder="60122228888" maxlength=12 required />
-                                                <span class="invalid-feedback d-block" id="phone_err'.$counter.'"></span>
+                                                <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="60122228888" maxlength=12 required />
+                                                <span class="invalid-feedback d-block" id="phone_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -609,7 +612,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress('.$counter.');">
+                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -618,7 +621,7 @@
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal('.$counter.')">Close</button>
+                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(' . $counter . ')">Close</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -633,68 +636,66 @@
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
 
-    
+
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
 
     <script>
-
-
         function updateAddress(counter) {
-            var address = document.getElementById("address"+counter).value;
-            var phone = document.getElementById("phone"+counter).value;
-            var name = document.getElementById("name"+counter).value;
-            var email = document.getElementById("email"+counter).value;
-            document.getElementById("address_err"+counter).innerHTML = "";
-            document.getElementById("phone_err"+counter).innerHTML = "";
-            document.getElementById("name_err"+counter).innerHTML = "";
-            document.getElementById("email_err"+counter).innerHTML = "";
+            var address = document.getElementById("address" + counter).value;
+            var phone = document.getElementById("phone" + counter).value;
+            var name = document.getElementById("name" + counter).value;
+            var email = document.getElementById("email" + counter).value;
+            document.getElementById("address_err" + counter).innerHTML = "";
+            document.getElementById("phone_err" + counter).innerHTML = "";
+            document.getElementById("name_err" + counter).innerHTML = "";
+            document.getElementById("email_err" + counter).innerHTML = "";
 
             var pass = true;
 
-            if(address == "") {
-                document.getElementById("address_err"+counter).innerHTML = "Address is required";
+            if (address == "") {
+                document.getElementById("address_err" + counter).innerHTML = "Address is required";
                 pass = false;
             }
 
-            if(phone == "") {
-                document.getElementById("phone_err"+counter).innerHTML = "Phone Number is required";
+            if (phone == "") {
+                document.getElementById("phone_err" + counter).innerHTML = "Phone Number is required";
                 pass = false;
             } else if (isNaN(phone)) {
-                document.getElementById("phone_err"+counter).innerHTML = "Please enter valid number";
+                document.getElementById("phone_err" + counter).innerHTML = "Please enter valid number";
                 pass = false;
             }
-            
-            if(name == "") {
-                document.getElementById("name_err"+counter).innerHTML = "Name is required";
+
+            if (name == "") {
+                document.getElementById("name_err" + counter).innerHTML = "Name is required";
                 pass = false;
             } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(name)) {
-                document.getElementById("name_err"+counter).innerHTML = "Please enter valid name";
+                document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
                 pass = false;
             }
 
-            if(email == "") {
-                document.getElementById("email_err"+counter).innerHTML = "Email is required";
+            if (email == "") {
+                document.getElementById("email_err" + counter).innerHTML = "Email is required";
                 pass = false;
             } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                document.getElementById("email_err"+counter).innerHTML = "Please enter valid email";
+                document.getElementById("email_err" + counter).innerHTML = "Please enter valid email";
                 pass = false;
             }
 
-            if(pass) {
+            if (pass) {
                 $.ajax({
                     type: "post",
                     url: "address.php",
-                    data: {  
+                    data: {
                         'details': true,
-                        'no' : counter,
-                        'name' : name,
+                        'no': counter,
+                        'name': name,
                         'address': address,
                         'phone': phone,
                         'email': email
                     },
                     cache: false,
-                    success: function (html) {
+                    success: function(html) {
                         alert('Details updated');
                         location.reload();
                     }
@@ -703,21 +704,18 @@
             return false;
         }
 
-        function edit(counter)
-        {
-			$('#address-modal'+counter).fadeIn();
+        function edit(counter) {
+            $('#address-modal' + counter).fadeIn();
             return false;
         }
 
         function closeModal(counter) {
 
-			$('#address-modal'+counter).fadeOut();
+            $('#address-modal' + counter).fadeOut();
             return false;
         }
-
     </script>
 
-    
+
 
 </body>
-

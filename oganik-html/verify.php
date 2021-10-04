@@ -229,7 +229,7 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
@@ -243,16 +243,21 @@
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
-                        <li>
-                            <a href="adminprofile.php">Profile</a>
+                        <li class="dropdown">
+                            <a href="index.php">Home</a>
                         </li>
                         <li>
-                            <a href="additem.php">Add item</a>
+                            <a href="about.php">About</a>
                         </li>
-                        <li>
-                            <a href="displayitem.php">Update Item</a>
+                        <li class="dropdown">
+                            <a href="products.php">Shop</a>
+                            <ul>
+                                <li><a href="products.php">Shop</a></li>
+                                <li><a href="cart.php">Cart Page</a></li>
+                                <li><a href="checkout.php">Checkout</a></li>
+                            </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">Transactions</a>
+                        <li class="dropdown"><a href="news.php">News</a>
                             <ul>
                                 <li><a href="news.php">News</a></li>
                                 <li><a href="news-details.php">News Details</a></li>

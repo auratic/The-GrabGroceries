@@ -86,6 +86,10 @@
             background-color: black;
             color: white;
         }
+        .fas
+        {
+            margin-left: 0;
+        }
     </style>
 </head>
 
@@ -197,13 +201,13 @@
             
         <!-- :::::::::: Profile :::::::::: -->
         <main id="main-container" class="main-container">
-            <div class="containerr">
+            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
                 <div class="row">
                     <div class="col-12">
                         <!-- :::::::::: Start My Account Section :::::::::: -->
                         <div class="my-account-area">
                             <div class="row">
-                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
@@ -237,7 +241,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-xl-8 col-md-8">
+                                <div class="col-xl-10 col-md-10">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
                                         <div class="#" id="pills-dashboard" aria-labelledby="pills-dashboard-tab">
                                             <div class="my-account-dashboard account-wrapper">

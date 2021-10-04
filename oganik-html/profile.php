@@ -183,9 +183,6 @@
                             <option value="arabic">Arabic</option>
                         </select>
                     </div><!-- /.main-menu__language -->
-                    <div>
-                        <button style="outline: none;" class="mode" onclick="myFunction()">Mode</button>
-                    </div>
                 </div><!-- /.container -->
             </nav>
              <!-- /.main-menu -->

@@ -118,7 +118,10 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         .modal-content {
             border-radius: 25px;
         }
-
+        .modal-body{
+            overflow-y: scroll;
+            max-height: calc(100vh - 210px);
+        }
         .modal-header {
             border-radius: 25px 25px 0 0;
         }

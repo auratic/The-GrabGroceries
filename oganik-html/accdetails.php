@@ -353,11 +353,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="row">
-                                                                    <div class="col-md-10">
-                                                                        <div class="form-group">
-                                                                            <input type="submit" name="save" class="btn btn-primary" value="Save">
-                                                                            <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                                                                    <div class="row">
+                                                                        <div class="col-md-10">
+                                                                            <div class="form-group">
+                                                                                <input type="submit" name="save" class="btn btn-primary" value="Save">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

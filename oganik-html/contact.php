@@ -261,16 +261,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>

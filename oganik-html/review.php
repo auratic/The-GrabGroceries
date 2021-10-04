@@ -1,16 +1,5 @@
 <?php
-  session_start();
-  
-  if(!isset($_SESSION["loggedin"])) {
-    echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
-   }
-
-   require "config.php";
-   
+  session_start()
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +8,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile || TheGrabGroceries</title>
+    <title>AboutUs || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -44,53 +33,9 @@
     <link rel="stylesheet" href="assets/vendors/odometer/odometer.min.css" />
     <link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
     <link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
-    <link rel="stylesheet" type="assets/css" href="css/organik.css">
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
-    <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
-          color:black;
-          background-color:white
-        }
-        .signup-form{ width: 360px; padding: 20px; }
-
-        .containerr
-        {
-            color:black;
-            background-color:white;
-            margin-top: 70px;
-            margin-left: 50px;
-            margin-bottom: 80px;
-            border-radius: 5px;
-            border-style: double;
-            width: 1430px;
-        }
-
-        .mode
-        {
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
-            text-align:center;
-            font-size: 16px;
-            margin-left: 20px;
-            outline: none;
-        }
-
-        .dark-mode 
-        {
-            background-color: black;
-            color: white;
-        }
-        .fas
-        {
-            margin-left: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -116,9 +61,9 @@
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
@@ -141,7 +86,7 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
@@ -164,17 +109,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -189,96 +132,103 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-             <!-- /.main-menu -->
+            <!-- /.main-menu -->
         </header><!-- /.main-header -->
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-            
-        <!-- :::::::::: Profile :::::::::: -->
-        <main id="main-container" class="main-container">
-            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- :::::::::: Start My Account Section :::::::::: -->
-                        <div class="my-account-area">
-                            <div class="row">
-                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
-                                    <div class="my-account-menu">
-                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                            <li>
-                                                <a href="profile.php">
-                                                    <i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="view_order.php">
-                                                    <i class="fas fa-shopping-cart"></i> Order</a>
-                                            </li>
-                                            <li>
-                                                <a href="payment.php">
-                                                    <i class="fas fa-credit-card"></i> Payment Method</a>
-                                            </li>
-                                            <li>
-                                                <a href="address.php">
-                                                    <i class="fas fa-map-marker-alt"></i> Address</a>
-                                            </li>
-                                            <li>
-                                                <a href="accdetails.php" >
-                                                    <i class="fas fa-user"></i> Account Details</a>
-                                            </li>
-                                            <li>
-                                                <a href="password.php" >
-                                                    <i class="fas fa-lock"></i> Password Changes</a>
-                                            </li>
-                                            <li>
-                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+        <section class="page-header">
+            <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2>Testimonials</h2>
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="index.php">Home</a></li>
+                    <li>/</li>
+                    <li><span>Testimonials</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
 
-                                </div>
-                                <div class="col-xl-10 col-md-10">
-                                    <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="#" id="pills-dashboard" aria-labelledby="pills-dashboard-tab">
-                                            <div class="my-account-dashboard account-wrapper">
-                                                <h4 class="account-title">Dashboard</h4>
-                                                    <div class="welcome-dashboard m-t-30">
-                                                        <p>Hello, (If not
-                                                            <?php 
-                                                                $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
-                                                                $result = mysqli_query($link, $sql);
-                                                        
-                                                                while($row=mysqli_fetch_assoc($result)) 
-                                                                {
-                                                                    $fname = $row['firstname'];
-                                                                    $lname = $row['lastname'];
-                                                                }
-                                                                echo "<strong>  ".$fname." ".$lname."</strong>"
-                                                            ?>
-                                                            
-                                                            please <a href="logout.php">Logout</a> )
-                                                        </p>
-                                                    </div>
-                                                        <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
-                                                            recent orders, manage your shipping and billing addresses and edit your password and
-                                                            account details.
-                                                        </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href="index.php">
-                                                <img src="assets/images/Logo6.png" style="width: 100%; object-fit: contain; border-radius: 25px; margin-left: 350px;">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- :::::::::: End My Account Section :::::::::: -->
+        <section class="testimonials-one">
+            <div class="testimonials-one__head">
+                <div class="container">
+                    <div class="block-title text-center">
+                        <div class="block-title__decor"></div><!-- /.block-title__decor -->
+                        <p>Our Testimonials</p>
+                        <h3>What People Say?</h3>
+                    </div><!-- /.block-title -->
+                </div><!-- /.container -->
+            </div><!-- /.testimonials-one__head -->
+            <div class="container">
+                <div class="thm-tiny__slider" id="testimonials-one-box" data-tiny-options='{
+            "container": "#testimonials-one-box",
+            "items": 1,
+            "slideBy": "page",
+            "gutter": 0,
+            "mouseDrag": true,
+            "autoplay": true,
+            "nav": false,
+            "controlsPosition": "bottom",
+            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
+            "autoplayButtonOutput": false,
+            "responsive": {
+                "640": {
+                  "items": 2,
+                  "gutter": 30
+                },
+                "992": {
+                  "gutter": 30,
+                  "items": 3
+                },
+                "1200": {
+                  "disable": true
+                }
+              }
+        }'>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-1.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Winnie Collier</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
+                    </div>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-2.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Helen Woods</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
+                    </div>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-3.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Ethan Thomas</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
                     </div>
                 </div>
-            </div>
-        </main> 
+            </div><!-- /.container -->
+        </section><!-- /.testimonials-one -->
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
@@ -370,10 +320,137 @@
                 </div><!-- /.container -->
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
+
     </div><!-- /.page-wrapper -->
 
-    <!--back to top!-->
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>                
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+            <div class="logo-box">
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+            </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="organik-icon-email"></i>
+                    <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                </li>
+                <li>
+                    <i class="organik-icon-calling"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__language">
+                    <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                    <label class="sr-only" for="language-select">select language</label>
+                    <!-- /#language-select.sr-only -->
+                    <select class="selectpicker" id="language-select">
+                        <option value="english">English</option>
+                        <option value="arabic">Arabic</option>
+                    </select>
+                </div><!-- /.mobile-nav__language -->
+                <div class="main-menu__login">
+                    <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                            <i class="organik-icon-user"></i>
+                                <?php 
+
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
+                    </a>
+                </div><!-- /.main-menu__login -->
+            </div><!-- /.mobile-nav__top -->
+
+
+
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
+
+    <div class="mini-cart">
+        <div class="mini-cart__overlay mini-cart__toggler"></div>
+        <div class="mini-cart__content">
+            <div class="mini-cart__top">
+                <h3 class="mini-cart__title">Shopping Cart</h3>
+                <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+            </div><!-- /.mini-cart__top -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-1.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Banana</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-2.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-3.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Bread</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+        </div><!-- /.mini-cart__content -->
+    </div><!-- /.cart-toggler -->
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="#">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="organik-icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
+    </div>
+    <!-- /.search-popup -->
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+
 
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
@@ -392,17 +469,8 @@
     <script src="assets/vendors/wow/wow.js"></script>
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
-    
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
-
-    <script>
-        function myFunction() 
-        {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
-        }
-    </script>
 </body>
 
 </html>

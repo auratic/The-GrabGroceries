@@ -38,38 +38,47 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+        $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($link, $sql);
 
-        if (mysqli_num_rows($result) == 1) {
-            
-            session_start();
-            $_SESSION["loggedin"] = true;
-            while($row = mysqli_fetch_assoc($result)) {
-                $_SESSION["mode"] = $row["mode"];
-                $_SESSION["lname"] = $row["lastname"];
-                $_SESSION["userid"] = $row["user_id"];
-                $_SESSION["verified"] = $row["verified"];
+        if (mysqli_num_rows($result) == 1) 
+        {   
+            while($row = mysqli_fetch_assoc($result)) 
+            {
+                if(password_verify($password, $row['password']))
+                {
+                    session_start();
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["mode"] = $row["mode"];
+                    $_SESSION["lname"] = $row["lastname"];
+                    $_SESSION["userid"] = $row["user_id"];
+                    $_SESSION["verified"] = $row["verified"];
+
+                    echo "Login successful.";
+                    if($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")
+                    {
+                        
+                        $date = date('Y-m-d H:i:s');
+                        $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'login', NULL, '$date')";
+                        mysqli_query($link, $sql);
+                        
+                        header("location: admin_profile.php");
+
+                    } else 
+                    {
+                        header("location: index.php");
+                    }
+                }
+                else
+                {
+                    $login_err = "Email or password is invalid";
+                }
             }
-
-            echo "Login successful.";
-            if($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin"){
-                
-                $date = date('Y-m-d H:i:s');
-                $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'login', NULL, '$date')";
-                mysqli_query($link, $sql);
-                
-                header("location: admin_profile.php");
-
-            } else {
-                header("location: index.php");
-
-            }
-
-          } else {
+        } 
+        else 
+        {
             $login_err = "Email or password is invalid";
             //echo "Error: " . $sql . "<br>" . mysqli_error($link);
-  
         }
     }
 
@@ -213,17 +222,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>

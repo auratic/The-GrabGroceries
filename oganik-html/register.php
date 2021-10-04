@@ -110,18 +110,19 @@
     }
     
     // Check input errors before inserting in database
-    if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
-        
+    if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) 
+    {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         // Prepare an insert statement
-        $sql = "INSERT INTO users (email, password, mode, firstname, lastname) VALUES ('$email', '$password', 'customer', '$fname', '$lname');";
-        $sql_get_id = "SELECT user_id FROM users WHERE email = '$email' and password = '$password'";
+        $sql = "INSERT INTO users (email, password, mode, firstname, lastname) VALUES ('$email', '$hash', 'customer', '$fname', '$lname');";
+        $sql_get_id = "SELECT user_id FROM users WHERE email = '$email' and password = '$hash'";
          
-        
         if (mysqli_query($link, $sql)) {
 
             if($id_result = mysqli_query($link, $sql_get_id)) {
 
-                while($row = mysqli_fetch_assoc($id_result)) {
+                while($row = mysqli_fetch_assoc($id_result)) 
+                {
 
                     $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (".$row['user_id'].")";
                     $sql_insert_card = "INSERT INTO cust_card (user_id) VALUES (".$row['user_id'].")";
@@ -148,7 +149,9 @@
                         </script>";
                     }
                 }
-            } else {
+            } 
+            else 
+            {
                 echo "
                 <script>
                   alert('Error: " . $sql_get_id . "\n" . mysqli_error($link) . "')

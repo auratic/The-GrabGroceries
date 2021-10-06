@@ -132,15 +132,28 @@
 
                     $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (".$row['user_id'].")";
                     $sql_insert_card = "INSERT INTO cust_card (user_id) VALUES (".$row['user_id'].")";
+                    $sql_insert_review = "INSERT INTO cust_review (user_id) VALUES (".$row['user_id'].")";
 
                     if(mysqli_query($link, $sql_insert_address)) {
 
                         if(mysqli_query($link,$sql_insert_card)){
-                            echo "
-                            <script>
-                            alert('New account created');
-                            location.href = 'login.php';
-                            </script>";
+
+                            if(mysqli_query($link,$sql_insert_review)){
+
+                                echo "
+                                <script>
+                                alert('New account created');
+                                location.href = 'login.php';
+                                </script>";
+                            }
+                            else
+                            {
+                                echo "
+                                <script>
+                                alert('Error: " . $sql_insert_review . "\n" . mysqli_error($link) . "')
+                                </script>";
+                            }
+
                         }
                         else{
                             echo "

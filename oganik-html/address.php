@@ -492,7 +492,7 @@ if ($result = mysqli_query($link, $sql)) {
                                             <div class="form-group">
                                                 <label>Name</label>
                                                 <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname . ' ' . $lname . '" disabled>
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <span class="con-pass-err" style="color:crimson" id="name_err0"></span>
                                             </div>
                                         </div>
                                     </div> 
@@ -502,7 +502,7 @@ if ($result = mysqli_query($link, $sql)) {
                                             <div class="form-group">
                                                 <label>Email</label>
                                                 <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" disabled>
-                                                <span class="con-pass-err" style="color:crimson"></span>
+                                                <span class="con-pass-err" style="color:crimson" id="email_err0"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -664,20 +664,22 @@ if ($result = mysqli_query($link, $sql)) {
                 pass = false;
             }
 
-            if (name == "") {
-                document.getElementById("name_err" + counter).innerHTML = "Name is required";
-                pass = false;
-            } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(name)) {
-                document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
-                pass = false;
-            }
+            if(counter != 0) {
+                if (name == "") {
+                    document.getElementById("name_err" + counter).innerHTML = "Name is required";
+                    pass = false;
+                } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(name)) {
+                    document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
+                    pass = false;
+                }
 
-            if (email == "") {
-                document.getElementById("email_err" + counter).innerHTML = "Email is required";
-                pass = false;
-            } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                document.getElementById("email_err" + counter).innerHTML = "Please enter valid email";
-                pass = false;
+                if (email == "") {
+                    document.getElementById("email_err" + counter).innerHTML = "Email is required";
+                    pass = false;
+                } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                    document.getElementById("email_err" + counter).innerHTML = "Please enter valid email";
+                    pass = false;
+                }
             }
 
             if (pass) {

@@ -343,7 +343,7 @@ if ($result = mysqli_query($link, $sql)) {
                                                                 <p class="card_numberr">'.$card_no[$x].'</p>
                                                                 <p class="card_expp">'.$card_exp[$x].'</p>
                                                                 <p class="card_namee">'.$card_name[$x].' </p>
-                                                                <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px;"></i>
+                                                                <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px; color: black;"></i>
                                                             </div>
                                                             <a class="box-btn m-t-25 " id="add-card'.$counterr.'" onclick="return addCard('.$counterr.')"><i class="far fa-edit"></i>Edit</a>
                                                         </div>';

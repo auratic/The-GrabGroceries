@@ -480,7 +480,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     <div class="row cardd space iconn-relative">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="label"><i class="fas fa-user"> Card Holder</i></label>
+                                                <label class="label" style="margin-left:5px;"><i class="fas fa-user"> Card Holder</i></label>
                                                 <input type="text" name="card_name' . $counter . '" id="card_name' . $counter . '" placeholder="Your Name" class="form-control ' . ((!empty($cname_err)) ? "is-invalid" : '') . '" value="' . $card_name[$x] . '">
                                                 <span class="invalid-feedback d-block" id="cname_err' . $counter . '"></span>   <span class="invalid-feedback"><?php echo $cname_err; ?></span>
                                             </div>
@@ -490,7 +490,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     <div class="row cardd space iconn-relative">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="label"><i class="fas fa-credit-card"> Card Number</i></label>
+                                                <label class="label" style="margin-left:5px;"><i class="fas fa-credit-card"> Card Number</i></label>
                                                 <input type="text" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
                                                 <span class="invalid-feedback d-block" id="cno_err' . $counter . '"></span>
                                             </div>
@@ -500,7 +500,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     <div class="row space iconn-relative">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label class="label"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
+                                                <label class="label" style="margin-left:5px;"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
                                                 <input type="text" name="card_exp' . $counter . '" id="card_exp' . $counter . '" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control ' . ((!empty($cexp_err)) ? "is-invalid" : '') . '" value="' . $card_exp[$x] . ' ">
                                                 <span class="invalid-feedback d-block" id="cexp_err' . $counter . '"></span>
                                             </div>
@@ -508,7 +508,7 @@ if ($result = mysqli_query($link, $sql)) {
                                             
                                         <div class="col">
                                             <div class="form-group">
-                                                <label class="label"><i class="fas fa-lock"> CVV</i></label>
+                                                <label class="label" style="margin-left:5px;"><i class="fas fa-lock"> CVV</i></label>
                                                 <input type="text" name="card_cvv' . $counter . '" id="card_cvv' . $counter . '" data-mask="000" placeholder="000" class="form-control ' . ((!empty($ccvv_err)) ? "is-invalid" : '') . '" value="' . $card_cvv[$x] . ' ">
                                                 <span class="invalid-feedback d-block" id="ccvv_err' . $counter . '"></span>
                                             </div>
@@ -573,7 +573,7 @@ if ($result = mysqli_query($link, $sql)) {
                 document.getElementById("cno_err" + counter).innerHTML = "";
                 document.getElementById("cexp_err" + counter).innerHTML = "";
                 document.getElementById("ccvv_err" + counter).innerHTML = "";
-
+                
                 var pass = true;
 
                 if (cardName == "") {

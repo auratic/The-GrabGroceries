@@ -4,13 +4,53 @@
   if(!isset($_SESSION["loggedin"])) {
     echo "
      <script>
-       alert('Please login');
+       alert('Please login to view your cart');
        location.href='login.php';
      </script>";
    }
 
   require "config.php";
-
+  if(!empty($_GET["action"])) {
+    switch($_GET["action"]) {
+        case "add":
+            if(!empty($_POST["stock"])) {
+                $getprod = $link->runQuery("SELECT * FROM item WHERE item_id='" . $_GET["item_id"] . "'");
+                $itemArray = array($getprod[0]["item_id"]=>array('item'=>$getprod[0]["item"], 'item_id'=>$getprod[0]["item_id"], 'stock'=>$_POST["stock"], 'cost'=>$getprod[0]["cost"], 'image'=>$getprod[0]["image"]));
+                
+                if(!empty($_SESSION["c_item"])) {
+                    if(in_array($getprod[0]["item_id"],array_keys($_SESSION["c_item"]))) {
+                        foreach($_SESSION["c_item"] as $k => $v) {
+                                if($getprod[0]["item_id"] == $k) {
+                                    if(empty($_SESSION["c_item"][$k]["stock"])) {
+                                        $_SESSION["c_item"][$k]["stock"] = 0;
+                                    }
+                                    $_SESSION["c_item"][$k]["stock"] += $_POST["stock"];
+                                }
+                        }
+                    } else {
+                        $_SESSION["c_item"] = array_merge($_SESSION["c_item"],$itemArray);
+                    }
+                } else {
+                    $_SESSION["c_item"] = $itemArray;
+                }
+            }
+        break;
+        case "remove":
+            if(!empty($_SESSION["c_item"])) {
+                foreach($_SESSION["c_item"] as $k => $v) {
+                        if($_GET["item_id"] == $k)
+                            unset($_SESSION["c_item"][$k]);				
+                        if(empty($_SESSION["c_item"]))
+                            unset($_SESSION["c_item"]);
+                }
+            }
+        break;
+        case "empty":
+            unset($_SESSION["c_item"]);
+        break;	
+    }
+    }
+    
    
 ?>
 
@@ -180,6 +220,7 @@
         </section><!-- /.page-header -->
 
         <section class="cart-page">
+        	
             <div class="container">
                 <div class="table-responsive">
                     <table class="table cart-table">
@@ -193,25 +234,57 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($item)): ?>
-                            <tr>
-                                <td colspan="5" style="text-align:center;">You have no items added in your Shopping Cart</td>
-                            </tr>
-                            <?php else: ?>
-                            <?php foreach ($item as $item): ?>
-                            <tr>
-                                <?php
-                                if(isset($_POST['add_to_cart']))
-                                {
-                                    
-                                }
+                        <?php
+                        if(isset($_SESSION["c_item"])){
+                            $total_quantity = 0;
+                            $total_price = 0;
+                        ?>
+                        <?php		
+                            foreach ($_SESSION["c_item"] as $item){
+                                $item_price = $item["quantity"]*$item["price"];
                                 ?>
+                                        <tr>
+                                            <td>
+                                                <div class="product-box">
+                                                <img src="<?php echo $item["image"]; ?>"> <h3><?php echo $item["item"]; ?></h3>
+                                                </div>
+                                            </td>
+                                            
+                                            <td><?php echo "RM ".$item["cost"]; ?></td>
+                                            <td>
+                                                <div class="quantity-box">
+                                                <button type="button" class="sub">-</button>
+                                                <input type="number" id="2" <?php echo $item["quantity"]?>></input>
+                                                <button type="button" class="add">+</button>
+                                                
+                                            </td>
+                                        
+                                            <td>
+                                                <?php echo "$ ". number_format($item_price,2); ?>
+                                            </td>
+                                            <td>
+                                            <a href="index.php?action=remove&item_id=<?php echo $item["item_id"]; ?>" class="organik-icon-close"></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        
+                                }
+                            ?>
+                            <?php
+                            } else {
+                            ?>
+                            <tr>
+                                <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
                             </tr>
-                            <?php endforeach; ?>
-                            <?php endif; ?>
+                            <?php 
+                            }
+                            ?>
+                           
+                            
                         </tbody>
-
+                        </div>
                     </table><!-- /.table -->
+                    
                 </div><!-- /.table-responsive -->
                 <div class="row">
                     <div class="col-lg-8">

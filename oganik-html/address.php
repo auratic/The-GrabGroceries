@@ -11,12 +11,14 @@ if (!isset($_SESSION["loggedin"])) {
 
 require "config.php";
 
-$fname = $lname = $default_address = $default_phone = "";
+$fname = $lname = $default_address = $default_phone = $default_pcode = $default_state = $default_area = "";
 $name = array();
 $address = array();
 $phone = array();
 $email = array();
-
+$pcode = array();
+$state = array();
+$area  = array();
 
 if (isset($_POST["details"])) {
     if ($_POST["no"] == 0) {
@@ -24,6 +26,9 @@ if (isset($_POST["details"])) {
             UPDATE users
             SET 
             address = '" . ucwords($_POST['address']) . "', 
+            postcode = '" . $_POST["pcode"] . "',
+            state = '" . $_POST["state"] . "',
+            area = '" . $_POST["area"] . "',
             phone= '" . $_POST["phone"] . "'
             WHERE user_id = " . $_SESSION["userid"];
     } else {
@@ -32,7 +37,10 @@ if (isset($_POST["details"])) {
                 SET 
                 address" . $_POST["no"] . " = '" . ucwords($_POST['address']) . "', 
                 phone" . $_POST["no"] . "= '" . $_POST["phone"] . "', 
+                postcode" . $_POST["no"] . "= '" . $_POST["pcode"] . "', 
                 name" . $_POST["no"] . " = '" . $_POST["name"] . "',
+                state" . $_POST["no"] . " = '" . $_POST["state"] . "',
+                area" . $_POST["no"] . " = '" . $_POST["area"] . "',
                 email" . $_POST["no"] . " = '" . $_POST["email"] . "'
                 WHERE user_id = " . $_SESSION["userid"];
     }
@@ -58,8 +66,11 @@ if ($result = mysqli_query($link, $sql)) {
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($name,    $row['name1'], $row['name2'], $row['name3'], $row['name4'], $row['name5']);
         array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
+        array_push($pcode,   $row['postcode1'], $row['postcode2'], $row['postcode3'], $row['postcode4'], $row['postcode5']);
         array_push($phone,   $row['phone1'], $row['phone2'], $row['phone3'], $row['phone4'], $row['phone5']);
         array_push($email,   $row['email1'], $row['email2'], $row['email3'], $row['email4'], $row['email5']);
+        array_push($state,   $row['state1'], $row['state2'], $row['state3'], $row['state4'], $row['state5']);
+        array_push($area,   $row['area1'], $row['area2'], $row['area3'], $row['area4'], $row['area5']);
     }
 }
 
@@ -336,15 +347,21 @@ if ($result = mysqli_query($link, $sql)) {
                                                         $default_address = $row['address'];
                                                         $default_phone = $row['phone'];
                                                         $default_email = $row['email'];
+                                                        $default_pcode = $row['postcode'];
+                                                        $default_state = $row['state'];
+                                                        $default_area = $row['area'];
                                                     }
 
                                                     echo '
                                                                 <div class="row">
                                                                     <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                         <p>Full name: <strong>  ' . $fname . ' ' . $lname . '</strong></p>
-                                                                        <p>Email    : ' . $default_email . '</span></p>
-                                                                        <p>Address  : <span style="font-style:italic;">' . $default_address . '</span> </p>
-                                                                        <p>Contact  : <span style="font-style:italic;">' . $default_phone . '</span></p>
+                                                                        <p>Email   &#160&#160&#160&#160&#160 : ' . $default_email . '</span></p>
+                                                                        <p>Address  &#160&#160: ' . $default_address . '</span> </p>
+                                                                        <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $default_area . '</span> </p>
+                                                                        <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $default_state . '</span> </p>
+                                                                        <p>Postcode : ' . $default_pcode . '</span> </p>
+                                                                        <p>Contact  &#160&#160: ' . $default_phone . '</span></p>
                                                                         <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span>
                                                                     </div>';
                                                     $counterr = 0;
@@ -353,9 +370,12 @@ if ($result = mysqli_query($link, $sql)) {
                                                         echo '
                                                                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
                                                                                 <p>Full name: <strong>  ' . $name[$x] . '</strong></p>
-                                                                                <p>Email    : ' . $email[$x] . '</span></p>
-                                                                                <p>Address  : <span style="font-style:italic;">' . $address[$x] . '</span></p>
-                                                                                <p>Contact  : <span style="font-style:italic;">' . $phone[$x] . '</span></p>
+                                                                                <p>Email    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
+                                                                                <p>Address &#160 : ' . $address[$x] . '</span></p>
+                                                                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
+                                                                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $state[$x] . '</span></p>
+                                                                                <p>Postcode&#160: ' . $pcode[$x] . '</span></p>
+                                                                                <p>Contact &#160&#160 : ' . $phone[$x] . '</span></p>
                                                                                 <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>Edit</a>
                                                                             </div>';
                                                     }
@@ -488,7 +508,7 @@ if ($result = mysqli_query($link, $sql)) {
                             
                                 <form> 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Name</label>
                                                 <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname . ' ' . $lname . '" disabled>
@@ -498,7 +518,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     </div> 
                                     
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Email</label>
                                                 <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" disabled>
@@ -508,7 +528,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
                                                 <input type="" name="address0" id="address0" required class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $default_address . '">
@@ -516,8 +536,42 @@ if ($result = mysqli_query($link, $sql)) {
                                             </div>
                                         </div>
                                     </div>
-                                            
+
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Area</label>
+                                                <select name="area0" id="area0" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $default_area . '">
+                                                    <option disabled selected value></option>
+                                                    <option value="Bukit Baru">Bukit Baru</option>
+                                                    <option value="Bukit Beruang">Bukit Beruang</option>
+                                                    <option value="Melaka Baru">Melaka Baru</option>
+                                                </select>
+                                                <span class="invalid-feedback d-block" id="area_err0"><?php echo $area_err; ?></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="state">State</label>
+                                                <select name="state0" id="state0" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $default_state . '">
+                                                    <option disabled selected value></option>
+                                                    <option value="Melaka">Melaka</option>
+                                                </select>
+                                                <span class="invalid-feedback d-block" id="state_err0"><?php echo $state_err; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Postcode</label>
+                                                <input type="" name="pcode0" id="pcode0" required class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $default_pcode . '" >
+                                                <span class="invalid-feedback d-block" id="pcode_err0"><?php echo $pcode_err; ?></span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
@@ -526,7 +580,7 @@ if ($result = mysqli_query($link, $sql)) {
                                             </div>
                                         </div>
                                     </div>
-
+                                            
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
@@ -568,7 +622,7 @@ if ($result = mysqli_query($link, $sql)) {
                             
                                 <form> 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Name</label>
                                                 <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John Doe" required />
@@ -578,7 +632,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     </div>  
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Email</label>
                                                 <input type="email" name="email' . $counter . '" id="email' . $counter . '" class="form-control ' . ((!empty($email_err)) ? "is-invalid" : '') . '" value="' . $email[$x] . '" placeholder="JohnDoe@gmail.com" required />
@@ -588,7 +642,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     </div>  
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
                                                 <input type="" name="address' . $counter . '" id="address' . $counter . '" class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $address[$x] . '" placeholder="No 1 Tmn Asin 70000" required />
@@ -596,8 +650,42 @@ if ($result = mysqli_query($link, $sql)) {
                                             </div>
                                         </div>
                                     </div>
-                                            
+
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="area">Area</label>
+                                                <select name="area' . $counter . '" id="area' . $counter . '" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $area[$x] . '" >
+                                                    <option disabled selected value></option>
+                                                    <option value="Bukit Baru">Bukit Baru</option>
+                                                    <option value="Bukit Beruang">Bukit Beruang</option>
+                                                    <option value="Melaka Baru">Melaka Baru</option>
+                                                </select>
+                                                <span class="invalid-feedback d-block" id="area_err' . $counter . '"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="state">State</label>
+                                                <select name="state' . $counter . '" id="state' . $counter . '" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $state[$x] . '" >
+                                                    <option disabled selected value></option>
+                                                    <option value="Melaka">Melaka</option>
+                                                </select>
+                                                <span class="invalid-feedback d-block" id="state_err' . $counter . '"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Postcode</label>
+                                                <input type="" name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $pcode[$x] . '" placeholder="75350" maxlength=5 required />
+                                                <span class="invalid-feedback d-block" id="pcode_err' . $counter . '"></span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
@@ -641,13 +729,19 @@ if ($result = mysqli_query($link, $sql)) {
     <script>
         function updateAddress(counter) {
             var address = document.getElementById("address" + counter).value;
+            var pcode = document.getElementById("pcode" + counter).value;
             var phone = document.getElementById("phone" + counter).value;
             var name = document.getElementById("name" + counter).value;
             var email = document.getElementById("email" + counter).value;
+            var state = document.getElementById("state" + counter).value;
+            var area = document.getElementById("area" + counter).value;
             document.getElementById("address_err" + counter).innerHTML = "";
             document.getElementById("phone_err" + counter).innerHTML = "";
             document.getElementById("name_err" + counter).innerHTML = "";
             document.getElementById("email_err" + counter).innerHTML = "";
+            document.getElementById("pcode_err" + counter).innerHTML = "";
+            document.getElementById("state_err" + counter).innerHTML = "";
+            document.getElementById("area_err" + counter).innerHTML = "";
 
             var pass = true;
 
@@ -661,6 +755,21 @@ if ($result = mysqli_query($link, $sql)) {
                 pass = false;
             } else if (isNaN(phone)) {
                 document.getElementById("phone_err" + counter).innerHTML = "Please enter valid number";
+                pass = false;
+            }
+
+            if (pcode == "") {
+                document.getElementById("pcode_err" + counter).innerHTML = "Postcode is required";
+                pass = false;
+            }
+
+            if (area == "") {
+                document.getElementById("area_err" + counter).innerHTML = "Area is required";
+                pass = false;
+            }
+
+            if (state == "") {
+                document.getElementById("state_err" + counter).innerHTML = "State is required";
                 pass = false;
             }
 
@@ -691,7 +800,10 @@ if ($result = mysqli_query($link, $sql)) {
                         'no': counter,
                         'name': name,
                         'address': address,
+                        'pcode': pcode,
                         'phone': phone,
+                        'state': state,
+                        'area' : area,
                         'email': email
                     },
                     cache: false,

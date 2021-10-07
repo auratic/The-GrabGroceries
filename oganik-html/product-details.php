@@ -1,17 +1,21 @@
 <?php
-  session_start();
-  
-  require "config.php";
+    session_start();
+    
+    require "config.php";
 
-  if(isset($_GET["item_id"])) {
-    $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
-  } else {
-    $sql = "SELECT * FROM item WHERE item_id = 200000001";
-  }
+    if(isset($_GET["item_id"])) {
+        $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
+    } else {
+        $sql = "SELECT * FROM item WHERE item_id = 200000001";
+    }
 
-  if($result = mysqli_query($link, $sql)) {
-    $row = mysqli_fetch_assoc($result);
-  }
+    if($result = mysqli_query($link, $sql)) {
+        $row = mysqli_fetch_assoc($result);
+    }
+
+    if(isset($_POST["add"])){
+        print_r($_POST["item_id"]);
+    }
 
 ?>
 
@@ -115,19 +119,6 @@
                     <ul class="main-menu__list">
                         <li class="dropdown">
                             <a href="index.php">Home</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="about.php">About</a>
@@ -135,17 +126,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -211,6 +200,8 @@
                                 <li>REF. 4231/406</li>
                                 <li>Available in store</li>
                             </ul>
+
+                            <form action=""></form>
                             <div class="product-quantity-box">
                                 <div class="quantity-box">
                                     <button type="button" class="sub">-</button>
@@ -218,7 +209,8 @@
                                     <button type="button" class="add">+</button>
                                 </div>
                                 <div class="addto-cart-box">
-                                    <button class="thm-btn" type="submit">Add to Cart</button>
+                                    <button class="thm-btn" type="submit" name="add">Add to Cart</button>
+                                    <input type="hidden" name="item_id" value="item_id">
                                 </div>
                                 <div class="wishlist_btn">
                                     <a href="#" class="thm-btn">Add to Wishlist</a>

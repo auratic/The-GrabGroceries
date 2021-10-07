@@ -183,6 +183,12 @@ if ($result = mysqli_query($link, $sql)) {
         {
             margin-left: 0;
         }
+
+        #card_no1, #card_no2, #card_no3, #card_no4, #card_no5{
+            background-image: url("assets/images/mastercard.jpg");
+            padding-left: 50px;
+            background-position: 99%;
+        }
     </style>
 </head>
 
@@ -522,6 +528,7 @@ if ($result = mysqli_query($link, $sql)) {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </form>
 
                             </div>
@@ -558,6 +565,12 @@ if ($result = mysqli_query($link, $sql)) {
         <script src="assets/vendors/wow/wow.js"></script>
         <script src="assets/vendors/isotope/isotope.js"></script>
         <script src="assets/vendors/countdown/countdown.min.js"></script>
+
+        <!---payment!--->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.payform.min.js" charset="utf-8"></script>
+        <script src="assets/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
         <!-- template js -->

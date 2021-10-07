@@ -543,9 +543,9 @@ if ($result = mysqli_query($link, $sql)) {
                                                 <label>Area</label>
                                                 <select name="area0" id="area0" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $default_area . '">
                                                     <option disabled selected value></option>
-                                                    <option value="Bukit Baru">Bukit Baru</option>
-                                                    <option value="Bukit Beruang">Bukit Beruang</option>
-                                                    <option value="Melaka Baru">Melaka Baru</option>
+                                                    <option value="Alor Gajah">Alor Gajah</option>
+                                                    <option value="Melaka Tengah">Melaka Tengah</option>
+                                                    <option value="Jasin">Jasin</option>
                                                 </select>
                                                 <span class="invalid-feedback d-block" id="area_err0"><?php echo $area_err; ?></span>
                                             </div>
@@ -656,10 +656,9 @@ if ($result = mysqli_query($link, $sql)) {
                                             <div class="form-group">
                                                 <label for="area">Area</label>
                                                 <select name="area' . $counter . '" id="area' . $counter . '" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $area[$x] . '" >
-                                                    <option disabled selected value></option>
-                                                    <option value="Bukit Baru">Bukit Baru</option>
-                                                    <option value="Bukit Beruang">Bukit Beruang</option>
-                                                    <option value="Melaka Baru">Melaka Baru</option>
+                                                    <option value="Alor Gajah">Alor Gajah</option>
+                                                    <option value="Melaka Tengah">Melaka Tengah</option>
+                                                    <option value="Jasin">Jasin</option>
                                                 </select>
                                                 <span class="invalid-feedback d-block" id="area_err' . $counter . '"></span>
                                             </div>

@@ -211,19 +211,23 @@
                                 <li>REF. 4231/406</li>
                                 <li>Available in store</li>
                             </ul>
+                            
                             <div class="product-quantity-box">
                                 <div class="quantity-box">
                                     <button type="button" class="sub">-</button>
-                                    <input type="number" id="2" value="1" />
+                                    <input type="number" name="stock" value="1" min="1" max="<?=$item['stock']?>" placeholder="stock" required>
                                     <button type="button" class="add">+</button>
                                 </div>
                                 <div class="addto-cart-box">
-                                    <button class="thm-btn" type="submit">Add to Cart</button>
+                        
+                                    <input type="button" class="thm-btn"  value="Add to Cart" onclick="cart.add(<?=$row['item_id']?>);" ></input>
+                        
                                 </div>
                                 <div class="wishlist_btn">
                                     <a href="#" class="thm-btn">Add to Wishlist</a>
                                 </div>
                             </div>
+                            
                             <ul class="list-unstyled category_tag_list">
                                 <li><span>Category:</span> <?php echo $row["category"] ?></li>
                             </ul>

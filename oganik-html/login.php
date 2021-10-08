@@ -4,49 +4,64 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 
 // Initialize the session
 session_start();
- 
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header("location: index.php");
     exit;
 }
- 
+
 // Include config file
 require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $email = $password = "";
-$email_err = $password_err = $login_err = "";
- 
+$email_err = $password_err = $login_err = $recaptcha_err = "";
+
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     // Check if email is empty
-    if(empty(trim($_POST["email"]))) {
+    if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter email.";
-    } else{
+    } else {
         $email = trim($_POST["email"]);
     }
-    
+
     // Check if password is empty
-    if(empty($_POST["password"])){
+    if (empty($_POST["password"])) {
         $password_err = "Please enter your password.";
-    } else{
+    } else {
         $password = $_POST["password"];
     }
-    
+
+    if (isset($_POST['g-recaptcha-response'])) {
+        // RECAPTCHA SETTINGS
+        $captcha = $_POST['g-recaptcha-response'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+        // RECAPTCH RESPONSE
+        $recaptcha_response = file_get_contents($url . '?secret=' . $key . '&response=' . $captcha . '&remoteip=' . $ip);
+        $data = json_decode($recaptcha_response);
+
+        if (isset($data->success) &&  $data->success === true) {
+
+        } else {
+            $recaptcha_err = 'Verify your reCAPTCHA';
+        }
+    }
+
     // Validate credentials
-    if(empty($email_err) && empty($password_err)){
+    if (empty($email_err) && empty($password_err) && empty($recaptcha_err)) {
         // Prepare a select statement
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($link, $sql);
 
-        if (mysqli_num_rows($result) == 1) 
-        {   
-            while($row = mysqli_fetch_assoc($result)) 
-            {
-                if(password_verify($password, $row['password']))
-                {
+        if (mysqli_num_rows($result) == 1) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                if (password_verify($password, $row['password'])) {
                     session_start();
                     $_SESSION["loggedin"] = true;
                     $_SESSION["mode"] = $row["mode"];
@@ -55,52 +70,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $_SESSION["verified"] = $row["verified"];
 
                     echo "Login successful.";
-                    if($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")
-                    {
-                        
-                        $date = date('Y-m-d H:i:s');
-                        $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (". $_SESSION["userid"] .", 'login', NULL, '$date')";
-                        mysqli_query($link, $sql);
-                        
-                        header("location: admin_profile.php");
+                    if ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin") {
 
-                    } else 
-                    {
+                        $date = date('Y-m-d H:i:s');
+                        $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'login', NULL, '$date')";
+                        mysqli_query($link, $sql);
+
+                        header("location: admin_profile.php");
+                    } else {
                         header("location: index.php");
                     }
-                }
-                else
-                {
+                } else {
                     $login_err = "Email or password is invalid";
                 }
             }
-        } 
-        else 
-        {
+        } else {
             $login_err = "Email or password is invalid";
             //echo "Error: " . $sql . "<br>" . mysqli_error($link);
         }
     }
 
     //reCAPTCHA
-    if(isset($_POST['g-recaptcha-response'])) {
-        // RECAPTCHA SETTINGS
-        $captcha = $_POST['g-recaptcha-response'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-     
-        // RECAPTCH RESPONSE
-        $recaptcha_response = file_get_contents($url.'?secret='.$key.'&response='.$captcha.'&remoteip='.$ip);
-        $data = json_decode($recaptcha_response);
-     
-        if(isset($data->success) &&  $data->success === true) {
-        }
-        else {
-           die('Your account has been logged as a spammer, you cannot continue!');
-        }
-      }
-    
+
     // Close connection
 }
 ?>
@@ -141,14 +132,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
+
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
     </style>
 
-    <script src="https://www.google.com/recaptcha/api.js"></script> 
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </head>
 
@@ -202,14 +197,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="main-menu__login">
                         <a href="login.php">
                             <i class="organik-icon-user"></i>
-                                <?php 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            <?php
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -245,36 +240,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            <div class="container signup-form loginbox">
-              <h2>Login to TheGrabGroceries</h2>
-              <p>Please fill in your credentials to login.</p>
+        </header>
+        
+        <div class="container signup-form loginbox">
+            <h2>Login to TheGrabGroceries</h2>
+            <p>Please fill in your credentials to login.</p>
 
-              <?php 
-              if(!empty($login_err)){
-                  echo '<div class="alert alert-danger">' . $login_err . '</div>';
-              }        
-              ?>
+            <?php
+            if (!empty($login_err)) {
+                echo '<div class="alert alert-danger">' . $login_err . '</div>';
+            }
+            ?>
 
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="form-group" style="text-align: left">
-                    <label><b>Email</b>    </label> </br>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group" style="text-align: left">
+                    <label><b>Email</b> </label> </br>
                     <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                    </div>    
-                    <div class="form-group" style="text-align: left">
+                </div>
+                <div class="form-group" style="text-align: left">
                     <label><b>Password</b></label> </br>
                     <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                    </div>
+                </div>
+                <div class="form-group" style="text-align: left">
                     <div class="g-recaptcha" data-sitekey="6LcwLAQcAAAAAMhvxlQCfVC7rHJl0BRtHxa4zR17"></div>
-                    <div class="form-group">
+                    <span class="reCAPTCHA-err" style="margin-top: .25rem; font-size: 80%; color: #dc3545;"><?php echo $recaptcha_err; ?></span>
+                </div>
+
+                <div class="form-group">
                     <input type="submit" class="btn btn-primary signinbtn" value="Login">
-                    </div>
-                    <a href="forgotpass.php">Forgot password? </a>
-                    <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
-                </form>
-            </div>
-        </header>
+                </div>
+                <a href="forgotpass.php">Forgot password? </a>
+                <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
+            </form>
+        </div>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->

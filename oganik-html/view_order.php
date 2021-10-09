@@ -118,10 +118,12 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         .modal-content {
             border-radius: 25px;
         }
-        .modal-body{
+
+        .modal-body {
             overflow-y: scroll;
             max-height: calc(100vh - 210px);
         }
+
         .modal-header {
             border-radius: 25px 25px 0 0;
         }
@@ -129,8 +131,8 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         .modal-footer {
             border-radius: 0 0 25px 25px;
         }
-        .fas
-        {
+
+        .fas {
             margin-left: 0;
         }
     </style>
@@ -608,6 +610,133 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
             </div><!-- /.container -->
         </div><!-- /.bottom-footer -->
     </footer><!-- /.site-footer -->
+    </div>
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+            <div class="logo-box">
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+            </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="organik-icon-email"></i>
+                    <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                </li>
+                <li>
+                    <i class="organik-icon-calling"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__language">
+                    <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                    <label class="sr-only" for="language-select">select language</label>
+                    <!-- /#language-select.sr-only -->
+                    <select class="selectpicker" id="language-select">
+                        <option value="english">English</option>
+                        <option value="arabic">Arabic</option>
+                    </select>
+                </div><!-- /.mobile-nav__language -->
+                <div class="main-menu__login">
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
+
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
+                        } else {
+                            echo "Login / Register";
+                        }
+
+                        ?>
+                    </a>
+                </div><!-- /.main-menu__login -->
+            </div><!-- /.mobile-nav__top -->
+
+
+
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
+
+    <div class="mini-cart">
+        <div class="mini-cart__overlay mini-cart__toggler"></div>
+        <div class="mini-cart__content">
+            <div class="mini-cart__top">
+                <h3 class="mini-cart__title">Shopping Cart</h3>
+                <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+            </div><!-- /.mini-cart__top -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-1.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Banana</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-2.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-3.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Bread</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+        </div><!-- /.mini-cart__content -->
+    </div><!-- /.cart-toggler -->
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="products.php" method="GET">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="organik-icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
     </div>
     <!-- /.search-popup -->
 

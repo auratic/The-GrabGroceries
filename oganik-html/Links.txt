@@ -27,6 +27,7 @@ Bootstrap / CSS
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
 Collapses - https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
 d-block - https://stackoverflow.com/questions/50431450/force-to-show-invalid-feedback-in-bootstrap-4
+Scrollable Modal - https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen
 
 
 //////////////////////////////////////////

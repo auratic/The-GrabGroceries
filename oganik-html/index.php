@@ -1,7 +1,7 @@
 <?php
-  session_start();
+session_start();
 
-  require "config.php";
+require "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -40,23 +40,20 @@
     <link rel="stylesheet" href="assets/css/organik.css" />
 
     <style>
-    .mode
-    {
-        color: #fff;
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 5px;
-        text-align:center;
-        font-size: 16px;
-        margin-left: 20px;
-    }
+        .mode {
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            margin-left: 20px;
+        }
 
-    .dark-mode 
-    {
-        background-color: black;
-        color: white;
-    }
-
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
     </style>
 </head>
 
@@ -108,17 +105,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -306,29 +307,27 @@
                 </div><!-- /.new-products__top -->
                 <div class="row">
                     <?php
-                        $sql = "SELECT * from item";
+                    $sql = "SELECT * from item";
 
-                        if ($result = mysqli_query($link, $sql)) 
-                        {
+                    if ($result = mysqli_query($link, $sql)) {
 
-                            while ($row = mysqli_fetch_assoc($result)) 
-                            {
+                        while ($row = mysqli_fetch_assoc($result)) {
 
-                                echo'
+                            echo '
                                 <div class="col-md-6 col-lg-4">
                                     <div class="product-card">
                                         <div class="product-card__image">
-                                            <img src="assets/images/items/'.$row['image'].'" alt="">
+                                            <img src="assets/images/items/' . $row['image'] . '" alt="">
                                             <div class="product-card__image-content" style="cursor:pointer;"
-                                                onclick="location.href = `product-details.php?item_id='.$row['item_id'].'`">
+                                                onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
                                                 <a href="#"><i class="organik-icon-heart"></i></a>
                                                 <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
                                                 </div><!-- /.product-card__image-content -->
                                         </div><!-- /.product-card__image -->
                                         <div class="product-card__content">
                                             <div class="product-card__left">
-                                                <h3><a href="product-details.php">'.$row['item'].'</a></h3>
-                                                <p>RM'.$row['cost'].'</p>
+                                                <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
+                                                <p>RM' . $row['cost'] . '</p>
                                             </div><!-- /.product-card__left -->
                                             <div class="product-card__right">
                                                 <i class="fa fa-star"></i>
@@ -340,8 +339,8 @@
                                         </div><!-- /.product-card__content -->
                                     </div><!-- /.product-card -->
                                 </div>';
-                            }
-                        } 
+                        }
+                    }
                     ?>
                 </div><!-- /.row -->
             </div><!-- /.container -->
@@ -421,8 +420,8 @@
                                 <p>Shopping Store</p>
                                 <h3>Organic Food Only</h3>
                             </div><!-- /.block-title -->
-                            <p><i>TheGrabGroceries</i> is a low-cost online general store that gets items crosswise over classifications like 
-                                grocery, natural products and vegetables, excellence and health, family unit care, infant care, pet consideration 
+                            <p><i>TheGrabGroceries</i> is a low-cost online general store that gets items crosswise over classifications like
+                                grocery, natural products and vegetables, excellence and health, family unit care, infant care, pet consideration
                                 and meats and fish conveyed to your doorstep.</p>
                             <div class="call-to-action__wrap">
                                 <div class="row no-gutters">
@@ -574,23 +573,23 @@
                                     <ul class="list-unstyled">
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                                We focus on what you need.
+                                            We focus on what you need.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                                Amazing finds only here!
+                                            Amazing finds only here!
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                                Exciting treats available daily.
+                                            Exciting treats available daily.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                                Make delicious creations.
+                                            Make delicious creations.
                                         </li>
                                         <li>
                                             <i class="far fa-check-circle"></i>
-                                                Stocked for your needs.
+                                            Stocked for your needs.
                                         </li>
                                     </ul><!-- /.list-unstyled -->
                                 </div><!-- /.col-md-6 -->
@@ -645,7 +644,7 @@
                                 <img src="assets/images/resources/testi-1-1.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>Great independent grocery store with a wide variety of gourmet items and hard to find food stuffs. 
+                                <p>Great independent grocery store with a wide variety of gourmet items and hard to find food stuffs.
                                     A great butcher offering local seafood and grass fed meats.</p>
                                 <h3>Winnie Collier</h3>
                                 <span>Customer</span>
@@ -658,7 +657,7 @@
                                 <img src="assets/images/resources/testi-1-2.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>Staff is the best in a health food store and locally owned. I only get my supplements from Staff 
+                                <p>Staff is the best in a health food store and locally owned. I only get my supplements from Staff
                                     because they have a knowledgeable staff.</p>
                                 <h3>Helen Woods</h3>
                                 <span>Customer</span>
@@ -671,7 +670,7 @@
                                 <img src="assets/images/resources/testi-1-3.png" alt="">
                             </div><!-- /.testimonials-one__image -->
                             <div class="testimonials-one__content">
-                                <p>Staff allows me to live out my dreams of becoming a zero-waster. The best bulk selection around. 
+                                <p>Staff allows me to live out my dreams of becoming a zero-waster. The best bulk selection around.
                                     Organic, beautiful produce.</p>
                                 <h3>Ethan Thomas</h3>
                                 <span>Customer</span>
@@ -1002,17 +1001,21 @@
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
-                            <i class="organik-icon-user"></i>
-                                <?php 
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
+                        } else {
+                            echo "Login / Register";
+                        }
+
+                        ?>
                     </a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->
@@ -1081,9 +1084,9 @@
         <div class="search-popup__overlay search-toggler"></div>
         <!-- /.search-popup__overlay -->
         <div class="search-popup__content">
-            <form action="#">
+            <form action="products.php" method="GET">
                 <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
-                <input type="text" id="search" placeholder="Search Here..." />
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
                 <button type="submit" aria-label="search submit" class="thm-btn">
                     <i class="organik-icon-magnifying-glass"></i>
                 </button>
@@ -1092,7 +1095,7 @@
         <!-- /.search-popup__content -->
     </div>
     <!-- /.search-popup -->
-    
+
     <p id="verified" style="display: none;"><?php echo (isset($_SESSION["loggedin"]) && (isset($_SESSION["verified"]) && $_SESSION["verified"] == "false")) ? "false" : "true"; ?></p>
 
     <div id="snackbar">
@@ -1107,7 +1110,7 @@
             <button type="button" class="btn btn-default" id="verified-btn">Close</button>
         </div>
     </div>
-    
+
     <!--back to top!-->
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
@@ -1115,7 +1118,7 @@
         var verified = document.querySelector("#verified").innerHTML;
         var snackbar = document.querySelector("#snackbar");
 
-        if(verified == "false") {
+        if (verified == "false") {
             snackbar.style.display = "flex";
         }
 
@@ -1150,13 +1153,11 @@
     <script src="assets/js/organik.js"></script>
 
     <script>
-        function myFunction() 
-        {
+        function myFunction() {
             var element = document.body;
             element.classList.toggle("dark-mode");
             document.querySelector("#p2").style.color = "white";
         }
-        
     </script>
 </body>
 

@@ -323,7 +323,7 @@
 
                             <div id="feed" style="
                                 background-color: azure;
-                                height: 80%;
+                                max-height: 50vh;
                                 width: 100%;
                                 overflow: scroll;
                                 border: solid lightgreen 1px;">

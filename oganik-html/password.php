@@ -13,70 +13,54 @@ require "config.php";
 
 $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
 
-    if (count($_POST) > 0)
-    {
-        $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+if (count($_POST) > 0) {
+    $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
 
-        $curPwd = $_POST["currentPassword"];
-        $newPwd = $_POST["newPassword"];
-        $cfmPwd = $_POST["confirmPassword"];
-        
-        $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
-        $result = mysqli_query($link, $sql);
-        $row = mysqli_fetch_assoc($result);
+    $curPwd = $_POST["currentPassword"];
+    $newPwd = $_POST["newPassword"];
+    $cfmPwd = $_POST["confirmPassword"];
 
-        //hashing part
-        if(password_verify($curPwd, $row["password"]))
-        {
-            $uppercase = preg_match('@[A-Z]@', $newPwd);
-            $lowercase = preg_match('@[a-z]@', $newPwd);
-            $number    = preg_match('@[0-9]@', $newPwd);
-            $specialChars = preg_match('@[^\w]@', $newPwd);
+    $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
 
-            if (!$uppercase || !$lowercase || !$number || !$specialChars ||(strlen(trim($newPwd)) < 8))
-            {
-                $newPassword_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
-            }
-            else if($_POST["newPassword"] != $_POST["confirmPassword"])
-            {
-                $confirmPassword_err = "Password did not match";
-            }
+    //hashing part
+    if (password_verify($curPwd, $row["password"])) {
+        $uppercase = preg_match('@[A-Z]@', $newPwd);
+        $lowercase = preg_match('@[a-z]@', $newPwd);
+        $number    = preg_match('@[0-9]@', $newPwd);
+        $specialChars = preg_match('@[^\w]@', $newPwd);
 
-            if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
-            {
-                if($curPwd != $newPwd)
-                {
-                    $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+        if (!$uppercase || !$lowercase || !$number || !$specialChars || (strlen(trim($newPwd)) < 8)) {
+            $newPassword_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+        } else if ($_POST["newPassword"] != $_POST["confirmPassword"]) {
+            $confirmPassword_err = "Password did not match";
+        }
 
-                    if(mysqli_query($link, $sql_update_password))
-                    {
-                        echo" 
+        if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) {
+            if ($curPwd != $newPwd) {
+                $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+
+                if (mysqli_query($link, $sql_update_password)) {
+                    echo " 
                         <script>
                         alert('Your password have updated!');
                         </script>";
-                    }
-                    else
-                    {
-                        echo "
+                } else {
+                    echo "
                         <script>
                         alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
                         </script>";
-                    }
                 }
-                else
-                {
-                    echo "
+            } else {
+                echo "
                     <script>
                         alert('The current password cannot be the same as the new password.');
                     </script>";
             }
-        }
-        else
-        {
+        } else {
             $currentPassword_err = "Current Password is not correct";
         }
-
-        
     }
 }
 
@@ -150,8 +134,8 @@ $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_e
             outline: none;
             border: none;
         }
-        .fas
-        {
+
+        .fas {
             margin-left: 0;
         }
     </style>
@@ -434,6 +418,133 @@ $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_e
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
 
+        <div class="mobile-nav__wrapper">
+            <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+            <!-- /.mobile-nav__overlay -->
+            <div class="mobile-nav__content">
+                <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+                <div class="logo-box">
+                    <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+                </div>
+                <!-- /.logo-box -->
+                <div class="mobile-nav__container"></div>
+                <!-- /.mobile-nav__container -->
+
+                <ul class="mobile-nav__contact list-unstyled">
+                    <li>
+                        <i class="organik-icon-email"></i>
+                        <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                    </li>
+                    <li>
+                        <i class="organik-icon-calling"></i>
+                        <a href="tel:666-888-0000">666 888 0000</a>
+                    </li>
+                </ul><!-- /.mobile-nav__contact -->
+                <div class="mobile-nav__top">
+                    <div class="mobile-nav__language">
+                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                        <label class="sr-only" for="language-select">select language</label>
+                        <!-- /#language-select.sr-only -->
+                        <select class="selectpicker" id="language-select">
+                            <option value="english">English</option>
+                            <option value="arabic">Arabic</option>
+                        </select>
+                    </div><!-- /.mobile-nav__language -->
+                    <div class="main-menu__login">
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
+                            <i class="organik-icon-user"></i>
+                            <?php
+
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
+                        </a>
+                    </div><!-- /.main-menu__login -->
+                </div><!-- /.mobile-nav__top -->
+
+
+
+            </div>
+            <!-- /.mobile-nav__content -->
+        </div>
+        <!-- /.mobile-nav__wrapper -->
+
+        <div class="mini-cart">
+            <div class="mini-cart__overlay mini-cart__toggler"></div>
+            <div class="mini-cart__content">
+                <div class="mini-cart__top">
+                    <h3 class="mini-cart__title">Shopping Cart</h3>
+                    <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+                </div><!-- /.mini-cart__top -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-1.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Banana</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-2.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Tomato</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-3.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Bread</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+            </div><!-- /.mini-cart__content -->
+        </div><!-- /.cart-toggler -->
+
+        <div class="search-popup">
+            <div class="search-popup__overlay search-toggler"></div>
+            <!-- /.search-popup__overlay -->
+            <div class="search-popup__content">
+                <form action="products.php" method="GET">
+                    <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                    <input type="text" id="search" name="search" placeholder="Search Here..." />
+                    <button type="submit" aria-label="search submit" class="thm-btn">
+                        <i class="organik-icon-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <!-- /.search-popup__content -->
+        </div>
         <!-- /.search-popup -->
 
         <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>

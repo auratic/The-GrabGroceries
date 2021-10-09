@@ -134,12 +134,10 @@ if (count($_POST) > 0) {
             outline: none;
             border: none;
         }
-
-        <<<<<<< HEAD .fas {
+        .fas {
             margin-left: 0;
         }
 
-        =======>>>>>>>77ef27ef65df7eeab71e7bed7b2dce8d419cf9fe
     </style>
 </head>
 

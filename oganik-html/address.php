@@ -567,7 +567,26 @@ if ($result = mysqli_query($link, $sql)) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Postcode</label>
-                                                <input type="" name="pcode0" id="pcode0" required class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $default_pcode . '" >
+                                                <select name="pcode0" id="pcode0" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $default_pcode . '">
+                                                <option disabled selected value></option>
+                                                    <option value="75000">75000</option>
+                                                    <option value="75050">75050</option>
+                                                    <option value="75100">75100</option>
+                                                    <option value="75150">75150</option>
+                                                    <option value="75200">75200</option>
+                                                    <option value="75250">75250</option>
+                                                    <option value="75260">75260</option>
+                                                    <option value="75300">75300</option>
+                                                    <option value="75350">75350</option>
+                                                    <option value="75400">75400</option>
+                                                    <option value="75430">75430</option>
+                                                    <option value="75450">75450</option>
+                                                    <option value="75460">75460</option>
+                                                    <option value="76300">76300</option>
+                                                    <option value="76400">76400</option>
+                                                    <option value="76450">76450</option>
+                                                    <option value="77200">77200</option>
+                                                </select>
                                                 <span class="invalid-feedback d-block" id="pcode_err0"><?php echo $pcode_err; ?></span>
                                             </div>
                                         </div>
@@ -680,7 +699,26 @@ if ($result = mysqli_query($link, $sql)) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Postcode</label>
-                                                <input type="" name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $pcode[$x] . '" placeholder="75350" maxlength=5 required />
+                                                <select name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $pcode[$x] . '" >
+                                                    <option disabled selected value></option>
+                                                    <option value="75000">75000</option>
+                                                    <option value="75050">75050</option>
+                                                    <option value="75100">75100</option>
+                                                    <option value="75150">75150</option>
+                                                    <option value="75200">75200</option>
+                                                    <option value="75250">75250</option>
+                                                    <option value="75260">75260</option>
+                                                    <option value="75300">75300</option>
+                                                    <option value="75350">75350</option>
+                                                    <option value="75400">75400</option>
+                                                    <option value="75430">75430</option>
+                                                    <option value="75450">75450</option>
+                                                    <option value="75460">75460</option>
+                                                    <option value="76300">76300</option>
+                                                    <option value="76400">76400</option>
+                                                    <option value="76450">76450</option>
+                                                    <option value="77200">77200</option>
+                                                </select>
                                                 <span class="invalid-feedback d-block" id="pcode_err' . $counter . '"></span>
                                             </div>
                                         </div>

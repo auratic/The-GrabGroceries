@@ -222,17 +222,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -307,8 +305,8 @@
                                                             </div> 
                                                             
                                                             <div class="form-group">
-                                                                <label>New Password</label> </br>
-                                                                <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required><span id="msg"></span>
+                                                                <label>New Password</label><i><span id="msg"></span></i></br>
+                                                                <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required><br>
                                                                 <span class="invalid-feedback"><?php echo $newPassword_err ; ?></span> 
                                                             </div>
                                                             <div>
@@ -518,15 +516,15 @@
                 case 0:
                 case 1:
                 case 2:
-                    strength = " Very Weak";
+                    strength = " (Very Weak)";
                     color = "red";
                     break;
                 case 3:
-                    strength = " Medium";
+                    strength = " (Medium)";
                     color = "orange";
                     break;
                 case 4:
-                    strength = " Strong";
+                    strength = " (Strong)";
                     color = "green";
                     break;
             }

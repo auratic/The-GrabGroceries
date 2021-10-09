@@ -228,8 +228,6 @@
                                                     <img src="assets/images/items/'.$row['image'].'" alt="">
                                                     <div class="product-card__image-content" style="cursor:pointer;"
                                                         onclick="location.href = `product-details.php?item_id='.$row['item_id'].'`">
-                                                        <a href="#"><i class="organik-icon-heart"></i></a>
-                                                        <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
                                                     </div><!-- /.product-card__image-content -->
                                                 </div><!-- /.product-card__image -->
                                                 <div class="product-card__content">

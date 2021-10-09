@@ -15,6 +15,7 @@ $card_name = array();
 $card_no = array();
 $card_exp = array();
 $card_cvv = array();
+$card_expyr = array();
 
 
 if (isset($_POST['detail'])) {
@@ -24,6 +25,7 @@ if (isset($_POST['detail'])) {
             cardName" . $_POST["no"] . " = '" . ucwords($_POST['card_name']) . "', 
             cardNo" . $_POST["no"] . "= '" . $_POST["card_no"] . "', 
             cardExp" . $_POST["no"] . " = '" . $_POST["card_exp"] . "',
+            cardExpYr" . $_POST["no"] . " = '" . $_POST["card_expyr"] . "',
             cardCvv" . $_POST["no"] . " = '" . $_POST["card_cvv"] . "'
             WHERE user_id = " . $_SESSION["userid"];
 
@@ -47,6 +49,7 @@ if ($result = mysqli_query($link, $sql)) {
         array_push($card_no, $row['cardNo1'], $row['cardNo2'], $row['cardNo3'], $row['cardNo4'], $row['cardNo5']);
         array_push($card_cvv, $row['cardCvv1'], $row['cardCvv2'], $row['cardCvv3'], $row['cardCvv4'], $row['cardCvv5']);
         array_push($card_exp, $row['cardExp1'], $row['cardExp2'], $row['cardExp3'], $row['cardExp4'], $row['cardExp5']);
+        array_push($card_expyr, $row['cardExpYr1'], $row['cardExpYr2'], $row['cardExpYr3'], $row['cardExpYr4'], $row['cardExpYr5']);
     }
 }
 
@@ -120,7 +123,6 @@ if ($result = mysqli_query($link, $sql)) {
         }
 
         .form-control {
-            padding: 13px 0 13px 25px;
             text-align: center;
             width: 100%;
             border: 2px solid #dddddd;
@@ -182,12 +184,6 @@ if ($result = mysqli_query($link, $sql)) {
         .fas
         {
             margin-left: 0;
-        }
-
-        #card_no1, #card_no2, #card_no3, #card_no4, #card_no5{
-            background-image: url("assets/images/mastercard.jpg");
-            padding-left: 50px;
-            background-position: 99%;
         }
     </style>
 </head>
@@ -347,7 +343,7 @@ if ($result = mysqli_query($link, $sql)) {
                                                                 <p class="card_type">Black Card</p>
                                                                 <img src="assets/images/chippp.png" style="width: 50px; object-fit: contain; margin-top:-30px; margin-left: 23px;">
                                                                 <p class="card_numberr">'.$card_no[$x].'</p>
-                                                                <p class="card_expp">'.$card_exp[$x].'</p>
+                                                                <p class="card_expp">'.$card_exp[$x].' / '.$card_expyr[$x].'</p>
                                                                 <p class="card_namee">'.$card_name[$x].' </p>
                                                                 <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px; color: black;"></i>
                                                             </div>
@@ -484,11 +480,19 @@ if ($result = mysqli_query($link, $sql)) {
                             
                                 <form> 
                                     <div class="row cardd space iconn-relative">
-                                        <div class="col-md-12">
+                                        <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="label" style="margin-left:5px;"><i class="fas fa-user"> Card Holder</i></label>
                                                 <input type="text" name="card_name' . $counter . '" id="card_name' . $counter . '" placeholder="Your Name" class="form-control ' . ((!empty($cname_err)) ? "is-invalid" : '') . '" value="' . $card_name[$x] . '">
                                                 <span class="invalid-feedback d-block" id="cname_err' . $counter . '"></span>   <span class="invalid-feedback"><?php echo $cname_err; ?></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="label" style="margin-left:5px;"><i class="fas fa-lock"> CVV</i></label>
+                                                <input type="text" name="card_cvv' . $counter . '" id="card_cvv' . $counter . '" data-mask="000" placeholder="000" class="form-control ' . ((!empty($ccvv_err)) ? "is-invalid" : '') . '" value="' . $card_cvv[$x] . ' ">
+                                                <span class="invalid-feedback d-block" id="ccvv_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div> 
@@ -504,27 +508,74 @@ if ($result = mysqli_query($link, $sql)) {
                                     </div>
 
                                     <div class="row space iconn-relative">
-                                        <div class="col">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="label" style="margin-left:5px;"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
-                                                <input type="text" name="card_exp' . $counter . '" id="card_exp' . $counter . '" name="expiry-data" data-mask="00 / 00"  placeholder="MM / YY" class="form-control ' . ((!empty($cexp_err)) ? "is-invalid" : '') . '" value="' . $card_exp[$x] . ' ">
+                                                <select name="card_exp' . $counter . '" id="card_exp' . $counter . '" class="form-control ' . ((!empty($cxep_err)) ? "is-invalid" : '') . '" value="' . $card_exp[$x] . '" >
+                                                    <option disabled selected value></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
                                                 <span class="invalid-feedback d-block" id="cexp_err' . $counter . '"></span>
                                             </div>
                                         </div>
-                                            
-                                        <div class="col">
+
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label class="label" style="margin-left:5px;"><i class="fas fa-lock"> CVV</i></label>
-                                                <input type="text" name="card_cvv' . $counter . '" id="card_cvv' . $counter . '" data-mask="000" placeholder="000" class="form-control ' . ((!empty($ccvv_err)) ? "is-invalid" : '') . '" value="' . $card_cvv[$x] . ' ">
-                                                <span class="invalid-feedback d-block" id="ccvv_err' . $counter . '"></span>
+                                                <label class="label" style="margin-top: 42px; margin-right: 50px;"></label>
+                                                <select name="card_expyr' . $counter . '" id="card_expyr' . $counter . '" class="form-control ' . ((!empty($cxepyr_err)) ? "is-invalid" : '') . '" value="' . $card_expyr[$x] . '" >
+                                                    <option disabled selected value></option>
+                                                    <option value="21">2021</option>
+                                                    <option value="22">2022</option>
+                                                    <option value="23">2023</option>
+                                                    <option value="24">2024</option>
+                                                    <option value="25">2025</option>
+                                                    <option value="26">2026</option>
+                                                    <option value="27">2027</option>
+                                                    <option value="28">2028</option>
+                                                    <option value="29">2029</option>
+                                                    <option value="30">2030</option>
+                                                    <option value="31">2031</option>
+                                                    <option value="32">2032</option>
+                                                </select>
+                                                <span class="invalid-feedback d-block" id="cexpyr_err' . $counter . '"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top: 50px; margin-left: 140px;">
+                                                <img src="assets/images/mastercard.jpg" alt="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top: 50px; margin-left: 90px;">
+                                                <img src="assets/images/visa.jpg" alt="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top: 50px; margin-left: 40px;">
+                                                <img src="assets/images/amex.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Submit" onclick="return updateCard(' . $counter . ');">
+                                                <input type="submit" class="btn btn-primary" value="Save" onclick="return updateCard(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -581,6 +632,7 @@ if ($result = mysqli_query($link, $sql)) {
                 var cardName = document.getElementById("card_name" + counter).value;
                 var cardNum = document.getElementById("card_no" + counter).value;
                 var cardExp = document.getElementById("card_exp" + counter).value;
+                var cardExpYr = document.getElementById("card_expyr" + counter).value;
                 var cardCvv = document.getElementById("card_cvv" + counter).value;
                 document.getElementById("cname_err" + counter).innerHTML = "";
                 document.getElementById("cno_err" + counter).innerHTML = "";
@@ -600,7 +652,12 @@ if ($result = mysqli_query($link, $sql)) {
                 }
 
                 if (cardExp == "") {
-                    document.getElementById("cexp_err" + counter).innerHTML = "Card Expiry is required";
+                    document.getElementById("cexp_err" + counter).innerHTML = "Month is required";
+                    pass = false;
+                }
+
+                if (cardExpYr == "") {
+                    document.getElementById("cexpyr_err" + counter).innerHTML = "Year is required";
                     pass = false;
                 }
 
@@ -619,6 +676,7 @@ if ($result = mysqli_query($link, $sql)) {
                             'card_name': cardName,
                             'card_no': cardNum,
                             'card_exp': cardExp,
+                            'card_expyr': cardExpYr,
                             'card_cvv': cardCvv
                         },
                         cache: false,

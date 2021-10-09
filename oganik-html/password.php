@@ -3,10 +3,10 @@ session_start();
 
 if (!isset($_SESSION["loggedin"])) {
     echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
+        <script>
+        alert('Please login');
+        location.href='login.php';
+        </script>";
 }
 
 require "config.php";
@@ -58,9 +58,9 @@ if (count($_POST) > 0) {
                         alert('The current password cannot be the same as the new password.');
                     </script>";
             }
-        } else {
-            $currentPassword_err = "Current Password is not correct";
         }
+    } else {
+        $currentPassword_err = "Current Password is not correct";
     }
 }
 
@@ -135,9 +135,11 @@ if (count($_POST) > 0) {
             border: none;
         }
 
-        .fas {
+        <<<<<<< HEAD .fas {
             margin-left: 0;
         }
+
+        =======>>>>>>>77ef27ef65df7eeab71e7bed7b2dce8d419cf9fe
     </style>
 </head>
 
@@ -239,89 +241,89 @@ if (count($_POST) > 0) {
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-        </header>
 
-        <!-- :::::::::: Profile :::::::::: -->
-        <main id="main-container" class="main-container">
-            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- :::::::::: Start My Account Section :::::::::: -->
-                        <div class="my-account-area">
-                            <div class="row">
-                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
-                                    <div class="my-account-menu">
-                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                            <li>
-                                                <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
-                                            </li>
-                                            <li>
-                                                <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
-                                            </li>
-                                            <li>
-                                                <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
-                                            </li>
-                                            <li>
-                                                <a href="accdetails.php"><i class="fas fa-user"></i>
-                                                    Account Details</a>
-                                            </li>
-                                            <li>
-                                                <a href="password.php">
-                                                    <i class="fas fa-lock"></i> Password Changes</a>
-                                            </li>
-                                            <li>
-                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                            </li>
-                                        </ul>
+            <!-- :::::::::: Profile :::::::::: -->
+            <main id="main-container" class="main-container">
+                <div class="containerr">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- :::::::::: Start My Account Section :::::::::: -->
+                            <div class="my-account-area">
+                                <div class="row">
+                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                        <div class="my-account-menu">
+                                            <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
+                                                <li>
+                                                    <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                                </li>
+                                                <li>
+                                                    <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
+                                                </li>
+                                                <li>
+                                                    <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
+                                                </li>
+                                                <li>
+                                                    <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="accdetails.php"><i class="fas fa-user"></i>
+                                                        Account Details</a>
+                                                </li>
+                                                <li>
+                                                    <a href="password.php">
+                                                        <i class="fas fa-lock"></i> Password Changes</a>
+                                                </li>
+                                                <li>
+                                                    <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
+                                    <div class="col-xl-8 col-md-8">
 
-                                </div>
-                                <div class="col-xl-10 col-md-10">
+                                        <div class="tab-content my-account-tab" id="pills-tabContent">
+                                            <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
+                                                <div class="my-account-details account-wrapper">
+                                                    <h4 class="account-title">Password Changes</h4>
+                                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
+                                                        <div class="form-group">
+                                                            <label>Current Password</label> </br>
+                                                            <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
+                                                            <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
+                                                        </div>
 
-                                    <div class="tab-content my-account-tab" id="pills-tabContent">
-                                        <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
-                                            <div class="my-account-details account-wrapper">
-                                                <h4 class="account-title">Password Changes</h4>
-                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
-                                                    <div class="form-group">
-                                                        <label>Current Password</label> </br>
-                                                        <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
-                                                        <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <label>New Password</label><i><span id="msg"></span></i></br>
+                                                            <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>" required><br>
+                                                            <span class="invalid-feedback"><?php echo $newPassword_err; ?></span>
+                                                        </div>
+                                                        <div>
+                                                            <label>Confirm Password</label> </br>
+                                                            <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required><span id="msg"></span>
+                                                            <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
+                                                        </div>
 
-                                                    <div class="form-group">
-                                                        <label>New Password</label> </br>
-                                                        <input type="password" id="newPwd" name="newPassword" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>" required>
-                                                        <span class="invalid-feedback"><?php echo $newPassword_err; ?></span>
-                                                    </div>
-                                                    <div>
-                                                        <label>Confirm Password</label> </br>
-                                                        <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required>
-                                                        <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
-                                                    </div>
+                                                        <div style="margin-top: 10px;">
+                                                            <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+                                                        </div>
 
-                                                    <div style="margin-top: 10px;">
-                                                        <input type="checkbox" onclick="myFunction()">Show Password
-                                                    </div>
-
-                                                    <div class="form-group" style="margin: 1%;">
-                                                        <input type="submit" class="btn btn-primary" value="Submit">
-                                                        <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
-                                                    </div>
-                                                </form>
+                                                        <div class="form-group" style="margin: 1%;">
+                                                            <input type="submit" class="btn btn-primary" value="Submit">
+                                                            <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div><!-- :::::::::: End My Account Section :::::::::: -->
+                            </div><!-- :::::::::: End My Account Section :::::::::: -->
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </header>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
@@ -592,6 +594,49 @@ if (count($_POST) > 0) {
                 } else {
                     z.type = "password";
                 }
+            }
+
+            function validatePassword(password) {
+                // Do not show anything when the length of password is zero.
+                if (password.length === 0) {
+                    document.getElementById("msg").innerHTML = "";
+                    return;
+                }
+                // Create an array and push all possible values that you want in password
+                var matchedCase = new Array();
+                matchedCase.push("[$@$!%*#?&]"); // Special Charector
+                matchedCase.push("[A-Z]"); // Uppercase Alpabates
+                matchedCase.push("[0-9]"); // Numbers
+                matchedCase.push("[a-z]"); // Lowercase Alphabates
+
+                // Check the conditions
+                var ctr = 0;
+                for (var i = 0; i < matchedCase.length; i++) {
+                    if (new RegExp(matchedCase[i]).test(password)) {
+                        ctr++;
+                    }
+                }
+                // Display it
+                var color = "";
+                var strength = "";
+                switch (ctr) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        strength = " (Very Weak)";
+                        color = "red";
+                        break;
+                    case 3:
+                        strength = " (Medium)";
+                        color = "orange";
+                        break;
+                    case 4:
+                        strength = " (Strong)";
+                        color = "green";
+                        break;
+                }
+                document.getElementById("msg").innerHTML = strength;
+                document.getElementById("msg").style.color = color;
             }
         </script>
 </body>

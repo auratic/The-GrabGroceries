@@ -1,5 +1,15 @@
 <?php
-  session_start()
+    session_start();
+
+    require "config.php";
+
+    $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
+
+    if(isset($_POST['update']))
+    {
+        
+        $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = ".$row['cart_id'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -159,60 +169,57 @@
                     <table class="table cart-table">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Item</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Remove</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="product-box">
-                                        <img src="assets/images/products/cart-1-1.jpg" alt="">
-                                        <h3><a href="product-details.php">Banana</a></h3>
-                                    </div><!-- /.product-box -->
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <div class="quantity-box">
-                                        <button type="button" class="sub">-</button>
-                                        <input type="number" id="2" value="1" />
-                                        <button type="button" class="add">+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    $9.99
-                                </td>
-                                <td>
-                                    <i class="organik-icon-close remove-icon"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-box">
-                                        <img src="assets/images/products/cart-1-2.jpg" alt="">
-                                        <h3><a href="product-details.php">Tomatoes</a></h3>
-                                    </div><!-- /.product-box -->
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <div class="quantity-box">
-                                        <button type="button" class="sub">-</button>
-                                        <input type="number" id="2" value="1" />
-                                        <button type="button" class="add">+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    $9.99
-                                </td>
-                                <td>
-                                    <i class="organik-icon-close"></i>
-                                </td>
-                            </tr>
-                        </tbody>
+                            <?php
+                                $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = ".$_SESSION['userid'];
+                                if ($result = mysqli_query($link, $sql)) 
+                                {
+                                    if (mysqli_num_rows($result) == 0) 
+                                    {
+                                        echo'
+                                            <tr>
+                                                <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
+                                            </tr>';
+                                    }
+                                    else
+                                    {
+                                        while($row = mysqli_fetch_assoc($result))
+                                        {
+                                            $total = 0;
 
+                                            echo'
+                                                <form action="cart.php" method="POST">
+                                                    <tr>
+                                                        <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
+                                                        <td><input type="hidden" name="iname" value="'.$row['item'].'">'.$row['item'].'</td>
+                                                        <td><input type="hidden" name="iprice" value="'.$row['cost'].'">RM '.$row['cost'].'</td>
+                                                        <td>
+                                                        <div class="quantity-box">
+                                                            <button type="button" class="sub">-</button>
+                                                                <input type="number" name="item_quantity" value="'.$row['quantity'].'" min="1" max="999">
+                                                            <button type="button" class="add">+</button>
+                                                        </div>
+                                                        </td>
+                                                        <td>RM '.$total.'</td>
+                                                        <td><button name="update" class="btn btn-warning">Update</button></td>
+                                                        <td><button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
+                                                        <td><input type="hidden" name="item" value="'.$row['item'].'"></td>
+                                                    </tr>
+                                                </form>
+                                            ';
+                                        }
+                                    }
+                                }
+
+                            ?>
                     </table><!-- /.table -->
                 </div><!-- /.table-responsive -->
                 <div class="row">
@@ -226,20 +233,36 @@
                         <ul class="cart-total list-unstyled">
                             <li>
                                 <span>Subtotal</span>
-                                <span>$19.98 USD</span>
+                                <span><?php echo 'RM '.$subtotal?></span>
                             </li>
                             <li>
                                 <span>Shipping Cost</span>
-                                <span>$0.00 USD</span>
+                                <span><?php echo 'RM '.$dfee?></span>
                             </li>
                             <li>
                                 <span>Total</span>
-                                <span>$19.98 USD</span>
+                                <span>
+                                    <?php 
+                                        if (is_numeric($subtotal) && is_numeric($dfee))
+                                        {
+                                            $totals = 0;
+                                            if($subtotal != 0)
+                                            {
+                                                $totals = $subtotal + $dfee;
+                                                echo 'RM ' .$totals;
+                                            }
+                                            else
+                                            {
+                                                echo 'RM ' .$totals;
+                                            }
+                                            
+                                        }
+                                        ?>
+                                </span>
                             </li>
                         </ul><!-- /.cart-total -->
-                        <div class="button-box">
-                            <a href="#" class="thm-btn">Update</a><!-- /.thm-btn -->
-                            <a href="#" class="thm-btn">Checkout</a><!-- /.thm-btn -->
+                        <div class="button-box" style="margin-left: 151px;">
+                            <a href="checkout.php" class="thm-btn"><i class="far fa-credit-card"></i>  Checkout</a><!-- /.thm-btn -->
                         </div><!-- /.button-box -->
                     </div><!-- /.col-lg-4 -->
                 </div><!-- /.row -->
@@ -408,34 +431,6 @@
                 <div class="mini-cart__item-content">
                     <div class="mini-cart__item-top">
                         <h3><a href="product-details.php">Banana</a></h3>
-                        <p>$9.99</p>
-                    </div><!-- /.mini-cart__item-top -->
-                    <div class="quantity-box">
-                        <button type="button" class="sub">-</button>
-                        <input type="number" id="2" value="1" />
-                        <button type="button" class="add">+</button>
-                    </div>
-                </div><!-- /.mini-cart__item-content -->
-            </div><!-- /.mini-cart__item -->
-            <div class="mini-cart__item">
-                <img src="assets/images/products/cart-1-2.jpg" alt="">
-                <div class="mini-cart__item-content">
-                    <div class="mini-cart__item-top">
-                        <h3><a href="product-details.php">Tomato</a></h3>
-                        <p>$9.99</p>
-                    </div><!-- /.mini-cart__item-top -->
-                    <div class="quantity-box">
-                        <button type="button" class="sub">-</button>
-                        <input type="number" id="2" value="1" />
-                        <button type="button" class="add">+</button>
-                    </div>
-                </div><!-- /.mini-cart__item-content -->
-            </div><!-- /.mini-cart__item -->
-            <div class="mini-cart__item">
-                <img src="assets/images/products/cart-1-3.jpg" alt="">
-                <div class="mini-cart__item-content">
-                    <div class="mini-cart__item-top">
-                        <h3><a href="product-details.php">Bread</a></h3>
                         <p>$9.99</p>
                     </div><!-- /.mini-cart__item-top -->
                     <div class="quantity-box">

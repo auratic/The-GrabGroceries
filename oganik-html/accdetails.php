@@ -84,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             lastname = '$new_lname',
             firstname = '$new_fname',
             phone = '$new_phone',
+            verified = 'false',
             email = '$new_email'
             WHERE user_id = " . $_SESSION["userid"];
 

@@ -240,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div><!-- /.container -->
             </nav>
         </header>
-
+        
         <div class="container signup-form loginbox">
             <h2>Login to TheGrabGroceries</h2>
             <p>Please fill in your credentials to login.</p>

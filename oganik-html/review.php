@@ -1,5 +1,7 @@
 <?php
-  session_start()
+  session_start();
+
+  require "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -158,6 +160,17 @@
                         <div class="block-title__decor"></div><!-- /.block-title__decor -->
                         <p>Our Testimonials</p>
                         <h3>What People Say?</h3>
+                        <?php
+                            $sql = "SELECT * FROM cust_review ";
+                            $result = mysqli_query($link, $sql);
+                            
+                            while($row=mysqli_fetch_assoc($result)) 
+                            {
+                                $review = $row['reviews'];
+                                $rating = $row['rating'];
+                                $name   = $row['cust_name'];
+                            }
+                        ?>
                     </div><!-- /.block-title -->
                 </div><!-- /.container -->
             </div><!-- /.testimonials-one__head -->

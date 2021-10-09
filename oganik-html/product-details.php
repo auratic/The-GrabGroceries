@@ -1,18 +1,52 @@
 <?php
-  session_start();
-  
-  require "config.php";
+    session_start();
+    
+    require "config.php";
 
-  if(isset($_GET["item_id"])) {
-    $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
-  } else {
-    $sql = "SELECT * FROM item WHERE item_id = 200000001";
-  }
+    if(isset($_GET["item_id"])) {
+        $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
+    } else {
+        $sql = "SELECT * FROM item WHERE item_id = 200000001";
+    }
 
-  if($result = mysqli_query($link, $sql)) {
-    $row = mysqli_fetch_assoc($result);
-  }
+    if($result = mysqli_query($link, $sql)) {
+        $row = mysqli_fetch_assoc($result);
+    }
 
+    if(isset($_POST["addtocart"]))
+    {
+        $sqll = "SELECT * FROM cust_cart WHERE user_id = ".$_SESSION['userid']." AND item_id = ".$_POST['iid'];
+        if($result=mysqli_query($link, $sqll))
+        {
+            if (mysqli_num_rows($result) == 1) 
+            {
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    $Quantity = $row['quantity'] + $_POST['item_quantity'];
+                    $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = ".$row['cart_id'];
+                }
+            }
+            else
+            {
+                $sql = "INSERT INTO cust_cart (user_id, item_id, quantity)VALUES (".$_SESSION['userid'].", ".$_POST['iid'].", ".$_POST['item_quantity']." )";
+            }
+        }
+        
+        if (mysqli_query($link, $sql))
+        {
+            echo "
+                <script>
+                    location.href = 'cart.php';
+                </script>";
+        }
+        else
+        {
+            echo "
+                <script>
+                    alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
+                </script>";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -115,19 +149,6 @@
                     <ul class="main-menu__list">
                         <li class="dropdown">
                             <a href="index.php">Home</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="about.php">About</a>
@@ -135,17 +156,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -182,18 +201,22 @@
 
         <section class="product_detail">
             <div class="container">
+            <form action="#" method="POST">
                 <div class="row">
                     <div class="col-xl-6 col-lg-6">
                         <div class="product_detail_image">
                             <img src="<?php echo "assets/images/items/".$row["image"]; ?>" alt="">
+                            <input type="hidden" name="ipic" value="<?php echo $row["image"] ?>">
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="product_detail_content">
                             <h2><?php echo $row["item"] ?></h2>
+                            <input type="hidden" name="iname" value="<?php echo $row["item"] ?>">
                             <div class="product_detail_review_box">
                                 <div class="product_detail_price_box">
                                     <p>RM<?php echo $row["cost"] ?></p>
+                                    <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
                                 </div>
                                 <div class="product_detail_review">
                                     <a href="#"><i class="fa fa-star"></i></a>
@@ -208,22 +231,24 @@
                                 <p><?php echo $row["description"] ?></p>
                             </div>
                             <ul class="list-unstyled product_detail_address">
-                                <li>REF. 4231/406</li>
-                                <li>Available in store</li>
+                                <li>Item ID: <?php echo $row["item_id"] ?></li>
+                                <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
+                                <li><i><?php echo $row["stock"] ?> piece available</i></li>
                             </ul>
-                            <div class="product-quantity-box">
-                                <div class="quantity-box">
-                                    <button type="button" class="sub">-</button>
-                                    <input type="number" id="2" value="1" />
-                                    <button type="button" class="add">+</button>
+                                <div class="product-quantity-box">
+                                    <div class="quantity-box">
+                                        <button type="button" class="sub">-</button>
+                                        <input type="number" name="item_quantity" id="item_quantity" value="1" />
+                                        <button type="button" class="add">+</button>
+                                    </div>
+                                    <div class="addto-cart-box">
+                                        <input type="submit" class="thm-btn" value="Add to Cart" name="addtocart">
+                                    </div>
+                                    <div class="wishlist_btn">
+                                        <a href="#" class="thm-btn">Add to Wishlist</a>
+                                    </div>
                                 </div>
-                                <div class="addto-cart-box">
-                                    <button class="thm-btn" type="submit">Add to Cart</button>
-                                </div>
-                                <div class="wishlist_btn">
-                                    <a href="#" class="thm-btn">Add to Wishlist</a>
-                                </div>
-                            </div>
+                        </form>
                             <ul class="list-unstyled category_tag_list">
                                 <li><span>Category:</span> <?php echo $row["category"] ?></li>
                             </ul>
@@ -240,6 +265,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="product-tab-box tabs-box">
@@ -725,6 +751,23 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+    <script src="assets/js/store.js" async></script>
+
+    <script>
+        function addToCartFunction(){
+            // Get the value from the span
+            quantityValue = $('.number').html();
+            prodIdValue = $('.prodID').html();
+
+            // Store the values in hidden entry elements
+            $("#item_quantity").val(quantityValue);
+            $("#item_id").val(prodIdValue);
+
+            // Submit form using ID "add-to-cart-form"
+            $("#add-to-cart-form").action = "cart.php";
+            $("#add-to-cart-form").submit();
+        }
+    </script>
 </body>
 
 </html>

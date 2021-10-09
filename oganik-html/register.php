@@ -119,15 +119,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
                     $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (" . $row['user_id'] . ")";
                     $sql_insert_card = "INSERT INTO cust_card (user_id) VALUES (" . $row['user_id'] . ")";
+                    $sql_insert_review = "INSERT INTO cust_review (user_id) VALUES (" . $row['user_id'] . ")";
 
                     if (mysqli_query($link, $sql_insert_address)) {
 
                         if (mysqli_query($link, $sql_insert_card)) {
-                            echo "
-                            <script>
-                            alert('New account created');
-                            location.href = 'login.php';
-                            </script>";
+
+                            if (mysqli_query($link, $sql_insert_review)) {
+
+                                echo "
+                                <script>
+                                alert('New account created');
+                                location.href = 'login.php';
+                                </script>";
+                            } else {
+                                echo "
+                                <script>
+                                alert('Error: " . $sql_insert_review . "\n" . mysqli_error($link) . "')
+                                </script>";
+                            }
                         } else {
                             echo "
                             <script>
@@ -276,19 +286,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                     <ul class="main-menu__list">
                         <li class="dropdown">
                             <a href="index.php">Home</a>
-                            <ul>
-                                <li>
-                                    <a href="index.php">Home One</a>
-                                </li>
-                                <li><a href="index-2.php">Home Two</a></li>
-                                <li class="dropdown">
-                                    <a href="#">Header Styles</a>
-                                    <ul>
-                                        <li><a href="index.php">Header One</a></li>
-                                        <li><a href="index-2.php">Header Two</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="about.php">About</a>
@@ -296,17 +293,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -353,7 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
                 <div class="form-group">
                     <label>Password</label> </br>
-                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                    <input type="password" name="password" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>"><span id="msg"></span>
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
@@ -612,6 +607,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         <script src="assets/vendors/countdown/countdown.min.js"></script>
         <!-- template js -->
         <script src="assets/js/organik.js"></script>
+        <script>
+            function validatePassword(password) {
+                // Do not show anything when the length of password is zero.
+                if (password.length === 0) {
+                    document.getElementById("msg").innerHTML = "";
+                    return;
+                }
+                // Create an array and push all possible values that you want in password
+                var matchedCase = new Array();
+                matchedCase.push("[$@$!%*#?&]"); // Special Charector
+                matchedCase.push("[A-Z]"); // Uppercase Alpabates
+                matchedCase.push("[0-9]"); // Numbers
+                matchedCase.push("[a-z]"); // Lowercase Alphabates
+
+                // Check the conditions
+                var ctr = 0;
+                for (var i = 0; i < matchedCase.length; i++) {
+                    if (new RegExp(matchedCase[i]).test(password)) {
+                        ctr++;
+                    }
+                }
+                // Display it
+                var color = "";
+                var strength = "";
+                switch (ctr) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        strength = " Very Weak";
+                        color = "red";
+                        break;
+                    case 3:
+                        strength = " Medium";
+                        color = "orange";
+                        break;
+                    case 4:
+                        strength = " Strong";
+                        color = "green";
+                        break;
+                }
+                document.getElementById("msg").innerHTML = strength;
+                document.getElementById("msg").style.color = color;
+            }
+        </script>
 </body>
 
 </html>

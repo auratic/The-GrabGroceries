@@ -176,6 +176,11 @@
         .modal-footer {
             border-radius: 0 0 25px 25px;
         }
+
+        .modal-body{
+            overflow-y: scroll;
+            max-height: calc(100vh - 210px);
+        }
     </style>
 </head>
 

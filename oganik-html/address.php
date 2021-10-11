@@ -13,6 +13,7 @@ require "config.php";
 
 $fname = $lname = $default_address = $default_phone = $default_pcode = $default_state = $default_area = "";
 $name = array();
+$lastname = array();
 $address = array();
 $phone = array();
 $email = array();
@@ -39,6 +40,7 @@ if (isset($_POST["details"])) {
                 phone" . $_POST["no"] . "= '" . $_POST["phone"] . "', 
                 postcode" . $_POST["no"] . "= '" . $_POST["pcode"] . "', 
                 name" . $_POST["no"] . " = '" . $_POST["name"] . "',
+                lname" . $_POST["no"] . " = '" . $_POST["lname"] . "',
                 state" . $_POST["no"] . " = '" . $_POST["state"] . "',
                 area" . $_POST["no"] . " = '" . $_POST["area"] . "',
                 email" . $_POST["no"] . " = '" . $_POST["email"] . "'
@@ -65,6 +67,7 @@ $sql = "SELECT * FROM cust_address where user_id = " . $_SESSION["userid"];
 if ($result = mysqli_query($link, $sql)) {
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($name,    $row['name1'], $row['name2'], $row['name3'], $row['name4'], $row['name5']);
+        array_push($lastname,    $row['lname1'], $row['lname2'], $row['lname3'], $row['lname4'], $row['lname5']);
         array_push($address, $row['address1'], $row['address2'], $row['address3'], $row['address4'], $row['address5']);
         array_push($pcode,   $row['postcode1'], $row['postcode2'], $row['postcode3'], $row['postcode4'], $row['postcode5']);
         array_push($phone,   $row['phone1'], $row['phone2'], $row['phone3'], $row['phone4'], $row['phone5']);
@@ -369,7 +372,7 @@ if ($result = mysqli_query($link, $sql)) {
                                                         $counterr++;
                                                         echo '
                                                                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                                                                <p>Full name: <strong>  ' . $name[$x] . '</strong></p>
+                                                                                <p>Full name: <strong>  ' . $name[$x] . ' '.$lastname[$x].'</strong></p>
                                                                                 <p>Email    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
                                                                                 <p>Address &#160 : ' . $address[$x] . '</span></p>
                                                                                 <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
@@ -508,11 +511,19 @@ if ($result = mysqli_query($link, $sql)) {
                             
                                 <form> 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Name</label>
-                                                <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname . ' ' . $lname . '" disabled>
+                                                <label>First Name</label>
+                                                <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname .'" disabled>
                                                 <span class="con-pass-err" style="color:crimson" id="name_err0"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input type="" name="lname0" id="lname0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $lname . '" disabled>
+                                                <span class="con-pass-err" style="color:crimson" id="lname_err0"></span>
                                             </div>
                                         </div>
                                     </div> 
@@ -640,15 +651,23 @@ if ($result = mysqli_query($link, $sql)) {
                             <div class="modal-body">
                             
                                 <form> 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Name</label>
-                                                <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John Doe" required />
-                                                <span class="invalid-feedback d-block" id="name_err' . $counter . '"></span>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John" required />
+                                            <span class="invalid-feedback d-block" id="name_err' . $counter . '"></span>
                                         </div>
-                                    </div>  
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="" name="lname' . $counter . '" id="lname' . $counter . '" class="form-control ' . ((!empty($lname_err)) ? "is-invalid" : '') . '" value="' . $lastname[$x] . '" placeholder="Doe" required />
+                                            <span class="invalid-feedback d-block" id="lname_err' . $counter . '"></span>
+                                        </div>
+                                    </div>
+                                </div>  
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -900,6 +919,7 @@ if ($result = mysqli_query($link, $sql)) {
             var email = document.getElementById("email" + counter).value;
             var state = document.getElementById("state" + counter).value;
             var area = document.getElementById("area" + counter).value;
+            var lname = document.getElementById("lname" + counter).value;
             document.getElementById("address_err" + counter).innerHTML = "";
             document.getElementById("phone_err" + counter).innerHTML = "";
             document.getElementById("name_err" + counter).innerHTML = "";
@@ -907,6 +927,7 @@ if ($result = mysqli_query($link, $sql)) {
             document.getElementById("pcode_err" + counter).innerHTML = "";
             document.getElementById("state_err" + counter).innerHTML = "";
             document.getElementById("area_err" + counter).innerHTML = "";
+            document.getElementById("lname_err" + counter).innerHTML = "";
 
             var pass = true;
 
@@ -942,8 +963,16 @@ if ($result = mysqli_query($link, $sql)) {
                 if (name == "") {
                     document.getElementById("name_err" + counter).innerHTML = "Name is required";
                     pass = false;
-                } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(name)) {
+                } else if (!/^[a-zA-Z]+$/. test(name)) {
                     document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
+                    pass = false;
+                }
+
+                if (lname == "") {
+                    document.getElementById("lname_err" + counter).innerHTML = "Name is required";
+                    pass = false;
+                } else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(lname)) {
+                    document.getElementById("lname_err" + counter).innerHTML = "Please enter valid name";
                     pass = false;
                 }
 
@@ -964,6 +993,7 @@ if ($result = mysqli_query($link, $sql)) {
                         'details': true,
                         'no': counter,
                         'name': name,
+                        'lname': lname,
                         'address': address,
                         'pcode': pcode,
                         'phone': phone,

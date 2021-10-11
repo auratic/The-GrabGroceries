@@ -344,7 +344,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                             INNER JOIN item ON cust_transaction.item_id = item.item_id
                                                                             WHERE cust_transaction.receipt_id = $x_value;";
 
-                                                            if ($trans_result = mysqli_query($link, $trans_sql)) {
+                                                            /*if ($trans_result = mysqli_query($link, $trans_sql)) {
 
                                                                 while ($trans_row = mysqli_fetch_assoc($trans_result)) {
 
@@ -368,7 +368,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                     </div>
                                                                                     ';
                                                                 }
-                                                            }
+                                                            }*/
                                                             echo '
                                                                         <div id="receipt-' . $display_row["receipt_id"] . '" class="modal" role="dialog">\
                                                                             <div class="modal-dialog modal-lg">

@@ -3,6 +3,11 @@ session_start();
 
 require "config.php";
 
+if (!isset($_SESSION['loggedin'])) 
+{
+	echo "<script>alert('Please log in first to checkout.'); location.href = 'login.php'</script>";
+}
+
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
 $sql = "SELECT * FROM cust_address 
@@ -525,23 +530,23 @@ if (isset($_POST["place-order"])) {
 								</div><!-- /.col-md-12 -->
 
 								<div class="col-md-12">
-									<label>Card Number <i style="color:lightgray" maxlength="19" required>(0000 0000 0000 0000)</i></label>
-									<input type="text" name="cardno" id="set-cardno">
+									<label>Card Number <i style="color:lightgray" >(0000 0000 0000 0000)</i></label>
+									<input type="text" name="cardno" maxlength="19" id="set-cardno" required>
 								</div><!-- /.col-md-12 -->
 
 								<div class="col-md-4">
-									<label>CVV<i style="color:lightgray" maxlength="3" required> (123)</i></label>
-									<input type="text" name="cvv" id="set-cvv">
+									<label>CVV<i style="color:lightgray" > (123)</i></label>
+									<input type="text" name="cvv" maxlength="3" id="set-cvv" required>
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
-									<label>Expiry Month <i style="color:lightgray" maxlength="2" required> (1 - 12)</i></label>
-									<input type="text" name="expmonth" id="set-expmonth">
+									<label>Expiry Month <i style="color:lightgray" > (1 - 12)</i></label>
+									<input type="text" name="expmonth" id="set-expmonth" maxlength="2" required>
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
-									<label>Expiry Year <i style="color:lightgray" maxlength="2" required> (21 , 22..) </i></label>
-									<input type="text" name="expmonth" id="set-expyear">
+									<label>Expiry Year <i style="color:lightgray" > (21 , 22..) </i></label>
+									<input type="text" name="expmonth" id="set-expyear" maxlength="2" required>
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-6">

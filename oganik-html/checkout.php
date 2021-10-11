@@ -1,5 +1,132 @@
 <?php
-  session_start()
+session_start();
+
+require "config.php";
+
+date_default_timezone_set("Asia/Kuala_Lumpur");
+
+$sql = "SELECT * FROM cust_address 
+		INNER JOIN users ON cust_address.user_id = users.user_id 
+		INNER JOIN cust_card ON cust_address.user_id = cust_card.user_id
+		WHERE cust_address.user_id = " . $_SESSION["userid"];
+
+if ($result = mysqli_query($link, $sql)) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$fname = array($row["firstname"], $row["name1"], $row["name2"], $row["name3"], $row["name4"], $row["name5"]);
+		$lname = array($row["lastname"], $row["lname1"], $row["lname2"], $row["lname3"], $row["lname4"], $row["lname5"]);
+		$email = array($row["email"], $row["email1"], $row["email2"], $row["email3"], $row["email4"], $row["email5"]);
+		$phone = array($row["phone"], $row["phone1"], $row["phone2"], $row["phone3"], $row["phone4"], $row["phone5"]);
+		$address = array($row["address"], $row["address1"], $row["address2"], $row["address3"], $row["address4"], $row["address5"]);
+		$area = array($row["area"], $row["area1"], $row["area2"], $row["area3"], $row["area4"], $row["area5"]);
+		$state = array($row["state"], $row["state1"], $row["state2"], $row["state3"], $row["state4"], $row["state5"]);
+		$postcode = array($row["postcode"], $row["postcode1"], $row["postcode2"], $row["postcode3"], $row["postcode4"], $row["postcode5"]);
+
+		$cardno = array($row["cardNo1"], $row["cardNo2"], $row["cardNo3"], $row["cardNo4"], $row["cardNo5"]);
+		$cardcvv = array($row["cardCvv1"], $row["cardCvv2"], $row["cardCvv3"], $row["cardCvv4"], $row["cardCvv5"]);
+		$expmonth = array($row["cardExp1"], $row["cardExp2"], $row["cardExp3"], $row["cardExp4"], $row["cardExp5"]);
+		$expyear = array($row["cardExpYr1"], $row["cardExpYr2"], $row["cardExpYr3"], $row["cardExpYr4"], $row["cardExpYr5"]);
+
+		echo "
+			<script>
+				var fname = ['" . $row["firstname"] . "', '" . $row["name1"] . "', '" . $row["name2"] . "', '" . $row["name3"] . "', '" . $row["name4"] . "', '" . $row["name5"] . "'];
+				var lname = ['" . $row["lastname"] . "', '" . $row["lname1"] . "', '" . $row["lname2"] . "', '" . $row["lname3"] . "', '" . $row["lname4"] . "', '" . $row["lname5"] . "'];
+				var email= ['" . $row["email"] . "', '" . $row["email1"] . "', '" . $row["email2"] . "', '" . $row["email3"] . "', '" . $row["email4"] . "', '" . $row["email5"] . "'];
+				var address = ['" . $row["address"] . "', '" . $row["address1"] . "', '" . $row["address2"] . "', '" . $row["address3"] . "', '" . $row["address4"] . "', '" . $row["address5"] . "'];
+				var area = ['" . $row["area"] . "', '" . $row["area1"] . "', '" . $row["area2"] . "', '" . $row["area3"] . "', '" . $row["area4"] . "', '" . $row["area5"] . "'];
+				var state = ['" . $row["state"] . "', '" . $row["state1"] . "', '" . $row["state2"] . "', '" . $row["state3"] . "', '" . $row["state4"] . "', '" . $row["state5"] . "'];
+				var postcode= ['" . $row["postcode"] . "', '" . $row["postcode1"] . "', '" . $row["postcode2"] . "', '" . $row["postcode3"] . "', '" . $row["postcode4"] . "', '" . $row["postcode5"] . "'];
+				var phone= [" . $row["phone"] . ", " . $row["phone1"] . ", " . $row["phone2"] . ", " . $row["phone3"] . ", " . $row["phone4"] . ", " . $row["phone5"] . "];
+
+				var cardno = ['" . $row["cardNo1"] . "', '" . $row["cardNo2"] . "', '" . $row["cardNo3"] . "', '" . $row["cardNo4"] . "', '" . $row["cardNo5"] . "'];
+				var cardcvv = [" . $row["cardCvv1"] . ", " . $row["cardCvv2"] . ", " . $row["cardCvv3"] . ", " . $row["cardCvv4"] . ", " . $row["cardCvv5"] . "];
+				var expmonth = [" . $row["cardExp1"] . ", " . $row["cardExp2"] . ", " . $row["cardExp3"] . ", " . $row["cardExp4"] . ", " . $row["cardExp5"] . "];
+				var expyear = [" . $row["cardExpYr1"] . ", " . $row["cardExpYr2"] . ", " . $row["cardExpYr3"] . ", " . $row["cardExpYr4"] . ", " . $row["cardExpYr5"] . "];
+			</script>";
+	}
+}
+
+function test_input($data)
+{
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
+if (isset($_POST["place-order"])) {
+	$fname_err = $lname_err = $email_err = "";
+
+	// Validate first name
+	if (empty($_POST["fname"])) {
+		$fname_err = "Name is required";
+	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
+		$fname_err = "Only letters and white space allowed";
+	} else {
+		$receipt_fname = ucwords(test_input($_POST["fname"]));
+	}
+
+	// Validate last name
+	if (empty($_POST["lname"])) {
+		$lname_err = "Name is required";
+	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
+		$lname_err = "Only letters and white space allowed";
+	} else {
+		$receipt_lname = ucwords(test_input($_POST["lname"]));
+	}
+
+	// Validate email
+	if (empty($_POST["email"])) {
+		$email_err = "Email is required";
+	} else if (!filter_var(test_input($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+		$email_err = "Invalid email format";
+	} else {
+		$receipt_email = test_input($_POST["email"]);
+	}
+
+	if (empty($fname_err) && empty($lname_err) && empty($email_err)) {
+
+		$date = date('Y-m-d H:i:s');
+		$sql_receipt = "INSERT INTO cust_receipt 
+						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
+						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
+						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
+						" . $_POST["total"] . ", 'Online Banking', '" .$_POST["cardno"]. "')";
+
+		if (mysqli_query($link, $sql_receipt)) {
+
+			$last_id = mysqli_insert_id($link);
+
+			for ($x = 0; $x < count($_POST["item_id"]); $x++) {
+				$sql_transaction = "INSERT INTO cust_transaction (item_id, receipt_id, amount, total_cost) 
+									VALUES (" . $_POST["item_id"][$x] . ", $last_id, " . $_POST["item_quantity"] . ", " . $_POST["item_total_cost"][$x] . ")";
+
+				$sql_delete = "DELETE FROM cust_cart WHERE item_id = " . $_POST["item_id"][$x] . " AND user_id = " . $_SESSION["userid"];
+
+				if (mysqli_query($link, $sql_transaction)) {
+
+
+					if (mysqli_query($link, $sql_delete)) {
+
+
+					} else {
+
+						echo "<script>alert('Error: Delete fail')</script>";
+					
+					}
+				} else {
+					echo "<script>alert('Error: Transaction fail')</script>";
+				}
+			}
+
+			echo "<script>alert('Transaction success'); location.href = 'view_order.php'</script>";
+
+		} else {
+
+			echo "<script>alert('Error: Receipt fail')</script>";
+
+		}
+	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +189,8 @@
 					<div class="topbar__left">
 						<div class="topbar__social">
 							<a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
+							<a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
+							<a href="https://www.instagram.com/" class="fab fa-instagram"></a>
 						</div><!-- /.topbar__social -->
 						<div class="topbar__info">
 							<i class="organik-icon-email"></i>
@@ -86,41 +213,45 @@
 			<nav class="main-menu">
 				<div class="container">
 					<div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
-                            <i class="organik-icon-user"></i>
-                                <?php 
+						<a href="<?php if (isset($_SESSION["lname"])) {
+										echo "profile.php";
+									} else {
+										echo "login.php";
+									} ?>">
+							<i class="organik-icon-user"></i>
+							<?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
-                        </a>
+							if (isset($_SESSION["lname"])) {
+								echo $_SESSION['lname'];
+							} else {
+								echo "Login / Register";
+							}
+
+							?>
+						</a>
 					</div><!-- /.main-menu__login -->
 					<ul class="main-menu__list">
-                        <li class="dropdown">
-                            <a href="index.php">Home</a>
-                        </li>
-                        <li>
-                            <a href="about.php">About</a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="products.php">Shop</a>
-                            <ul>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="news.php">News</a>
-                        </li>
-                        <li>
-                            <a href="review.php">Review</a>
-                        </li>
-                        <li><a href="contact.php">Contact</a></li>
-                    </ul>
+						<li class="dropdown">
+							<a href="index.php">Home</a>
+						</li>
+						<li>
+							<a href="about.php">About</a>
+						</li>
+						<li class="dropdown">
+							<a href="products.php">Shop</a>
+							<ul>
+								<li><a href="cart.php">Cart Page</a></li>
+								<li><a href="checkout.php">Checkout</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="news.php">News</a>
+						</li>
+						<li>
+							<a href="review.php">Review</a>
+						</li>
+						<li><a href="contact.php">Contact</a></li>
+					</ul>
 					<div class="main-menu__language">
 						<img src="assets/images/resources/flag-1-1.jpg" alt="">
 						<label class="sr-only" for="language-select">select language</label>
@@ -152,266 +283,371 @@
 		</section><!-- /.page-header -->
 
 		<section class="checkout-page">
+
 			<div class="container">
-				<p>Returning Customer? <a href="#">Click here to Login</a></p>
-				<div class="row">
-					<div class="col-lg-6">
-						<h3>Billing Details</h3>
-						<form action="#" class="contact-form-validated contact-one__form">
+				<form action="#" class="contact-one__form" method="POST">
+					<p>Returning Customer? <a href="#">Click here to Login</a></p>
+					<div class="row">
+						<div class="col-lg-6">
+							<h3>
+								Your Orders
+							</h3>
+							<div class="table-responsive">
+								<table class="table cart-table">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Item</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+										$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
+
+										$counter = 0;
+										$item_total_cost = 0;
+										$subtotal = 0;
+										$total = 0;
+										$shipping_cost = 0;
+
+										if ($result = mysqli_query($link, $sql)) {
+											if (mysqli_num_rows($result) == 0) {
+												echo '
+                                            <tr>
+                                                <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
+                                            </tr>';
+											} else {
+												while ($row = mysqli_fetch_assoc($result)) {
+
+													$counter++;
+													$item_total_cost = $row["quantity"] * $row["cost"];
+													$subtotal += $item_total_cost;
+
+													echo '
+                                                    <tr>
+														<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
+                                                        <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
+                                                        <td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
+                                                        <td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+                                                        <td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
+                                                        <td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
+                                                    </tr>
+													';
+												}
+											}
+											$total = $subtotal + $shipping_cost;
+											echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
+										}
+										?>
+								</table><!-- /.table -->
+							</div><!-- /.table-responsive -->
+
+							<div class="order-details">
+								<div class="order-details__top">
+									<p>Product</p>
+									<p>Price</p>
+								</div><!-- /.order-details__top -->
+								<p>
+									<span>Subtotal (RM)</span>
+									<span><?php echo $subtotal ?></span>
+								</p>
+								<p>
+									<span>Shipping (RM)</span>
+									<span>0.00</span>
+								</p>
+								<p>
+									<span>Total (RM)</span>
+									<span><?php echo $total ?></span>
+								</p>
+							</div><!-- /.order-details -->
+						</div><!-- /.col-lg-6 -->
+						<div class="col-lg-6">
+							<h3>Shipping Details</h3>
 							<div class="row">
 								<div class="col-md-12">
-									<select class="selectpicker">
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
+									<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
+										<option value="" style="display:none">Choose existing address</option>
+										<option value="" style="<?php
+																if (
+																	$address[0] == "" &&
+																	$address[1] == "" &&
+																	$address[2] == "" &&
+																	$address[3] == "" &&
+																	$address[4] == "" &&
+																	$address[5] == ""
+																) {
+																	echo 'display:block';
+																} else {
+																	echo 'display:none';
+																}
+																?>" disabled>
+											No existing address
+										</option>
+										<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>">Default Address</option>
+										<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>">Address 1</option>
+										<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>">Address 2</option>
+										<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>">Address 3</option>
+										<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>">Address 4</option>
+										<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>">Address 5</option>
 									</select>
 								</div><!-- /.col-md-12 -->
 								<div class="col-md-6">
-									<input type="text" name="fname" placeholder="First Name">
+									<label>First Name <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
+									<input type="text" name="fname" id="set-fname">
 								</div><!-- /.col-md-6 -->
+
 								<div class="col-md-6">
-									<input type="text" name="lname" placeholder="Last Name">
+									<label>Last Name / Surname <i style="color:lightgray"> (eg. Lim etc.)</i></label>
+									<input type="text" name="lname" id="set-lname">
 								</div><!-- /.col-md-6 -->
+
 								<div class="col-md-12">
-									<input type="text" name="company" placeholder="Company">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-12">
-									<input type="text" name="address" placeholder="Address">
+									<label>E-mail <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
+									<input type="text" name="email" id="set-email">
 								</div><!-- /.col-md-12 -->
+
 								<div class="col-md-12">
-									<input type="text" name="appartment" placeholder="Appartment, Unit, etc. (optional)">
+									<label>Phone <i style="color:lightgray"> (eg. 60123334444)</i></label>
+									<input type="text" name="phone" id="set-phone">
 								</div><!-- /.col-md-12 -->
+
 								<div class="col-md-12">
-									<input type="text" name="town" placeholder="Town / City">
+									<label>Address <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
+									<input type="text" name="address" id="set-address">
 								</div><!-- /.col-md-12 -->
+
 								<div class="col-md-6">
-									<input type="text" placeholder="State" name="state">
+									<label>Area</label> <br>
+									<select name="area" class="form-select form-select-lg" style="width: 100%">
+										<option disabled selected style="display: none;"></option>
+										<option id="set-area" style="display: none;"></option>
+										<option value="Alor Gajah">Alor Gajah</option>
+										<option value="Melaka Tengah">Melaka Tengah</option>
+										<option value="Jasin">Jasin</option>
+									</select>
 								</div><!-- /.col-md-6 -->
+
 								<div class="col-md-6">
-									<input type="text" placeholder="Zip Code" name="zip">
+									<label>State</label> <br>
+									<select name="state" class="form-select form-select-lg" style="width: 100%">
+										<option disabled selected style="display: none;"></option>
+										<option id="set-state" style="display: none;"></option>
+										<option value="Melaka">Melaka</option>
+									</select>
 								</div><!-- /.col-md-6 -->
+
 								<div class="col-md-6">
-									<input type="email" placeholder="Email Address" name="email">
+									<label>Postcode</label> <br>
+									<select name="postcode" class="form-select form-select-lg" style="width: 100%">
+										<option disabled selected style="display: none;"></option>
+										<option id="set-postcode" style="display: none;"></option>
+										<option value="75000">75000</option>
+										<option value="75050">75050</option>
+										<option value="75100">75100</option>
+										<option value="75150">75150</option>
+										<option value="75200">75200</option>
+										<option value="75250">75250</option>
+										<option value="75260">75260</option>
+										<option value="75300">75300</option>
+										<option value="75350">75350</option>
+										<option value="75400">75400</option>
+										<option value="75430">75430</option>
+										<option value="75450">75450</option>
+										<option value="75460">75460</option>
+										<option value="76300">76300</option>
+										<option value="76400">76400</option>
+										<option value="76450">76450</option>
+										<option value="77200">77200</option>
+									</select>
 								</div><!-- /.col-md-6 -->
-								<div class="col-md-6">
-									<input type="text" placeholder="Phone" name="phone">
-								</div><!-- /.col-md-6 -->
+
+
 								<div class="col-md-12">
-									<div class="form-group">
-										<input type="checkbox" id="createAccount">
-										<label for="createAccount">Create an Account?</label>
-									</div><!-- /.form-group -->
-								</div><!-- /.col-md-12 -->
-							</div><!-- /.row -->
-						</form>
-					</div><!-- /.col-lg-6 -->
-					<div class="col-lg-6">
-						<h3>
-							<input type="checkbox" id="shipDetails">
-							<label for="shipDetails">Ship to a Different Address</label>
-						</h3>
-						<form action="#" class="contact-form-validated contact-one__form">
-							<div class="row">
+									<hr>
+									<h3>Payment Details</h3>
+								</div>
+								<!--
+										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
+											<li>
+												<h2 class="para-title active">
+													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+														Direct Bank Transfer
+													</span>
+												</h2>
+												<div id="collapseTwo" class="collapse show" role="button" aria-labelledby="collapseTwo" data-parent="#accordion">
+													<p>Make your payment directly into our bank account. Please
+														use your Order ID as the payment reference. Your order
+														wont be shipped until the funds have cleared.</p>
+												</div>
+											</li>
+											<li>
+												<h2 class="para-title ">
+													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+														Paypal Payment
+														<img src="assets/images/products/paypal-1-1.jpg" alt="">
+													</span>
+												</h2>
+												<div id="collapseOne" class="collapse " aria-labelledby="collapseOne" data-parent="#accordion">
+													<p>Make your payment directly into our bank account. Please
+														use your Order ID as the payment reference. Your order
+														wont be shipped until the funds have cleared.</p>
+												</div>
+											</li>
+										</ul>
+										-->
 								<div class="col-md-12">
-									<select class="selectpicker">
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
-										<option value="">Select a Country</option>
+									<select class="selectpicker" id="choose-card" onchange="chooseCard()">
+										<option value="" style="display:none">Choose existing card</option>
+										<option value="" style="<?php
+																if (
+																	$cardno[0] == "" &&
+																	$cardno[1] == "" &&
+																	$cardno[2] == "" &&
+																	$cardno[3] == "" &&
+																	$cardno[4] == ""
+																) {
+																	echo 'display:block';
+																} else {
+																	echo 'display:none';
+																}
+																?>" disabled>
+											No existing address
+										</option>
+										<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>">Card 1</option>
+										<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>">Card 2</option>
+										<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>">Card 3</option>
+										<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>">Card 4</option>
+										<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>">Card 5</option>
 									</select>
 								</div><!-- /.col-md-12 -->
-								<div class="col-md-6">
-									<input type="text" name="fname" placeholder="First Name">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-6">
-									<input type="text" name="lname" placeholder="Last Name">
-								</div><!-- /.col-md-6 -->
+
 								<div class="col-md-12">
-									<input type="text" name="company" placeholder="Company">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-12">
-									<input type="text" name="address" placeholder="Address">
+									<label>Card Number <i style="color:lightgray" maxlength="19" required>(0000 0000 0000 0000)</i></label>
+									<input type="text" name="cardno" id="set-cardno">
 								</div><!-- /.col-md-12 -->
-								<div class="col-md-12">
-									<input type="text" name="appartment" placeholder="Appartment, Unit, etc. (optional)">
-								</div><!-- /.col-md-12 -->
-								<div class="col-md-12">
-									<input type="text" name="town" placeholder="Town / City">
-								</div><!-- /.col-md-12 -->
+
+								<div class="col-md-4">
+									<label>CVV<i style="color:lightgray" maxlength="3" required> (123)</i></label>
+									<input type="text" name="cvv" id="set-cvv">
+								</div><!-- /.col-md-4 -->
+
+								<div class="col-md-4">
+									<label>Expiry Month <i style="color:lightgray" maxlength="2" required> (1 - 12)</i></label>
+									<input type="text" name="expmonth" id="set-expmonth">
+								</div><!-- /.col-md-4 -->
+
+								<div class="col-md-4">
+									<label>Expiry Year <i style="color:lightgray" maxlength="2" required> (21 , 22..) </i></label>
+									<input type="text" name="expmonth" id="set-expyear">
+								</div><!-- /.col-md-4 -->
+
 								<div class="col-md-6">
-									<input type="text" placeholder="State" name="state">
+									<div class="text-right">
+										<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
+									</div><!-- /.text-right -->
 								</div><!-- /.col-md-6 -->
-								<div class="col-md-6">
-									<input type="text" placeholder="Zip Code" name="zip">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-6">
-									<input type="email" placeholder="Email Address" name="email">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-6">
-									<input type="text" placeholder="Phone" name="phone">
-								</div><!-- /.col-md-6 -->
-								<div class="col-md-12">
-									<textarea name="notes" placeholder="Notes About Your Order"></textarea>
-								</div><!-- /.col-md-12 -->
+
+
 							</div><!-- /.row -->
-						</form>
-					</div><!-- /.col-lg-6 -->
-				</div><!-- /.row -->
-				<h3 class="order-title">Your Order</h3>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="order-details">
-							<div class="order-details__top">
-								<p>Product</p>
-								<p>Price</p>
-							</div><!-- /.order-details__top -->
-							<p>
-								<span>Vagetables Pack</span>
-								<span>$9.99 USD</span>
-							</p>
-							<p>
-								<span>Subtotal</span>
-								<span>$9.99 USD</span>
-							</p>
-							<p>
-								<span>Shipping</span>
-								<span>$9.99 USD</span>
-							</p>
-							<p>
-								<span>Total</span>
-								<span>$9.99 USD</span>
-							</p>
-						</div><!-- /.order-details -->
-					</div><!-- /.col-md-6 -->
-					<div class="col-md-6">
-						<div class="order-payment">
-							<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
-								<li>
-									<h2 class="para-title active">
-										<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-											Direct Bank Transfer
-										</span>
-									</h2>
-									<div id="collapseTwo" class="collapse show" role="button" aria-labelledby="collapseTwo" data-parent="#accordion">
-										<p>Make your payment directly into our bank account. Please
-											use your Order ID as the payment reference. Your order
-											wont be shipped until the funds have cleared.</p>
-									</div>
-								</li>
-								<li>
-									<h2 class="para-title ">
-										<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-											Paypal Payment
-											<img src="assets/images/products/paypal-1-1.jpg" alt="">
-										</span>
-									</h2>
-									<div id="collapseOne" class="collapse " aria-labelledby="collapseOne" data-parent="#accordion">
-										<p>Make your payment directly into our bank account. Please
-											use your Order ID as the payment reference. Your order
-											wont be shipped until the funds have cleared.</p>
-									</div>
-								</li>
-							</ul>
-						</div><!-- /.order-payment -->
-						<div class="text-right">
-							<a href="checkout.php" class="thm-btn">Place Your Order</a>
-						</div><!-- /.text-right -->
-					</div><!-- /.col-md-6 -->
-				</div><!-- /.row -->
+						</div><!-- /.col-lg-6 -->
+					</div><!-- /.row -->
+				</form>
 			</div><!-- /.container -->
 		</section><!-- /.checkout-page -->
 
 		<footer class="site-footer background-black-2">
-            <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
-            <img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__about-widget">
-                            <a href="index.php" class="footer-widget__logo">
-                                <img src="assets/images/tgg.png" alt="" width="150" height="150">
-                            </a>
-                            <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__contact-widget">
-                            <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__contact">
-                                <li>
-                                    <i class="fa fa-phone-square"></i>
-                                    <a href="tel:666-888-0000">60123456789</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-envelope"></i>
-                                    <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-map-marker-alt"></i>
-                                    <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
-                                        Malacca Malaysia</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__links-widget">
-                            <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__links">
-                                <li>
-                                    <a href="index.php">Top Sellers</a>
-                                </li>
-                                <li>
-                                    <a href="products.php">Shopping</a>
-                                </li>
-                                <li>
-                                    <a href="about.php">About</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Contact</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Help</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
-                        <div class="footer-widget">
-                            <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__links">
-                                <li>
-                                    <a href="products.php">New Products</a>
-                                </li>
-                                <li>
-                                    <a href="profile.php">My Account</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Support</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">FAQs</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-            <div class="bottom-footer">
-                <div class="container">
-                    <hr>
-                    <div class="inner-container text-center">
-                        <div class="bottom-footer__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
-                            <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
-                            <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
-                        </div><!-- /.bottom-footer__social -->
-                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
-                    </div><!-- /.inner-container -->
-                </div><!-- /.container -->
-            </div><!-- /.bottom-footer -->
-        </footer><!-- /.site-footer -->
+			<img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
+			<img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+						<div class="footer-widget footer-widget__about-widget">
+							<a href="index.php" class="footer-widget__logo">
+								<img src="assets/images/tgg.png" alt="" width="150" height="150">
+							</a>
+							<p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
+						</div><!-- /.footer-widget -->
+					</div><!-- /.col-sm-12 col-md-6 -->
+					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+						<div class="footer-widget footer-widget__contact-widget">
+							<h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+							<ul class="list-unstyled footer-widget__contact">
+								<li>
+									<i class="fa fa-phone-square"></i>
+									<a href="tel:666-888-0000">60123456789</a>
+								</li>
+								<li>
+									<i class="fa fa-envelope"></i>
+									<a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
+								</li>
+								<li>
+									<i class="fa fa-map-marker-alt"></i>
+									<a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
+										Malacca Malaysia</a>
+								</li>
+							</ul><!-- /.list-unstyled footer-widget__contact -->
+						</div><!-- /.footer-widget -->
+					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+						<div class="footer-widget footer-widget__links-widget">
+							<h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
+							<ul class="list-unstyled footer-widget__links">
+								<li>
+									<a href="index.php">Top Sellers</a>
+								</li>
+								<li>
+									<a href="products.php">Shopping</a>
+								</li>
+								<li>
+									<a href="about.php">About</a>
+								</li>
+								<li>
+									<a href="contact.php">Contact</a>
+								</li>
+								<li>
+									<a href="contact.php">Help</a>
+								</li>
+							</ul><!-- /.list-unstyled footer-widget__contact -->
+						</div><!-- /.footer-widget -->
+					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+						<div class="footer-widget">
+							<h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
+							<ul class="list-unstyled footer-widget__links">
+								<li>
+									<a href="products.php">New Products</a>
+								</li>
+								<li>
+									<a href="profile.php">My Account</a>
+								</li>
+								<li>
+									<a href="contact.php">Support</a>
+								</li>
+								<li>
+									<a href="contact.php">FAQs</a>
+								</li>
+							</ul><!-- /.list-unstyled footer-widget__contact -->
+						</div><!-- /.footer-widget -->
+					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+			<div class="bottom-footer">
+				<div class="container">
+					<hr>
+					<div class="inner-container text-center">
+						<div class="bottom-footer__social">
+							<a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+							<a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+							<a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
+						</div><!-- /.bottom-footer__social -->
+						<p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
+					</div><!-- /.inner-container -->
+				</div><!-- /.container -->
+			</div><!-- /.bottom-footer -->
+		</footer><!-- /.site-footer -->
 
 	</div><!-- /.page-wrapper -->
 
@@ -450,18 +686,22 @@
 					</select>
 				</div><!-- /.mobile-nav__language -->
 				<div class="main-menu__login">
-					<a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
-                            <i class="organik-icon-user"></i>
-                                <?php 
+					<a href="<?php if (isset($_SESSION["lname"])) {
+									echo "profile.php";
+								} else {
+									echo "login.php";
+								} ?>">
+						<i class="organik-icon-user"></i>
+						<?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
-                    </a>				
+						if (isset($_SESSION["lname"])) {
+							echo $_SESSION['lname'];
+						} else {
+							echo "Login / Register";
+						}
+
+						?>
+					</a>
 				</div><!-- /.main-menu__login -->
 			</div><!-- /.mobile-nav__top -->
 
@@ -530,19 +770,167 @@
 		<!-- /.search-popup__overlay -->
 		<div class="search-popup__content">
 			<form action="products.php" method="GET">
-                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
-                <input type="text" id="search" name="search" placeholder="Search Here..." />
-                <button type="submit" aria-label="search submit" class="thm-btn">
-                    <i class="organik-icon-magnifying-glass"></i>
-                </button>
-            </form>
+				<label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+				<input type="text" id="search" name="search" placeholder="Search Here..." />
+				<button type="submit" aria-label="search submit" class="thm-btn">
+					<i class="organik-icon-magnifying-glass"></i>
+				</button>
+			</form>
 		</div>
 		<!-- /.search-popup__content -->
 	</div>
 	<!-- /.search-popup -->
+	<script>
+		function chooseAddress() {
+			var choose = document.getElementById("choose-address").value;
 
+			document.getElementById("set-area").selected = "true";
+			document.getElementById("set-state").selected = "true";
+			document.getElementById("set-postcode").selected = "true";
+
+
+			switch (choose) {
+				case '1':
+					document.getElementById("set-fname").value = fname[0];
+					document.getElementById("set-lname").value = lname[0];
+					document.getElementById("set-email").value = email[0];
+					document.getElementById("set-phone").value = phone[0];
+					document.getElementById("set-address").value = address[0];
+
+					document.getElementById("set-area").innerHTML = area[0];
+					document.getElementById("set-state").innerHTML = state[0];
+					document.getElementById("set-postcode").innerHTML = postcode[0];
+
+					document.getElementById("set-area").value = area[0];
+					document.getElementById("set-state").value = state[0];
+					document.getElementById("set-postcode").value = postcode[0];
+
+					break;
+				case '2':
+					document.getElementById("set-fname").value = fname[1];
+					document.getElementById("set-lname").value = lname[1];
+					document.getElementById("set-email").value = email[1];
+					document.getElementById("set-phone").value = phone[1];
+					document.getElementById("set-address").value = address[1];
+
+					document.getElementById("set-area").value = area[1];
+					document.getElementById("set-state").value = state[1];
+					document.getElementById("set-postcode").value = postcode[1];
+
+					document.getElementById("set-area").innerHTML = area[1];
+					document.getElementById("set-state").innerHTML = state[1];
+					document.getElementById("set-postcode").innerHTML = postcode[1];
+
+					break;
+				case '3':
+					document.getElementById("set-fname").value = fname[2];
+					document.getElementById("set-lname").value = lname[2];
+					document.getElementById("set-email").value = email[2];
+					document.getElementById("set-phone").value = phone[2];
+					document.getElementById("set-address").value = address[2];
+					document.getElementById("set-area").value = area[2];
+					document.getElementById("set-state").value = state[2];
+					document.getElementById("set-postcode").value = postcode[2];
+					break;
+				case '4':
+					document.getElementById("set-fname").value = fname[3];
+					document.getElementById("set-lname").value = lname[3];
+					document.getElementById("set-email").value = email[3];
+					document.getElementById("set-phone").value = phone[3];
+					document.getElementById("set-address").value = address[3];
+					document.getElementById("set-area").value = area[3];
+					document.getElementById("set-state").value = state[3];
+					document.getElementById("set-postcode").value = postcode[3];
+					break;
+				case '5':
+					document.getElementById("set-fname").value = fname[4];
+					document.getElementById("set-lname").value = lname[4];
+					document.getElementById("set-email").value = email[4];
+					document.getElementById("set-phone").value = phone[4];
+					document.getElementById("set-address").value = address[4];
+					document.getElementById("set-area").value = area[4];
+					document.getElementById("set-state").value = state[4];
+					document.getElementById("set-postcode").value = postcode[4];
+					break;
+				case '6':
+					document.getElementById("set-fname").value = fname[5];
+					document.getElementById("set-lname").value = lname[5];
+					document.getElementById("set-email").value = email[5];
+					document.getElementById("set-phone").value = phone[5];
+					document.getElementById("set-address").value = address[5];
+					document.getElementById("set-area").value = area[5];
+					document.getElementById("set-state").value = state[5];
+					document.getElementById("set-postcode").value = postcode[5];
+					break;
+			}
+		}
+
+
+		function chooseCard() {
+			var choose = document.getElementById("choose-card").value;
+
+			switch (choose) {
+				case '1':
+					document.getElementById("set-cardno").value = cardno[0];
+					document.getElementById("set-cvv").value = cardcvv[0];
+					document.getElementById("set-expmonth").value = expmonth[0];
+					document.getElementById("set-expyear").value = expyear[0];
+					break;
+				case '2':
+					document.getElementById("set-cardno").value = cardno[1];
+					document.getElementById("set-cvv").value = cardcvv[1];
+					document.getElementById("set-expmonth").value = expmonth[1];
+					document.getElementById("set-expyear").value = expyear[1];
+
+					break;
+				case '3':
+					document.getElementById("set-cardno").value = cardno[2];
+					document.getElementById("set-cvv").value = cardcvv[2];
+					document.getElementById("set-expmonth").value = expmonth[2];
+					document.getElementById("set-expyear").value = expyear[2];
+					break;
+				case '4':
+					document.getElementById("set-cardno").value = cardno[3];
+					document.getElementById("set-cvv").value = cardcvv[3];
+					document.getElementById("set-expmonth").value = expmonth[3];
+					document.getElementById("set-expyear").value = expyear[3];
+					break;
+				case '5':
+					document.getElementById("set-cardno").value = cardno[4];
+					document.getElementById("set-cvv").value = cardcvv[4];
+					document.getElementById("set-expmonth").value = expmonth[4];
+					document.getElementById("set-expyear").value = expyear[4];
+					break;
+			}
+		}
+
+		document.getElementById("set-cardno").onkeyup = function() {
+
+			var CCNValue = $("#set-cardno").val();
+			CCNValue = CCNValue.replace(/ /g, '');
+			var CCNLength = CCNValue.length;
+			var m = 1;
+			var arr = CCNValue.split('');
+			var ccnnewval = "";
+
+			if (arr.length > 0) {
+				for (var m = 0; m < arr.length; m++) {
+					if (m == 4 || m == 8 || m == 12) {
+						ccnnewval = ccnnewval + ' ';
+					}
+
+					if (m <= 11) {
+						ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+					} else {
+						ccnnewval = ccnnewval + arr[m];
+					}
+				}
+			}
+
+			$("#set-cardno").val(ccnnewval);
+		}
+	</script>
 	<a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
-
 
 	<script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
 	<script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>

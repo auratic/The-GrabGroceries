@@ -1,21 +1,22 @@
 <?php
-  // Include config file
-  require "config.php";
- 
-  // Define variables and initialize with empty values
-  $email = $fname = $lname = $password = $confirm_password = "";
-  $fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = "";
- 
-  function test_input($data) {
+// Include config file
+require "config.php";
+
+// Define variables and initialize with empty values
+$email = $fname = $lname = $password = $confirm_password = "";
+$fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = "";
+
+function test_input($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
-  }
+}
 
-  // Processing form data when form is submitted
-  if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Returns the request method used to access the page (such as POST)
- 
+// Processing form data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Returns the request method used to access the page (such as POST)
+
     // Validate username
     /*
     if (empty(trim($_POST["username"]))) {
@@ -43,10 +44,8 @@
     // Validate first name
     if (empty($_POST["fname"])) {
         $fname_err = "Name is required";
-
-    } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["fname"]))) {
+    } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
         $fname_err = "Only letters and white space allowed";
-
     } else {
         $fname = ucwords(test_input($_POST["fname"]));
     }
@@ -54,10 +53,8 @@
     // Validate last name
     if (empty($_POST["lname"])) {
         $lname_err = "Name is required";
-
-    } else if (!preg_match("/^[a-zA-Z-' ]*$/",test_input($_POST["lname"]))) {
+    } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
         $lname_err = "Only letters and white space allowed";
-
     } else {
         $lname = ucwords(test_input($_POST["lname"]));
     }
@@ -65,10 +62,8 @@
     // Validate email
     if (empty($_POST["email"])) {
         $email_err = "Email is required";
-
     } else if (!filter_var(test_input($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
-          $email_err = "Invalid email format";
-          
+        $email_err = "Invalid email format";
     } else {
         // Prepare a select statement
 
@@ -77,9 +72,7 @@
 
         if (mysqli_num_rows($result) > 0) {
             $email_err = "Email is taken";
-
-        } else 
-        {
+        } else {
             $email = test_input($_POST["email"]);
         }
     }
@@ -93,69 +86,59 @@
     $specialChars = preg_match('@[^\w]@', $password);
 
     if (empty($_POST["password"])) {
-        $password_err = "Please enter a password.";    
-
-    } elseif(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        $password_err = "Please enter a password.";
+    } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
         $password_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
     } else {
         $password = $_POST["password"];
-
     }
-    
+
     // Validate confirm password
     if (empty($_POST["confirm_password"])) {
-        $confirm_password_err = "Please confirm password.";     
-
+        $confirm_password_err = "Please confirm password.";
     } else {
         $confirm_password = $_POST["confirm_password"];
 
         if (empty($password_err) && ($password != $confirm_password)) {
             $confirm_password_err = "Password did not match.";
-
         }
     }
-    
+
     // Check input errors before inserting in database
-    if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) 
-    {
+    if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         // Prepare an insert statement
         $sql = "INSERT INTO users (email, password, mode, firstname, lastname) VALUES ('$email', '$hash', 'customer', '$fname', '$lname');";
         $sql_get_id = "SELECT user_id FROM users WHERE email = '$email' and password = '$hash'";
-         
+
         if (mysqli_query($link, $sql)) {
 
-            if($id_result = mysqli_query($link, $sql_get_id)) {
+            if ($id_result = mysqli_query($link, $sql_get_id)) {
 
-                while($row = mysqli_fetch_assoc($id_result)) 
-                {
+                while ($row = mysqli_fetch_assoc($id_result)) {
 
-                    $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (".$row['user_id'].")";
-                    $sql_insert_card = "INSERT INTO cust_card (user_id) VALUES (".$row['user_id'].")";
-                    $sql_insert_review = "INSERT INTO cust_review (user_id) VALUES (".$row['user_id'].")";
+                    $sql_insert_address = "INSERT INTO cust_address (user_id) VALUES (" . $row['user_id'] . ")";
+                    $sql_insert_card = "INSERT INTO cust_card (user_id) VALUES (" . $row['user_id'] . ")";
+                    $sql_insert_review = "INSERT INTO cust_review (user_id) VALUES (" . $row['user_id'] . ")";
 
-                    if(mysqli_query($link, $sql_insert_address)) {
+                    if (mysqli_query($link, $sql_insert_address)) {
 
-                        if(mysqli_query($link,$sql_insert_card)){
+                        if (mysqli_query($link, $sql_insert_card)) {
 
-                            if(mysqli_query($link,$sql_insert_review)){
+                            if (mysqli_query($link, $sql_insert_review)) {
 
                                 echo "
                                 <script>
                                 alert('New account created');
                                 location.href = 'login.php';
                                 </script>";
-                            }
-                            else
-                            {
+                            } else {
                                 echo "
                                 <script>
                                 alert('Error: " . $sql_insert_review . "\n" . mysqli_error($link) . "')
                                 </script>";
                             }
-
-                        }
-                        else{
+                        } else {
                             echo "
                             <script>
                             alert('Error: " . $sql_insert_card . "\n" . mysqli_error($link) . "')
@@ -168,26 +151,22 @@
                         </script>";
                     }
                 }
-            } 
-            else 
-                {
+            } else {
                 echo "
                 <script>
                   alert('Error: " . $sql_get_id . "\n" . mysqli_error($link) . "')
                 </script>";
             }
-
         } else {
-          echo "
+            echo "
           <script>
             alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
           </script>";
-
         }
     }
     // Close connection
     mysqli_close($link);
-  }
+}
 
 ?>
 
@@ -227,11 +206,15 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 500px; padding: 20px; }
+
+        .signup-form {
+            width: 500px;
+            padding: 20px;
+        }
     </style>
 </head>
 
@@ -283,17 +266,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -338,29 +325,26 @@
         <div class="signup-form container loginbox">
             <h2>Sign Up</h2>
             <p>Please fill this form to create an account.</p>
-            <form 
-            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
-            method="post"
-            style="text-align: left">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                 <div class="form-group">
                     <label>E-mail</label> </br>
                     <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                </div> 
-                    
+                </div>
+
                 <div class="form-group" style="display: flex; justify-content: space-between">
-                  <div>
-                    <label>First Name</label> </br>
-                    <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
-                    <span class="invalid-feedback"><?php echo $fname_err; ?></span>
-                  </div>   
-                      
-                  <div>
-                    <label>Last Name</label> </br>
-                    <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
-                    <span class="invalid-feedback"><?php echo $lname_err; ?></span>
-                  </div>    
-                </div>    
+                    <div>
+                        <label>First Name</label> </br>
+                        <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
+                        <span class="invalid-feedback"><?php echo $fname_err; ?></span>
+                    </div>
+
+                    <div>
+                        <label>Last Name</label> </br>
+                        <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
+                        <span class="invalid-feedback"><?php echo $lname_err; ?></span>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label>Password</label> </br>
@@ -378,7 +362,7 @@
                 </div>
                 <p>Already have an account? <a href="login.php">Login here</a>.</p>
             </form>
-        </div> 
+        </div>
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
@@ -469,78 +453,204 @@
                     </div><!-- /.inner-container -->
                 </div><!-- /.container -->
             </div><!-- /.bottom-footer -->
-        </footer><!-- /.site-footer -->   
-
-    <!-- /.search-popup -->
-
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+        </footer><!-- /.site-footer -->
 
 
-    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
-    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
-    <script src="assets/vendors/odometer/odometer.min.js"></script>
-    <script src="assets/vendors/swiper/swiper.min.js"></script>
-    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
-    <script src="assets/vendors/wow/wow.js"></script>
-    <script src="assets/vendors/isotope/isotope.js"></script>
-    <script src="assets/vendors/countdown/countdown.min.js"></script>
-    <!-- template js -->
-    <script src="assets/js/organik.js"></script>
-    <script>
-        function validatePassword(password) 
-        {
-            // Do not show anything when the length of password is zero.
-            if (password.length === 0) 
-            {
-                document.getElementById("msg").innerHTML = "";
-                return;
-            }
-            // Create an array and push all possible values that you want in password
-            var matchedCase = new Array();
-            matchedCase.push("[$@$!%*#?&]"); // Special Charector
-            matchedCase.push("[A-Z]");      // Uppercase Alpabates
-            matchedCase.push("[0-9]");      // Numbers
-            matchedCase.push("[a-z]");     // Lowercase Alphabates
+        <div class="mobile-nav__wrapper">
+            <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+            <!-- /.mobile-nav__overlay -->
+            <div class="mobile-nav__content">
+                <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
 
-            // Check the conditions
-            var ctr = 0;
-            for (var i = 0; i < matchedCase.length; i++) {
-                if (new RegExp(matchedCase[i]).test(password)) {
-                    ctr++;
+                <div class="logo-box">
+                    <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+                </div>
+                <!-- /.logo-box -->
+                <div class="mobile-nav__container"></div>
+                <!-- /.mobile-nav__container -->
+
+                <ul class="mobile-nav__contact list-unstyled">
+                    <li>
+                        <i class="organik-icon-email"></i>
+                        <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                    </li>
+                    <li>
+                        <i class="organik-icon-calling"></i>
+                        <a href="tel:666-888-0000">666 888 0000</a>
+                    </li>
+                </ul><!-- /.mobile-nav__contact -->
+                <div class="mobile-nav__top">
+                    <div class="mobile-nav__language">
+                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                        <label class="sr-only" for="language-select">select language</label>
+                        <!-- /#language-select.sr-only -->
+                        <select class="selectpicker" id="language-select">
+                            <option value="english">English</option>
+                            <option value="arabic">Arabic</option>
+                        </select>
+                    </div><!-- /.mobile-nav__language -->
+                    <div class="main-menu__login">
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
+                            <i class="organik-icon-user"></i>
+                            <?php
+
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
+                        </a>
+                    </div><!-- /.main-menu__login -->
+                </div><!-- /.mobile-nav__top -->
+
+
+
+            </div>
+            <!-- /.mobile-nav__content -->
+        </div>
+        <!-- /.mobile-nav__wrapper -->
+
+        <div class="mini-cart">
+            <div class="mini-cart__overlay mini-cart__toggler"></div>
+            <div class="mini-cart__content">
+                <div class="mini-cart__top">
+                    <h3 class="mini-cart__title">Shopping Cart</h3>
+                    <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+                </div><!-- /.mini-cart__top -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-1.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Banana</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-2.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Tomato</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-3.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Bread</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+            </div><!-- /.mini-cart__content -->
+        </div><!-- /.cart-toggler -->
+
+        <div class="search-popup">
+            <div class="search-popup__overlay search-toggler"></div>
+            <!-- /.search-popup__overlay -->
+            <div class="search-popup__content">
+                <form action="products.php" method="GET">
+                    <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                    <input type="text" id="search" name="search" placeholder="Search Here..." />
+                    <button type="submit" aria-label="search submit" class="thm-btn">
+                        <i class="organik-icon-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <!-- /.search-popup__content -->
+        </div>
+        <!-- /.search-popup -->
+
+        <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+
+
+        <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
+        <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+        <script src="assets/vendors/jarallax/jarallax.min.js"></script>
+        <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+        <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
+        <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+        <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+        <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
+        <script src="assets/vendors/nouislider/nouislider.min.js"></script>
+        <script src="assets/vendors/odometer/odometer.min.js"></script>
+        <script src="assets/vendors/swiper/swiper.min.js"></script>
+        <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
+        <script src="assets/vendors/wnumb/wNumb.min.js"></script>
+        <script src="assets/vendors/wow/wow.js"></script>
+        <script src="assets/vendors/isotope/isotope.js"></script>
+        <script src="assets/vendors/countdown/countdown.min.js"></script>
+        <!-- template js -->
+        <script src="assets/js/organik.js"></script>
+        <script>
+            function validatePassword(password) {
+                // Do not show anything when the length of password is zero.
+                if (password.length === 0) {
+                    document.getElementById("msg").innerHTML = "";
+                    return;
                 }
+                // Create an array and push all possible values that you want in password
+                var matchedCase = new Array();
+                matchedCase.push("[$@$!%*#?&]"); // Special Charector
+                matchedCase.push("[A-Z]"); // Uppercase Alpabates
+                matchedCase.push("[0-9]"); // Numbers
+                matchedCase.push("[a-z]"); // Lowercase Alphabates
+
+                // Check the conditions
+                var ctr = 0;
+                for (var i = 0; i < matchedCase.length; i++) {
+                    if (new RegExp(matchedCase[i]).test(password)) {
+                        ctr++;
+                    }
+                }
+                // Display it
+                var color = "";
+                var strength = "";
+                switch (ctr) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        strength = " Very Weak";
+                        color = "red";
+                        break;
+                    case 3:
+                        strength = " Medium";
+                        color = "orange";
+                        break;
+                    case 4:
+                        strength = " Strong";
+                        color = "green";
+                        break;
+                }
+                document.getElementById("msg").innerHTML = strength;
+                document.getElementById("msg").style.color = color;
             }
-            // Display it
-            var color = "";
-            var strength = "";
-            switch (ctr) {
-                case 0:
-                case 1:
-                case 2:
-                    strength = " Very Weak";
-                    color = "red";
-                    break;
-                case 3:
-                    strength = " Medium";
-                    color = "orange";
-                    break;
-                case 4:
-                    strength = " Strong";
-                    color = "green";
-                    break;
-            }
-            document.getElementById("msg").innerHTML = strength;
-            document.getElementById("msg").style.color = color;
-        }
-    </script>
+        </script>
 </body>
 
 </html>

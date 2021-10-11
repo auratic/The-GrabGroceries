@@ -1,7 +1,42 @@
 <?php
-  session_start();
+session_start();
 
-  require "config.php";
+require "config.php";
+
+$id_array = array();
+
+if (isset($_GET["search"])) {
+    $search = $_GET["search"];
+
+    $getid_sql = "SELECT item_id FROM item 
+                    WHERE item LIKE '%$search%'
+                    OR description LIKE '%$search%'";
+
+    if($result = mysqli_query($link, $getid_sql)) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            array_push($id_array, $row["item_id"]);
+
+        }
+
+    }
+
+} else {
+    $getid_sql = "SELECT * FROM item";
+    
+    if($result = mysqli_query($link, $getid_sql)) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            array_push($id_array, $row["item_id"]);
+
+        }
+
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -88,17 +123,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -215,38 +254,51 @@
                         <div class="row">
 
                             <?php
-                                $sql = "SELECT * from item";
+                            $sql = "SELECT * from item";
 
-                                if ($result = mysqli_query($link, $sql)) {
+                            if(count($id_array) == 0 ) {
+                                echo "<h4 style='margin: auto'>No search result</h4>";
+                            } else {
+                                for($i = 0 ; $i < count($id_array) ; $i++) {
+                                    $sql = "SELECT * from item WHERE item_id = ". $id_array[$i];
 
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    if($result = mysqli_query($link, $sql)) {
 
-                                        echo'
-                                        <div class="col-md-6 col-lg-4">
-                                            <div class="product-card">
-                                                <div class="product-card__image">
-                                                    <img src="assets/images/items/'.$row['image'].'" alt="">
-                                                    <div class="product-card__image-content" style="cursor:pointer;"
-                                                        onclick="location.href = `product-details.php?item_id='.$row['item_id'].'`">
-                                                    </div><!-- /.product-card__image-content -->
-                                                </div><!-- /.product-card__image -->
-                                                <div class="product-card__content">
-                                                    <div class="product-card__left">
-                                                        <h3><a href="product-details.php">'.$row['item'].'</a></h3>
-                                                        <p>RM'.$row['cost'].'</p>
-                                                    </div><!-- /.product-card__left -->
-                                                    <div class="product-card__right">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div><!-- /.product-card__right -->
-                                                </div><!-- /.product-card__content -->
-                                            </div><!-- /.product-card -->
-                                        </div>';
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                            
+                                            echo '
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="product-card">
+                                                    <div class="product-card__image">
+                                                        <img src="assets/images/items/' . $row['image'] . '" alt="">
+                                                        <div class="product-card__image-content" style="cursor:pointer;"
+                                                            onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
+                                                            <a href="#"><i class="organik-icon-heart"></i></a>
+                                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                                        </div><!-- /.product-card__image-content -->
+                                                    </div><!-- /.product-card__image -->
+                                                    <div class="product-card__content">
+                                                        <div class="product-card__left">
+                                                            <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
+                                                            <p>RM' . $row['cost'] . '</p>
+                                                        </div><!-- /.product-card__left -->
+                                                        <div class="product-card__right">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div><!-- /.product-card__right -->
+                                                    </div><!-- /.product-card__content -->
+                                                </div><!-- /.product-card -->
+                                            </div>';
+                                
+                                        }
+
                                     }
-                                } 
+
+                                }
+                            }
 
                             ?>
                             <!-- /.col-md-6 col-lg-4 -->
@@ -388,17 +440,21 @@
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
-                            <i class="organik-icon-user"></i>
-                                <?php 
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
+                        } else {
+                            echo "Login / Register";
+                        }
+
+                        ?>
                     </a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->
@@ -467,9 +523,9 @@
         <div class="search-popup__overlay search-toggler"></div>
         <!-- /.search-popup__overlay -->
         <div class="search-popup__content">
-            <form action="#">
+            <form action="products.php" method="GET">
                 <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
-                <input type="text" id="search" placeholder="Search Here..." />
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
                 <button type="submit" aria-label="search submit" class="thm-btn">
                     <i class="organik-icon-magnifying-glass"></i>
                 </button>
@@ -479,7 +535,7 @@
     </div>
     <!-- /.search-popup -->
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>                         
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>

@@ -1,85 +1,69 @@
 <?php
-    session_start();
+session_start();
 
-    if(!isset($_SESSION["loggedin"])) {
-        echo "
+if (!isset($_SESSION["loggedin"])) {
+    echo "
         <script>
         alert('Please login');
         location.href='login.php';
         </script>";
-    }
+}
 
-   require "config.php";
+require "config.php";
 
-   $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+$newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
 
-    if (count($_POST) > 0)
-    {
-        $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
+if (count($_POST) > 0) {
+    $newPassword_err = $currentPassword_err = $confirmPassword_err = $samePassword_err = "";
 
-        $curPwd = $_POST["currentPassword"];
-        $newPwd = $_POST["newPassword"];
-        $cfmPwd = $_POST["confirmPassword"];
-        
-        $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
-        $result = mysqli_query($link, $sql);
-        $row = mysqli_fetch_assoc($result);
+    $curPwd = $_POST["currentPassword"];
+    $newPwd = $_POST["newPassword"];
+    $cfmPwd = $_POST["confirmPassword"];
 
-        //hashing part
-        if(password_verify($curPwd, $row["password"]))
-        {
-            $uppercase = preg_match('@[A-Z]@', $newPwd);
-            $lowercase = preg_match('@[a-z]@', $newPwd);
-            $number    = preg_match('@[0-9]@', $newPwd);
-            $specialChars = preg_match('@[^\w]@', $newPwd);
+    $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
 
-            if (!$uppercase || !$lowercase || !$number || !$specialChars ||(strlen(trim($newPwd)) < 8))
-            {
-                $newPassword_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
-            }
-            else if($_POST["newPassword"] != $_POST["confirmPassword"])
-            {
-                $confirmPassword_err = "Password did not match";
-            }
+    //hashing part
+    if (password_verify($curPwd, $row["password"])) {
+        $uppercase = preg_match('@[A-Z]@', $newPwd);
+        $lowercase = preg_match('@[a-z]@', $newPwd);
+        $number    = preg_match('@[0-9]@', $newPwd);
+        $specialChars = preg_match('@[^\w]@', $newPwd);
 
-            if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) 
-            {
-                if($curPwd != $newPwd)
-                {
-                    $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+        if (!$uppercase || !$lowercase || !$number || !$specialChars || (strlen(trim($newPwd)) < 8)) {
+            $newPassword_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+        } else if ($_POST["newPassword"] != $_POST["confirmPassword"]) {
+            $confirmPassword_err = "Password did not match";
+        }
 
-                    if(mysqli_query($link, $sql_update_password))
-                    {
-                        echo" 
+        if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) {
+            if ($curPwd != $newPwd) {
+                $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+
+                if (mysqli_query($link, $sql_update_password)) {
+                    echo " 
                         <script>
                         alert('Your password have updated!');
                         </script>";
-                    }
-                    else
-                    {
-                        echo "
+                } else {
+                    echo "
                         <script>
                         alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
                         </script>";
-                    }
                 }
-                else
-                {
-                    echo "
+            } else {
+                echo "
                     <script>
                         alert('The current password cannot be the same as the new password.');
                     </script>";
-                }
             }
         }
-        else
-        {
-            $currentPassword_err = "Current Password is not correct";
-        }
-
-        
+    } else {
+        $currentPassword_err = "Current Password is not correct";
     }
-   
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -118,15 +102,18 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
 
-        .containerr
-        {
-            background-color:white;
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
+
+        .containerr {
+            background-color: white;
             margin-top: 70px;
             margin-left: 50px;
             margin-bottom: 80px;
@@ -135,19 +122,22 @@
             width: 1430px;
         }
 
-        .btnSubmit
-        {
-            color:white;
-            background-color:#4CAF50;
+        .btnSubmit {
+            color: white;
+            background-color: #4CAF50;
             border-radius: 5px;
-            text-align:center;
+            text-align: center;
             font-size: 16px;
             text-decoration: none;
             padding: 5px 15px;
             margin-top: 10px;
-            outline: none; 
+            outline: none;
             border: none;
         }
+        .fas {
+            margin-left: 0;
+        }
+
     </style>
 </head>
 
@@ -199,17 +189,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -245,7 +239,7 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            
+
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
                 <div class="containerr">
@@ -258,27 +252,23 @@
                                         <div class="my-account-menu">
                                             <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                                 <li>
-                                                    <a href="profile.php"><i
-                                                            class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                                    <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                                                 </li>
                                                 <li>
-                                                    <a href="view_order.php"><i
-                                                            class="fas fa-shopping-cart"></i> Order</a>
+                                                    <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
                                                 </li>
                                                 <li>
-                                                    <a href="payment.php"><i
-                                                            class="fas fa-credit-card"></i> Payment Method</a>
+                                                    <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
                                                 </li>
                                                 <li>
-                                                    <a href="address.php"><i
-                                                            class="fas fa-map-marker-alt"></i> Address</a>
+                                                    <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
                                                 </li>
                                                 <li>
                                                     <a href="accdetails.php"><i class="fas fa-user"></i>
                                                         Account Details</a>
                                                 </li>
                                                 <li>
-                                                    <a href="password.php" >
+                                                    <a href="password.php">
                                                         <i class="fas fa-lock"></i> Password Changes</a>
                                                 </li>
                                                 <li>
@@ -294,36 +284,33 @@
                                             <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
                                                 <div class="my-account-details account-wrapper">
                                                     <h4 class="account-title">Password Changes</h4>
-                                                        <form 
-                                                            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" 
-                                                            method="post"
-                                                            style="text-align: left">
-                                                            <div class="form-group">    
-                                                                <label>Current Password</label> </br>
-                                                                <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required >
-                                                                <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
-                                                            </div> 
-                                                            
-                                                            <div class="form-group">
-                                                                <label>New Password</label><i><span id="msg"></span></i></br>
-                                                                <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : '';?>" required><br>
-                                                                <span class="invalid-feedback"><?php echo $newPassword_err ; ?></span> 
-                                                            </div>
-                                                            <div>
-                                                                <label>Confirm Password</label> </br>
-                                                                <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required><span id="msg"></span>
-                                                                <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
-                                                            </div>    
+                                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
+                                                        <div class="form-group">
+                                                            <label>Current Password</label> </br>
+                                                            <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
+                                                            <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
+                                                        </div>
 
-                                                            <div style="margin-top: 10px;">
-                                                                <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
-                                                            </div>
-                                                                
-                                                            <div class="form-group" style="margin: 1%;">
-                                                                <input type="submit" class="btn btn-primary" value="Submit">
-                                                                <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
-                                                            </div>  
-                                                        </form>
+                                                        <div class="form-group">
+                                                            <label>New Password</label><i><span id="msg"></span></i></br>
+                                                            <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>" required><br>
+                                                            <span class="invalid-feedback"><?php echo $newPassword_err; ?></span>
+                                                        </div>
+                                                        <div>
+                                                            <label>Confirm Password</label> </br>
+                                                            <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required><span id="msg"></span>
+                                                            <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
+                                                        </div>
+
+                                                        <div style="margin-top: 10px;">
+                                                            <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+                                                        </div>
+
+                                                        <div class="form-group" style="margin: 1%;">
+                                                            <input type="submit" class="btn btn-primary" value="Submit">
+                                                            <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +320,7 @@
                         </div>
                     </div>
                 </div>
-            </main> 
+            </main>
         </header>
 
         <div class="stricky-header stricked-menu main-menu">
@@ -431,108 +418,225 @@
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
 
-    <!-- /.search-popup -->
+        <div class="mobile-nav__wrapper">
+            <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+            <!-- /.mobile-nav__overlay -->
+            <div class="mobile-nav__content">
+                <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+                <div class="logo-box">
+                    <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+                </div>
+                <!-- /.logo-box -->
+                <div class="mobile-nav__container"></div>
+                <!-- /.mobile-nav__container -->
+
+                <ul class="mobile-nav__contact list-unstyled">
+                    <li>
+                        <i class="organik-icon-email"></i>
+                        <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                    </li>
+                    <li>
+                        <i class="organik-icon-calling"></i>
+                        <a href="tel:666-888-0000">666 888 0000</a>
+                    </li>
+                </ul><!-- /.mobile-nav__contact -->
+                <div class="mobile-nav__top">
+                    <div class="mobile-nav__language">
+                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                        <label class="sr-only" for="language-select">select language</label>
+                        <!-- /#language-select.sr-only -->
+                        <select class="selectpicker" id="language-select">
+                            <option value="english">English</option>
+                            <option value="arabic">Arabic</option>
+                        </select>
+                    </div><!-- /.mobile-nav__language -->
+                    <div class="main-menu__login">
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
+                            <i class="organik-icon-user"></i>
+                            <?php
+
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
+                        </a>
+                    </div><!-- /.main-menu__login -->
+                </div><!-- /.mobile-nav__top -->
 
 
-    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
-    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
-    <script src="assets/vendors/odometer/odometer.min.js"></script>
-    <script src="assets/vendors/swiper/swiper.min.js"></script>
-    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
-    <script src="assets/vendors/wow/wow.js"></script>
-    <script src="assets/vendors/isotope/isotope.js"></script>
-    <script src="assets/vendors/countdown/countdown.min.js"></script>
-    <!-- template js -->
-    <script src="assets/js/organik.js"></script>
-    <script>
-        function myFunction() 
-        {
-            var x = document.getElementById("curPwd");
-            var y = document.getElementById("newPwd");
-            var z = document.getElementById("cfmPwd");
 
-            if (x.type === "password") 
-            {
-                x.type = "text";
-            } else 
-            {
-                x.type = "password";
-            }
+            </div>
+            <!-- /.mobile-nav__content -->
+        </div>
+        <!-- /.mobile-nav__wrapper -->
 
-            if (y.type === "password") 
-            {
-                y.type = "text";
-            } else 
-            {
-                y.type = "password";
-            }
+        <div class="mini-cart">
+            <div class="mini-cart__overlay mini-cart__toggler"></div>
+            <div class="mini-cart__content">
+                <div class="mini-cart__top">
+                    <h3 class="mini-cart__title">Shopping Cart</h3>
+                    <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+                </div><!-- /.mini-cart__top -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-1.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Banana</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-2.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Tomato</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <div class="mini-cart__item">
+                    <img src="assets/images/products/cart-1-3.jpg" alt="">
+                    <div class="mini-cart__item-content">
+                        <div class="mini-cart__item-top">
+                            <h3><a href="product-details.php">Bread</a></h3>
+                            <p>$9.99</p>
+                        </div><!-- /.mini-cart__item-top -->
+                        <div class="quantity-box">
+                            <button type="button" class="sub">-</button>
+                            <input type="number" id="2" value="1" />
+                            <button type="button" class="add">+</button>
+                        </div>
+                    </div><!-- /.mini-cart__item-content -->
+                </div><!-- /.mini-cart__item -->
+                <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+            </div><!-- /.mini-cart__content -->
+        </div><!-- /.cart-toggler -->
 
-            if (z.type === "password") 
-            {
-                z.type = "text";
-            } else 
-            {
-                z.type = "password";
-            }
-        }
+        <div class="search-popup">
+            <div class="search-popup__overlay search-toggler"></div>
+            <!-- /.search-popup__overlay -->
+            <div class="search-popup__content">
+                <form action="products.php" method="GET">
+                    <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                    <input type="text" id="search" name="search" placeholder="Search Here..." />
+                    <button type="submit" aria-label="search submit" class="thm-btn">
+                        <i class="organik-icon-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <!-- /.search-popup__content -->
+        </div>
+        <!-- /.search-popup -->
 
-        function validatePassword(password) 
-        {
-            // Do not show anything when the length of password is zero.
-            if (password.length === 0) 
-            {
-                document.getElementById("msg").innerHTML = "";
-                return;
-            }
-            // Create an array and push all possible values that you want in password
-            var matchedCase = new Array();
-            matchedCase.push("[$@$!%*#?&]"); // Special Charector
-            matchedCase.push("[A-Z]");      // Uppercase Alpabates
-            matchedCase.push("[0-9]");      // Numbers
-            matchedCase.push("[a-z]");     // Lowercase Alphabates
+        <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
-            // Check the conditions
-            var ctr = 0;
-            for (var i = 0; i < matchedCase.length; i++) {
-                if (new RegExp(matchedCase[i]).test(password)) {
-                    ctr++;
+
+        <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
+        <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+        <script src="assets/vendors/jarallax/jarallax.min.js"></script>
+        <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+        <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
+        <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+        <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+        <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
+        <script src="assets/vendors/nouislider/nouislider.min.js"></script>
+        <script src="assets/vendors/odometer/odometer.min.js"></script>
+        <script src="assets/vendors/swiper/swiper.min.js"></script>
+        <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
+        <script src="assets/vendors/wnumb/wNumb.min.js"></script>
+        <script src="assets/vendors/wow/wow.js"></script>
+        <script src="assets/vendors/isotope/isotope.js"></script>
+        <script src="assets/vendors/countdown/countdown.min.js"></script>
+        <!-- template js -->
+        <script src="assets/js/organik.js"></script>
+        <script>
+            function myFunction() {
+                var x = document.getElementById("curPwd");
+                var y = document.getElementById("newPwd");
+                var z = document.getElementById("cfmPwd");
+
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+
+                if (y.type === "password") {
+                    y.type = "text";
+                } else {
+                    y.type = "password";
+                }
+
+                if (z.type === "password") {
+                    z.type = "text";
+                } else {
+                    z.type = "password";
                 }
             }
-            // Display it
-            var color = "";
-            var strength = "";
-            switch (ctr) {
-                case 0:
-                case 1:
-                case 2:
-                    strength = " (Very Weak)";
-                    color = "red";
-                    break;
-                case 3:
-                    strength = " (Medium)";
-                    color = "orange";
-                    break;
-                case 4:
-                    strength = " (Strong)";
-                    color = "green";
-                    break;
-            }
-            document.getElementById("msg").innerHTML = strength;
-            document.getElementById("msg").style.color = color;
-        }
 
-    </script>
+            function validatePassword(password) {
+                // Do not show anything when the length of password is zero.
+                if (password.length === 0) {
+                    document.getElementById("msg").innerHTML = "";
+                    return;
+                }
+                // Create an array and push all possible values that you want in password
+                var matchedCase = new Array();
+                matchedCase.push("[$@$!%*#?&]"); // Special Charector
+                matchedCase.push("[A-Z]"); // Uppercase Alpabates
+                matchedCase.push("[0-9]"); // Numbers
+                matchedCase.push("[a-z]"); // Lowercase Alphabates
+
+                // Check the conditions
+                var ctr = 0;
+                for (var i = 0; i < matchedCase.length; i++) {
+                    if (new RegExp(matchedCase[i]).test(password)) {
+                        ctr++;
+                    }
+                }
+                // Display it
+                var color = "";
+                var strength = "";
+                switch (ctr) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        strength = " (Very Weak)";
+                        color = "red";
+                        break;
+                    case 3:
+                        strength = " (Medium)";
+                        color = "orange";
+                        break;
+                    case 4:
+                        strength = " (Strong)";
+                        color = "green";
+                        break;
+                }
+                document.getElementById("msg").innerHTML = strength;
+                document.getElementById("msg").style.color = color;
+            }
+        </script>
 </body>
 
 </html>

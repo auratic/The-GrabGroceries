@@ -10,6 +10,7 @@ Randomized string - https://www.geeksforgeeks.org/generating-random-string-using
 Email verification - https://code.tutsplus.com/tutorials/how-to-implement-email-verification-for-new-members--net-3824
 Set Date and Timezone - https://stackoverflow.com/questions/19583592/how-to-i-can-show-time-with-php-code-with-malaysia-timezone
 Password Strength - https://www.codexworld.com/how-to/validate-password-strength-in-php/
+Get Last ID - https://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
 
 //////////////////////////////////////////
 HTML
@@ -27,6 +28,7 @@ Bootstrap / CSS
 Good looking pop-up (modals) - https://www.w3schools.com/bootstrap/bootstrap_modal.asp
 Collapses - https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
 d-block - https://stackoverflow.com/questions/50431450/force-to-show-invalid-feedback-in-bootstrap-4
+Scrollable Modal - https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen
 
 
 //////////////////////////////////////////

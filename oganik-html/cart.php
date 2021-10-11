@@ -4,11 +4,41 @@
     require "config.php";
 
     $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
+    $result=mysqli_query($link, $sql);
+    while ($row = mysqli_fetch_assoc($result)) 
+    {
+        $cartId = $row['cart_id'];
+        $itemName = $row['item'];
+    }
 
     if(isset($_POST['update']))
     {
-        
-        $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = ".$row['cart_id'];
+        $newQty = $_POST['item_quantity'];
+
+        $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cartId";
+        if(mysqli_query($link, $sql))
+        {
+            echo'
+            <script>
+                alert("Updated '.$itemName.' to '.$newQty.' quantity");    
+                location.href = "cart.php";
+            </script>  
+            ';
+        }
+    }
+
+    if(isset($_POST['remove']))
+    {
+        $sql = "DELETE FROM cust_cart where cart_id = $cartId";
+        if(mysqli_query($link, $sql))
+        {
+            echo'
+            <script>
+                alert("Success remove '.$itemName.'");    
+                location.href = "cart.php";
+            </script>  
+            ';
+        }
     }
 ?>
 
@@ -195,6 +225,9 @@
                                         while($row = mysqli_fetch_assoc($result))
                                         {
                                             $total = 0;
+                                            $subtotal = 0;
+                                            $dfee = 0.00;
+                                            $total = $row['cost'] * $row['quantity'] ; 
 
                                             echo'
                                                 <form action="cart.php" method="POST">
@@ -235,7 +268,11 @@
                         <ul class="cart-total list-unstyled">
                             <li>
                                 <span>Subtotal</span>
-                                <span><?php echo 'RM '.$subtotal?></span>
+                                <span>
+                                    <?php 
+                                        echo 'RM '.$total;
+                                    ?>
+                                </span>
                             </li>
                             <li>
                                 <span>Shipping Cost</span>

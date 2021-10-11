@@ -1,59 +1,4 @@
 <?php
-<<<<<<< HEAD
-  session_start();
-  
-  if(!isset($_SESSION["loggedin"])) {
-    echo "
-     <script>
-       alert('Please login to view your cart');
-       location.href='login.php';
-     </script>";
-   }
-
-  require "config.php";
-  if(!empty($_GET["action"])) {
-    switch($_GET["action"]) {
-        case "add":
-            if(!empty($_POST["stock"])) {
-                $getprod = $link->runQuery("SELECT * FROM item WHERE item_id='" . $_GET["item_id"] . "'");
-                $itemArray = array($getprod[0]["item_id"]=>array('item'=>$getprod[0]["item"], 'item_id'=>$getprod[0]["item_id"], 'stock'=>$_POST["stock"], 'cost'=>$getprod[0]["cost"], 'image'=>$getprod[0]["image"]));
-                
-                if(!empty($_SESSION["c_item"])) {
-                    if(in_array($getprod[0]["item_id"],array_keys($_SESSION["c_item"]))) {
-                        foreach($_SESSION["c_item"] as $k => $v) {
-                                if($getprod[0]["item_id"] == $k) {
-                                    if(empty($_SESSION["c_item"][$k]["stock"])) {
-                                        $_SESSION["c_item"][$k]["stock"] = 0;
-                                    }
-                                    $_SESSION["c_item"][$k]["stock"] += $_POST["stock"];
-                                }
-                        }
-                    } else {
-                        $_SESSION["c_item"] = array_merge($_SESSION["c_item"],$itemArray);
-                    }
-                } else {
-                    $_SESSION["c_item"] = $itemArray;
-                }
-            }
-        break;
-        case "remove":
-            if(!empty($_SESSION["c_item"])) {
-                foreach($_SESSION["c_item"] as $k => $v) {
-                        if($_GET["item_id"] == $k)
-                            unset($_SESSION["c_item"][$k]);				
-                        if(empty($_SESSION["c_item"]))
-                            unset($_SESSION["c_item"]);
-                }
-            }
-        break;
-        case "empty":
-            unset($_SESSION["c_item"]);
-        break;	
-    }
-    }
-    
-   
-=======
     session_start();
 
     require "config.php";
@@ -65,7 +10,6 @@
         
         $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = ".$row['cart_id'];
     }
->>>>>>> 27b45cf2cef9763f975f03ce3257d5fca8c70596
 ?>
 
 <!DOCTYPE html>

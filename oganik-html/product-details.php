@@ -235,25 +235,6 @@
                                 <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
                                 <li><i><?php echo $row["stock"] ?> piece available</i></li>
                             </ul>
-<<<<<<< HEAD
-                            
-                            <div class="product-quantity-box">
-                                <div class="quantity-box">
-                                    <button type="button" class="sub">-</button>
-                                    <input type="number" name="stock" value="1" min="1" max="<?=$item['stock']?>" placeholder="stock" required>
-                                    <button type="button" class="add">+</button>
-                                </div>
-                                <div class="addto-cart-box">
-                        
-                                    <input type="button" class="thm-btn"  value="Add to Cart" onclick="cart.add(<?=$row['item_id']?>);" ></input>
-                        
-                                </div>
-                                <div class="wishlist_btn">
-                                    <a href="#" class="thm-btn">Add to Wishlist</a>
-                                </div>
-                            </div>
-                            
-=======
                                 <div class="product-quantity-box">
                                     <div class="quantity-box">
                                         <button type="button" class="sub">-</button>
@@ -268,7 +249,6 @@
                                     </div>
                                 </div>
                         </form>
->>>>>>> 27b45cf2cef9763f975f03ce3257d5fca8c70596
                             <ul class="list-unstyled category_tag_list">
                                 <li><span>Category:</span> <?php echo $row["category"] ?></li>
                             </ul>

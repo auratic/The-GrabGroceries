@@ -1,7 +1,9 @@
 <?php
   session_start();
   
-  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || $_SESSION["mode"] !== "admin") {
+  date_default_timezone_set("Asia/Kuala_Lumpur");
+
+  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
    echo "
     <script>
       alert('You are not authorized to this page');
@@ -11,13 +13,22 @@
 
   require "config.php";
 
-  if(isset($_GET["archive"])) {
+  if(isset($_GET["restore"])) {
 
       $item_id = $_GET["item_id"];
 
+      $date = date('Y-m-d H:i:s');
+      $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (". $_SESSION["userid"] .", 'restore item', '$date', '";
+
       for($i = 0; $i < count($item_id) ; $i++) {
-        $sql = "UPDATE item SET item_status = 'Inactive' WHERE item_id = ".$item_id[$i];
-  
+        $sql = "UPDATE item SET item_status = 'Active' WHERE item_id = ".$item_id[$i];
+
+        if($i < 1) {
+            $activity_sql .= $item_id[$i];
+        } else {
+            $activity_sql .= ",".$item_id[$i];
+        }
+
         if(mysqli_query($link,$sql)) {
           echo "<script>alert('Updated');</script>";
         } else {
@@ -25,6 +36,8 @@
         }
 
       }
+      $activity_sql .= "')";
+      mysqli_query($link, $activity_sql);
   }
 ?>
 
@@ -71,7 +84,7 @@
         .signup-form{ 
           padding: 20px 50px; 
           margin: 20px 50px 20px 50px;
-          background-color: azure;
+          background-color: beige;
           overflow: auto;
         }
     </style>
@@ -125,12 +138,12 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "admin_profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
                                 <?php 
 
                                 if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
+                                    echo $_SESSION['lname'] ." (".$_SESSION['mode'].")";
                                 } else { 
                                     echo "Login / Register";
                                 }
@@ -140,22 +153,28 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li>
-                            <a href="adminprofile.php">Profile</a>
+                            <a href="admin_profile.php">Profile</a>
                         </li>
                         <li>
-                            <a href="additem.php">Add item</a>
+                            <a href="admin_additem.php">Add item</a>
                         </li>
                         <li class="dropdown">
-                            <a href="displayitem.php">Update product</a>
+                            <a href="admin_displayitem.php">Update product</a>
                             <ul>
-                                <li><a href="displayitem.php">Update product</a></li>
-                                <li><a href="archiveitem.php">Archive product</a></li>
+                                <li><a href="admin_displayitem.php">Update product</a></li>
+                                <li><a href="admin_archiveitem.php">Archive product</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <li><a href="adminlist.php">Admin</a></li>
+                        <?php 
+
+                        if($_SESSION["mode"] == "superadmin") {
+                            echo "<li><a href='admin_manage.php'>Manage Admins</a></li>";
+                        }
+                        
+                        ?>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -173,13 +192,13 @@
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-        
-        <section>
-                <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
-                    <h1>Your active products</h1>
-                </div>
 
-                <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
+        <section>
+            <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(245,245,220,0.8); text-align:center">
+                <h1>Archive products</h1>
+            </div>
+            
+            <div class="container" style="padding:2%; background-color:rgba(245,245,220,0.8);">
                 <div class="row">
 
                     <div class="col-sm-2" 
@@ -313,7 +332,7 @@
                                         <label for="select-all">Select All</label>
                                     </div>
                                     <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                        <button class="btn btn-info btn-sm" onclick="return archiveItem();">Archive</button>
+                                        <button class="btn btn-info btn-sm" onclick="return restoreItem();">Restore</button>
                                     </div>
                                     <div class="form-group" style="text-align: left">
                                         <button class="btn btn-info btn-sm" onclick="return deleteItem();">Delete</button>
@@ -342,7 +361,7 @@
 
                                     while ($row = mysqli_fetch_assoc($result)) {
 
-                                        if($row["item_status"] == "Active") {
+                                        if($row["item_status"] == "Inactive") {
                                             echo '
                                                 <tr>
                                                 <td>'.$row['item_id'].'</td>
@@ -354,7 +373,7 @@
                                                 <td>RM'.$row['cost'].'</td>
                                                 <td>'.$row['exp_date'].'</td>
                                                 <td>
-                                                    <a href="updateitem.php?id='.$row['item_id'].'">
+                                                    <a href="admin_updateitem.php?id='.$row['item_id'].'">
                                                     <button class="btn btn-info btn-sm">Edit</button>
                                                     </a>
                                                 </td>
@@ -371,8 +390,9 @@
                     </div>
                 
                 </div>
-                </div>
-            </section>
+            </div>
+        </section>
+    </div>
 
     <!-- /.search-popup -->
 
@@ -397,7 +417,7 @@
             }
         }
 
-        function archiveItem() {
+        function restoreItem() {
             var item_id = [];
 
             for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -405,18 +425,18 @@
                     item_id.push(checkboxes[i].value);
                 }
             }
-            if (confirm("Move to archive? Press 'OK' to continue")) {
+            if (confirm("Restore product? Press 'OK' to continue")) {
 				$.ajax({
 					type: "get",
-					url: "displayitem.php",
+					url: "admin_archiveitem.php",
 					data: {  
-                    'archive' : true,
+                    'restore' : true,
 					'item_id' : item_id
 					},
 					cache: false,
 					success: function (html) {
 						alert('Updated');
-						location.href = 'displayitem.php';
+						location.href = 'admin_archiveitem.php';
 					}
 				});
                 
@@ -429,7 +449,7 @@
 
         function deleteItem() {
             if (confirm("Delete permenantly? Press 'OK' to continue")) {
-                alert("Updated");
+                alert("Not working yet");
             } else {
                 
             }

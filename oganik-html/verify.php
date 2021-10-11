@@ -1,49 +1,48 @@
 <?php
-  session_start();
+session_start();
 
-  require "config.php";
+require "config.php";
 
-  if(!isset($_SESSION["loggedin"])) {
+if (!isset($_SESSION["loggedin"])) {
     echo "
      <script>
        alert('Please login');
        location.href='login.php';
      </script>";
-   } else if ($_SESSION["verified"] == "true") {
+} else if ($_SESSION["verified"] == "true") {
     echo "
      <script>
        alert('This account is already verified');
        location.href='index.php';
      </script>";
-      
-   }
+}
 
-  $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+$pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
 
-  if($pageWasRefreshed ) {
+if ($pageWasRefreshed) {
     //do something because page was refreshed;
     // header("location: verify.php");
-  } else {
+} else {
     //do nothing;
-  }
+}
 
-  
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ver_err = '';
 
-    if(empty($_POST["ver_code"])) {
+    if (empty($_POST["ver_code"])) {
         $ver_err = 'Please enter your verification code';
-    } else if(trim(strtoupper($_POST["ver_code"])) != $_SESSION["ver_code"]) {
+    } else if (trim(strtoupper($_POST["ver_code"])) != $_SESSION["ver_code"]) {
         $ver_err = 'Wrong verification code';
     }
 
-    if(empty($ver_err)) {
+    if (empty($ver_err)) {
         $sql = "
             UPDATE users
             SET verified = 'true'
-            WHERE user_id = '".$_SESSION["userid"]."'";
-        
-        if(mysqli_query($link, $sql)){
+            WHERE user_id = '" . $_SESSION["userid"] . "'";
+
+        if (mysqli_query($link, $sql)) {
             $_SESSION["verified"] = "true";
             $_SESSION["ver_code"] = "";
             echo "
@@ -59,23 +58,24 @@
             </script>";
         }
     }
-  }
+}
 
-  $n=6;
-  function getName($n) {
-      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      $randomString = '';
-    
-      for ($i = 0; $i < $n; $i++) {
-          $index = rand(0, strlen($characters) - 1);
-          $randomString .= $characters[$index];
-      }
-    
-      return $randomString;
-  }
+$n = 6;
+function getName($n)
+{
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
 
-  if(isset($_GET["message"])) {
-       
+    for ($i = 0; $i < $n; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomString .= $characters[$index];
+    }
+
+    return $randomString;
+}
+
+if (isset($_GET["message"])) {
+
     $_SESSION["ver_code"] = getName($n);
     $to      = "1191201218@student.mmu.edu.my"; // Send email to our user
     $subject = 'Signup | Verification'; // Give the email a subject 
@@ -88,7 +88,7 @@
             height: 600px;
             color: white;"
             >
-        <h1>Dear '. $_SESSION["lname"] . ',</h1>
+        <h1>Dear ' . $_SESSION["lname"] . ',</h1>
         <br>
         
         <p style="color: white;">Thanks for signing up with us! Here is your verification code:</p>
@@ -107,7 +107,7 @@
             font-family:Arial, Helvetica, sans-serif;
             margin: auto"
             >
-            '.$_SESSION["ver_code"].'
+            ' . $_SESSION["ver_code"] . '
         </h1>
         <br>
         <br>
@@ -129,12 +129,12 @@
         </body>
     </html>
     ';
-                            
+
     $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
-    $headers .= 'MIME-Version: 1.0' . "\r\n"; 
+    $headers .= 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
     mail($to, $subject, $message, $headers); // Send our email
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -173,11 +173,15 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
         }
-        .signup-form{ width: 360px; padding: 20px; }
+
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
     </style>
 </head>
 
@@ -229,30 +233,39 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "adminprofile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
-                        <li>
-                            <a href="adminprofile.php">Profile</a>
+                        <li class="dropdown">
+                            <a href="index.php">Home</a>
                         </li>
                         <li>
-                            <a href="additem.php">Add item</a>
+                            <a href="about.php">About</a>
                         </li>
-                        <li>
-                            <a href="displayitem.php">Update Item</a>
+                        <li class="dropdown">
+                            <a href="products.php">Shop</a>
+                            <ul>
+                                <li><a href="products.php">Shop</a></li>
+                                <li><a href="cart.php">Cart Page</a></li>
+                                <li><a href="checkout.php">Checkout</a></li>
+                            </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">Transactions</a>
+                        <li class="dropdown"><a href="news.php">News</a>
                             <ul>
                                 <li><a href="news.php">News</a></li>
                                 <li><a href="news-details.php">News Details</a></li>
@@ -271,78 +284,207 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
 
-            <div class="container" style="margin: auto; margin-top: 50px; padding: 20px; background-color:azure; width:80%">
-                <h4 style="margin-bottom: 20px">Verify</h4>
-                <p>
-                    Click <b>Send Verification Email</b> button to receive verification code </br>
-                </p>
-                <p id="try-again" style="visibility: hidden;">
-                    You can resend the email in <span>60</span> seconds.
-                </p> 
-                    
-                <button type="button" class="btn btn-md btn-info" id="verify-btn" style="margin-top:20px; margin-bottom:20px">Send Verification Email</button>
-                <p id="sent" style="color:crimson; margin: 0;"></p>
+        <div class="container" style="margin: auto; margin-top: 50px; padding: 20px; background-color:azure; width:80%">
+            <h4 style="margin-bottom: 20px">Verify</h4>
+            <p>
+                Click <b>Send Verification Email</b> button to receive verification code </br>
+            </p>
+            <p id="try-again" style="visibility: hidden;">
+                You can resend the email in <span>60</span> seconds.
+            </p>
 
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="form-group" style="text-align: left">
-                        <label><b>Please enter your verification code</b></label> </br>
-                        <input type="text" name="ver_code" class="form-control <?php echo (!empty($ver_err)) ? 'is-invalid' : ''; ?>" style="width:200px">
-                        <span class="invalid-feedback"><?php echo $ver_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Verify">
-                    </div>
-                </form>
+            <button type="button" class="btn btn-md btn-info" id="verify-btn" style="margin-top:20px; margin-bottom:20px">Send Verification Email</button>
+            <p id="sent" style="color:crimson; margin: 0;"></p>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group" style="text-align: left">
+                    <label><b>Please enter your verification code</b></label> </br>
+                    <input type="text" name="ver_code" class="form-control <?php echo (!empty($ver_err)) ? 'is-invalid' : ''; ?>" style="width:200px">
+                    <span class="invalid-feedback"><?php echo $ver_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Verify">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+            <div class="logo-box">
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
             </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
 
-            <script>
-                var try_again = document.querySelector("#try-again");
-                var verify_btn = document.querySelector("#verify-btn");
-                var sent_status = document.querySelector("#sent");
-                var count; 
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="organik-icon-email"></i>
+                    <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                </li>
+                <li>
+                    <i class="organik-icon-calling"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__language">
+                    <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                    <label class="sr-only" for="language-select">select language</label>
+                    <!-- /#language-select.sr-only -->
+                    <select class="selectpicker" id="language-select">
+                        <option value="english">English</option>
+                        <option value="arabic">Arabic</option>
+                    </select>
+                </div><!-- /.mobile-nav__language -->
+                <div class="main-menu__login">
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
 
-                verify_btn.onclick = () => {
-
-                    try_again.style.visibility = "visible";
-                    sent_status.innerHTML = "";
-
-                    var xhttp = new XMLHttpRequest();
-                    
-                    xhttp.open("GET", "verify.php?message=true", true);
-                    xhttp.send();
-                    xhttp.onreadystatechange = function() {
-
-                        if (this.readyState == 4 && this.status == 200) {
-                            sent_status.innerHTML = "<i>Email sent. Check spam folder if you did not see the email.</i>" //this.responseText;
-
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
                         } else {
-                            sent_status.innerHTML = "<i>Fail to send email</i>";
-
+                            echo "Login / Register";
                         }
-                    }
 
-                    if(document.querySelector("#try-again > span").innerHTML != -1) {
+                        ?>
+                    </a>
+                </div><!-- /.main-menu__login -->
+            </div><!-- /.mobile-nav__top -->
 
-                       count = setInterval(() => {
-                            document.querySelector("#try-again > span").innerHTML -= 1;
-                            verify_btn.disabled = true;
 
-                            if (document.querySelector("#try-again > span").innerHTML == -1) {
-                                clearInterval(count);
-                                try_again.style.visibility = "hidden";
-                                document.querySelector("#try-again > span").innerHTML = 60;
-                                sent_status.innerHTML = "<i>You can resend the verification email</i>";
-                                verify_btn.disabled = false;
 
-                            }
-                        }, 1000);
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
 
-                    } 
-                }
-            </script>
+    <div class="mini-cart">
+        <div class="mini-cart__overlay mini-cart__toggler"></div>
+        <div class="mini-cart__content">
+            <div class="mini-cart__top">
+                <h3 class="mini-cart__title">Shopping Cart</h3>
+                <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+            </div><!-- /.mini-cart__top -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-1.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Banana</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-2.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-3.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Bread</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+        </div><!-- /.mini-cart__content -->
+    </div><!-- /.cart-toggler -->
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="products.php" method="GET">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="organik-icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
+    </div>
     <!-- /.search-popup -->
 
+    <script>
+        var try_again = document.querySelector("#try-again");
+        var verify_btn = document.querySelector("#verify-btn");
+        var sent_status = document.querySelector("#sent");
+        var count;
+
+        verify_btn.onclick = () => {
+
+            try_again.style.visibility = "visible";
+            sent_status.innerHTML = "";
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.open("GET", "verify.php?message=true", true);
+            xhttp.send();
+            xhttp.onreadystatechange = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    sent_status.innerHTML = "<i>Email sent. Check spam folder if you did not see the email.</i>" //this.responseText;
+
+                } else {
+                    sent_status.innerHTML = "<i>Fail to send email</i>";
+
+                }
+            }
+
+            if (document.querySelector("#try-again > span").innerHTML != -1) {
+
+                count = setInterval(() => {
+                    document.querySelector("#try-again > span").innerHTML -= 1;
+                    verify_btn.disabled = true;
+
+                    if (document.querySelector("#try-again > span").innerHTML == -1) {
+                        clearInterval(count);
+                        try_again.style.visibility = "hidden";
+                        document.querySelector("#try-again > span").innerHTML = 60;
+                        sent_status.innerHTML = "<i>You can resend the verification email</i>";
+                        verify_btn.disabled = false;
+
+                    }
+                }, 1000);
+
+            }
+        }
+    </script>
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
 

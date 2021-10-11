@@ -1,98 +1,7 @@
 <?php
+  session_start();
 
-date_default_timezone_set("Asia/Kuala_Lumpur");
-
-// Initialize the session
-session_start();
-
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: index.php");
-    exit;
-}
-
-// Include config file
-require_once "config.php";
-
-// Define variables and initialize with empty values
-$email = $password = "";
-$email_err = $password_err = $login_err = $recaptcha_err = "";
-
-// Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Check if email is empty
-    if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter email.";
-    } else {
-        $email = trim($_POST["email"]);
-    }
-
-    // Check if password is empty
-    if (empty($_POST["password"])) {
-        $password_err = "Please enter your password.";
-    } else {
-        $password = $_POST["password"];
-    }
-
-    if (isset($_POST['g-recaptcha-response'])) {
-        // RECAPTCHA SETTINGS
-        $captcha = $_POST['g-recaptcha-response'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-
-        // RECAPTCH RESPONSE
-        $recaptcha_response = file_get_contents($url . '?secret=' . $key . '&response=' . $captcha . '&remoteip=' . $ip);
-        $data = json_decode($recaptcha_response);
-
-        if (isset($data->success) &&  $data->success === true) {
-        } else {
-            $recaptcha_err = 'Verify your reCAPTCHA';
-        }
-    }
-
-    // Validate credentials
-    if (empty($email_err) && empty($password_err) && empty($recaptcha_err)) {
-        // Prepare a select statement
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-        $result = mysqli_query($link, $sql);
-
-        if (mysqli_num_rows($result) == 1) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                if (password_verify($password, $row['password'])) {
-                    session_start();
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["mode"] = $row["mode"];
-                    $_SESSION["lname"] = $row["lastname"];
-                    $_SESSION["userid"] = $row["user_id"];
-                    $_SESSION["verified"] = $row["verified"];
-
-                    echo "Login successful.";
-                    if ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin") {
-
-                        $date = date('Y-m-d H:i:s');
-                        $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'login', NULL, '$date')";
-                        mysqli_query($link, $sql);
-
-                        header("location: admin_profile.php");
-                    } else {
-                        header("location: index.php");
-                    }
-                } else {
-                    $login_err = "Email or password is invalid";
-                }
-            }
-        } else {
-            $login_err = "Email or password is invalid";
-            //echo "Error: " . $sql . "<br>" . mysqli_error($link);
-        }
-    }
-
-    //reCAPTCHA
-
-    // Close connection
-}
+  require "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login || TheGrabGroceries</title>
+    <title>AboutUs || TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -126,29 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/vendors/odometer/odometer.min.css" />
     <link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
     <link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
-    <link rel="stylesheet" type="assets/css" href="css/organik.css">
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
-    <style>
-        body {
-            font: 14px sans-serif;
-            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
-        }
-
-        .signup-form {
-            width: 360px;
-            padding: 20px;
-        }
-    </style>
-
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-
 </head>
 
 <body>
     <div class="preloader">
-        <img class="preloader__image" width="100" src="assets/images/loaderr.png" alt="" />
+        <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
@@ -169,9 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
+                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                            <a href="https://www.facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
@@ -194,16 +88,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="login.php">
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
-                            <?php
-                            if (isset($_SESSION["lname"])) {
-                                echo $_SESSION['lname'];
-                            } else {
-                                echo "Login / Register";
-                            }
+                                <?php 
 
-                            ?>
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -239,45 +134,114 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-        </header>
-        
-        <div class="container signup-form loginbox">
-            <h2>Login to TheGrabGroceries</h2>
-            <p>Please fill in your credentials to login.</p>
-
-            <?php
-            if (!empty($login_err)) {
-                echo '<div class="alert alert-danger">' . $login_err . '</div>';
-            }
-            ?>
-
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group" style="text-align: left">
-                    <label><b>Email</b> </label> </br>
-                    <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-                    <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                </div>
-                <div class="form-group" style="text-align: left">
-                    <label><b>Password</b></label> </br>
-                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                    <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                </div>
-                <div class="form-group" style="text-align: left">
-                    <div class="g-recaptcha" data-sitekey="6LcwLAQcAAAAAMhvxlQCfVC7rHJl0BRtHxa4zR17"></div>
-                    <span class="reCAPTCHA-err" style="margin-top: .25rem; font-size: 80%; color: #dc3545;"><?php echo $recaptcha_err; ?></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary signinbtn" value="Login">
-                </div>
-                <a href="forgotpass.php">Forgot password? </a>
-                <p>Don't have an account? <a href="register.php">Sign Up Now</a>.</p>
-            </form>
-        </div>
+            <!-- /.main-menu -->
+        </header><!-- /.main-header -->
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
+        <section class="page-header">
+            <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2>Testimonials</h2>
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="index.php">Home</a></li>
+                    <li>/</li>
+                    <li><span>Testimonials</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="testimonials-one">
+            <div class="testimonials-one__head">
+                <div class="container">
+                    <div class="block-title text-center">
+                        <div class="block-title__decor"></div><!-- /.block-title__decor -->
+                        <p>Our Testimonials</p>
+                        <h3>What People Say?</h3>
+                        <?php
+                            $sql = "SELECT * FROM cust_review ";
+                            $result = mysqli_query($link, $sql);
+                            
+                            while($row=mysqli_fetch_assoc($result)) 
+                            {
+                                $review = $row['reviews'];
+                                $rating = $row['rating'];
+                                $name   = $row['cust_name'];
+                            }
+                        ?>
+                    </div><!-- /.block-title -->
+                </div><!-- /.container -->
+            </div><!-- /.testimonials-one__head -->
+            <div class="container">
+                <div class="thm-tiny__slider" id="testimonials-one-box" data-tiny-options='{
+            "container": "#testimonials-one-box",
+            "items": 1,
+            "slideBy": "page",
+            "gutter": 0,
+            "mouseDrag": true,
+            "autoplay": true,
+            "nav": false,
+            "controlsPosition": "bottom",
+            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
+            "autoplayButtonOutput": false,
+            "responsive": {
+                "640": {
+                  "items": 2,
+                  "gutter": 30
+                },
+                "992": {
+                  "gutter": 30,
+                  "items": 3
+                },
+                "1200": {
+                  "disable": true
+                }
+              }
+        }'>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-1.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Winnie Collier</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
+                    </div>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-2.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Helen Woods</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
+                    </div>
+                    <div>
+                        <div class="testimonials-one__single">
+                            <div class="testimonials-one__image">
+                                <img src="assets/images/resources/testi-1-3.png" alt="">
+                            </div><!-- /.testimonials-one__image -->
+                            <div class="testimonials-one__content">
+                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                                    refreshing. Neque porro est qui dolorem ipsum.</p>
+                                <h3>Ethan Thomas</h3>
+                                <span>Customer</span>
+                            </div><!-- /.testimonials-one__content -->
+                        </div><!-- /.testimonials-one__single -->
+                    </div>
+                </div>
+            </div><!-- /.container -->
+        </section><!-- /.testimonials-one -->
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
@@ -369,7 +333,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div><!-- /.container -->
             </div><!-- /.bottom-footer -->
         </footer><!-- /.site-footer -->
-    </div>
+
+    </div><!-- /.page-wrapper -->
+
 
     <div class="mobile-nav__wrapper">
         <div class="mobile-nav__overlay mobile-nav__toggler"></div>
@@ -405,21 +371,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="<?php if (isset($_SESSION["lname"])) {
-                                    echo "profile.php";
-                                } else {
-                                    echo "login.php";
-                                } ?>">
-                        <i class="organik-icon-user"></i>
-                        <?php
+                    <a href="<?php if(isset($_SESSION["username"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                            <i class="organik-icon-user"></i>
+                                <?php 
 
-                        if (isset($_SESSION["lname"])) {
-                            echo $_SESSION['lname'];
-                        } else {
-                            echo "Login / Register";
-                        }
-
-                        ?>
+                                if(isset($_SESSION["username"])) { 
+                                    echo $_SESSION['username'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
                     </a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->

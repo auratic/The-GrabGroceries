@@ -1,16 +1,16 @@
 <?php
-  session_start();
-  
-  if(!isset($_SESSION["loggedin"])) {
+session_start();
+
+if (!isset($_SESSION["loggedin"])) {
     echo "
      <script>
        alert('Please login');
        location.href='login.php';
      </script>";
-   }
+}
 
-   require "config.php";
-   
+require "config.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -49,18 +49,21 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
-          color:black;
-          background-color:white
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg");
+            color: black;
+            background-color: white
         }
-        .signup-form{ width: 360px; padding: 20px; }
 
-        .containerr
-        {
-            color:black;
-            background-color:white;
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
+
+        .containerr {
+            color: black;
+            background-color: white;
             margin-top: 70px;
             margin-left: 50px;
             margin-bottom: 80px;
@@ -69,22 +72,24 @@
             width: 1430px;
         }
 
-        .mode
-        {
+        .mode {
             color: #fff;
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
-            text-align:center;
+            text-align: center;
             font-size: 16px;
             margin-left: 20px;
             outline: none;
         }
 
-        .dark-mode 
-        {
+        .dark-mode {
             background-color: black;
             color: white;
+        }
+
+        .fas {
+            margin-left: 0;
         }
     </style>
 </head>
@@ -137,17 +142,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -160,17 +169,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -183,27 +190,24 @@
                             <option value="arabic">Arabic</option>
                         </select>
                     </div><!-- /.main-menu__language -->
-                    <div>
-                        <button style="outline: none;" class="mode" onclick="myFunction()">Mode</button>
-                    </div>
                 </div><!-- /.container -->
             </nav>
-             <!-- /.main-menu -->
+            <!-- /.main-menu -->
         </header><!-- /.main-header -->
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-            
+
         <!-- :::::::::: Profile :::::::::: -->
         <main id="main-container" class="main-container">
-            <div class="containerr">
+            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
                 <div class="row">
                     <div class="col-12">
                         <!-- :::::::::: Start My Account Section :::::::::: -->
                         <div class="my-account-area">
                             <div class="row">
-                                <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
                                     <div class="my-account-menu">
                                         <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                             <li>
@@ -223,11 +227,11 @@
                                                     <i class="fas fa-map-marker-alt"></i> Address</a>
                                             </li>
                                             <li>
-                                                <a href="accdetails.php" >
+                                                <a href="accdetails.php">
                                                     <i class="fas fa-user"></i> Account Details</a>
                                             </li>
                                             <li>
-                                                <a href="password.php" >
+                                                <a href="password.php">
                                                     <i class="fas fa-lock"></i> Password Changes</a>
                                             </li>
                                             <li>
@@ -237,32 +241,31 @@
                                     </div>
 
                                 </div>
-                                <div class="col-xl-8 col-md-8">
+                                <div class="col-xl-10 col-md-10">
                                     <div class="tab-content my-account-tab" id="pills-tabContent">
                                         <div class="#" id="pills-dashboard" aria-labelledby="pills-dashboard-tab">
                                             <div class="my-account-dashboard account-wrapper">
                                                 <h4 class="account-title">Dashboard</h4>
-                                                    <div class="welcome-dashboard m-t-30">
-                                                        <p>Hello, (If not
-                                                            <?php 
-                                                                $sql = "SELECT * FROM users WHERE user_id = ".$_SESSION['userid'];
-                                                                $result = mysqli_query($link, $sql);
-                                                        
-                                                                while($row=mysqli_fetch_assoc($result)) 
-                                                                {
-                                                                    $fname = $row['firstname'];
-                                                                    $lname = $row['lastname'];
-                                                                }
-                                                                echo "<strong>  ".$fname." ".$lname."</strong>"
-                                                            ?>
-                                                            
-                                                            please <a href="logout.php">Logout</a> )
-                                                        </p>
-                                                    </div>
-                                                        <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
-                                                            recent orders, manage your shipping and billing addresses and edit your password and
-                                                            account details.
-                                                        </p>
+                                                <div class="welcome-dashboard m-t-30">
+                                                    <p>Hello, (If not
+                                                        <?php
+                                                        $sql = "SELECT * FROM users WHERE user_id = " . $_SESSION['userid'];
+                                                        $result = mysqli_query($link, $sql);
+
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            $fname = $row['firstname'];
+                                                            $lname = $row['lastname'];
+                                                        }
+                                                        echo "<strong>  " . $fname . " " . $lname . "</strong>"
+                                                        ?>
+
+                                                        please <a href="logout.php">Logout</a> )
+                                                    </p>
+                                                </div>
+                                                <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
+                                                    recent orders, manage your shipping and billing addresses and edit your password and
+                                                    account details.
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -277,7 +280,7 @@
                     </div>
                 </div>
             </div>
-        </main> 
+        </main>
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
@@ -371,8 +374,137 @@
         </footer><!-- /.site-footer -->
     </div><!-- /.page-wrapper -->
 
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+            <div class="logo-box">
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+            </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="organik-icon-email"></i>
+                    <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                </li>
+                <li>
+                    <i class="organik-icon-calling"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__language">
+                    <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                    <label class="sr-only" for="language-select">select language</label>
+                    <!-- /#language-select.sr-only -->
+                    <select class="selectpicker" id="language-select">
+                        <option value="english">English</option>
+                        <option value="arabic">Arabic</option>
+                    </select>
+                </div><!-- /.mobile-nav__language -->
+                <div class="main-menu__login">
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
+
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
+                        } else {
+                            echo "Login / Register";
+                        }
+
+                        ?>
+                    </a>
+                </div><!-- /.main-menu__login -->
+            </div><!-- /.mobile-nav__top -->
+
+
+
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
+
+    <div class="mini-cart">
+        <div class="mini-cart__overlay mini-cart__toggler"></div>
+        <div class="mini-cart__content">
+            <div class="mini-cart__top">
+                <h3 class="mini-cart__title">Shopping Cart</h3>
+                <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+            </div><!-- /.mini-cart__top -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-1.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Banana</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-2.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-3.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Bread</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+        </div><!-- /.mini-cart__content -->
+    </div><!-- /.cart-toggler -->
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="products.php" method="GET">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="organik-icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
+    </div>
+    <!-- /.search-popup -->
+
     <!--back to top!-->
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>                
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
@@ -391,13 +523,12 @@
     <script src="assets/vendors/wow/wow.js"></script>
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
-    
+
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
 
     <script>
-        function myFunction() 
-        {
+        function myFunction() {
             var element = document.body;
             element.classList.toggle("dark-mode");
         }

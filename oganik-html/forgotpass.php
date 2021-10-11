@@ -326,29 +326,27 @@ if(isset($_POST["new-pass"])) {
                         </a>
 					</div><!-- /.main-menu__login -->
 					<ul class="main-menu__list">
-						<li class="dropdown">
-							<a href="index.php">Home</a>
-						</li>
-						<li>
-							<a href="about.php">About</a>
-						</li>
-						<li class="dropdown">
-							<a href="products.php">Shop</a>
-							<ul>
-								<li><a href="products.php">Shop</a></li>
-								<li><a href="product-details.php">Product Details</a></li>
-								<li><a href="cart.php">Cart Page</a></li>
-								<li><a href="checkout.php">Checkout</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a href="news.php">News</a>
-							<ul>
-								<li><a href="news.php">News</a></li>
-								<li><a href="news-details.php">News Details</a></li>
-							</ul>
-						</li>
-						<li><a href="contact.php">Contact</a></li>
-					</ul>
+                        <li class="dropdown">
+                            <a href="index.php">Home</a>
+                        </li>
+                        <li>
+                            <a href="about.php">About</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="products.php">Shop</a>
+                            <ul>
+                                <li><a href="cart.php">Cart Page</a></li>
+                                <li><a href="checkout.php">Checkout</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
+                        </li>
+                        <li><a href="contact.php">Contact</a></li>
+                    </ul>
 					<div class="main-menu__language">
 						<img src="assets/images/resources/flag-1-1.jpg" alt="">
 						<label class="sr-only" for="language-select">select language</label>
@@ -638,7 +636,7 @@ if(isset($_POST["new-pass"])) {
 		<!-- Modal content-->
 			<div class="modal-content ver-modal">
 				<div class="modal-header" style="background-color:var(--thm-base)">
-					<h4 class="modal-title">Verify PIN</h4>
+					<h4 class="modal-title" style="color: white">Verify PIN</h4>
 				</div> 
 				<!-- Modal Header-->
 
@@ -691,7 +689,7 @@ if(isset($_POST["new-pass"])) {
 		<!-- Modal content-->
 			<div class="modal-content reset-modal">
 				<div class="modal-header" style="background-color:var(--thm-base)">
-					<h4 class="modal-title">Reset Password</h4>
+					<h4 class="modal-title" style="color: white;">Reset Password</h4>
 				</div> 
 				<!-- Modal Header-->
 
@@ -703,7 +701,7 @@ if(isset($_POST["new-pass"])) {
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>New password</label>
-									<input type="password" name="new-pass" id="new-pass" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>">
+									<input type="password" name="new-pass" id="new-pass" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>"><span id="msg"></span>
 									<span class="new-pass-err" style="color:crimson"></span>
 								</div>
 							</div>
@@ -837,6 +835,50 @@ if(isset($_POST["new-pass"])) {
 			return false;
 		}
 
+		function validatePassword(password) 
+        {
+            // Do not show anything when the length of password is zero.
+            if (password.length === 0) 
+            {
+                document.getElementById("msg").innerHTML = "";
+                return;
+            }
+            // Create an array and push all possible values that you want in password
+            var matchedCase = new Array();
+            matchedCase.push("[$@$!%*#?&]"); // Special Charector
+            matchedCase.push("[A-Z]");      // Uppercase Alpabates
+            matchedCase.push("[0-9]");      // Numbers
+            matchedCase.push("[a-z]");     // Lowercase Alphabates
+
+            // Check the conditions
+            var ctr = 0;
+            for (var i = 0; i < matchedCase.length; i++) {
+                if (new RegExp(matchedCase[i]).test(password)) {
+                    ctr++;
+                }
+            }
+            // Display it
+            var color = "";
+            var strength = "";
+            switch (ctr) {
+                case 0:
+                case 1:
+                case 2:
+                    strength = " Very Weak";
+                    color = "red";
+                    break;
+                case 3:
+                    strength = " Medium";
+                    color = "orange";
+                    break;
+                case 4:
+                    strength = " Strong";
+                    color = "green";
+                    break;
+            }
+            document.getElementById("msg").innerHTML = strength;
+            document.getElementById("msg").style.color = color;
+        }
     </script>
 </body>
 

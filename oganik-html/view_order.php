@@ -1,26 +1,26 @@
 <?php
-  session_start();
-  
-  if(!isset($_SESSION["loggedin"])) {
+session_start();
+
+if (!isset($_SESSION["loggedin"])) {
     echo "
      <script>
        alert('Please login');
        location.href='login.php';
      </script>";
-   }
+}
 
-  require "config.php";
+require "config.php";
 
-   
-  $sql_receipt = "SELECT receipt_id FROM cust_receipt 
-                  WHERE user_id = ".$_SESSION['userid'];
-  $receipt_array = array();
 
-  if($receipt_result = mysqli_query($link, $sql_receipt)) {
-    while($receipt_row = mysqli_fetch_assoc($receipt_result)) {
+$sql_receipt = "SELECT receipt_id FROM cust_receipt 
+                  WHERE user_id = " . $_SESSION['userid'];
+$receipt_array = array();
+
+if ($receipt_result = mysqli_query($link, $sql_receipt)) {
+    while ($receipt_row = mysqli_fetch_assoc($receipt_result)) {
         array_push($receipt_array, $receipt_row["receipt_id"]);
     }
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,16 +76,19 @@
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
 
-        .containerr
-        {
-            color:black;
-            background-color:white;
+        .signup-form {
+            width: 360px;
+            padding: 20px;
+        }
+
+        .containerr {
+            color: black;
+            background-color: white;
             margin-top: 70px;
             margin-left: 50px;
             margin-bottom: 80px;
@@ -95,10 +98,51 @@
         }
 
         .panel-heading {
-            background-color: var(--thm-base);
-            border-radius: 25px;
+            border: solid var(--thm-base) 1px;
+            box-sizing: border-box;
+            background-color: azure
+                /*var(--thm-base)*/
+            ;
             padding: 2%;
             margin: 1%
+        }
+
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal>div {
+            padding: 10px;
+        }
+
+        .modal-content {
+            border-radius: 25px;
+        }
+
+        .modal-body {
+            overflow-y: scroll;
+            max-height: calc(100vh - 210px);
+        }
+
+        .modal-header {
+            border-radius: 25px 25px 0 0;
+        }
+
+        .modal-footer {
+            border-radius: 0 0 25px 25px;
+        }
+
+        .fas {
+            margin-left: 0;
+        }
+
+        table, th, td {
+            
+        }
+
+        tr{
+            background-color: white;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -151,17 +195,21 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
                             <i class="organik-icon-user"></i>
-                                <?php 
+                            <?php
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'];
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'];
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -174,17 +222,15 @@
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <ul>
-                                <li><a href="products.php">Shop</a></li>
-                                <li><a href="product-details.php">Product Details</a></li>
                                 <li><a href="cart.php">Cart Page</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="news.php">News</a>
-                            <ul>
-                                <li><a href="news.php">News</a></li>
-                                <li><a href="news-details.php">News Details</a></li>
-                            </ul>
+                        <li>
+                            <a href="news.php">News</a>
+                        </li>
+                        <li>
+                            <a href="review.php">Review</a>
                         </li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -199,270 +245,472 @@
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
-            
-            <!-- :::::::::: Profile :::::::::: -->
-            <main id="main-container" class="main-container">
-                <div class="containerr">
-                    <div class="row">
-                        <div class="col-12">
-                            <!-- :::::::::: Start My Account Section :::::::::: -->
-                            <div class="my-account-area">
-                                <div class="row">
-                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
-                                        <div class="my-account-menu">
-                                            <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
-                                                <li>
-                                                    <a href="profile.php"><i
-                                                            class="fas fa-tachometer-alt"></i> Dashboard</a>
-                                                </li>
-                                                <li>
-                                                    <a  href="view_order.php"><i
-                                                            class="fas fa-shopping-cart"></i> Order</a>
-                                                </li>
-                                                <li>
-                                                    <a href="payment.php"><i
-                                                            class="fas fa-credit-card"></i> Payment Method</a>
-                                                </li>
-                                                <li>
-                                                    <a  href="address.php"><i
-                                                            class="fas fa-map-marker-alt"></i> Address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="accdetails.php"><i class="fas fa-user"></i>
-                                                        Account Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="password.php" >
-                                                        <i class="fas fa-lock"></i> Password Changes</a>
-                                                </li>
-                                                <li>
-                                                    <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+        </header>
 
+        <!-- :::::::::: Profile :::::::::: -->
+        <main id="main-container" class="main-container">
+            <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- :::::::::: Start My Account Section :::::::::: -->
+                        <div class="my-account-area">
+                            <div class="row">
+                                <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
+                                    <div class="my-account-menu">
+                                        <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
+                                            <li>
+                                                <a href="profile.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="view_order.php"><i class="fas fa-shopping-cart"></i> Order</a>
+                                            </li>
+                                            <li>
+                                                <a href="payment.php"><i class="fas fa-credit-card"></i> Payment Method</a>
+                                            </li>
+                                            <li>
+                                                <a href="address.php"><i class="fas fa-map-marker-alt"></i> Address</a>
+                                            </li>
+                                            <li>
+                                                <a href="accdetails.php"><i class="fas fa-user"></i>
+                                                    Account Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="password.php">
+                                                    <i class="fas fa-lock"></i> Password Changes</a>
+                                            </li>
+                                            <li>
+                                                <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="col-xl-8 col-md-8">
-                                        <div class="tab-content my-account-tab" id="pills-tabContent">
-                                            <h4 class="account-title">Orders</h4>
-                                                        
-                                                <div class="panel-group" id="accordion">
 
-                                                            <?php
-                                                                if(count($receipt_array) == 0) {
-                                                                    echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
-                                                                } else {
-                                                                    foreach($receipt_array as $x => $x_value) {
+                                </div>
+                                <div class="col-xl-10 col-md-10">
+                                    <div class="tab-content my-account-tab" id="pills-tabContent">
+                                        <h4 class="account-title">Orders</h4>
 
-                                                                        $display_sql = "SELECT * FROM cust_receipt 
-                                                                                        INNER JOIN users ON cust_receipt.user_id = users.user_id 
-                                                                                        WHERE cust_receipt.receipt_id = $x_value;
-                                                                                        ";
+                                        <div class="panel-group" id="accordion">
 
-                                                                        if ($display_result = mysqli_query($link, $display_sql)) {
+                                            <?php
 
-                                                                            while ($display_row = mysqli_fetch_assoc($display_result)) {
+                                            if (count($receipt_array) == 0) {
+                                                echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
+                                            } else {
+                                                foreach ($receipt_array as $x => $x_value) {
+                                                    $display_sql = "SELECT * FROM cust_receipt 
+                                                        INNER JOIN users ON cust_receipt.user_id = users.user_id 
+                                                        WHERE cust_receipt.receipt_id = $x_value;
+                                                        ";
 
-                                                                                    echo '
-                                                                                    <div class="panel panel-default">
-                                                                                        <div class="panel-heading">
-                                                                                            <div class="row">
-                                                                                                <input type="" hidden value="'.$display_row["receipt_id"].'" name="receipt"></input>
-                                                                                                <div class="col-md-2">
-                                                                                                    <h5 class="panel-title">
-                                                                                                        Receipt ID: 
-                                                                                                    </h5>
-                                                                                                    <p>'.$display_row["receipt_id"].'</p>
-                                                                                                </div>
+                                                    if ($display_result = mysqli_query($link, $display_sql)) {
 
-                                                                                                <div class="col-md-2">
-                                                                                                    <h5>Transaction Date: </h5>
-                                                                                                    <p>'.$display_row["receipt_date"].'</p>
-                                                                                                </div>
-                                                                                                        
-                                                                                                <div class="col-md-2">
-                                                                                                    <h5>Delivery Date: </h5>
-                                                                                                    <p>'.$display_row["delivery_date"].'</p>
-                                                                                                </div>
-                                                                                                        
-                                                                                                <div class="col-md-2">
-                                                                                                    <h5>Receive Date: </h5>
-                                                                                                    <p>'.$display_row["receive_date"].'</p>
-                                                                                                </div>
-                                                                                                        
-                                                                                                <div class="col-md-2">
-                                                                                                    <h5>Status: </h5>
-                                                                                                    <p>'.$display_row["product_status"].'</p>
-                                                                                                </div>
-                                                                                            </div> 
-                                                                                                    
+                                                        while ($display_row = mysqli_fetch_assoc($display_result)) {
+
+                                                            echo'
+                                                                <div class="panel panel-default text-center">
+                                                                    <table class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                                                        <tr>
+                                                                            <th><h5>Receipt ID</h5></th>
+                                                                            <th><h5>Receipt Name</h5></th>
+                                                                            <th><h5>Transaction Date</h5></th>
+                                                                            <th><h5>Total</h5></th>
+                                                                            <th><h5>Status</h5></th>
+                                                                            <th><h5>Action</h5></th>
+                                                                         </tr>
+                                                                        <tr>
+                                                                            <td>'. $display_row["receipt_id"].'</td>
+                                                                            <td>'. $display_row["receipt_name"] . '</td>
+                                                                            <td>'. $display_row["receipt_date"].'</td>
+                                                                            <td>' . $display_row["payment_cost"] . '</td>
+                                                                            <td>' .$display_row["product_status"]. '</td>
+                                                                            <td>
+                                                                                <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                    More option
+                                                                                </a>
+
+                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                                    <a class="dropdown-item" onclick="openModal(' . $display_row["receipt_id"] . ')" target="_blank" style="cursor:pointer">
+                                                                                        View Details
+                                                                                    </a>
+                                                                                    <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $display_row["receipt_id"] . '" target="_blank">
+                                                                                        Invoice
+                                                                                    </a>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                                ';
+
+                                                            $trans_sql = "SELECT * FROM cust_transaction
+                                                                            INNER JOIN item ON cust_transaction.item_id = item.item_id
+                                                                            WHERE cust_transaction.receipt_id = $x_value;";
+
+                                                            if ($trans_result = mysqli_query($link, $trans_sql)) {
+
+                                                                while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+
+                                                                    echo '
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2">
+                                                                                            <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
+                                                                                        </div>
+                                                                                        <div class="col-md-2">
+                                                                                            <p>' . $trans_row['item'] . '</p>
+                                                                                        </div>
+                                                                                        <div class="col-md-2">
+                                                                                            <p>x' . $trans_row['amount'] . '</p>
+                                                                                        </div>
+                                                                                        <div class="col-md-2">
+                                                                                            <p>RM' . $trans_row['cost'] . '</p>
+                                                                                        </div>
+                                                                                        <div class="col-md-2">
+                                                                                            <p>RM' . $trans_row['total_cost'] . '</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    ';
+                                                                }
+                                                            }
+                                                            echo '
+                                                                        <div id="receipt-' . $display_row["receipt_id"] . '" class="modal" role="dialog">\
+                                                                            <div class="modal-dialog modal-lg">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header" style="background-color:var(--thm-base)">
+                                                                                        <h4 class="modal-title"><span style="color:white;">Details</span></h4>
+                                                                                        <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                                                                                    </div> 
+                                                                                    <!-- Modal Header-->
+
+                                                                                    <div class="modal-body">
+                                                                                        <div>
+                                                                                            <h4>Receipt Details</h4>
                                                                                             <hr>
-
-                                                                                            <div class="row more-detail" style="display: flex; justify-content: center; cursor: pointer;" data-toggle="collapse" data-parent="#accordion" data-target="#R'.$display_row["receipt_id"].'">
-                                                                                                <h5>Click to show more detail<i class="fas fa-plus"></i></h5>
-                                                                                            </div>
+                                                                                            <p>Receipt ID: ' . $display_row["receipt_id"] . '</p>
+                                                                                            <p>Payment Method: ' . $display_row["payment_method"] . '</p>
+                                                                                            <p>Payment Cost: ' . $display_row["payment_cost"] . '</p>
+                                                                                            <p>Transaction Date: ' . $display_row["receipt_date"] . '</p>
                                                                                         </div>
 
-                                                                                        <div id="R'.$display_row["receipt_id"].'" class="panel-collapse collapse in" style="margin: 2%;">
-                                                                                            <p>Name: '.$display_row["firstname"]." ".$display_row["lastname"].'</p>
-                                                                                            <p>Email: '.$display_row["email"].'</p>
-                                                                                            <p>Phone: '.$display_row["phone"].'</p>
-                                                                                            <p>Address: '.$display_row["receipt_address"].'</p>
-                                                                                            <p>Payment Method: '.$display_row["payment_method"].'</p>
-                                                                                            <p>Payment Made: '.$display_row["payment_cost"].'</p>
-                                                                                            <p>Products Purchased:</p>
-                                                                                            <table class="table table-bordered table-striped table-hover table-condensed">
-                                                                                                <tr>
-                                                                                                    <th>Item ID</th>
-                                                                                                    <th>Item Name</th>
-                                                                                                    <th>Amount</th>
-                                                                                                    <th>Cost Rer Product</th>
-                                                                                                    <th>Total Cost</th>
-                                                                                                </tr>';
-                                                                            }
-                                                                        }
+                                                                                        <div>
+                                                                                            <hr>
+                                                                                            <h4>Buyer\'s Details</h4>
+                                                                                            <hr>
+                                                                                            <p>User ID: ' . $display_row["user_id"] . '</p>
+                                                                                            <p>Name: ' . $display_row["receipt_name"] . '</p>
+                                                                                            <p>Email: ' . $display_row["receipt_email"] . '</p>
+                                                                                            <p>Phone: ' . $display_row["receipt_phone"] . '</p>
+                                                                                            <p>Address: ' . $display_row["receipt_address"] . '</p>
+                                                                                        </div>
 
-                                                                        $trans_sql = "SELECT * FROM cust_transaction
-                                                                                      INNER JOIN item ON cust_transaction.item_id = item.item_id
-                                                                                      WHERE cust_transaction.receipt_id = '$x_value';";
-                                                                                            
-                                                                        if ($trans_result = mysqli_query($link, $trans_sql)) {
+                                                                                        <div>
+                                                                                            <hr>
+                                                                                            <h4>Purchased Products</h4>
+                                                                                            <hr>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-2">
+                                                                                                </div>
+                                                                                                <div class="col-md-2">
+                                                                                                    <p><b>Item name</b></p>
+                                                                                                </div>
+                                                                                                <div class="col-md-2">
+                                                                                                    <p><b>Amount</b></p>
+                                                                                                </div>
+                                                                                                <div class="col-md-2">
+                                                                                                    <p><b>Unit Cost</b></p>
+                                                                                                </div>
+                                                                                                <div class="col-md-2">
+                                                                                                    <p><b>Total Cost</b></p>
+                                                                                                </div>
+                                                                                            </div>';
 
-                                                                            while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+                                                            if ($trans_result = mysqli_query($link, $trans_sql)) {
 
-                                                                                echo '
-                                                                                    <tr>
-                                                                                        <td>'.$trans_row['item_id'].'</td>
-                                                                                        <td>'.$trans_row['item'].'</td>
-                                                                                        <td>'.$trans_row['amount'].'</td>
-                                                                                        <td>'.$trans_row['cost'].'</td>
-                                                                                        <td>'.$trans_row['total_cost'].'</td>
-                                                                                    </tr>
-                                                                                    ';
-                                                                            }
+                                                                while ($trans_row = mysqli_fetch_assoc($trans_result)) {
 
-                                                                        }
-                                                                        echo '
-                                                                            </table>
+                                                                    echo '
+                                                                        <div class="row">
+                                                                            <div class="col-md-2">
+                                                                                <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
                                                                             </div>
-                                                                            </div>';
-                                                                    }
-                                                                                
-                                                                }                  
-                                                            ?>
-                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <p>' . $trans_row['item'] . '</p>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <p>x' . $trans_row['amount'] . '</p>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <p>RM' . $trans_row['cost'] . '</p>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <p>RM' . $trans_row['total_cost'] . '</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        ';
+                                                                }
+                                                            }
+                                                            echo '
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer" style="background-color:var(--thm-base)">
+                                                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $display_row["receipt_id"] . ')">Cancel</button>
+                                                                                    </div> 
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    ';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ?>
+
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                            <!-- :::::::::: End My Account Section :::::::::: -->
-                            <script>
-                                //Hide other panel when another collapses
-                                $('.more-detail').click( function(e) {
-                                    $('.collapse').collapse('hide');
-                                });
-                            </script>
                         </div>
+                        <!-- :::::::::: End My Account Section :::::::::: -->
+                        <script>
+                            //Hide other panel when another collapses
+                            function openModal(id) {
+                                $('#receipt-' + id).fadeIn();
+                                return false;
+                            }
+
+                            function closeModal(id) {
+                                $('#receipt-' + id).fadeOut();
+                                return false;
+                            }
+                        </script>
                     </div>
                 </div>
-            </main> 
-        </header>
+            </div>
+        </main>
     </div>
 
-        <div class="stricky-header stricked-menu main-menu">
-            <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
-        </div><!-- /.stricky-header -->
+    <div class="stricky-header stricked-menu main-menu">
+        <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
+    </div><!-- /.stricky-header -->
 
-        <footer class="site-footer background-black-2">
-            <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
-            <img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
+    <footer class="site-footer background-black-2">
+        <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
+        <img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-widget footer-widget__about-widget">
+                        <a href="index.php" class="footer-widget__logo">
+                            <img src="assets/images/tgg.png" alt="" width="150" height="150">
+                        </a>
+                        <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-sm-12 col-md-6 -->
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-widget footer-widget__contact-widget">
+                        <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                        <ul class="list-unstyled footer-widget__contact">
+                            <li>
+                                <i class="fa fa-phone-square"></i>
+                                <a href="tel:666-888-0000">60123456789</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker-alt"></i>
+                                <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
+                                    Malacca Malaysia</a>
+                            </li>
+                        </ul><!-- /.list-unstyled footer-widget__contact -->
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-widget footer-widget__links-widget">
+                        <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
+                        <ul class="list-unstyled footer-widget__links">
+                            <li>
+                                <a href="index.php">Top Sellers</a>
+                            </li>
+                            <li>
+                                <a href="products.php">Shopping</a>
+                            </li>
+                            <li>
+                                <a href="about.php">About</a>
+                            </li>
+                            <li>
+                                <a href="contact.php">Contact</a>
+                            </li>
+                            <li>
+                                <a href="contact.php">Help</a>
+                            </li>
+                        </ul><!-- /.list-unstyled footer-widget__contact -->
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
+                    <div class="footer-widget">
+                        <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
+                        <ul class="list-unstyled footer-widget__links">
+                            <li>
+                                <a href="products.php">New Products</a>
+                            </li>
+                            <li>
+                                <a href="profile.php">My Account</a>
+                            </li>
+                            <li>
+                                <a href="contact.php">Support</a>
+                            </li>
+                            <li>
+                                <a href="contact.php">FAQs</a>
+                            </li>
+                        </ul><!-- /.list-unstyled footer-widget__contact -->
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+        <div class="bottom-footer">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__about-widget">
-                            <a href="index.php" class="footer-widget__logo">
-                                <img src="assets/images/tgg.png" alt="" width="150" height="150">
-                            </a>
-                            <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__contact-widget">
-                            <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__contact">
-                                <li>
-                                    <i class="fa fa-phone-square"></i>
-                                    <a href="tel:666-888-0000">60123456789</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-envelope"></i>
-                                    <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-map-marker-alt"></i>
-                                    <a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
-                                        Malacca Malaysia</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-widget footer-widget__links-widget">
-                            <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__links">
-                                <li>
-                                    <a href="index.php">Top Sellers</a>
-                                </li>
-                                <li>
-                                    <a href="products.php">Shopping</a>
-                                </li>
-                                <li>
-                                    <a href="about.php">About</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Contact</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Help</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
-                        <div class="footer-widget">
-                            <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
-                            <ul class="list-unstyled footer-widget__links">
-                                <li>
-                                    <a href="products.php">New Products</a>
-                                </li>
-                                <li>
-                                    <a href="profile.php">My Account</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">Support</a>
-                                </li>
-                                <li>
-                                    <a href="contact.php">FAQs</a>
-                                </li>
-                            </ul><!-- /.list-unstyled footer-widget__contact -->
-                        </div><!-- /.footer-widget -->
-                    </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-                </div><!-- /.row -->
+                <hr>
+                <div class="inner-container text-center">
+                    <div class="bottom-footer__social">
+                        <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
+                        <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
+                    </div><!-- /.bottom-footer__social -->
+                    <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
+                </div><!-- /.inner-container -->
             </div><!-- /.container -->
-            <div class="bottom-footer">
-                <div class="container">
-                    <hr>
-                    <div class="inner-container text-center">
-                        <div class="bottom-footer__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
-                            <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
-                            <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
-                        </div><!-- /.bottom-footer__social -->
-                        <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
-                    </div><!-- /.inner-container -->
-                </div><!-- /.container -->
-            </div><!-- /.bottom-footer -->
-        </footer><!-- /.site-footer -->
+        </div><!-- /.bottom-footer -->
+    </footer><!-- /.site-footer -->
+    </div>
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+
+            <div class="logo-box">
+                <a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
+            </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="organik-icon-email"></i>
+                    <a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
+                </li>
+                <li>
+                    <i class="organik-icon-calling"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__language">
+                    <img src="assets/images/resources/flag-1-1.jpg" alt="">
+                    <label class="sr-only" for="language-select">select language</label>
+                    <!-- /#language-select.sr-only -->
+                    <select class="selectpicker" id="language-select">
+                        <option value="english">English</option>
+                        <option value="arabic">Arabic</option>
+                    </select>
+                </div><!-- /.mobile-nav__language -->
+                <div class="main-menu__login">
+                    <a href="<?php if (isset($_SESSION["lname"])) {
+                                    echo "profile.php";
+                                } else {
+                                    echo "login.php";
+                                } ?>">
+                        <i class="organik-icon-user"></i>
+                        <?php
+
+                        if (isset($_SESSION["lname"])) {
+                            echo $_SESSION['lname'];
+                        } else {
+                            echo "Login / Register";
+                        }
+
+                        ?>
+                    </a>
+                </div><!-- /.main-menu__login -->
+            </div><!-- /.mobile-nav__top -->
+
+
+
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
+
+    <div class="mini-cart">
+        <div class="mini-cart__overlay mini-cart__toggler"></div>
+        <div class="mini-cart__content">
+            <div class="mini-cart__top">
+                <h3 class="mini-cart__title">Shopping Cart</h3>
+                <span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
+            </div><!-- /.mini-cart__top -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-1.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Banana</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-2.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Tomato</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <div class="mini-cart__item">
+                <img src="assets/images/products/cart-1-3.jpg" alt="">
+                <div class="mini-cart__item-content">
+                    <div class="mini-cart__item-top">
+                        <h3><a href="product-details.php">Bread</a></h3>
+                        <p>$9.99</p>
+                    </div><!-- /.mini-cart__item-top -->
+                    <div class="quantity-box">
+                        <button type="button" class="sub">-</button>
+                        <input type="number" id="2" value="1" />
+                        <button type="button" class="add">+</button>
+                    </div>
+                </div><!-- /.mini-cart__item-content -->
+            </div><!-- /.mini-cart__item -->
+            <a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
+        </div><!-- /.mini-cart__content -->
+    </div><!-- /.cart-toggler -->
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form action="products.php" method="GET">
+                <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+                <input type="text" id="search" name="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="organik-icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
     </div>
     <!-- /.search-popup -->
 

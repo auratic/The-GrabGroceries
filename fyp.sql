@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2021 at 12:53 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.3.20
+-- Generation Time: Oct 04, 2021 at 10:17 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,41 @@ SET time_zone = "+00:00";
 --
 -- Database: `fyp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_activity`
+--
+
+CREATE TABLE `admin_activity` (
+  `activity_id` int(9) NOT NULL,
+  `user_id` int(9) NOT NULL,
+  `activity` varchar(50) DEFAULT NULL,
+  `target` varchar(300) DEFAULT NULL,
+  `activity_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin_activity`
+--
+
+INSERT INTO `admin_activity` (`activity_id`, `user_id`, `activity`, `target`, `activity_time`) VALUES
+(500000000, 100000000, 'login', NULL, '2021-09-27 22:18:26'),
+(500000001, 100000006, 'login', NULL, '2021-09-28 17:38:21'),
+(500000002, 100000000, 'login', NULL, '2021-09-28 17:38:36'),
+(500000004, 100000000, 'restore item', '200000000,200000002', '2021-09-28 18:22:03'),
+(500000005, 100000000, 'archive item', '200000000', '2021-09-28 18:24:21'),
+(500000006, 100000000, 'update receipt', '300000000', '2021-09-28 19:38:00'),
+(500000007, 100000000, 'add admin', 'Tan Ah Beng', '2021-09-28 21:16:45'),
+(500000008, 100000000, 'update item', '200000002', '2021-09-28 21:23:24'),
+(500000009, 100000000, 'add item', 'Egg', '2021-09-28 21:41:21'),
+(500000010, 100000008, 'login', NULL, '2021-09-28 21:41:44'),
+(500000011, 100000008, 'restore item', '200000000,200000001', '2021-09-28 21:41:57'),
+(500000012, 100000000, 'login', NULL, '2021-09-28 21:42:05'),
+(500000013, 100000000, 'login', NULL, '2021-09-29 20:23:54'),
+(500000014, 100000000, 'add admin', 'Tan Ah Kau', '2021-09-29 20:27:10'),
+(500000015, 100000000, 'login', NULL, '2021-10-04 12:27:25');
 
 -- --------------------------------------------------------
 
@@ -58,6 +93,7 @@ CREATE TABLE `cust_address` (
 INSERT INTO `cust_address` (`user_id`, `name1`, `name2`, `name3`, `name4`, `name5`, `address1`, `address2`, `address3`, `address4`, `address5`, `phone1`, `phone2`, `phone3`, `phone4`, `phone5`, `email1`, `email2`, `email3`, `email4`, `email5`) VALUES
 (100000002, 'jie', 'Jay ', ' Darenn  ', ' Ming wai  ', 'JJ  ', '12, Lorong Seri Wangsa 7/2.', '123,KL', '666, JB', '123, SG', '123,St Oxward', '01236083724    ', '0123456789 ', '0122345943 ', '0192864213 ', '0123608370  ', ' gj@hotmail.com     ', ' 123@gmail.com', ' darem@gmail.com', ' mw@outlook.com', ' jj@outlook.com'),
 (100000000, 'mw', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(100000001, 'mw   ', NULL, 'mw mw', 'chan chan', NULL, 'Ujong Pasir', NULL, '123', '123', NULL, ' 0122334455  ', NULL, '123', '123', NULL, 'mw@hotmail.my', NULL, '123@gmail.com', '123@gmail.com', NULL),
 (100000003, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (100000004, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -135,15 +171,22 @@ CREATE TABLE `cust_receipt` (
   `product_status` varchar(10) DEFAULT 'Not set',
   `user_id` int(9) NOT NULL,
   `payment_cost` float DEFAULT NULL,
-  `payment_method` varchar(20) DEFAULT NULL
+  `payment_method` varchar(20) DEFAULT NULL,
+  `receipt_address` varchar(200) DEFAULT NULL,
+  `rating` varchar(20) DEFAULT 'Not delivered',
+  `receipt_name` varchar(200) DEFAULT NULL,
+  `receipt_email` varchar(200) DEFAULT NULL,
+  `receipt_phone` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cust_receipt`
 --
 
-INSERT INTO `cust_receipt` (`receipt_id`, `receipt_date`, `delivery_date`, `receive_date`, `product_status`, `user_id`, `payment_cost`, `payment_method`) VALUES
-(300000000, '2020-09-07 16:59:00', NULL, NULL, 'Preparing', 100000001, 59.99, 'Touch N Go');
+INSERT INTO `cust_receipt` (`receipt_id`, `receipt_date`, `delivery_date`, `receive_date`, `product_status`, `user_id`, `payment_cost`, `payment_method`, `receipt_address`, `rating`, `receipt_name`, `receipt_email`, `receipt_phone`) VALUES
+(300000000, '2020-09-07 16:59:00', '2021-09-25 22:48:11', '2021-09-24 01:59:09', 'Preparing', 100000001, 59.99, 'Touch N Go', 'MMU Bukit Beruang', 'Not delivered', 'mw chan', 'mw@gmail.com', '0123334455'),
+(300000001, '2020-09-10 16:59:00', '2021-09-25 22:48:11', NULL, 'Delivering', 100000001, 59.99, 'Maybank2U', 'Jasin', 'Not delivered', 'mw chan', 'mw@gmail.com', '0123334455'),
+(300000002, '2020-11-20 16:59:00', '2021-09-25 22:48:11', NULL, 'Delivering', 100000002, 9.99, 'Credit Card', 'Batu Berendam', 'Not delivered', 'Jie Guang', 'jie@gmail.com', '0168889920');
 
 -- --------------------------------------------------------
 
@@ -165,7 +208,8 @@ CREATE TABLE `cust_transaction` (
 
 INSERT INTO `cust_transaction` (`trans_id`, `item_id`, `receipt_id`, `amount`, `total_cost`) VALUES
 (400000000, 200000001, 300000000, 5, 10),
-(400000001, 200000000, 300000000, 10, 50);
+(400000001, 200000000, 300000000, 10, 50),
+(400000002, 200000002, 300000001, 10, 9.99);
 
 -- --------------------------------------------------------
 
@@ -188,9 +232,11 @@ CREATE TABLE `item` (
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`item_id`, `item`, `category`, `description`, `cost`, `stock`, `exp_date`, `image`) VALUES
-(200000000, 'Mamee (10 In 1)', 'Fruit & Vegetables', 'Mamee 250g per pack. Durian flavor at its best.', 2.99, 888, '2050-05-21 00:00:00', 'ShotType1_540x540.jpg'),
-(200000001, 'Watermelon', 'Fruit & Vegetables', 'Watermelon imported from Iceland', 1.99, 500, '2050-05-21 00:00:00', 'watermelon.png');
+INSERT INTO `item` (`item_id`, `item`, `category`, `description`, `cost`, `stock`, `exp_date`, `image`, `item_status`) VALUES
+(200000000, 'Mamee (10 In 1)', 'Fruit & Vegetables', 'Mamee 250g per pack. Durian flavor at its best.', 2.99, 888, '2050-05-21 00:00:00', 'ShotType1_540x540.jpg', 'Active'),
+(200000001, 'Watermelon', 'Fruit & Vegetables', 'Watermelon imported from Iceland', 1.99, 500, '2050-05-21 00:00:00', 'watermelon.png', 'Active'),
+(200000002, 'Potato', 'Fruit & Vegetables', 'Its no potato', 0.99, 999, '2022-05-10 00:00:00', '5b566bc71d308_thumb900.png', 'Active'),
+(200000003, 'Egg', 'Fruit & Vegetables', 'A chicken egg', 99.99, 999, '2022-05-10 00:00:00', 'egg.jpg', 'Active');
 
 -- --------------------------------------------------------
 
@@ -215,20 +261,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `password`, `lastname`, `firstname`, `verified`, `mode`, `phone`, `email`, `address`) VALUES
-(100000000, 'mwmwmw', 'chan', 'mw', 'true', 'admin', '60127991011', 'mw@hotmail.com', 'Bukit Beruang MMU'),
-(100000001, 'mw12345', 'Chan', 'Mingwai', 'false', 'customer', NULL, 'mw@gmail.com', NULL),
-(100000002, '123123', 'Jiee', 'Guang', 'false', 'customer', '0123608370', 'jie@gmail.com', '123,Melakaaa'),
-(100000003, '123123', 'E', 'Jie', 'false', 'customer', '0123608370', '123@gmail.com', '12, Lorong Seri Wangsa 7/2, Kampung Tengah, 75350 Melaka, Malaysia Batu Berendam 75350 Melaka'),
-(100000004, '123123', 'Jie', 'Guang', 'false', 'customer', NULL, 'gj@hotmail.com', NULL);
+(100000000, 'mwmwmw', 'chan', 'mw', 'true', 'superadmin', '60127991011', 'mw@hotmail.com', 'Bukit Beruang MMU'),
+(100000001, 'mw12345', 'Chan', 'Mingwaiiii', 'false', 'customer', '60129998877', 'mw@gmail.com', 'Bukit Beruang Mmu'),
+(100000002, 'jie123', 'Jiee', 'Guang', 'false', 'customer', '0123608370', 'jie@gmail.com', '666,Melaka'),
+(100000003, 'mwmwmw', 'Ali', 'Ali Muhammad Bin', 'false', 'customer', NULL, 'qwert@outlook.com', NULL),
+(100000004, 'mwmw12', 'Chan', 'Mingwai', 'false', 'customer', NULL, 'wasdwasd@yahoo.com', NULL),
+(100000006, 'wwwwww', 'Ley', 'Daren', 'false', 'admin', NULL, 'www@gmail.com', NULL),
+(100000007, 'wasdwasd', 'Jie', 'Guang', 'false', 'admin', NULL, 'gjgj@gmail.com', NULL),
+(100000008, 'bbbbbb', 'Tan', 'Ah Beng', 'false', 'admin', '60170002292', 'bbb@gmail.com', NULL),
+(100000009, 'mwmwmw', 'Tan', 'Ah Kau', 'false', 'admin', '601010101010', 'mmm@mail.com', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cust_address`
+-- Indexes for table `admin_activity`
 --
-ALTER TABLE `cust_address`
+ALTER TABLE `admin_activity`
+  ADD PRIMARY KEY (`activity_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -275,38 +326,44 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_activity`
+--
+ALTER TABLE `admin_activity`
+  MODIFY `activity_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500000016;
+
+--
 -- AUTO_INCREMENT for table `cust_receipt`
 --
 ALTER TABLE `cust_receipt`
-  MODIFY `receipt_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=300000001;
+  MODIFY `receipt_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=300000003;
 
 --
 -- AUTO_INCREMENT for table `cust_transaction`
 --
 ALTER TABLE `cust_transaction`
-  MODIFY `trans_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=400000002;
+  MODIFY `trans_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=400000003;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200000002;
+  MODIFY `item_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200000004;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000005;
+  MODIFY `user_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000010;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `cust_address`
+-- Constraints for table `admin_activity`
 --
-ALTER TABLE `cust_address`
-  ADD CONSTRAINT `cust_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+ALTER TABLE `admin_activity`
+  ADD CONSTRAINT `admin_activity_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `cust_card`

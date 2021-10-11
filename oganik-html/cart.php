@@ -235,57 +235,6 @@
                             </tr>
                         </thead>
                         <tbody>
-<<<<<<< HEAD
-                        <?php
-                        if(isset($_SESSION["c_item"])){
-                            $total_quantity = 0;
-                            $total_price = 0;
-                        ?>
-                        <?php		
-                            foreach ($_SESSION["c_item"] as $item){
-                                $item_price = $item["quantity"]*$item["price"];
-                                ?>
-                                        <tr>
-                                            <td>
-                                                <div class="product-box">
-                                                <img src="<?php echo $item["image"]; ?>"> <h3><?php echo $item["item"]; ?></h3>
-                                                </div>
-                                            </td>
-                                            
-                                            <td><?php echo "RM ".$item["cost"]; ?></td>
-                                            <td>
-                                                <div class="quantity-box">
-                                                <button type="button" class="sub">-</button>
-                                                <input type="number" id="2" <?php echo $item["quantity"]?>></input>
-                                                <button type="button" class="add">+</button>
-                                                
-                                            </td>
-                                        
-                                            <td>
-                                                <?php echo "$ ". number_format($item_price,2); ?>
-                                            </td>
-                                            <td>
-                                            <a href="index.php?action=remove&item_id=<?php echo $item["item_id"]; ?>" class="organik-icon-close"></a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        
-                                }
-                            ?>
-                            <?php
-                            } else {
-                            ?>
-                            <tr>
-                                <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
-                            </tr>
-                            <?php 
-                            }
-                            ?>
-                           
-                            
-                        </tbody>
-                        </div>
-=======
                             <?php
                                 $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = ".$_SESSION['userid'];
                                 if ($result = mysqli_query($link, $sql)) 
@@ -328,7 +277,6 @@
                                 }
 
                             ?>
->>>>>>> 27b45cf2cef9763f975f03ce3257d5fca8c70596
                     </table><!-- /.table -->
                     
                 </div><!-- /.table-responsive -->

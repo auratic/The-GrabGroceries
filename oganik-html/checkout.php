@@ -90,7 +90,7 @@ if (isset($_POST["place-order"])) {
 						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Online Banking', '" .$_POST["cardno"]. "')";
+						" . $_POST["total"] . ", 'Online Banking', '" . $_POST["cardno"] . "')";
 
 		if (mysqli_query($link, $sql_receipt)) {
 
@@ -106,12 +106,9 @@ if (isset($_POST["place-order"])) {
 
 
 					if (mysqli_query($link, $sql_delete)) {
-
-
 					} else {
 
 						echo "<script>alert('Error: Delete fail')</script>";
-					
 					}
 				} else {
 					echo "<script>alert('Error: Transaction fail')</script>";
@@ -119,11 +116,9 @@ if (isset($_POST["place-order"])) {
 			}
 
 			echo "<script>alert('Transaction success'); location.href = 'view_order.php'</script>";
-
 		} else {
 
 			echo "<script>alert('Error: Receipt fail')</script>";
-
 		}
 	}
 }
@@ -359,7 +354,7 @@ if (isset($_POST["place-order"])) {
 									<span>0.00</span>
 								</p>
 								<p>
-									<span>Total (RM)</span>
+									<span>Grand Total (RM)</span>
 									<span><?php echo $total ?></span>
 								</p>
 							</div><!-- /.order-details -->
@@ -525,29 +520,27 @@ if (isset($_POST["place-order"])) {
 								</div><!-- /.col-md-12 -->
 
 								<div class="col-md-12">
-									<label>Card Number <i style="color:lightgray" maxlength="19" required>(0000 0000 0000 0000)</i></label>
-									<input type="text" name="cardno" id="set-cardno">
+									<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
+									<input type="text" name="cardno" id="set-cardno" maxlength="19" >
 								</div><!-- /.col-md-12 -->
 
 								<div class="col-md-4">
-									<label>CVV<i style="color:lightgray" maxlength="3" required> (123)</i></label>
-									<input type="text" name="cvv" id="set-cvv">
+									<label>CVV<i style="color:lightgray" required> (123)</i></label>
+									<input type="text" name="cvv" id="set-cvv" maxlength="3" >
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
-									<label>Expiry Month <i style="color:lightgray" maxlength="2" required> (1 - 12)</i></label>
-									<input type="text" name="expmonth" id="set-expmonth">
+									<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
+									<input type="text" name="expmonth" id="set-expmonth" maxlength="2" >
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
-									<label>Expiry Year <i style="color:lightgray" maxlength="2" required> (21 , 22..) </i></label>
-									<input type="text" name="expmonth" id="set-expyear">
+									<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
+									<input type="text" name="expmonth" id="set-expyear" maxlength="2" >
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-6">
-									<div class="text-right">
-										<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
-									</div><!-- /.text-right -->
+									<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
 								</div><!-- /.col-md-6 -->
 
 

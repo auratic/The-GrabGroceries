@@ -239,16 +239,17 @@ if (count($_POST) > 0) {
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
+        </header>
 
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
-                <div class="containerr">
+                <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
                     <div class="row">
                         <div class="col-12">
                             <!-- :::::::::: Start My Account Section :::::::::: -->
                             <div class="my-account-area">
                                 <div class="row">
-                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                    <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
                                         <div class="my-account-menu">
                                             <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                                 <li>
@@ -278,7 +279,7 @@ if (count($_POST) > 0) {
                                         </div>
 
                                     </div>
-                                    <div class="col-xl-8 col-md-8">
+                                    <div class="col-xl-10 col-md-10">
 
                                         <div class="tab-content my-account-tab" id="pills-tabContent">
                                             <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
@@ -321,7 +322,6 @@ if (count($_POST) > 0) {
                     </div>
                 </div>
             </main>
-        </header>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->

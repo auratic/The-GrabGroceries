@@ -122,18 +122,6 @@ if (count($_POST) > 0) {
             width: 1430px;
         }
 
-        .btnSubmit {
-            color: white;
-            background-color: #4CAF50;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 16px;
-            text-decoration: none;
-            padding: 5px 15px;
-            margin-top: 10px;
-            outline: none;
-            border: none;
-        }
         .fas {
             margin-left: 0;
         }
@@ -242,13 +230,13 @@ if (count($_POST) > 0) {
 
             <!-- :::::::::: Profile :::::::::: -->
             <main id="main-container" class="main-container">
-                <div class="containerr">
+                <div class="container" style="background-color: rgba(255,255,255,0.9); margin: 20px auto;">
                     <div class="row">
                         <div class="col-12">
                             <!-- :::::::::: Start My Account Section :::::::::: -->
                             <div class="my-account-area">
                                 <div class="row">
-                                    <div class="col-xl-3 col-md-4" style="border-right: 1px solid black">
+                                    <div class="col-xl-2 col-md-2" style="border-right: 1px solid black">
                                         <div class="my-account-menu">
                                             <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                                 <li>

@@ -2,7 +2,7 @@
     session_start();
 
     require "config.php";
-    $sum = 0;
+    $subtotal = 0;
     $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
     $result=mysqli_query($link, $sql);
     while ($row = mysqli_fetch_assoc($result)) 
@@ -10,7 +10,6 @@
         $cartId = $row['cart_id'];
         $itemName = $row['item'];
         
-       
     }
 
     if(isset($_POST['update']))

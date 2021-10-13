@@ -3,6 +3,12 @@
 
     require "config.php";
 
+    if (!isset($_SESSION['loggedin'])) 
+    {
+        echo "<script>alert('Please log in first to add item to cart.'); location.href = 'login.php'</script>";
+    }
+    
+
     $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
     $result=mysqli_query($link, $sql);
     while ($row = mysqli_fetch_assoc($result)) 
@@ -253,6 +259,7 @@
                                 }
 
                             ?>
+                        </tbody>
                     </table><!-- /.table -->
                 </div><!-- /.table-responsive -->
                 <div class="row">

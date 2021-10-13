@@ -122,18 +122,6 @@ if (count($_POST) > 0) {
             width: 1430px;
         }
 
-        .btnSubmit {
-            color: white;
-            background-color: #4CAF50;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 16px;
-            text-decoration: none;
-            padding: 5px 15px;
-            margin-top: 10px;
-            outline: none;
-            border: none;
-        }
         .fas {
             margin-left: 0;
         }

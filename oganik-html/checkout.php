@@ -3,6 +3,11 @@ session_start();
 
 require "config.php";
 
+if (!isset($_SESSION['loggedin'])) 
+{
+	echo "<script>alert('Please log in first to checkout.'); location.href = 'login.php'</script>";
+}
+
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
 $sql = "SELECT * FROM cust_address 

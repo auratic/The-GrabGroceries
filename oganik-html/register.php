@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
     // Validate email
     if (empty($_POST["email"])) {
         $email_err = "Email is required";
-    } else if (!filter_var(test_input($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+    } else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", test_input($_POST["email"]))) {
         $email_err = "Invalid email format";
     } else {
         // Prepare a select statement
@@ -649,6 +649,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                 }
                 document.getElementById("msg").innerHTML = strength;
                 document.getElementById("msg").style.color = color;
+            }
+
+            function ValidateEmail(email)
+            {
+
             }
         </script>
 </body>

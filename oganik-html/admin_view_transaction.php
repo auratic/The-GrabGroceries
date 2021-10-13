@@ -377,217 +377,166 @@
                                     <?php
                                     
                                     if(count($receipt_array) == 0) {
+
                                         echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
+
                                     } else {
+                                        
+                                        echo'
+                                        <table class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th><h5>Receipt ID</h5></th>
+                                                    <th><h5>Receipt Name</h5></th>
+                                                    <th><h5>Transaction Date</h5></th>
+                                                    <th><h5>Total(RM)</h5></th>
+                                                    <th><h5>Status</h5></th>
+                                                    <th><h5>Action</h5></th>
+                                                    <th><h5></h5></th>
+                                                </tr>
+                                            </thead>';
+
                                         foreach($receipt_array as $x => $x_value) {
                                             $display_sql = "SELECT * FROM cust_receipt 
                                             INNER JOIN users ON cust_receipt.user_id = users.user_id 
                                             WHERE cust_receipt.receipt_id = $x_value;
                                             ";
 
-                                            if ($display_result = mysqli_query($link, $display_sql)) {
+                                            $display_result = mysqli_query($link, $display_sql);
 
-                                                while ($display_row = mysqli_fetch_assoc($display_result)) {
-                                                        echo '
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <div class="row">
-                                                                    <input type="" hidden value="'.$display_row["receipt_id"].'" name="receipt"></input>
-                                                                    <div class="col-md-3">
-                                                                        <h5 class="panel-title">Receipt ID: </h5>
-                                                                        <p>'.$display_row["receipt_id"].'</p>
-                                                                            
-                                                                    </div>
+                                            while ($display_row = mysqli_fetch_assoc($display_result)) {
+                                                    
+                                                $rID = $display_row['receipt_id'];
+                                                $rName = $display_row['receipt_lname'];
+                                                $Fname = $display_row['receipt_fname'];
+                                                $tDate = $display_row['receipt_date'];
+                                                $rEmail = $display_row['receipt_email'];
+                                                $rPhone = $display_row['receipt_phone'];
+                                                $rAdds = $display_row['receipt_address'];
+                                                $total = $display_row['payment_cost'];
+                                                $status = $display_row['product_status'];
+                                                $method = $display_row['payment_method'];
+                                                $uid = $display_row['user_id'];
 
-                                                                    <div class="col-md-4">
-                                                                        <h5>Transaction Date: </h5>
-                                                                        <p>'.$display_row["receipt_date"].'</p>
-                                                                    </div>
-                                                                        
-                                                                    <div class="col-md-3">
-                                                                        <h5>Status: </h5>
-                                                                        <p>'.$display_row["product_status"].'</p>
-                                                                    </div>
+                                            }
+                                            echo'
+                                            <tbody>
+                                                <tr>
+                                                    <td>'.$rID.'</td>
+                                                    <td>'.$Fname.' '.$rName.'</td>
+                                                    <td>'.$tDate.'</td>
+                                                    <td>'.$total.'</td>
+                                                    <td>'.$status.'</td>
+                                                    <td>
+                                                        <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            More option
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item" onclick="openModal('.$rID.')" target="_blank" style="cursor:pointer">
+                                                                View Details
+                                                            </a>
+                                                            <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$rID.'" target="_blank">
+                                                                Invoice
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td> <input type="checkbox" name="select-item" value="'.$rID.'"> </td>
+                                                </tr>
+                                            </tbody>
+                                            ';
 
-                                                                    <div class="col-md-2" style="display: flex; flex-direction: column; align-items: flex-end;">
-                                                                        <input type="checkbox" name="select-item" value="'.$display_row['receipt_id'].'">
-                                                                    </div>
-                                                                </div> 
-                                                                
+                                            //Modal
+
+                                            echo '
+                                            <div id="receipt-' . $rID . '" class="modal" role="dialog">
+
+                                                <div class="modal-dialog modal-lg">
+
+                                                    <div class="modal-content" style="text-align: left;">
+                                                                                    
+                                                        <div class="modal-header" style="background-color:var(--thm-base)">
+                                                            <h4 class="modal-title"><span style="color:white;">Details</span></h4>
+                                                            <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                                                        </div> 
+                                                        <!-- Modal Header-->
+
+                                                        <div class="modal-body">
+                                                            <div>
+                                                                <h4>Receipt Details</h4>
                                                                 <hr>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-2">
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <p><b>Item name</b></p>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <p><b>Amount</b></p>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <p><b>Unit Cost</b></p>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <p><b>Total Cost</b></p>
-                                                                    </div>
-                                                                </div>';
-                                                                
-
-                                                                $trans_sql = "SELECT * FROM cust_transaction
-                                                                INNER JOIN item ON cust_transaction.item_id = item.item_id
-                                                                WHERE cust_transaction.receipt_id = $x_value;";
-                                            
-                                                                if ($trans_result = mysqli_query($link, $trans_sql)) {
-
-                                                                    while ($trans_row = mysqli_fetch_assoc($trans_result)) {
-
-                                                                        echo '
-                                                                        <div class="row">
-                                                                            <div class="col-md-2">
-                                                                                <img src="assets/images/items/'.$trans_row['image'].'" style="width:50%;object-fit:contain;">
-                                                                            </div>
-                                                                            <div class="col-md-2">
-                                                                                <p>'.$trans_row['item'].'</p>
-                                                                            </div>
-                                                                            <div class="col-md-2">
-                                                                                <p>x'.$trans_row['amount'].'</p>
-                                                                            </div>
-                                                                            <div class="col-md-2">
-                                                                                <p>RM'.$trans_row['cost'].'</p>
-                                                                            </div>
-                                                                            <div class="col-md-2">
-                                                                                <p>RM'.$trans_row['total_cost'].'</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        ';
-                                                                    }
-
-                                                                }
-                                                                echo '<hr>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        <p><b>Receipt Name: </b> <br>'.$display_row["receipt_name"].'</p>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <p><b>Receipt Email: </b> <br>'.$display_row["receipt_email"].'</p>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <p><b>Receipt Phone: </b> <br>'.$display_row["receipt_phone"].'</p>
-                                                                    </div>
-                                                                    <div class="col-md-3" style="display: flex; flex-direction: column; align-items: flex-end;">
-                                                                        
-                                                                        <div class="dropdown show">
-                                                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                More option
-                                                                            </a>
-
-                                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                <a class="dropdown-item" onclick="openModal('.$display_row["receipt_id"].')" target="_blank" style="cursor:pointer">
-                                                                                    View Details
-                                                                                 </a>
-                                                                                 <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$display_row["receipt_id"].'" target="_blank">
-                                                                                    Invoice
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                <p>Receipt ID: ' . $rID . '</p>
+                                                                <p>Payment Method: ' . $method . '</p>
+                                                                <p>Payment Cost: ' . $total . '</p>
+                                                                <p>Transaction Date: ' . $tDate . '</p>
                                                             </div>
 
-                                                            <div id="receipt-'.$display_row["receipt_id"].'" class="modal" role="dialog">\
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header" style="background-color:var(--thm-base)">
-                                                                            <h4 class="modal-title"><span style="color:white;">Details</span></h4>
-                                                                            <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
-                                                                        </div> 
-                                                                        <!-- Modal Header-->
+                                                            <div>
+                                                                <hr>
+                                                                <h4>Buyer\'s Details</h4>
+                                                                <hr>
+                                                                <p>User ID: ' . $uid . '</p>
+                                                                <p>Name: '.$Fname.' ' . $rName . '</p>
+                                                                <p>Email: ' . $rEmail . '</p>
+                                                                <p>Phone: ' . $rPhone . '</p>
+                                                                <p>Address: ' . $rAdds . '</p>
+                                                            </div>
 
-                                                                        <div class="modal-body">
-                                                                            <div>
-                                                                                <h4>Receipt Details</h4>
-                                                                                <hr>
-                                                                                <p>Receipt ID: '.$display_row["receipt_id"].'</p>
-                                                                                <p>Payment Method: '.$display_row["payment_method"].'</p>
-                                                                                <p>Payment Cost: '.$display_row["payment_cost"].'</p>
-                                                                                <p>Transaction Date: '.$display_row["receipt_date"].'</p>
-                                                                            </div>
+                                                            <div>
+                                                                <hr>
+                                                                <h4>Purchased Products</h4>
+                                                                <hr>
+                                                                <div class="row">
+                                                                <div class="col-md-2"></div>
+                                                                <div class="col-md-2"><p><b>Item name</b></p></div>
+                                                                <div class="col-md-2"><p><b>Amount</b></p></div>
+                                                                <div class="col-md-2"><p><b>Unit Cost</b></p></div>
+                                                                <div class="col-md-2"><p><b>Total Cost</b></p></div>
+                                                            </div>
+                                                            ';
 
-                                                                            <div>
-                                                                                <hr>
-                                                                                <h4>Purchased Products</h4>
-                                                                                <hr>
+                                                            $trans_sql = "SELECT * FROM cust_transaction
+                                                                          INNER JOIN item ON cust_transaction.item_id = item.item_id
+                                                                          WHERE cust_transaction.receipt_id = $x_value;";
+
+                                                                    if ($trans_result = mysqli_query($link, $trans_sql)) {
+                                                                        while ($trans_row = mysqli_fetch_assoc($trans_result)) {
+                                                                            echo 
+                                                                                '
                                                                                 <div class="row">
                                                                                     <div class="col-md-2">
+                                                                                        <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
                                                                                     </div>
                                                                                     <div class="col-md-2">
-                                                                                        <p><b>Item name</b></p>
+                                                                                        <p>' . $trans_row['item'] . '</p>
                                                                                     </div>
                                                                                     <div class="col-md-2">
-                                                                                        <p><b>Amount</b></p>
+                                                                                        <p>x' . $trans_row['amount'] . '</p>
                                                                                     </div>
                                                                                     <div class="col-md-2">
-                                                                                        <p><b>Unit Cost</b></p>
+                                                                                        <p>RM' . $trans_row['cost'] . '</p>
                                                                                     </div>
                                                                                     <div class="col-md-2">
-                                                                                        <p><b>Total Cost</b></p>
+                                                                                        <p>RM' . $trans_row['total_cost'] . '</p>
                                                                                     </div>
-                                                                                </div>';
-                                                                                
-                                                                                if ($trans_result = mysqli_query($link, $trans_sql)) {
-
-                                                                                    while ($trans_row = mysqli_fetch_assoc($trans_result)) {
-                
-                                                                                        echo '
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-2">
-                                                                                                <img src="assets/images/items/'.$trans_row['image'].'" style="width:50%;object-fit:contain;">
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <p>'.$trans_row['item'].'</p>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <p>x'.$trans_row['amount'].'</p>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <p>RM'.$trans_row['cost'].'</p>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <p>RM'.$trans_row['total_cost'].'</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        ';
-                                                                                    }
-                
-                                                                                }
-                                                                            echo '
-                                                                            </div>
-                                                                            <div>
-                                                                                <hr>
-                                                                                <h4>Buyer\'s Details</h4>
-                                                                                <hr>
-                                                                                <p>User ID: '.$display_row["user_id"].'</p>
-                                                                                <p>Name: '.$display_row["receipt_name"].'</p>
-                                                                                <p>Email: '.$display_row["receipt_email"].'</p>
-                                                                                <p>Phone: '.$display_row["receipt_phone"].'</p>
-                                                                                <p>Address: '.$display_row["receipt_address"].'</p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="modal-footer" style="background-color:var(--thm-base)">
-                                                                            <button type="button" class="btn btn-danger"  onclick="return closeModal('.$display_row["receipt_id"].')">Cancel</button>
-                                                                        </div> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                                </div>
+                                                                            ';
+                                                                        }
+                                                                    }
+                                                                    echo '
                                                         </div>
-                                                        ';
-                                                }
-                                            }
-                                        }           
-                                    }        
+                                                    </div>
+                                                    <div class="modal-footer" style="background-color:var(--thm-base)">
+                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Cancel</button>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            ';
+
+                                        }
+                                        echo'
+                                        </table>';
+                                    }
+
                                     ?>
 
                                     </div>

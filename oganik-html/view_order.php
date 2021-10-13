@@ -330,28 +330,28 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 }
                                                     
                                                                     echo'
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>'.$rID.'</td>
-                                                                            <td>'.$Fname.' '.$rName.'</td>
-                                                                            <td>'.$tDate.'</td>
-                                                                            <td>'.$total.'</td>
-                                                                            <td>'.$status.'</td>
-                                                                            <td>
-                                                                                <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    More option
-                                                                                </a>
-                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                                    <a class="dropdown-item" onclick="openModal('.$rID.')" target="_blank" style="cursor:pointer">
-                                                                                        View Details
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>'.$rID.'</td>
+                                                                                <td>'.$Fname.' '.$rName.'</td>
+                                                                                <td>'.$tDate.'</td>
+                                                                                <td>'.$total.'</td>
+                                                                                <td>'.$status.'</td>
+                                                                                <td>
+                                                                                    <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        More option
                                                                                     </a>
-                                                                                    <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$rID.'" target="_blank">
-                                                                                        Invoice
-                                                                                    </a>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
+                                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                                        <a class="dropdown-item" onclick="openModal('.$rID.')" target="_blank" style="cursor:pointer">
+                                                                                            View Details
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="EditableInvoice/invoice.php?id='.$rID.'" target="_blank">
+                                                                                            Invoice
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
                                                                     ';
                                                                     echo '
                                                                         <div id="receipt-' . $rID . '" class="modal" role="dialog">

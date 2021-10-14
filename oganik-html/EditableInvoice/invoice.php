@@ -1,5 +1,13 @@
 <?php
+  	session_start();
 
+	if(!isset($_SESSION["loggedin"])) {
+		echo "
+		<script>
+		alert('Please login');
+		location.href='login.php';
+		</script>";
+	}
 	require '../config.php';
 
 	if(isset($_GET["id"])) {
@@ -13,9 +21,11 @@
 				$name = $row["receipt_name"];
 				$date = $row["receipt_date"];
 				$address = $row["receipt_address"];
-				$total_cost = $row["payment_cost"];
+				$grand_total = $row["payment_cost"];
 				$phone = $row["receipt_phone"];
 				$payment_method = $row["payment_method"];
+				$fname = $row["receipt_fname"];
+				$lname = $row["receipt_lname"];
 			}
 		}
 
@@ -34,6 +44,7 @@
 	<link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
 	<script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
 	<script type='text/javascript' src='js/example.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	
     <link rel="stylesheet" href="../assets/vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/vendors/bootstrap-select/bootstrap-select.min.css" />
@@ -42,11 +53,12 @@
 
 <body>
 
-	<div id="page-wrap">
+	<div class="container" style="text-align:center; margin-top: 10px">
+			<button class="hidden-print btn btn-info" onclick="window.print()">Print</button>
+			<button class="hidden-print btn btn-info" onclick="demoFromHTML()">Download</button>
+	</div>
 
-		<div class="container" style="text-align:center; margin-top: 10px">
-			<button class="hidden-print btn btn-info" onclick="window.print()">Download or Print</button>
-		</div>
+	<div id="content" style="width: 800px; margin: 0 auto;">
 
 		<p id="header">INVOICE</p>
 		
@@ -73,7 +85,7 @@
 		<div id="customer">
 			<div style="float:left">
 				<p style="width:250%">
-					<b>Mr / Mrs <?php echo $name; ?>,</b>
+					<b>Mr / Mrs <?php echo $fname ." ". $lname; ?>,</b>
 					<br>
 					<?php echo $address; ?>
 					<br><br>
@@ -92,8 +104,8 @@
                     <td><p><?php echo $date; ?></p></td>
                 </tr>
                 <tr>
-                    <td class="meta-head">Total cost</td>
-                    <td><p><?php echo $total_cost; ?></p></td>
+                    <td class="meta-head">Grand Total</td>
+                    <td><p><?php echo $grand_total; ?></p></td>
                 </tr>
 
             </table>
@@ -147,8 +159,8 @@
 		  </tr>
 		  <tr>
 		      <td colspan="2" class="blank"> </td>
-		      <td colspan="2" class="total-line">Total</td>
-		      <td class="total-value"><p>RM <?php echo $total_cost; ?></p></td>
+		      <td colspan="2" class="total-line">Grand Total</td>
+		      <td class="total-value"><p>RM <?php echo $grand_total; ?></p></td>
 		  </tr>
 		  <tr>
 		      <td colspan="2" class="blank"> </td>
@@ -164,7 +176,22 @@
 		</div>
 	
 	</div>
+	<script>
+    function demoFromHTML() {
+        var pdf = new jsPDF();
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $("body")
 
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.html(document.body, {
+			callback: function (pdf) {
+				pdf.save();
+   			}
+		});
+    }
+</script>
 </body>
 
 </html>

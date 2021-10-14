@@ -3,24 +3,30 @@
 
     require "config.php";
 
-    if (!isset($_SESSION['loggedin'])) 
+    if(!isset($_SESSION['loggedin']))
     {
-        echo "<script>alert('Please log in first to add item to cart.'); location.href = 'login.php'</script>";
+        echo"
+        <script>
+            alert('Please log in first to add item to cart.'); location.href='login.php'
+        </script>
+        ";
     }
-    
 
+    $subtotal = 0;
+    $dfee = 0;
     $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
     $result=mysqli_query($link, $sql);
     while ($row = mysqli_fetch_assoc($result)) 
     {
         $cartId = $row['cart_id'];
         $itemName = $row['item'];
+        
     }
 
     if(isset($_POST['update']))
     {
         $newQty = $_POST['item_quantity'];
-
+        
         $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cartId";
         if(mysqli_query($link, $sql))
         {
@@ -200,6 +206,7 @@
         </section><!-- /.page-header -->
 
         <section class="cart-page">
+        	
             <div class="container">
                 <div class="table-responsive">
                     <table class="table cart-table">
@@ -230,9 +237,9 @@
                                         while($row = mysqli_fetch_assoc($result))
                                         {
                                             $total = 0;
-                                            $subtotal = 0;
                                             $dfee = 0.00;
                                             $total = $row['cost'] * $row['quantity'] ; 
+                                            $subtotal=$subtotal+$total; 
 
                                             echo'
                                                 <form action="cart.php" method="POST">
@@ -259,8 +266,8 @@
                                 }
 
                             ?>
-                        </tbody>
                     </table><!-- /.table -->
+                    
                 </div><!-- /.table-responsive -->
                 <div class="row">
                     <div class="col-lg-8">
@@ -275,7 +282,8 @@
                                 <span>Subtotal</span>
                                 <span>
                                     <?php 
-                                        echo 'RM '.$total;
+                                        
+                                        echo 'RM '.$subtotal;
                                     ?>
                                 </span>
                             </li>

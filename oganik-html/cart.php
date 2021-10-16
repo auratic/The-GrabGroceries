@@ -12,27 +12,17 @@
         ";
     }
 
-    $subtotal = 0;
-    $dfee = 0;
-    $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
-    $result=mysqli_query($link, $sql);
-    while ($row = mysqli_fetch_assoc($result)) 
-    {
-        $cartId = $row['cart_id'];
-        $itemName = $row['item'];
-        
-    }
-
     if(isset($_POST['update']))
     {
         $newQty = $_POST['item_quantity'];
+        $cart_id = $_POST["cart_id"];
         
-        $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cartId";
+        $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cart_id";
         if(mysqli_query($link, $sql))
         {
             echo'
             <script>
-                alert("Updated '.$itemName.' to '.$newQty.' quantity");    
+                alert("Updated '.$_POST["iname"].' to '.$newQty.' quantity");    
                 location.href = "cart.php";
             </script>  
             ';
@@ -41,12 +31,14 @@
 
     if(isset($_POST['remove']))
     {
-        $sql = "DELETE FROM cust_cart where cart_id = $cartId";
+        $cart_id = $_POST["cart_id"];
+
+        $sql = "DELETE FROM cust_cart where cart_id = $cart_id";
         if(mysqli_query($link, $sql))
         {
             echo'
             <script>
-                alert("Success remove '.$itemName.'");    
+                alert("Success remove '.$_POST["iname"].'");    
                 location.href = "cart.php";
             </script>  
             ';
@@ -250,6 +242,7 @@
                                             echo'
                                                 <form action="cart.php" method="POST">
                                                     <tr>
+                                                        <input name="cart_id" value="'.$row['cart_id'].'" style="display: none;">
                                                         <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
                                                         <td><input type="hidden" name="iname" value="'.$row['item'].'">'.$row['item'].'</td>
                                                         <td><input type="hidden" name="iprice" value="'.$row['cost'].'">RM '.$row['cost'].'</td>
@@ -263,7 +256,6 @@
                                                         <td>RM '.$item_total.'</td>
                                                         <td><button name="update" class="btn btn-warning">Update</button></td>
                                                         <td><button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
-                                                        <td><input type="hidden" name="item" value="'.$row['item'].'"></td>
                                                     </tr>
                                                 </form>
                                             ';

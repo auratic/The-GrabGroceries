@@ -38,6 +38,33 @@
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
+    <style>
+    .carousel-control-next-icon:after
+    {
+        font-size: 34px;
+        color: black;
+    }
+
+    .carousel-control-prev-icon:after 
+    {
+        font-size: 34px;
+        color: black;
+    }
+
+    .carousel-control-prev-icon 
+    {
+        width: 50px;
+        height: 50px;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23c593d8' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5L4.25 4l2.5-2.5L5.25 0z'/%3e%3c/svg%3e");
+    }
+ 
+    .carousel-control-next-icon 
+    {
+        width: 50px;
+        height: 50px;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23c593d8' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e");
+    }
+    </style>
 </head>
 
 <body>
@@ -174,73 +201,39 @@
                     </div><!-- /.block-title -->
                 </div><!-- /.container -->
             </div><!-- /.testimonials-one__head -->
-            <div class="container">
-                <div class="thm-tiny__slider" id="testimonials-one-box" data-tiny-options='{
-            "container": "#testimonials-one-box",
-            "items": 1,
-            "slideBy": "page",
-            "gutter": 0,
-            "mouseDrag": true,
-            "autoplay": true,
-            "nav": false,
-            "controlsPosition": "bottom",
-            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-            "autoplayButtonOutput": false,
-            "responsive": {
-                "640": {
-                  "items": 2,
-                  "gutter": 30
-                },
-                "992": {
-                  "gutter": 30,
-                  "items": 3
-                },
-                "1200": {
-                  "disable": true
-                }
-              }
-        }'>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-1.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
-                                <h3>Winnie Collier</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
+
+            <div id="carouselExampleControls" class="carousel slide text-center" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                            refreshing. Neque porro est qui dolorem ipsum.</p>
+                        <h3>Helen Woods</h3>
+                        <span>Customer</span>
                     </div>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-2.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
-                                <h3>Helen Woods</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
+                    <div class="carousel-item">
+                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                            refreshing. Neque porro est qui dolorem ipsum.</p>
+                        <h3>Helen Woods</h3>
+                        <span>Customer</span>
                     </div>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-3.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                                    refreshing. Neque porro est qui dolorem ipsum.</p>
-                                <h3>Ethan Thomas</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
+                    <div class="carousel-item">
+                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
+                            refreshing. Neque porro est qui dolorem ipsum.</p>
+                        <h3>Helen Woods</h3>
+                        <span>Customer</span>
                     </div>
                 </div>
-            </div><!-- /.container -->
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+
         </section><!-- /.testimonials-one -->
 
         <footer class="site-footer background-black-2">

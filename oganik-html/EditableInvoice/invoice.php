@@ -5,7 +5,7 @@
 		echo "
 		<script>
 		alert('Please login');
-		location.href='login.php';
+		location.href='../login.php';
 		</script>";
 	}
 	require '../config.php';

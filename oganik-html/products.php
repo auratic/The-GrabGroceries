@@ -8,31 +8,28 @@ $id_array = array();
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
 
-    $getid_sql = "SELECT item_id FROM item 
+    $getid_sql = "SELECT * FROM item 
                     WHERE item LIKE '%$search%'
                     OR description LIKE '%$search%'";
 
-    if($result = mysqli_query($link, $getid_sql)) {
+    if ($result = mysqli_query($link, $getid_sql)) {
 
-        while($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
 
-            array_push($id_array, $row["item_id"]);
-
+            if ($row['item_status'] == "Active")
+                array_push($id_array, $row["item_id"]);
         }
-
     }
-
 } else {
     $getid_sql = "SELECT * FROM item";
-    
-    if($result = mysqli_query($link, $getid_sql)) {
 
-        while($row = mysqli_fetch_assoc($result)) {
+    if ($result = mysqli_query($link, $getid_sql)) {
 
-            array_push($id_array, $row["item_id"]);
+        while ($row = mysqli_fetch_assoc($result)) {
 
+            if ($row['item_status'] == "Active")
+                array_push($id_array, $row["item_id"]);
         }
-
     }
 }
 
@@ -149,10 +146,14 @@ if (isset($_GET["search"])) {
                         </li>
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
-                            <ul>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                            </ul>
+                            <?php 
+                                if(isset($_SESSION["loggedin"]))
+                                    echo "
+                                    <ul>
+                                        <li><a href='cart.php'>Cart Page</a></li>
+                                        <li><a href='checkout.php'>Checkout</a></li>
+                                    </ul>";
+                            ?>
                         </li>
                         <li>
                             <a href="news.php">News</a>
@@ -256,47 +257,45 @@ if (isset($_GET["search"])) {
                             <?php
                             $sql = "SELECT * from item";
 
-                            if(count($id_array) == 0 ) {
+                            if (count($id_array) == 0) {
                                 echo "<h4 style='margin: auto'>No search result</h4>";
                             } else {
-                                for($i = 0 ; $i < count($id_array) ; $i++) {
-                                    $sql = "SELECT * from item WHERE item_id = ". $id_array[$i];
 
-                                    if($result = mysqli_query($link, $sql)) {
+                                for ($i = 0; $i < count($id_array); $i++) {
+                                    $sql = "SELECT * from item WHERE item_id = " . $id_array[$i];
 
-                                        while($row = mysqli_fetch_assoc($result)) {
-                                            
+                                    if ($result = mysqli_query($link, $sql)) {
+
+                                        while ($row = mysqli_fetch_assoc($result)) {
+
                                             echo '
-                                            <div class="col-md-6 col-lg-4">
-                                                <div class="product-card">
-                                                    <div class="product-card__image">
-                                                        <img src="assets/images/items/' . $row['image'] . '" alt="">
-                                                        <div class="product-card__image-content" style="cursor:pointer;"
-                                                            onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
-                                                            <a href="#"><i class="organik-icon-heart"></i></a>
-                                                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                                                        </div><!-- /.product-card__image-content -->
-                                                    </div><!-- /.product-card__image -->
-                                                    <div class="product-card__content">
-                                                        <div class="product-card__left">
-                                                            <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
-                                                            <p>RM' . $row['cost'] . '</p>
-                                                        </div><!-- /.product-card__left -->
-                                                        <div class="product-card__right">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div><!-- /.product-card__right -->
-                                                    </div><!-- /.product-card__content -->
-                                                </div><!-- /.product-card -->
-                                            </div>';
-                                
+                                                <div class="col-md-6 col-lg-4">
+                                                    <div class="product-card">
+                                                        <div class="product-card__image">
+                                                            <img src="assets/images/items/' . $row['image'] . '" alt="">
+                                                            <div class="product-card__image-content" style="cursor:pointer;"
+                                                                onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
+                                                                <a href="#"><i class="organik-icon-heart"></i></a>
+                                                                <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                                                            </div><!-- /.product-card__image-content -->
+                                                        </div><!-- /.product-card__image -->
+                                                        <div class="product-card__content">
+                                                            <div class="product-card__left">
+                                                                <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
+                                                                <p>RM' . $row['cost'] . '</p>
+                                                            </div><!-- /.product-card__left -->
+                                                            <div class="product-card__right">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div><!-- /.product-card__right -->
+                                                        </div><!-- /.product-card__content -->
+                                                    </div><!-- /.product-card -->
+                                                </div>';
                                         }
-
                                     }
-
                                 }
                             }
 

@@ -292,10 +292,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                         </li>
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
-                            <ul>
-                                <li><a href="cart.php">Cart Page</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                            </ul>
+                            <?php 
+                                if(isset($_SESSION["loggedin"]))
+                                    echo "
+                                    <ul>
+                                        <li><a href='cart.php'>Cart Page</a></li>
+                                        <li><a href='checkout.php'>Checkout</a></li>
+                                    </ul>";
+                            ?>
                         </li>
                         <li>
                             <a href="news.php">News</a>

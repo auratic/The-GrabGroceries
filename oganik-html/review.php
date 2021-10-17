@@ -1,7 +1,18 @@
 <?php
-  session_start();
+    session_start();
 
-  require "config.php";
+    require "config.php";
+
+    $sql = "SELECT * FROM cust_review";
+    $review_array = array();
+
+    if($result=mysqli_query($link, $sql)) 
+    {
+        while ($row=mysqli_fetch_assoc($result)) 
+        {
+            array_push($review_array, $row["review_id"]);
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -187,51 +198,48 @@
                         <div class="block-title__decor"></div><!-- /.block-title__decor -->
                         <p>Our Testimonials</p>
                         <h3>What People Say?</h3>
-                        <?php
-                            $sql = "SELECT * FROM cust_review ";
-                            $result = mysqli_query($link, $sql);
-                            
-                            while($row=mysqli_fetch_assoc($result)) 
-                            {
-                                $review = $row['reviews'];
-                                $rating = $row['rating'];
-                                $name   = $row['cust_name'];
-                            }
-                        ?>
                     </div><!-- /.block-title -->
                 </div><!-- /.container -->
             </div><!-- /.testimonials-one__head -->
 
-            <div id="carouselExampleControls" class="carousel slide text-center" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                            refreshing. Neque porro est qui dolorem ipsum.</p>
-                        <h3>Helen Woods</h3>
-                        <span>Customer</span>
-                    </div>
-                    <div class="carousel-item">
-                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                            refreshing. Neque porro est qui dolorem ipsum.</p>
-                        <h3>Helen Woods</h3>
-                        <span>Customer</span>
-                    </div>
-                    <div class="carousel-item">
-                        <p>I was very impresed by the osfins service lorem ipsum is simply free text used by copy typing
-                            refreshing. Neque porro est qui dolorem ipsum.</p>
-                        <h3>Helen Woods</h3>
-                        <span>Customer</span>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            <?php
+                if(count($review_array) == 0)
+                {
+                    echo' Do not have any reviews yet.';
+                }
+                else
+                {
+                    for($i = 0 ; $i <count($review_array) ; $i++) 
+                    {
+                        $sql = "SELECT * from cust_review WHERE review_id = ". $review_array[$i];
+                        if($result = mysqli_query($link, $sql)) 
+                        {
+                            while($row = mysqli_fetch_assoc($result)) 
+                            {
+                                echo'
+                                    <div id="carouselExampleControls" class="carousel slide text-center" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <p>'.$row['review'].'</p>
+                                                <h3>'.$row['name'].'</h3>
+                                                <span>'.$row['rating'].'</span>
+                                            </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                ';
+                            }
+                        }
+                    }
+                }
+            ?>
 
 
         </section><!-- /.testimonials-one -->

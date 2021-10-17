@@ -12,27 +12,17 @@
         ";
     }
 
-    $subtotal = 0;
-    $dfee = 0;
-    $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id";
-    $result=mysqli_query($link, $sql);
-    while ($row = mysqli_fetch_assoc($result)) 
-    {
-        $cartId = $row['cart_id'];
-        $itemName = $row['item'];
-        
-    }
-
     if(isset($_POST['update']))
     {
         $newQty = $_POST['item_quantity'];
+        $cart_id = $_POST["cart_id"];
         
-        $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cartId";
+        $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cart_id";
         if(mysqli_query($link, $sql))
         {
             echo'
             <script>
-                alert("Updated '.$itemName.' to '.$newQty.' quantity");    
+                alert("Updated '.$_POST["iname"].' to '.$newQty.' quantity");    
                 location.href = "cart.php";
             </script>  
             ';
@@ -41,12 +31,14 @@
 
     if(isset($_POST['remove']))
     {
-        $sql = "DELETE FROM cust_cart where cart_id = $cartId";
+        $cart_id = $_POST["cart_id"];
+
+        $sql = "DELETE FROM cust_cart where cart_id = $cart_id";
         if(mysqli_query($link, $sql))
         {
             echo'
             <script>
-                alert("Success remove '.$itemName.'");    
+                alert("Success remove '.$_POST["iname"].'");    
                 location.href = "cart.php";
             </script>  
             ';
@@ -223,6 +215,8 @@
                         <tbody>
                             <?php
                                 $sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = ".$_SESSION['userid'];
+                                $empty_cart = false;
+                                
                                 if ($result = mysqli_query($link, $sql)) 
                                 {
                                     if (mysqli_num_rows($result) == 0) 
@@ -231,19 +225,24 @@
                                             <tr>
                                                 <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
                                             </tr>';
+                                            
+                                        $empty_cart = true;
                                     }
                                     else
                                     {
+                                        $grand_total = 0.00;
+                                        $shipping_fee = 0.00;
+                                        $subtotal = 0.00;
+
                                         while($row = mysqli_fetch_assoc($result))
                                         {
-                                            $total = 0;
-                                            $dfee = 0.00;
-                                            $total = $row['cost'] * $row['quantity'] ; 
-                                            $subtotal=$subtotal+$total; 
-
+                                            $item_total = $row['cost'] * $row['quantity'] ; 
+                                            $subtotal += $item_total ;
+                                            
                                             echo'
                                                 <form action="cart.php" method="POST">
                                                     <tr>
+                                                        <input name="cart_id" value="'.$row['cart_id'].'" style="display: none;">
                                                         <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
                                                         <td><input type="hidden" name="iname" value="'.$row['item'].'">'.$row['item'].'</td>
                                                         <td><input type="hidden" name="iprice" value="'.$row['cost'].'">RM '.$row['cost'].'</td>
@@ -254,10 +253,9 @@
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>
-                                                        <td>RM '.$total.'</td>
+                                                        <td>RM '.$item_total.'</td>
                                                         <td><button name="update" class="btn btn-warning">Update</button></td>
                                                         <td><button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
-                                                        <td><input type="hidden" name="item" value="'.$row['item'].'"></td>
                                                     </tr>
                                                 </form>
                                             ';
@@ -281,35 +279,40 @@
                             <li>
                                 <span>Subtotal</span>
                                 <span>
+                                    RM
                                     <?php 
-                                        
-                                        echo 'RM '.$subtotal;
+                                        if($empty_cart) 
+                                            echo "0";
+                                        else
+                                            echo $subtotal; 
                                     ?>
                                 </span>
                             </li>
                             <li>
                                 <span>Shipping Cost</span>
-                                <span><?php echo 'RM '.$dfee?></span>
+                                <span>
+                                    RM
+                                    <?php 
+                                        if($empty_cart) 
+                                            echo "0";
+                                        else 
+                                            echo $shipping_fee; 
+                                    ?>
+                                </span>
                             </li>
                             <li>
                                 <span>Total</span>
                                 <span>
+                                    RM
                                     <?php 
-                                        if (is_numeric($subtotal) && is_numeric($dfee))
-                                        {
-                                            $totals = 0;
-                                            if($subtotal != 0)
-                                            {
-                                                $totals = $subtotal + $dfee;
-                                                echo 'RM ' .$totals;
-                                            }
-                                            else
-                                            {
-                                                echo 'RM ' .$totals;
-                                            }
-                                            
+
+                                        if($empty_cart) 
+                                            echo "0";
+                                        else {
+                                            $grand_total = $subtotal + $shipping_fee;
+                                            echo $grand_total; 
                                         }
-                                        ?>
+                                    ?>
                                 </span>
                             </li>
                         </ul><!-- /.cart-total -->

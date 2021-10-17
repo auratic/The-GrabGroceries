@@ -3,9 +3,8 @@ session_start();
 
 require "config.php";
 
-if(!isset($_SESSION['loggedin']))
-{
-	echo"
+if (!isset($_SESSION['loggedin'])) {
+	echo "
 	<script>
 		alert('Please log in first to checkout.'); location.href='login.php'
 	</script>
@@ -92,43 +91,50 @@ if (isset($_POST["place-order"])) {
 		$receipt_email = test_input($_POST["email"]);
 	}
 
-	if (empty($fname_err) && empty($lname_err) && empty($email_err)) {
+	if ($_POST["cart_empty"] != 'true') {
 
-		$date = date('Y-m-d H:i:s');
-		$sql_receipt = "INSERT INTO cust_receipt 
+		if (empty($fname_err) && empty($lname_err) && empty($email_err)) {
+
+			$date = date('Y-m-d H:i:s');
+			$sql_receipt = "INSERT INTO cust_receipt 
 						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
 						" . $_POST["total"] . ", 'Online Banking', '" . $_POST["cardno"] . "')";
 
-		if (mysqli_query($link, $sql_receipt)) {
+			if (mysqli_query($link, $sql_receipt)) {
 
-			$last_id = mysqli_insert_id($link);
+				$last_id = mysqli_insert_id($link);
 
-			for ($x = 0; $x < count($_POST["item_id"]); $x++) {
-				$sql_transaction = "INSERT INTO cust_transaction (item_id, receipt_id, amount, total_cost) 
+				for ($x = 0; $x < count($_POST["item_id"]); $x++) {
+					$sql_transaction = "INSERT INTO cust_transaction (item_id, receipt_id, amount, total_cost) 
 									VALUES (" . $_POST["item_id"][$x] . ", $last_id, " . $_POST["item_quantity"] . ", " . $_POST["item_total_cost"][$x] . ")";
 
-				$sql_delete = "DELETE FROM cust_cart WHERE item_id = " . $_POST["item_id"][$x] . " AND user_id = " . $_SESSION["userid"];
+					$sql_delete = "DELETE FROM cust_cart WHERE item_id = " . $_POST["item_id"][$x] . " AND user_id = " . $_SESSION["userid"];
 
-				if (mysqli_query($link, $sql_transaction)) {
+					if (mysqli_query($link, $sql_transaction)) {
 
 
-					if (mysqli_query($link, $sql_delete)) {
+						if (mysqli_query($link, $sql_delete)) {
+						} else {
+
+							echo "<script>alert('Error: Delete fail')</script>";
+						}
 					} else {
-
-						echo "<script>alert('Error: Delete fail')</script>";
+						echo "<script>alert('Error: Transaction fail')</script>";
 					}
-				} else {
-					echo "<script>alert('Error: Transaction fail')</script>";
 				}
+
+				echo "<script>alert('Transaction success'); location.href = 'view_order.php'</script>";
+			} else {
+
+				echo "<script>alert('Error: Receipt fail')</script>";
 			}
-
-			echo "<script>alert('Transaction success'); location.href = 'view_order.php'</script>";
-		} else {
-
-			echo "<script>alert('Error: Receipt fail')</script>";
 		}
+	} else {
+		
+		echo "<script>alert('You cart is empty!')</script>";
+
 	}
 }
 ?>
@@ -290,84 +296,7 @@ if (isset($_POST["place-order"])) {
 
 			<div class="container">
 				<form action="#" class="contact-one__form" method="POST">
-					<p>Returning Customer? <a href="#">Click here to Login</a></p>
 					<div class="row">
-						<div class="col-lg-6">
-							<h3>
-								Your Orders
-							</h3>
-							<div class="table-responsive">
-								<table class="table cart-table">
-									<thead>
-										<tr>
-											<th></th>
-											<th>Item</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-										$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
-
-										$counter = 0;
-										$item_total_cost = 0;
-										$subtotal = 0;
-										$total = 0;
-										$shipping_cost = 0;
-
-										if ($result = mysqli_query($link, $sql)) {
-											if (mysqli_num_rows($result) == 0) {
-												echo '
-                                            <tr>
-                                                <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
-                                            </tr>';
-											} else {
-												while ($row = mysqli_fetch_assoc($result)) {
-
-													$counter++;
-													$item_total_cost = $row["quantity"] * $row["cost"];
-													$subtotal += $item_total_cost;
-
-													echo '
-                                                    <tr>
-														<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
-                                                        <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
-                                                        <td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
-                                                        <td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
-                                                        <td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
-                                                        <td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
-                                                    </tr>
-													';
-												}
-											}
-											$total = $subtotal + $shipping_cost;
-											echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
-										}
-										?>
-								</table><!-- /.table -->
-							</div><!-- /.table-responsive -->
-
-							<div class="order-details">
-								<div class="order-details__top">
-									<p>Product</p>
-									<p>Price</p>
-								</div><!-- /.order-details__top -->
-								<p>
-									<span>Subtotal (RM)</span>
-									<span><?php echo $subtotal ?></span>
-								</p>
-								<p>
-									<span>Shipping (RM)</span>
-									<span>0.00</span>
-								</p>
-								<p>
-									<span>Grand Total (RM)</span>
-									<span><?php echo $total ?></span>
-								</p>
-							</div><!-- /.order-details -->
-						</div><!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<h3>Shipping Details</h3>
 							<div class="row">
@@ -530,23 +459,25 @@ if (isset($_POST["place-order"])) {
 
 								<div class="col-md-12">
 									<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
-									<input type="text" name="cardno" id="set-cardno" maxlength="19" >
+									<input type="text" name="cardno" id="set-cardno" maxlength="19">
 								</div><!-- /.col-md-12 -->
 
 								<div class="col-md-4">
 									<label>CVV<i style="color:lightgray" required> (123)</i></label>
-									<input type="text" name="cvv" id="set-cvv" maxlength="3" >
+									<input type="text" name="cvv" id="set-cvv" maxlength="3">
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
 									<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-									<input type="text" name="expmonth" id="set-expmonth" maxlength="2" >
+									<input type="text" name="expmonth" id="set-expmonth" maxlength="2">
 								</div><!-- /.col-md-4 -->
 
 								<div class="col-md-4">
 									<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-									<input type="text" name="expmonth" id="set-expyear" maxlength="2" >
+									<input type="text" name="expmonth" id="set-expyear" maxlength="2">
 								</div><!-- /.col-md-4 -->
+
+								<input type="hidden" id="cart-empty" name="cart_empty">
 
 								<div class="col-md-6">
 									<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
@@ -554,6 +485,88 @@ if (isset($_POST["place-order"])) {
 
 
 							</div><!-- /.row -->
+						</div><!-- /.col-lg-6 -->
+
+						<div class="col-lg-6">
+							<h3>
+								Your Orders
+							</h3>
+							<div class="table-responsive">
+								<table class="table cart-table">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Item</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+										$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
+
+										$counter = 0;
+										$item_total_cost = 0;
+										$subtotal = 0;
+										$total = 0;
+										$shipping_cost = 0;
+
+										if ($result = mysqli_query($link, $sql)) {
+											if (mysqli_num_rows($result) == 0) {
+												echo '
+                                            <tr>
+                                                <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
+                                            </tr>';
+
+												echo "
+											<script>
+												document.getElementById('cart-empty').value = 'true'
+											</script>";
+											} else {
+												while ($row = mysqli_fetch_assoc($result)) {
+
+													$counter++;
+													$item_total_cost = $row["quantity"] * $row["cost"];
+													$subtotal += $item_total_cost;
+
+													echo '
+                                                    <tr>
+														<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
+                                                        <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
+                                                        <td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
+                                                        <td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+                                                        <td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
+                                                        <td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
+                                                    </tr>
+													';
+												}
+											}
+											$total = $subtotal + $shipping_cost;
+											echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
+										}
+										?>
+								</table><!-- /.table -->
+							</div><!-- /.table-responsive -->
+
+							<div class="order-details">
+								<div class="order-details__top">
+									<p>Product</p>
+									<p>Price</p>
+								</div><!-- /.order-details__top -->
+								<p>
+									<span>Subtotal (RM)</span>
+									<span><?php echo $subtotal ?></span>
+								</p>
+								<p>
+									<span>Shipping (RM)</span>
+									<span>0.00</span>
+								</p>
+								<p>
+									<span>Grand Total (RM)</span>
+									<span><?php echo $total ?></span>
+								</p>
+							</div><!-- /.order-details -->
 						</div><!-- /.col-lg-6 -->
 					</div><!-- /.row -->
 				</form>

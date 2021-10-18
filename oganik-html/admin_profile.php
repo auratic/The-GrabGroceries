@@ -1,13 +1,13 @@
 <?php
-  session_start();
+session_start();
 
-  if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
-   echo "
+if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mode"] !== "admin" && $_SESSION["mode"] !== "superadmin")) {
+    echo "
     <script>
       alert('You are not authorized to this page');
       location.href='index.php';
     </script>";
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +44,14 @@
     <link rel="stylesheet" type="assets/css" href="css/organik.css">
 
     <!-- template styles -->
-    <link rel="stylesheet" href="assets/css/organik.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/organik.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/admin.css" />
+
     <style>
-        body { 
-          font: 14px sans-serif; 
-          background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+        body {
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        .signup-form{ width: 360px; padding: 20px; }
     </style>
 </head>
 
@@ -61,60 +62,37 @@
     <!-- /.preloader -->
     <div class="page-wrapper">
         <header class="main-header">
-            <div class="topbar">
-                <div class="container">
-                    <div class="main-logo">
-                        <a href="index.php" class="logo">
-                            <img src="assets/images/logo-dark.png" width="105" alt="">
-                        </a>
-                        <div class="mobile-nav__buttons">
-                            <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
-                        </div><!-- /.mobile__buttons -->
 
-                        <span class="fa fa-bars mobile-nav__toggler"></span>
-                    </div><!-- /.main-logo -->
-
-                    <div class="topbar__left">
-                        <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram"></a>
-                        </div><!-- /.topbar__social -->
-                        <div class="topbar__info">
-                            <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
-                        </div><!-- /.topbar__info -->
-                    </div><!-- /.topbar__left -->
-                    <div class="topbar__right">
-                        <div class="topbar__info">
-                            <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+92-666-888-0000">+60123456789</a></p>
-                        </div><!-- /.topbar__info -->
-                        <div class="topbar__buttons">
-                            <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
-                        </div><!-- /.topbar__buttons -->
-                    </div><!-- /.topbar__left -->
-
-                </div><!-- /.container -->
-            </div><!-- /.topbar -->
             <nav class="main-menu">
-                <div class="container">
-                    <div class="main-menu__login">
-                        <a href="<?php if(isset($_SESSION["lname"])) { echo "admin_profile.php";} else { echo "login.php"; }?>" >
-                            <i class="organik-icon-user"></i>
-                                <?php 
 
-                                if(isset($_SESSION["lname"])) { 
-                                    echo $_SESSION['lname'] ." (".$_SESSION['mode'].")";
-                                } else { 
-                                    echo "Login / Register";
-                                }
-                                
-                                ?>
+                <div class="row" style="padding: 50px 0 50px 0;">
+                    <button id="instruction" type="button" class="btn instruction" onclick="toggleNav()" style="margin: 0 3%" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Click here to view menu">
+                        &#9776;
+                    </button>
+                    <div class="main-menu__login" style="margin: auto 0;">
+                        <a href="<?php if (isset($_SESSION["lname"])) {
+                                        echo "admin_profile.php";
+                                    } else {
+                                        echo "login.php";
+                                    } ?>">
+                            <i class="organik-icon-user"></i>
+                            <?php
+
+                            if (isset($_SESSION["lname"])) {
+                                echo $_SESSION['lname'] . " (" . $_SESSION['mode'] . ")";
+                            } else {
+                                echo "Login / Register";
+                            }
+
+                            ?>
                         </a>
                     </div><!-- /.main-menu__login -->
+                    <a href="index.php" class="admin-logo">
+                        <img src="assets/images/logo-trans.png" width="105" alt="">
+                    </a> <!-- Logo -->
+
+                </div>
+                <!--
                     <ul class="main-menu__list">
                         <li>
                             <a href="admin_profile.php">Profile</a>
@@ -132,36 +110,119 @@
                         <li>
                             <a href="admin_view_transaction.php">Transactions</a>
                         </li>
-                        <?php 
+                        <?php
 
-                        if($_SESSION["mode"] == "superadmin") {
+                        if ($_SESSION["mode"] == "superadmin") {
                             echo "<li><a href='admin_manage.php'>Manage Admins</a></li>";
                         }
-                        
+
                         ?>
                     </ul>
-                    <div class="main-menu__language">
-                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
-                        <label class="sr-only" for="language-select">select language</label>
-                        <!-- /#language-select.sr-only -->
-                        <select class="selectpicker" id="language-select-header">
-                            <option value="english">English</option>
-                            <option value="arabic">Arabic</option>
-                        </select>
-                    </div><!-- /.main-menu__language -->
-                </div><!-- /.container -->
+                    -->
             </nav>
         </header>
 
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-        
+
+        <div id="admin-overlay" class="admin-overlay">
+            <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+
+            <div class="admin-overlay-content">
+                <div id="accordion">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <a href="admin_profile.php">
+                                    Profile
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Products
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                <a href="admin_addproduct.php">
+                                    Add Products
+                                </a>
+                                <hr>
+                                <a href="admin_displayitem.php">
+                                    Active Products
+                                </a>
+                                <hr>
+                                <a href="admin_archiveitem.php">
+                                    Archived Products
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <a href="admin_view_transaction.php">
+                                    Transactions
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+                    <?php 
+
+                        if($_SESSION["mode"] == "superadmin") {
+                            echo '
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <a href="admin_manage.php">
+                                            Admins
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>';
+                        }
+                        
+                    ?>
+                </div>
+                <div class="card" style="background-color:black">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <a href="logout.php">
+                                Logout
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function toggleNav() {
+                    var x = document.getElementById("admin-overlay");
+
+                    if (x.style.width === "100%") {
+                        x.style.width = "0%";
+                    } else {
+                        x.style.width = "100%";
+                    }
+
+                }
+            </script>
+        </div>
+
         <section>
             <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
 
-              <h1>Dashboard</h1>
-            
+                <h1>Dashboard</h1>
+
             </div>
 
             <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
@@ -169,7 +230,7 @@
                 <div class="row" style="border: solid black 1px; padding:1%">
                     <div class="col-sm-10">
                         <a href="logout.php">
-                        <button class="btn btn-info btn-lg">Logout</button>
+                            <button class="btn btn-info btn-lg">Logout</button>
                         </a>
                     </div>
                     <div class="col-sm-2">
@@ -184,7 +245,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </section>
     </div>
 
@@ -212,6 +273,19 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+    <script>
+        $(function() {
+            $('[data-toggle="popover"]').popover()
+        })
+
+        $(function() {
+            $("#instruction").popover('show');
+        });
+
+        $(".instruction").click(function() {
+            $(".popover").css('display', 'none');
+        });
+    </script>
 </body>
 
 </html>

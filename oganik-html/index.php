@@ -126,9 +126,6 @@ require "config.php";
                         <li class="dropdown">
                             <a href="index.php">Home</a>
                         </li>
-                        <li>
-                            <a href="about.php">About</a>
-                        </li>
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
                             <?php 
@@ -140,13 +137,19 @@ require "config.php";
                                     </ul>";
                             ?>
                         </li>
+
                         <li>
-                            <a href="news.php">News</a>
+                            <a href="contact.php">Contact Us</a>
                         </li>
-                        <li>
-                            <a href="review.php">Review</a>
+
+                        <li class="dropdown">
+                            <a href="#">More</a>
+                            <ul>
+                                <li><a href='news.php'>News</a></li>
+                                <li><a href='review.php'>Review</a></li>
+                                <li><a href="about.php">About Us</a></li>
+                            </ul>
                         </li>
-                        <li><a href="contact.php">Contact</a></li>
                     </ul>
                     <div class="main-menu__language">
                         <img src="assets/images/resources/flag-1-1.jpg" alt="">
@@ -185,14 +188,13 @@ require "config.php";
                 }'>
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="image-layer" style="background-image: url(assets/images/main-slider/main-slider-1-1.jpg);">
+                        <div class="image-layer" style="background-image: url('https://images.theconversation.com/files/50485/original/b649fxyy-1402045852.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip'); filter:brightness(0.5)">
                         </div>
                         <!-- /.image-layer -->
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 text-center">
-                                    <h2><span>The</span> <br>
-                                        Grab Groceries</h2>
+                                    <h2><span>TheGrabGroceries</span> <br></h2>
                                     <a href="products.php" class=" thm-btn">Shop Now</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
@@ -200,14 +202,13 @@ require "config.php";
                         </div><!-- /.container -->
                     </div><!-- /.swiper-slide -->
                     <div class="swiper-slide">
-                        <div class="image-layer" style="background-image: url(assets/images/main-slider/main-slider-1-2.jpg);">
+                        <div class="image-layer" style="background-image: url('https://www.cupitfood.com/wp-content/uploads/2018/08/fruits-delivery-2560x1280.jpg'); filter:brightness(0.5)">
                         </div>
                         <!-- /.image-layer -->
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 text-center">
-                                    <h2><span>The</span> <br>
-                                        Grab Groceries</h2>
+                                    <h2><span>TheGrabGroceries</span> <br></h2>
                                     <a href="about.php" class=" thm-btn">About Us</a>
                                     <!-- /.thm-btn dynamic-radius -->
                                 </div><!-- /.col-lg-7 text-right -->
@@ -217,11 +218,12 @@ require "config.php";
                 </div><!-- /.swiper-wrapper -->
 
                 <!-- If we need navigation buttons -->
+                <!--
                 <div class="main-slider__nav">
                     <div class="swiper-button-prev" id="main-slider__swiper-button-next"><i class="organik-icon-left-arrow"></i>
                     </div>
                     <div class="swiper-button-next" id="main-slider__swiper-button-prev"><i class="organik-icon-right-arrow"></i></div>
-                </div><!-- /.main-slider__nav -->
+                </div>--><!-- /.main-slider__nav -->
 
             </div><!-- /.swiper-container thm-swiper__slider -->
         </section><!-- /.main-slider -->
@@ -451,431 +453,6 @@ require "config.php";
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </section><!-- /.call-to-action -->
-
-        <div class="client-carousel ">
-            <div class="container">
-                <div class="thm-swiper__slider swiper-container" data-swiper-options='{"spaceBetween": 140, "slidesPerView": 5, "autoplay": { "delay": 5000 }, "breakpoints": {
-                "0": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 2
-                },
-                "375": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 2
-                },
-                "575": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 3
-                },
-                "767": {
-                    "spaceBetween": 50,
-                    "slidesPerView": 4
-                },
-                "991": {
-                    "spaceBetween": 50,
-                    "slidesPerView": 5
-                },
-                "1199": {
-                    "spaceBetween": 100,
-                    "slidesPerView": 5
-                }
-            }}'>
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <img src="assets/images/resources/brand-1-1.png" alt="">
-                        </div><!-- /.swiper-slide -->
-                    </div><!-- /.swiper-wrapper -->
-                </div><!-- /.thm-swiper__slider -->
-            </div><!-- /.container -->
-        </div><!-- /.client-carousel -->
-
-        <section class="call-to-action-two">
-            <img src="assets/images/shapes/call-shape-2-1.png" alt="" class="call-to-action-two__shape-1">
-            <img src="assets/images/shapes/call-shape-2-2.png" alt="" class="call-to-action-two__shape-2">
-            <img src="assets/images/shapes/call-shape-2-3.png" alt="" class="call-to-action-two__shape-3">
-            <img src="assets/images/shapes/call-shape-2-4.png" alt="" class="call-to-action-two__shape-4">
-            <img src="assets/images/shapes/call-shape-2-5.png" alt="" class="call-to-action-two__shape-5">
-            <img src="assets/images/shapes/call-shape-2-6.png" alt="" class="call-to-action-two__shape-6">
-            <div class="container">
-                <div class="row flex-xl-row-reverse">
-                    <div class="col-lg-12 col-xl-6">
-                        <div class="call-to-action-two__image">
-                            <h2 class="floated-text">Healthy</h2><!-- /.floated-text -->
-                            <img src="assets/images/resources/call-2-1.png" alt="">
-                        </div><!-- /.call-to-action-two__image -->
-                    </div><!-- /.col-md-6 -->
-                    <div class="col-lg-12 col-xl-6">
-                        <div class="call-to-action-two__content">
-                            <div class="block-title text-left">
-                                <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                                <p>Pure Organic Products</p>
-                                <h3>Everyday Fresh Food</h3>
-                            </div><!-- /.block-title -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>Look no further! We got everything for you.</h4>
-                                    <p>Browse more than 5,000 items at costs lower than markets each day!</p>
-                                </div><!-- /.col-md-6 -->
-                                <div class="col-md-6">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <i class="far fa-check-circle"></i>
-                                            We focus on what you need.
-                                        </li>
-                                        <li>
-                                            <i class="far fa-check-circle"></i>
-                                            Amazing finds only here!
-                                        </li>
-                                        <li>
-                                            <i class="far fa-check-circle"></i>
-                                            Exciting treats available daily.
-                                        </li>
-                                        <li>
-                                            <i class="far fa-check-circle"></i>
-                                            Make delicious creations.
-                                        </li>
-                                        <li>
-                                            <i class="far fa-check-circle"></i>
-                                            Stocked for your needs.
-                                        </li>
-                                    </ul><!-- /.list-unstyled -->
-                                </div><!-- /.col-md-6 -->
-                            </div><!-- /.row -->
-                            <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
-                        </div><!-- /.call-to-action-two__content -->
-                    </div><!-- /.col-md-6 -->
-
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /.call-to-action-two -->
-
-        <section class="testimonials-one">
-            <div class="testimonials-one__head">
-                <div class="container">
-                    <div class="block-title text-center">
-                        <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                        <p>Our Testimonials</p>
-                        <h3>What People Say?</h3>
-                    </div><!-- /.block-title -->
-                </div><!-- /.container -->
-            </div><!-- /.testimonials-one__head -->
-            <div class="container">
-                <div class="thm-tiny__slider" id="testimonials-one-box" data-tiny-options='{
-            "container": "#testimonials-one-box",
-            "items": 1,
-            "slideBy": "page",
-            "gutter": 0,
-            "mouseDrag": true,
-            "autoplay": true,
-            "nav": false,
-            "controlsPosition": "bottom",
-            "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-            "autoplayButtonOutput": false,
-            "responsive": {
-                "640": {
-                  "items": 2,
-                  "gutter": 30
-                },
-                "992": {
-                  "gutter": 30,
-                  "items": 3
-                },
-                "1200": {
-                  "disable": true
-                }
-              }
-        }'>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-1.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>Great independent grocery store with a wide variety of gourmet items and hard to find food stuffs.
-                                    A great butcher offering local seafood and grass fed meats.</p>
-                                <h3>Winnie Collier</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
-                    </div>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-2.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>Staff is the best in a health food store and locally owned. I only get my supplements from Staff
-                                    because they have a knowledgeable staff.</p>
-                                <h3>Helen Woods</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
-                    </div>
-                    <div>
-                        <div class="testimonials-one__single">
-                            <div class="testimonials-one__image">
-                                <img src="assets/images/resources/testi-1-3.png" alt="">
-                            </div><!-- /.testimonials-one__image -->
-                            <div class="testimonials-one__content">
-                                <p>Staff allows me to live out my dreams of becoming a zero-waster. The best bulk selection around.
-                                    Organic, beautiful produce.</p>
-                                <h3>Ethan Thomas</h3>
-                                <span>Customer</span>
-                            </div><!-- /.testimonials-one__content -->
-                        </div><!-- /.testimonials-one__single -->
-                    </div>
-                </div>
-            </div><!-- /.container -->
-        </section><!-- /.testimonials-one -->
-
-        <section class="gallery-one">
-            <div class="container-fluid">
-                <div class="block-title text-center">
-                    <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                    <p>We’re On Instagram</p>
-                    <h3>Shop on Instagram</h3>
-                </div><!-- /.block-title -->
-                <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-        "autoplay": {
-            "delay": 5000
-        }, "breakpoints": {
-            "0": {
-                "spaceBetween": 0,
-                "slidesPerView": 1
-            },
-            "375": {
-                "spaceBetween": 0,
-                "slidesPerView": 1
-            },
-            "575": {
-                "spaceBetween": 10,
-                "slidesPerView": 2
-            },
-            "767": {
-                "spaceBetween": 10,
-                "slidesPerView": 3
-            },
-            "991": {
-                "spaceBetween": 10,
-                "slidesPerView": 5
-            },
-            "1199": {
-                "spaceBetween": 10,
-                "slidesPerView": 5
-            }
-        }}'>
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-1.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-1.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-2.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-2.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-3.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-3.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-4.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-4.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-5.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-5.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-1.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-1.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-2.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-2.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-3.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-3.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-4.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-4.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-5.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-5.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-1.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-1.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-2.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-2.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-3.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-3.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-4.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-4.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-5.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-5.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-1.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-1.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-2.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-2.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-3.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-3.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-4.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-4.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-5.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-5.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-1.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-1.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-2.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-2.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-3.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-3.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-4.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-4.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                        <div class="swiper-slide">
-                            <div class="gallery-one__item">
-                                <img src="assets/images/gallery/gallery-1-5.jpg" alt="">
-                                <a href="assets/images/gallery/gallery-1-5.jpg" class="img-popup"><i class="fa fa-plus"></i></a>
-                            </div><!-- /.gallery-one__item -->
-                        </div><!-- /.swiper-slide -->
-                    </div><!-- /.swiper-wrapper -->
-                </div><!-- /.swiper-container thm-swiper__slider -->
-            </div><!-- /.container-fluid -->
-        </section><!-- /.gallery-one -->
 
         <footer class="site-footer background-black-2">
             <img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">

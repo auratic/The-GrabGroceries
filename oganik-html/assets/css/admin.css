@@ -1,0 +1,62 @@
+/* Admin overlay */
+
+.admin-overlay {
+    z-index: 1;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.2s;
+  }
+  
+  .admin-overlay-content {
+    position: relative;
+    padding: 2%;
+    background-color: #f8f9fa;
+    width: 20%;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .admin-overlay a {
+    padding: 8px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+  }
+  
+  .admin-overlay a:hover, .admin-overlay a:focus {
+    color: #60be74;
+    cursor: pointer;
+  }
+  
+  .admin-overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+  }
+
+  
+  @media screen and (max-height: 450px) {
+    .admin-overlay a {font-size: 20px}
+    .admin-overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+    }
+  }
+
+  .popover-body {
+      font-size: 25px;
+      color: crimson;
+      text-align: center;
+  }
+  
+  .admin-logo {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }

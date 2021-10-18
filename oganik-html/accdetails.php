@@ -319,14 +319,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     <div class="col-md-5">
                                                                         <div class="form-group">
                                                                             <span><b>First Name</b></span>
-                                                                            <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="First Name" style="width:100%" value="<?php echo $fname ?>">
+                                                                            <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="<?php echo $fname ?>" style="width:100%" value="">
                                                                             <span class="invalid-feedback"><?php echo $fname_err; ?></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-5">
                                                                         <div class="form-group">
                                                                             <span><b>Last Name</b></span>
-                                                                            <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="Last Name" style="width:100%" value="<?php echo $lname ?>">
+                                                                            <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="<?php echo $lname ?>" style="width:100%" value="">
                                                                             <span class="invalid-feedback"><?php echo $lname_err; ?></span>
                                                                         </div>
                                                                     </div>
@@ -336,7 +336,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     <div class="col-md-5">
                                                                         <div class="form-group">
                                                                             <span><b>Phone Number</b></span>
-                                                                            <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="60123456789" style="width:100%" value="<?php echo $phone ?>">
+                                                                            <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="">
                                                                             <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                                                         </div>
                                                                     </div>
@@ -346,7 +346,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     <div class="col-md-10">
                                                                         <div class="form-group">
                                                                             <span><b>Email Address</b></span>
-                                                                            <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="example@gmail.com" style="width:100%" value="<?php echo $email ?>">
+                                                                            <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="<?php echo $email ?>" style="width:100%" value="">
                                                                             <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                                                         </div>
                                                                     </div>

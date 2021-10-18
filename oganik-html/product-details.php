@@ -242,7 +242,7 @@
                                 <div class="product-quantity-box">
                                     <div class="quantity-box">
                                         <button type="button" class="sub">-</button>
-                                        <input type="number" name="item_quantity" id="item_quantity" value="1" />
+                                        <input type="number" name="item_quantity" id="item_quantity" value="1" min="1" max="99" data-mask="00"/>
                                         <button type="button" class="add">+</button>
                                     </div>
                                     <div class="addto-cart-box">
@@ -756,7 +756,8 @@
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
     <script src="assets/js/store.js" async></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    
     <script>
         function addToCartFunction(){
             // Get the value from the span

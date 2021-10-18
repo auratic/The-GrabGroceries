@@ -132,9 +132,8 @@ if (isset($_POST["place-order"])) {
 			}
 		}
 	} else {
-		
-		echo "<script>alert('You cart is empty!')</script>";
 
+		echo "<script>alert('You cart is empty!')</script>";
 	}
 }
 ?>
@@ -479,11 +478,6 @@ if (isset($_POST["place-order"])) {
 
 								<input type="hidden" id="cart-empty" name="cart_empty">
 
-								<div class="col-md-6">
-									<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
-								</div><!-- /.col-md-6 -->
-
-
 							</div><!-- /.row -->
 						</div><!-- /.col-lg-6 -->
 
@@ -566,7 +560,10 @@ if (isset($_POST["place-order"])) {
 									<span>Grand Total (RM)</span>
 									<span><?php echo $total ?></span>
 								</p>
+								<hr>
+								<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
 							</div><!-- /.order-details -->
+
 						</div><!-- /.col-lg-6 -->
 					</div><!-- /.row -->
 				</form>

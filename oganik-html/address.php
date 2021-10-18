@@ -963,7 +963,7 @@ if ($result = mysqli_query($link, $sql)) {
                 if (name == "") {
                     document.getElementById("name_err" + counter).innerHTML = "Name is required";
                     pass = false;
-                } else if (!/^[a-zA-Z]+$/. test(name)) {
+                } else if (!/^[a-zA-Z-' ]*$/. test(name)) {
                     document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
                     pass = false;
                 }
@@ -971,7 +971,7 @@ if ($result = mysqli_query($link, $sql)) {
                 if (lname == "") {
                     document.getElementById("lname_err" + counter).innerHTML = "Name is required";
                     pass = false;
-                } else if (!/^[a-zA-Z]+$/.test(lname)) {
+                } else if (!/^[a-zA-Z-' ]*$/.test(lname)) {
                     /* else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(lname)) */
                     document.getElementById("lname_err" + counter).innerHTML = "Please enter valid name";
                     pass = false;

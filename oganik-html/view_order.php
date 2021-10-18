@@ -136,12 +136,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
             margin-left: 0;
         }
 
-        table, th, td {
-            
-        }
-
         tr{
-            background-color: white;
             font-size: 16px;
         }
     </style>
@@ -305,7 +300,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                     <th><h5>Receipt ID</h5></th>
                                                                     <th><h5>Receipt Name</h5></th>
                                                                     <th><h5>Transaction Date</h5></th>
-                                                                    <th><h5>Total</h5></th>
+                                                                    <th><h5>Total (RM)</h5></th>
                                                                     <th><h5>Status</h5></th>
                                                                     <th><h5>Action</h5></th>
                                                                 </tr>
@@ -335,7 +330,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                 <td>'.$rID.'</td>
                                                                                 <td>'.$Fname.' '.$rName.'</td>
                                                                                 <td>'.$tDate.'</td>
-                                                                                <td>'.$total.'</td>
+                                                                                <td>'.number_format($total,2).'</td>
                                                                                 <td>'.$status.'</td>
                                                                                 <td>
                                                                                     <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

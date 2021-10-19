@@ -29,6 +29,7 @@ if ($result = mysqli_query($link, $sql)) {
 		$state = array($row["state"], $row["state1"], $row["state2"], $row["state3"], $row["state4"], $row["state5"]);
 		$postcode = array($row["postcode"], $row["postcode1"], $row["postcode2"], $row["postcode3"], $row["postcode4"], $row["postcode5"]);
 
+		$cardname = array($row["cardName1"], $row["cardName2"], $row["cardName3"], $row["cardName4"], $row["cardName5"]);
 		$cardno = array($row["cardNo1"], $row["cardNo2"], $row["cardNo3"], $row["cardNo4"], $row["cardNo5"]);
 		$cardcvv = array($row["cardCvv1"], $row["cardCvv2"], $row["cardCvv3"], $row["cardCvv4"], $row["cardCvv5"]);
 		$expmonth = array($row["cardExp1"], $row["cardExp2"], $row["cardExp3"], $row["cardExp4"], $row["cardExp5"]);
@@ -335,12 +336,12 @@ if (isset($_POST["place-order"])) {
 																?>" disabled>
 											No existing address
 										</option>
-										<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>">Default Address</option>
-										<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>">Address 1</option>
-										<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>">Address 2</option>
-										<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>">Address 3</option>
-										<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>">Address 4</option>
-										<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>">Address 5</option>
+										<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0]?></option>
+										<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1]?></option>
+										<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo $address[2]?></option>
+										<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo $address[3]?></option>
+										<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo $address[4]?></option>
+										<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo $address[5]?></option>
 									</select>
 								</div><!-- /.col-md-12 -->
 								<div class="col-md-6">
@@ -465,11 +466,11 @@ if (isset($_POST["place-order"])) {
 																?>" disabled>
 											No existing address
 										</option>
-										<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>">Card 1</option>
-										<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>">Card 2</option>
-										<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>">Card 3</option>
-										<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>">Card 4</option>
-										<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>">Card 5</option>
+										<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0]." (".$cardname[0].")";?></option>
+										<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1]." (".$cardname[1].")";?></option>
+										<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2]." (".$cardname[2].")";?></option>
+										<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3]." (".$cardname[3].")";?></option>
+										<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4]." (".$cardname[4].")";?></option>
 									</select>
 								</div><!-- /.col-md-12 -->
 

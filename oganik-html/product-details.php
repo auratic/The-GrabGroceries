@@ -115,7 +115,7 @@ if (isset($_POST["addtocart"])) {
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cart.php" ><i class="organik-icon-shopping-cart"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 
@@ -208,23 +208,15 @@ if (isset($_POST["addtocart"])) {
                                 <input type="hidden" name="ipic" value="<?php echo $row["image"] ?>">
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="product_detail_content">
-                                <h2><?php echo $row["item"] ?></h2>
-                                <input type="hidden" name="iname" value="<?php echo $row["item"] ?>">
-                                <div class="product_detail_review_box">
-                                    <div class="product_detail_price_box">
-                                        <p>RM<?php echo $row["cost"] ?></p>
-                                        <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
-                                    </div>
-                                    <div class="product_detail_review">
-                                        <a href="#"><i class="fa fa-star"></i></a>
-                                        <a href="#"><i class="fa fa-star"></i></a>
-                                        <a href="#"><i class="fa fa-star"></i></a>
-                                        <a href="#"><i class="fa fa-star"></i></a>
-                                        <a href="#" class="deactive"><i class="fa fa-star"></i></a>
-                                        <span>2 Customer Reviews</span>
-                                    </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="product_detail_content">
+                            <h2><?php echo $row["item"] ?></h2>
+                            <input type="hidden" name="iname" value="<?php echo $row["item"] ?>">
+                            <div class="product_detail_review_box">
+                                <div class="product_detail_price_box">
+                                    <p>RM<?php echo number_format($row["cost"],2); ?></p>
+                                    <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
                                 </div>
                                 <div class="product_detail_text">
                                     <p><?php echo $row["description"] ?></p>

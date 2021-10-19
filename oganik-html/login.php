@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cart.php" ><i class="organik-icon-shopping-cart"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 

@@ -112,14 +112,31 @@ if (isset($_POST["place-order"])) {
 
 					$sql_delete = "DELETE FROM cust_cart WHERE item_id = " . $_POST["item_id"][$x] . " AND user_id = " . $_SESSION["userid"];
 
+					$sql_get_stock = "SELECT stock FROM item WHERE item_id = " . $_POST["item_id"][$x];
+					$result_stock = mysqli_query($link, $sql_get_stock);
+					while($stock_row = mysqli_fetch_assoc($result_stock)) {
+						$new_stock = $stock_row["stock"] - $_POST["item_quantity"];
+					}
+
+					$sql_update_stock = "UPDATE item SET stock = $new_stock WHERE item_id = " . $_POST["item_id"][$x];
+					
 					if (mysqli_query($link, $sql_transaction)) {
 
-
 						if (mysqli_query($link, $sql_delete)) {
+
 						} else {
 
-							echo "<script>alert('Error: Delete fail')</script>";
+							echo "<script>alert('Error: Delete cart fail')</script>";
 						}
+						
+						if (mysqli_query($link, $sql_update_stock)) {
+
+						} else {
+							
+							echo "<script>alert('Error: Fail to update stock')</script>";
+
+						}
+
 					} else {
 						echo "<script>alert('Error: Transaction fail')</script>";
 					}

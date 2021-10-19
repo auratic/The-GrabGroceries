@@ -745,9 +745,7 @@ if ($result = mysqli_query($link, $sql)) {
 
         <!---payment!--->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="assets/js/jquery.payform.min.js" charset="utf-8"></script>
-        <script src="assets/js/script.js"></script>
+        <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
         <!-- template js -->

@@ -153,16 +153,16 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                             <div class="card-body">
-                                <a href="admin_addproduct.php">
+                                <a href="admin_additem.php">
                                     Add Products
                                 </a>
                                 <hr>
                                 <a href="admin_displayitem.php">
-                                    Active Products
+                                    Show Products
                                 </a>
                                 <hr>
-                                <a href="admin_archiveitem.php">
-                                    Archived Products
+                                <a href="admin_category.php">
+                                    Categories
                                 </a>
                             </div>
                         </div>

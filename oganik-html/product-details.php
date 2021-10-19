@@ -124,7 +124,7 @@
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cart.php" ><i class="organik-icon-shopping-cart"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 
@@ -219,7 +219,7 @@
                             <input type="hidden" name="iname" value="<?php echo $row["item"] ?>">
                             <div class="product_detail_review_box">
                                 <div class="product_detail_price_box">
-                                    <p>RM<?php echo $row["cost"] ?></p>
+                                    <p>RM<?php echo number_format($row["cost"],2); ?></p>
                                     <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
                                 </div>
                                 <div class="product_detail_review">

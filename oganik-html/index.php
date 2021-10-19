@@ -81,7 +81,7 @@ require "config.php";
                     <div class="topbar__left">
                         <div class="topbar__social">
                             <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
-                            <a href="https://www.facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                            <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
                             <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
@@ -96,7 +96,7 @@ require "config.php";
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-                            <a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cart.php" ><i class="organik-icon-shopping-cart"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 
@@ -270,7 +270,7 @@ require "config.php";
                                 <i class="organik-icon-delivery-truck feature-box__icon"></i>
                                 <div class="feature-box__content">
                                     <h3>Free Shipping</h3>
-                                    <p>On all orders over $25.00</p>
+                                    <p>On all orders over RM100.00</p>
                                 </div><!-- /.feature-box__content -->
                             </div><!-- /.feature-box__single -->
                         </div>

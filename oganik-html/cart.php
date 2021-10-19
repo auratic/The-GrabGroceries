@@ -7,7 +7,7 @@
     {
         echo"
         <script>
-            alert('Please log in first to add item to cart.'); location.href='login.php'
+            alert('Please log in first to view cart.'); location.href='login.php'
         </script>
         ";
     }
@@ -249,7 +249,7 @@
                                                         <td>
                                                         <div class="quantity-box">
                                                             <button type="button" class="sub">-</button>
-                                                                <input type="number" name="item_quantity" value="'.$row['quantity'].'" min="1" max="999">
+                                                                <input type="number" name="item_quantity" value="'.$row['quantity'].'" min="1" max="999" data-mask="00">
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>
@@ -284,7 +284,10 @@
                                         if($empty_cart) 
                                             echo "0";
                                         else
-                                            echo $subtotal; 
+                                        {
+                                            echo number_format($subtotal,2); 
+                                        }
+                                            
                                     ?>
                                 </span>
                             </li>
@@ -310,7 +313,7 @@
                                             echo "0";
                                         else {
                                             $grand_total = $subtotal + $shipping_fee;
-                                            echo $grand_total; 
+                                            echo number_format($grand_total,2); 
                                         }
                                     ?>
                                 </span>
@@ -537,6 +540,7 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
 
 </html>

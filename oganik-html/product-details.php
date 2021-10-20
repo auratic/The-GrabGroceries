@@ -1,43 +1,52 @@
 <?php
-session_start();
+    session_start();
+    
+    require "config.php";
 
-require "config.php";
-
-if (isset($_GET["item_id"])) {
-    $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
-} else {
-    $sql = "SELECT * FROM item WHERE item_id = 200000001";
-}
-
-if ($result = mysqli_query($link, $sql)) {
-    $row = mysqli_fetch_assoc($result);
-}
-
-if (isset($_POST["addtocart"])) {
-    $sqll = "SELECT * FROM cust_cart WHERE user_id = " . $_SESSION['userid'] . " AND item_id = " . $_POST['iid'];
-    if ($result = mysqli_query($link, $sqll)) {
-        if (mysqli_num_rows($result) == 1) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $Quantity = $row['quantity'] + $_POST['item_quantity'];
-                $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = " . $row['cart_id'];
-            }
-        } else {
-            $sql = "INSERT INTO cust_cart (user_id, item_id, quantity)VALUES (" . $_SESSION['userid'] . ", " . $_POST['iid'] . ", " . $_POST['item_quantity'] . " )";
-        }
+    if(isset($_GET["item_id"])) {
+        $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
+    } else {
+        $sql = "SELECT * FROM item WHERE item_id = 200000001";
     }
 
-    if (mysqli_query($link, $sql)) {
-        echo "
+    if($result = mysqli_query($link, $sql)) {
+        $row = mysqli_fetch_assoc($result);
+    }
+
+    if(isset($_POST["addtocart"]))
+    {
+        $sqll = "SELECT * FROM cust_cart WHERE user_id = ".$_SESSION['userid']." AND item_id = ".$_POST['iid'];
+        if($result=mysqli_query($link, $sqll))
+        {
+            if (mysqli_num_rows($result) == 1) 
+            {
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    $Quantity = $row['quantity'] + $_POST['item_quantity'];
+                    $sql = "UPDATE cust_cart SET quantity = $Quantity WHERE cart_id = ".$row['cart_id'];
+                }
+            }
+            else
+            {
+                $sql = "INSERT INTO cust_cart (user_id, item_id, quantity)VALUES (".$_SESSION['userid'].", ".$_POST['iid'].", ".$_POST['item_quantity']." )";
+            }
+        }
+        
+        if (mysqli_query($link, $sql))
+        {
+            echo "
                 <script>
                     location.href = 'cart.php';
                 </script>";
-    } else {
-        echo "
+        }
+        else
+        {
+            echo "
                 <script>
                     alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
                 </script>";
+        }
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -124,21 +133,17 @@ if (isset($_POST["addtocart"])) {
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if (isset($_SESSION["lname"])) {
-                                        echo "profile.php";
-                                    } else {
-                                        echo "login.php";
-                                    } ?>">
+                        <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
                             <i class="organik-icon-user"></i>
-                            <?php
+                                <?php 
 
-                            if (isset($_SESSION["lname"])) {
-                                echo $_SESSION['lname'];
-                            } else {
-                                echo "Login / Register";
-                            }
-
-                            ?>
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
                         </a>
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
@@ -150,9 +155,9 @@ if (isset($_POST["addtocart"])) {
                         </li>
                         <li class="dropdown">
                             <a href="products.php">Shop</a>
-                            <?php
-                            if (isset($_SESSION["loggedin"]))
-                                echo "
+                            <?php 
+                                if(isset($_SESSION["loggedin"]))
+                                    echo "
                                     <ul>
                                         <li><a href='cart.php'>Cart Page</a></li>
                                         <li><a href='checkout.php'>Checkout</a></li>
@@ -200,13 +205,12 @@ if (isset($_POST["addtocart"])) {
 
         <section class="product_detail">
             <div class="container">
-                <form action="#" method="POST">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="product_detail_image">
-                                <img src="<?php echo "assets/images/items/" . $row["image"]; ?>" alt="">
-                                <input type="hidden" name="ipic" value="<?php echo $row["image"] ?>">
-                            </div>
+            <form action="#" method="POST">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="product_detail_image">
+                            <img src="<?php echo "assets/images/items/".$row["image"]; ?>" alt="">
+                            <input type="hidden" name="ipic" value="<?php echo $row["image"] ?>">
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
@@ -218,18 +222,27 @@ if (isset($_POST["addtocart"])) {
                                     <p>RM<?php echo number_format($row["cost"],2); ?></p>
                                     <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
                                 </div>
-                                <div class="product_detail_text">
-                                    <p><?php echo $row["description"] ?></p>
+                                <div class="product_detail_review">
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#" class="deactive"><i class="fa fa-star"></i></a>
+                                    <span>2 Customer Reviews</span>
                                 </div>
-                                <ul class="list-unstyled product_detail_address">
-                                    <li>Item ID: <?php echo $row["item_id"] ?></li>
-                                    <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
-                                    <li><i><?php echo $row["stock"] ?> piece available</i></li>
-                                </ul>
+                            </div>
+                            <div class="product_detail_text">
+                                <p><?php echo $row["description"] ?></p>
+                            </div>
+                            <ul class="list-unstyled product_detail_address">
+                                <li>Item ID: <?php echo $row["item_id"] ?></li>
+                                <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
+                                <li><i><?php echo $row["stock"] ?> piece available</i></li>
+                            </ul>
                                 <div class="product-quantity-box">
                                     <div class="quantity-box">
                                         <button type="button" class="sub">-</button>
-                                        <input type="number" name="item_quantity" id="item_quantity" value="1" min="1" max="<?php echo $row["stock"]; ?>" data-mask="00" />
+                                        <input type="number" name="item_quantity" id="item_quantity" value="1" min="1" max="<?php echo $row['stock']?>" data-mask="00"/>
                                         <button type="button" class="add">+</button>
                                     </div>
                                     <div class="addto-cart-box">
@@ -239,23 +252,24 @@ if (isset($_POST["addtocart"])) {
                                         <a href="#" class="thm-btn">Add to Wishlist</a>
                                     </div>
                                 </div>
-                                <ul class="list-unstyled category_tag_list">
-                                    <li><span>Category:</span> <?php echo $row["category"] ?></li>
-                                </ul>
-                                <div class="product_detail_share_box">
-                                    <div class="share_box_title">
-                                        <h2>Share with friends</h2>
-                                    </div>
-                                    <div class="share_box_social">
-                                        <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </div>
+                        </form>
+                            <ul class="list-unstyled category_tag_list">
+                                <li><span>Category:</span> <?php echo $row["category"] ?></li>
+                            </ul>
+                            <div class="product_detail_share_box">
+                                <div class="share_box_title">
+                                    <h2>Share with friends</h2>
+                                </div>
+                                <div class="share_box_social">
+                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="product-tab-box tabs-box">
@@ -628,21 +642,17 @@ if (isset($_POST["addtocart"])) {
                     </select>
                 </div><!-- /.mobile-nav__language -->
                 <div class="main-menu__login">
-                    <a href="<?php if (isset($_SESSION["lname"])) {
-                                    echo "profile.php";
-                                } else {
-                                    echo "login.php";
-                                } ?>">
-                        <i class="organik-icon-user"></i>
-                        <?php
+                    <a href="<?php if(isset($_SESSION["lname"])) { echo "profile.php";} else { echo "login.php"; }?>" >
+                            <i class="organik-icon-user"></i>
+                                <?php 
 
-                        if (isset($_SESSION["lname"])) {
-                            echo $_SESSION['lname'];
-                        } else {
-                            echo "Login / Register";
-                        }
-
-                        ?>
+                                if(isset($_SESSION["lname"])) { 
+                                    echo $_SESSION['lname'];
+                                } else { 
+                                    echo "Login / Register";
+                                }
+                                
+                                ?>
                     </a>
                 </div><!-- /.main-menu__login -->
             </div><!-- /.mobile-nav__top -->
@@ -747,9 +757,9 @@ if (isset($_POST["addtocart"])) {
     <script src="assets/js/organik.js"></script>
     <script src="assets/js/store.js" async></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-
+    
     <script>
-        function addToCartFunction() {
+        function addToCartFunction(){
             // Get the value from the span
             quantityValue = $('.number').html();
             prodIdValue = $('.prodID').html();

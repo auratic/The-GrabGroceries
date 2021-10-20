@@ -276,13 +276,12 @@ if (isset($_GET["search"])) {
                                                             <div class="product-card__image-content" style="cursor:pointer;"
                                                                 onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
                                                                 <a href="#"><i class="organik-icon-heart"></i></a>
-                                                                <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
                                                             </div><!-- /.product-card__image-content -->
                                                         </div><!-- /.product-card__image -->
                                                         <div class="product-card__content">
                                                             <div class="product-card__left">
                                                                 <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
-                                                                <p>RM' . $row['cost'] . '</p>
+                                                                <p>RM' . number_format($row['cost'],2) . '</p>
                                                             </div><!-- /.product-card__left -->
                                                             <div class="product-card__right">
                                                                 <i class="fa fa-star"></i>

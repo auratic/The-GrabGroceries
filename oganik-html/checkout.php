@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-require "config.php";
+include 'cust_header.php';
 
 if (!isset($_SESSION['loggedin'])) {
 	echo "
@@ -93,62 +91,60 @@ if (isset($_POST["place-order"])) {
 	}
 
 	if (empty($_POST["phone"])) {
-        $phone_err = "Phone number is required";
-    } else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
-        $phone_err = "Please enter valid phone number";
-    } else {
+		$phone_err = "Phone number is required";
+	} else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
+		$phone_err = "Please enter valid phone number";
+	} else {
 		$receipt_phone = $_POST['phone'];
 	}
 
 	if (empty($_POST["address"])) {
-        $address_err = "Address is required";
-    } else {
+		$address_err = "Address is required";
+	} else {
 		$receipt_address = $_POST['address'];
 	}
 
 	if (empty($_POST["area"])) {
-        $area_err = "Area is required";
-    } else {
+		$area_err = "Area is required";
+	} else {
 		$receipt_area = $_POST['area'];
 	}
 
 	if (empty($_POST["state"])) {
-        $state_err = "State is required";
-    } else {
+		$state_err = "State is required";
+	} else {
 		$receipt_state = $_POST['state'];
 	}
 
 	if (empty($_POST["postcode"])) {
-        $postcode_err = "Postcode is required";
-    } else {
+		$postcode_err = "Postcode is required";
+	} else {
 		$receipt_postcode = $_POST['postcode'];
 	}
 
 	if (empty($_POST["cardno"])) {
-        $cardnum_err = "Card Number is required";
-    } else {
+		$cardnum_err = "Card Number is required";
+	} else {
 		$receipt_cardnum = $_POST['cardno'];
 	}
 
 	if (empty($_POST["cvv"])) {
-        $cardcvv_err = "CVV is required";
-    } else {
+		$cardcvv_err = "CVV is required";
+	} else {
 		$receipt_ccvv = $_POST['cvv'];
 	}
 
 	if (empty($_POST["expmonth"])) {
-        $cardexpm_err = "Month is required";
-    } else if($_POST["expmonth"] > 12){
+		$cardexpm_err = "Month is required";
+	} else if ($_POST["expmonth"] > 12) {
 		$cardexpm_err = "Invalid month";
-	}
-	else
-	{
+	} else {
 		$receipt_cexpm = $_POST['expmonth'];
 	}
 
 	if (empty($_POST["expyear"])) {
-        $cardexpy_err = "Year is required";
-    } else {
+		$cardexpy_err = "Year is required";
+	} else {
 		$receipt_cexpm = $_POST['expyear'];
 	}
 
@@ -175,39 +171,33 @@ if (isset($_POST["place-order"])) {
 
 					$sql_get_stock = "SELECT stock FROM item WHERE item_id = " . $_POST["item_id"][$x];
 					$result_stock = mysqli_query($link, $sql_get_stock);
-					while($stock_row = mysqli_fetch_assoc($result_stock)) {
+					while ($stock_row = mysqli_fetch_assoc($result_stock)) {
 						$new_stock = $stock_row["stock"] - $_POST["item_quantity"];
 					}
 
 					$sql_update_stock = "UPDATE item SET stock = $new_stock WHERE item_id = " . $_POST["item_id"][$x];
 
-					$sql_review = "UPDATE users SET review = 'true' WHERE user_id = ".$_SESSION['userid'];
-					
+					$sql_review = "UPDATE users SET review = 'true' WHERE user_id = " . $_SESSION['userid'];
+
 					if (mysqli_query($link, $sql_transaction)) {
 
 						if (mysqli_query($link, $sql_delete)) {
-
 						} else {
 
 							echo "<script>alert('Error: Delete cart fail')</script>";
 						}
-						
+
 						if (mysqli_query($link, $sql_update_stock)) {
-
 						} else {
-							
-							echo "<script>alert('Error: Fail to update stock')</script>";
 
+							echo "<script>alert('Error: Fail to update stock')</script>";
 						}
 
 						if (mysqli_query($link, $sql_review)) {
-
 						} else {
-							
+
 							echo "<script>alert('Error: Fail update review.')</script>";
-
 						}
-
 					} else {
 						echo "<script>alert('Error: Transaction fail')</script>";
 					}
@@ -225,279 +215,138 @@ if (isset($_POST["place-order"])) {
 	}
 }
 ?>
+<section class="page-header">
+	<div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+	<!-- /.page-header__bg -->
+	<div class="container">
+		<h2>Checkout</h2>
+		<ul class="thm-breadcrumb list-unstyled">
+			<li><a href="index.php">Home</a></li>
+			<li>/</li>
+			<li><span>Checkout</span></li>
+		</ul><!-- /.thm-breadcrumb list-unstyled -->
+	</div><!-- /.container -->
+</section><!-- /.page-header -->
 
-<!DOCTYPE html>
-<html lang="en">
+<section class="checkout-page">
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Checkout || TheGrabGroceries</title>
-	<!-- favicons Icons -->
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png" />
-	<link rel="manifest" href="assets/images/favicons/site.webmanifest" />
-	<meta name="description" content="Agrikon HTML Template For Agriculture Farm & Farmers" />
-
-	<!-- fonts -->
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Abril+Fatface&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-
-
-	<link rel="stylesheet" href="assets/vendors/bootstrap/bootstrap.min.css" />
-	<link rel="stylesheet" href="assets/vendors/bootstrap-select/bootstrap-select.min.css" />
-	<link rel="stylesheet" href="assets/vendors/animate/animate.min.css" />
-	<link rel="stylesheet" href="assets/vendors/fontawesome/css/all.min.css" />
-	<link rel="stylesheet" href="assets/vendors/jarallax/jarallax.css" />
-	<link rel="stylesheet" href="assets/vendors/organik-icon/organik-icons.css" />
-	<link rel="stylesheet" href="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css" />
-	<link rel="stylesheet" href="assets/vendors/nouislider/nouislider.min.css" />
-	<link rel="stylesheet" href="assets/vendors/nouislider/nouislider.pips.css" />
-	<link rel="stylesheet" href="assets/vendors/odometer/odometer.min.css" />
-	<link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
-	<link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
-
-	<!-- template styles -->
-	<link rel="stylesheet" href="assets/css/organik.css" />
-</head>
-
-<body>
-	<div class="preloader">
-		<img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
-	</div>
-	<!-- /.preloader -->
-	<div class="page-wrapper">
-		<header class="main-header">
-			<div class="topbar">
-				<div class="container">
-					<div class="main-logo">
-						<a href="index.php" class="logo">
-							<img src="assets/images/Logo6.png" width="105" alt="">
-						</a>
-						<div class="mobile-nav__buttons">
-							<a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-							<a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
-						</div><!-- /.mobile__buttons -->
-
-						<span class="fa fa-bars mobile-nav__toggler"></span>
-					</div><!-- /.main-logo -->
-
-					<div class="topbar__left">
-						<div class="topbar__social">
-							<a href="https://twitter.com/" class="fab fa-twitter"></a>
-							<a href="https://www.facebook.com/" class="fab fa-facebook-square"></a>
-							<a href="https://www.instagram.com/" class="fab fa-instagram"></a>
-						</div><!-- /.topbar__social -->
-						<div class="topbar__info">
-							<i class="organik-icon-email"></i>
-							<p>Email <a href="mailto:info@organik.com">thegrabgroceries@gmail.com</a></p>
-						</div><!-- /.topbar__info -->
-					</div><!-- /.topbar__left -->
-					<div class="topbar__right">
-						<div class="topbar__info">
-							<i class="organik-icon-calling"></i>
-							<p>Phone <a href="tel:+92-666-888-0000">+60123456789</a></p>
-						</div><!-- /.topbar__info -->
-						<div class="topbar__buttons">
-							<a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
-							<a href="#" class="mini-cart__toggler"><i class="organik-icon-shopping-cart"></i></a>
-						</div><!-- /.topbar__buttons -->
-					</div><!-- /.topbar__left -->
-
-				</div><!-- /.container -->
-			</div><!-- /.topbar -->
-			<nav class="main-menu">
-				<div class="container">
-					<div class="main-menu__login">
-						<a href="<?php if (isset($_SESSION["lname"])) {
-										echo "profile.php";
-									} else {
-										echo "login.php";
-									} ?>">
-							<i class="organik-icon-user"></i>
-							<?php
-
-							if (isset($_SESSION["lname"])) {
-								echo $_SESSION['lname'];
-							} else {
-								echo "Login / Register";
-							}
-
-							?>
-						</a>
-					</div><!-- /.main-menu__login -->
-					<ul class="main-menu__list">
-						<li class="dropdown">
-							<a href="index.php">Home</a>
-						</li>
-						<li>
-							<a href="about.php">About</a>
-						</li>
-						<li class="dropdown">
-							<a href="products.php">Shop</a>
-							<ul>
-								<li><a href="cart.php">Cart Page</a></li>
-								<li><a href="checkout.php">Checkout</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="news.php">News</a>
-						</li>
-						<li>
-							<a href="review.php">Review</a>
-						</li>
-						<li><a href="contact.php">Contact</a></li>
-					</ul>
-					<div class="main-menu__language">
-						<img src="assets/images/resources/flag-1-1.jpg" alt="">
-						<label class="sr-only" for="language-select">select language</label>
-						<!-- /#language-select.sr-only -->
-						<select class="selectpicker" id="language-select-header">
-							<option value="english">English</option>
-							<option value="arabic">Arabic</option>
-						</select>
-					</div><!-- /.main-menu__language -->
-				</div><!-- /.container -->
-			</nav>
-			<!-- /.main-menu -->
-		</header><!-- /.main-header -->
-
-		<div class="stricky-header stricked-menu main-menu">
-			<div class="sticky-header__content"></div><!-- /.sticky-header__content -->
-		</div><!-- /.stricky-header -->
-		<section class="page-header">
-			<div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
-			<!-- /.page-header__bg -->
-			<div class="container">
-				<h2>Checkout</h2>
-				<ul class="thm-breadcrumb list-unstyled">
-					<li><a href="index.php">Home</a></li>
-					<li>/</li>
-					<li><span>Checkout</span></li>
-				</ul><!-- /.thm-breadcrumb list-unstyled -->
-			</div><!-- /.container -->
-		</section><!-- /.page-header -->
-
-		<section class="checkout-page">
-
-			<div class="container">
-				<form action="#" class="contact-one__form" method="POST">
+	<div class="container">
+		<form action="#" class="contact-one__form" method="POST">
+			<div class="row">
+				<div class="col-lg-6">
+					<h3>Shipping Details</h3>
 					<div class="row">
-						<div class="col-lg-6">
-							<h3>Shipping Details</h3>
-							<div class="row">
-								<div class="col-md-12">
-									<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
-										<option value="" style="display:none">Choose existing address</option>
-										<option value="" style="<?php
-																if (
-																	$address[0] == "" &&
-																	$address[1] == "" &&
-																	$address[2] == "" &&
-																	$address[3] == "" &&
-																	$address[4] == "" &&
-																	$address[5] == ""
-																) {
-																	echo 'display:block';
-																} else {
-																	echo 'display:none';
-																}
-																?>" disabled>
-											No existing address
-										</option>
-										<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0]?></option>
-										<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1]?></option>
-										<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo $address[2]?></option>
-										<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo $address[3]?></option>
-										<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo $address[4]?></option>
-										<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo $address[5]?></option>
-									</select>
-								</div><!-- /.col-md-12 -->
-								<div class="col-md-6">
-									<label>First Name <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
-									<input type="text" name="fname" id="set-fname">
-									<span class="invalid-feedback d-block"><?php echo $fname_err; ?></span>
-								</div><!-- /.col-md-6 -->
+						<div class="col-md-12">
+							<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
+								<option value="" style="display:none">Choose existing address</option>
+								<option value="" style="<?php
+														if (
+															$address[0] == "" &&
+															$address[1] == "" &&
+															$address[2] == "" &&
+															$address[3] == "" &&
+															$address[4] == "" &&
+															$address[5] == ""
+														) {
+															echo 'display:block';
+														} else {
+															echo 'display:none';
+														}
+														?>" disabled>
+									No existing address
+								</option>
+								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0] ?></option>
+								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1] ?></option>
+								<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo $address[2] ?></option>
+								<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo $address[3] ?></option>
+								<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo $address[4] ?></option>
+								<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo $address[5] ?></option>
+							</select>
+						</div><!-- /.col-md-12 -->
+						<div class="col-md-6">
+							<label>First Name <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
+							<input type="text" name="fname" id="set-fname">
+							<span class="invalid-feedback d-block"><?php echo $fname_err; ?></span>
+						</div><!-- /.col-md-6 -->
 
-								<div class="col-md-6">
-									<label>Last Name / Surname <i style="color:lightgray"> (eg. Lim etc.)</i></label>
-									<input type="text" name="lname" id="set-lname">
-									<span class="invalid-feedback d-block"><?php echo $lname_err; ?></span>
-								</div><!-- /.col-md-6 -->
+						<div class="col-md-6">
+							<label>Last Name / Surname <i style="color:lightgray"> (eg. Lim etc.)</i></label>
+							<input type="text" name="lname" id="set-lname">
+							<span class="invalid-feedback d-block"><?php echo $lname_err; ?></span>
+						</div><!-- /.col-md-6 -->
 
-								<div class="col-md-12">
-									<label>E-mail <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
-									<input type="text" name="email" id="set-email">
-									<span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
-								</div><!-- /.col-md-12 -->
+						<div class="col-md-12">
+							<label>E-mail <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
+							<input type="text" name="email" id="set-email">
+							<span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
+						</div><!-- /.col-md-12 -->
 
-								<div class="col-md-12">
-									<label>Phone <i style="color:lightgray"> (eg. 60123334444)</i></label>
-									<input type="text" name="phone" id="set-phone">
-									<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
-								</div><!-- /.col-md-12 -->
+						<div class="col-md-12">
+							<label>Phone <i style="color:lightgray"> (eg. 60123334444)</i></label>
+							<input type="text" name="phone" id="set-phone">
+							<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
+						</div><!-- /.col-md-12 -->
 
-								<div class="col-md-12">
-									<label>Address <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
-									<input type="text" name="address" id="set-address">
-									<span class="invalid-feedback d-block"><?php echo $address_err; ?></span>
-								</div><!-- /.col-md-12 -->
+						<div class="col-md-12">
+							<label>Address <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
+							<input type="text" name="address" id="set-address">
+							<span class="invalid-feedback d-block"><?php echo $address_err; ?></span>
+						</div><!-- /.col-md-12 -->
 
-								<div class="col-md-6">
-									<label>Area</label> <br>
-									<select name="area" class="form-select form-select-lg" style="width: 100%">
-										<option disabled selected style="display: none;"></option>
-										<option id="set-area" style="display: none;"></option>
-										<option value="Alor Gajah">Alor Gajah</option>
-										<option value="Melaka Tengah">Melaka Tengah</option>
-										<option value="Jasin">Jasin</option>
-									</select>
-									<span class="invalid-feedback d-block"><?php echo $area_err; ?></span>
-								</div><!-- /.col-md-6 -->
+						<div class="col-md-6">
+							<label>Area</label> <br>
+							<select name="area" class="form-select form-select-lg" style="width: 100%">
+								<option disabled selected style="display: none;"></option>
+								<option id="set-area" style="display: none;"></option>
+								<option value="Alor Gajah">Alor Gajah</option>
+								<option value="Melaka Tengah">Melaka Tengah</option>
+								<option value="Jasin">Jasin</option>
+							</select>
+							<span class="invalid-feedback d-block"><?php echo $area_err; ?></span>
+						</div><!-- /.col-md-6 -->
 
-								<div class="col-md-6">
-									<label>State</label> <br>
-									<select name="state" class="form-select form-select-lg" style="width: 100%">
-										<option disabled selected style="display: none;"></option>
-										<option id="set-state" style="display: none;"></option>
-										<option value="Melaka">Melaka</option>
-									</select>
-									<span class="invalid-feedback d-block"><?php echo $state_err; ?></span>
-								</div><!-- /.col-md-6 -->
+						<div class="col-md-6">
+							<label>State</label> <br>
+							<select name="state" class="form-select form-select-lg" style="width: 100%">
+								<option disabled selected style="display: none;"></option>
+								<option id="set-state" style="display: none;"></option>
+								<option value="Melaka">Melaka</option>
+							</select>
+							<span class="invalid-feedback d-block"><?php echo $state_err; ?></span>
+						</div><!-- /.col-md-6 -->
 
-								<div class="col-md-6">
-									<label>Postcode</label> <br>
-									<select name="postcode" class="form-select form-select-lg" style="width: 100%">
-										<option disabled selected style="display: none;"></option>
-										<option id="set-postcode" style="display: none;"></option>
-										<option value="75000">75000</option>
-										<option value="75050">75050</option>
-										<option value="75100">75100</option>
-										<option value="75150">75150</option>
-										<option value="75200">75200</option>
-										<option value="75250">75250</option>
-										<option value="75260">75260</option>
-										<option value="75300">75300</option>
-										<option value="75350">75350</option>
-										<option value="75400">75400</option>
-										<option value="75430">75430</option>
-										<option value="75450">75450</option>
-										<option value="75460">75460</option>
-										<option value="76300">76300</option>
-										<option value="76400">76400</option>
-										<option value="76450">76450</option>
-										<option value="77200">77200</option>
-									</select>
-									<span class="invalid-feedback d-block"><?php echo $postcode_err; ?></span>
-								</div><!-- /.col-md-6 -->
+						<div class="col-md-6">
+							<label>Postcode</label> <br>
+							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
+								<option disabled selected style="display: none;"></option>
+								<option id="set-postcode" style="display: none;"></option>
+								<option value="75000">75000</option>
+								<option value="75050">75050</option>
+								<option value="75100">75100</option>
+								<option value="75150">75150</option>
+								<option value="75200">75200</option>
+								<option value="75250">75250</option>
+								<option value="75260">75260</option>
+								<option value="75300">75300</option>
+								<option value="75350">75350</option>
+								<option value="75400">75400</option>
+								<option value="75430">75430</option>
+								<option value="75450">75450</option>
+								<option value="75460">75460</option>
+								<option value="76300">76300</option>
+								<option value="76400">76400</option>
+								<option value="76450">76450</option>
+								<option value="77200">77200</option>
+							</select>
+							<span class="invalid-feedback d-block"><?php echo $postcode_err; ?></span>
+						</div><!-- /.col-md-6 -->
 
 
-								<div class="col-md-12">
-									<hr>
-									<h3>Payment Details</h3>
-								</div>
-								<!--
+						<div class="col-md-12">
+							<hr>
+							<h3>Payment Details</h3>
+						</div>
+						<!--
 										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
 											<li>
 												<h2 class="para-title active">
@@ -526,106 +375,106 @@ if (isset($_POST["place-order"])) {
 											</li>
 										</ul>
 										-->
-								<div class="col-md-12">
-									<select class="selectpicker" id="choose-card" onchange="chooseCard()">
-										<option value="" style="display:none">Choose existing card</option>
-										<option value="" style="<?php
-																if (
-																	$cardno[0] == "" &&
-																	$cardno[1] == "" &&
-																	$cardno[2] == "" &&
-																	$cardno[3] == "" &&
-																	$cardno[4] == ""
-																) {
-																	echo 'display:block';
-																} else {
-																	echo 'display:none';
-																}
-																?>" disabled>
-											No existing address
-										</option>
-										<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0]." (".$cardname[0].")";?></option>
-										<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1]." (".$cardname[1].")";?></option>
-										<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2]." (".$cardname[2].")";?></option>
-										<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3]." (".$cardname[3].")";?></option>
-										<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4]." (".$cardname[4].")";?></option>
-									</select>
-									
-								</div><!-- /.col-md-12 -->
+						<div class="col-md-12">
+							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
+								<option value="" style="display:none">Choose existing card</option>
+								<option value="" style="<?php
+														if (
+															$cardno[0] == "" &&
+															$cardno[1] == "" &&
+															$cardno[2] == "" &&
+															$cardno[3] == "" &&
+															$cardno[4] == ""
+														) {
+															echo 'display:block';
+														} else {
+															echo 'display:none';
+														}
+														?>" disabled>
+									No existing address
+								</option>
+								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
+								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
+								<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2] . " (" . $cardname[2] . ")"; ?></option>
+								<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3] . " (" . $cardname[3] . ")"; ?></option>
+								<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4] . " (" . $cardname[4] . ")"; ?></option>
+							</select>
 
-								<div class="col-md-12">
-									<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
-									<input type="text" name="cardno" id="set-cardno" maxlength="19">
-									<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
-								</div><!-- /.col-md-12 -->
+						</div><!-- /.col-md-12 -->
 
-								<div class="col-md-4">
-									<label>CVV<i style="color:lightgray" required> (123)</i></label>
-									<input type="text" name="cvv" id="set-cvv" maxlength="3">
-									<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
-								</div><!-- /.col-md-4 -->
+						<div class="col-md-12">
+							<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
+							<input type="text" name="cardno" id="set-cardno" maxlength="19">
+							<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
+						</div><!-- /.col-md-12 -->
 
-								<div class="col-md-4">
-									<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-									<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
-									<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
-								</div><!-- /.col-md-4 -->
+						<div class="col-md-4">
+							<label>CVV<i style="color:lightgray" required> (123)</i></label>
+							<input type="text" name="cvv" id="set-cvv" maxlength="3">
+							<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
+						</div><!-- /.col-md-4 -->
 
-								<div class="col-md-4">
-									<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-									<input type="text" name="expyear" id="set-expyear" maxlength="2">
-									<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
-								</div><!-- /.col-md-4 -->
+						<div class="col-md-4">
+							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
+							<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
+							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
+						</div><!-- /.col-md-4 -->
 
-								<input type="hidden" id="cart-empty" name="cart_empty">
+						<div class="col-md-4">
+							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
+							<input type="text" name="expyear" id="set-expyear" maxlength="2">
+							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
+						</div><!-- /.col-md-4 -->
 
-							</div><!-- /.row -->
-						</div><!-- /.col-lg-6 -->
+						<input type="hidden" id="cart-empty" name="cart_empty">
 
-						<div class="col-lg-6">
-							<h3>
-								Your Orders
-							</h3>
-							<div class="table-responsive">
-								<table class="table cart-table">
-									<thead>
-										<tr>
-											<th></th>
-											<th>Item</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-										$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
+					</div><!-- /.row -->
+				</div><!-- /.col-lg-6 -->
 
-										$counter = 0;
-										$item_total_cost = 0;
-										$subtotal = 0;
-										$total = 0;
-										$shipping_cost = 0;
+				<div class="col-lg-6">
+					<h3>
+						Your Orders
+					</h3>
+					<div class="table-responsive">
+						<table class="table cart-table">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Item</th>
+									<th>Price</th>
+									<th>Quantity</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
 
-										if ($result = mysqli_query($link, $sql)) {
-											if (mysqli_num_rows($result) == 0) {
-												echo '
+								$counter = 0;
+								$item_total_cost = 0;
+								$subtotal = 0;
+								$total = 0;
+								$shipping_cost = 0;
+
+								if ($result = mysqli_query($link, $sql)) {
+									if (mysqli_num_rows($result) == 0) {
+										echo '
                                             <tr>
                                                 <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
                                             </tr>';
 
-												echo "
+										echo "
 											<script>
 												document.getElementById('cart-empty').value = 'true'
 											</script>";
-											} else {
-												while ($row = mysqli_fetch_assoc($result)) {
+									} else {
+										while ($row = mysqli_fetch_assoc($result)) {
 
-													$counter++;
-													$item_total_cost = $row["quantity"] * $row["cost"];
-													$subtotal += $item_total_cost;
+											$counter++;
+											$item_total_cost = $row["quantity"] * $row["cost"];
+											$subtotal += $item_total_cost;
 
-													echo '
+											echo '
                                                     <tr>
 														<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
                                                         <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
@@ -635,435 +484,191 @@ if (isset($_POST["place-order"])) {
                                                         <td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
                                                     </tr>
 													';
-												}
-											}
-											$total = $subtotal + $shipping_cost;
-											echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
 										}
-										?>
-								</table><!-- /.table -->
-							</div><!-- /.table-responsive -->
+									}
+									$total = $subtotal + $shipping_cost;
+									echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
+								}
+								?>
+						</table><!-- /.table -->
+					</div><!-- /.table-responsive -->
 
-							<div class="order-details">
-								<div class="order-details__top">
-									<p>Product</p>
-									<p>Price</p>
-								</div><!-- /.order-details__top -->
-								<p>
-									<span>Subtotal (RM)</span>
-									<span><?php echo $subtotal ?></span>
-								</p>
-								<p>
-									<span>Shipping (RM)</span>
-									<span>0.00</span>
-								</p>
-								<p>
-									<span>Grand Total (RM)</span>
-									<span><?php echo $total ?></span>
-								</p>
-								<hr>
-								<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
-							</div><!-- /.order-details -->
+					<div class="order-details">
+						<div class="order-details__top">
+							<p>Product</p>
+							<p>Price</p>
+						</div><!-- /.order-details__top -->
+						<p>
+							<span>Subtotal (RM)</span>
+							<span><?php echo $subtotal ?></span>
+						</p>
+						<p>
+							<span>Shipping (RM)</span>
+							<span>0.00</span>
+						</p>
+						<p>
+							<span>Grand Total (RM)</span>
+							<span><?php echo $total ?></span>
+						</p>
+						<hr>
+						<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
+					</div><!-- /.order-details -->
 
-						</div><!-- /.col-lg-6 -->
-					</div><!-- /.row -->
-				</form>
-			</div><!-- /.container -->
-		</section><!-- /.checkout-page -->
+				</div><!-- /.col-lg-6 -->
+			</div><!-- /.row -->
+		</form>
+	</div><!-- /.container -->
+</section><!-- /.checkout-page -->
 
-		<footer class="site-footer background-black-2">
-			<img src="assets/images/shapes/footer-bg-1-1.png" alt="" class="site-footer__shape-1">
-			<img src="assets/images/shapes/footer-bg-1-2.png" alt="" class="site-footer__shape-2">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-						<div class="footer-widget footer-widget__about-widget">
-							<a href="index.php" class="footer-widget__logo">
-								<img src="assets/images/tgg.png" alt="" width="150" height="150">
-							</a>
-							<p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
-						</div><!-- /.footer-widget -->
-					</div><!-- /.col-sm-12 col-md-6 -->
-					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-						<div class="footer-widget footer-widget__contact-widget">
-							<h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
-							<ul class="list-unstyled footer-widget__contact">
-								<li>
-									<i class="fa fa-phone-square"></i>
-									<a href="tel:666-888-0000">60123456789</a>
-								</li>
-								<li>
-									<i class="fa fa-envelope"></i>
-									<a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
-								</li>
-								<li>
-									<i class="fa fa-map-marker-alt"></i>
-									<a href="https://goo.gl/maps/kLV5kZiqyVc5PKrH9" target="_blank">66 Melaka Street
-										Malacca Malaysia</a>
-								</li>
-							</ul><!-- /.list-unstyled footer-widget__contact -->
-						</div><!-- /.footer-widget -->
-					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-						<div class="footer-widget footer-widget__links-widget">
-							<h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
-							<ul class="list-unstyled footer-widget__links">
-								<li>
-									<a href="index.php">Top Sellers</a>
-								</li>
-								<li>
-									<a href="products.php">Shopping</a>
-								</li>
-								<li>
-									<a href="about.php">About</a>
-								</li>
-								<li>
-									<a href="contact.php">Contact</a>
-								</li>
-								<li>
-									<a href="contact.php">Help</a>
-								</li>
-							</ul><!-- /.list-unstyled footer-widget__contact -->
-						</div><!-- /.footer-widget -->
-					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
-						<div class="footer-widget">
-							<h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
-							<ul class="list-unstyled footer-widget__links">
-								<li>
-									<a href="products.php">New Products</a>
-								</li>
-								<li>
-									<a href="profile.php">My Account</a>
-								</li>
-								<li>
-									<a href="contact.php">Support</a>
-								</li>
-								<li>
-									<a href="contact.php">FAQs</a>
-								</li>
-							</ul><!-- /.list-unstyled footer-widget__contact -->
-						</div><!-- /.footer-widget -->
-					</div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
-				</div><!-- /.row -->
-			</div><!-- /.container -->
-			<div class="bottom-footer">
-				<div class="container">
-					<hr>
-					<div class="inner-container text-center">
-						<div class="bottom-footer__social">
-							<a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
-							<a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
-							<a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
-						</div><!-- /.bottom-footer__social -->
-						<p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
-					</div><!-- /.inner-container -->
-				</div><!-- /.container -->
-			</div><!-- /.bottom-footer -->
-		</footer><!-- /.site-footer -->
+<script>
+	function chooseAddress() {
+		var choose = document.getElementById("choose-address").value;
 
-	</div><!-- /.page-wrapper -->
+		document.getElementById("set-area").selected = "true";
+		document.getElementById("set-state").selected = "true";
+		document.getElementById("set-postcode").selected = "true";
 
 
-	<div class="mobile-nav__wrapper">
-		<div class="mobile-nav__overlay mobile-nav__toggler"></div>
-		<!-- /.mobile-nav__overlay -->
-		<div class="mobile-nav__content">
-			<span class="mobile-nav__close mobile-nav__toggler"><i class="organik-icon-close"></i></span>
+		switch (choose) {
+			case '1':
+				document.getElementById("set-fname").value = fname[0];
+				document.getElementById("set-lname").value = lname[0];
+				document.getElementById("set-email").value = email[0];
+				document.getElementById("set-phone").value = phone[0];
+				document.getElementById("set-address").value = address[0];
 
-			<div class="logo-box">
-				<a href="index.php" aria-label="logo image"><img src="assets/images/logo-light.png" width="155" alt="" /></a>
-			</div>
-			<!-- /.logo-box -->
-			<div class="mobile-nav__container"></div>
-			<!-- /.mobile-nav__container -->
+				document.getElementById("set-area").innerHTML = area[0];
+				document.getElementById("set-state").innerHTML = state[0];
+				document.getElementById("set-postcode").innerHTML = postcode[0];
 
-			<ul class="mobile-nav__contact list-unstyled">
-				<li>
-					<i class="organik-icon-email"></i>
-					<a href="mailto:needhelp@organik.com">needhelp@organik.com</a>
-				</li>
-				<li>
-					<i class="organik-icon-calling"></i>
-					<a href="tel:666-888-0000">666 888 0000</a>
-				</li>
-			</ul><!-- /.mobile-nav__contact -->
-			<div class="mobile-nav__top">
-				<div class="mobile-nav__language">
-					<img src="assets/images/resources/flag-1-1.jpg" alt="">
-					<label class="sr-only" for="language-select">select language</label>
-					<!-- /#language-select.sr-only -->
-					<select class="selectpicker" id="language-select">
-						<option value="english">English</option>
-						<option value="arabic">Arabic</option>
-					</select>
-				</div><!-- /.mobile-nav__language -->
-				<div class="main-menu__login">
-					<a href="<?php if (isset($_SESSION["lname"])) {
-									echo "profile.php";
-								} else {
-									echo "login.php";
-								} ?>">
-						<i class="organik-icon-user"></i>
-						<?php
+				document.getElementById("set-area").value = area[0];
+				document.getElementById("set-state").value = state[0];
+				document.getElementById("set-postcode").value = postcode[0];
 
-						if (isset($_SESSION["lname"])) {
-							echo $_SESSION['lname'];
-						} else {
-							echo "Login / Register";
-						}
+				break;
+			case '2':
+				document.getElementById("set-fname").value = fname[1];
+				document.getElementById("set-lname").value = lname[1];
+				document.getElementById("set-email").value = email[1];
+				document.getElementById("set-phone").value = phone[1];
+				document.getElementById("set-address").value = address[1];
 
-						?>
-					</a>
-				</div><!-- /.main-menu__login -->
-			</div><!-- /.mobile-nav__top -->
+				document.getElementById("set-area").value = area[1];
+				document.getElementById("set-state").value = state[1];
+				document.getElementById("set-postcode").value = postcode[1];
 
+				document.getElementById("set-area").innerHTML = area[1];
+				document.getElementById("set-state").innerHTML = state[1];
+				document.getElementById("set-postcode").innerHTML = postcode[1];
 
-
-		</div>
-		<!-- /.mobile-nav__content -->
-	</div>
-	<!-- /.mobile-nav__wrapper -->
-
-	<div class="mini-cart">
-		<div class="mini-cart__overlay mini-cart__toggler"></div>
-		<div class="mini-cart__content">
-			<div class="mini-cart__top">
-				<h3 class="mini-cart__title">Shopping Cart</h3>
-				<span class="mini-cart__close mini-cart__toggler"><i class="organik-icon-close"></i></span>
-			</div><!-- /.mini-cart__top -->
-			<div class="mini-cart__item">
-				<img src="assets/images/products/cart-1-1.jpg" alt="">
-				<div class="mini-cart__item-content">
-					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Banana</a></h3>
-						<p>$9.99</p>
-					</div><!-- /.mini-cart__item-top -->
-					<div class="quantity-box">
-						<button type="button" class="sub">-</button>
-						<input type="number" id="2" value="1" />
-						<button type="button" class="add">+</button>
-					</div>
-				</div><!-- /.mini-cart__item-content -->
-			</div><!-- /.mini-cart__item -->
-			<div class="mini-cart__item">
-				<img src="assets/images/products/cart-1-2.jpg" alt="">
-				<div class="mini-cart__item-content">
-					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Tomato</a></h3>
-						<p>$9.99</p>
-					</div><!-- /.mini-cart__item-top -->
-					<div class="quantity-box">
-						<button type="button" class="sub">-</button>
-						<input type="number" id="2" value="1" />
-						<button type="button" class="add">+</button>
-					</div>
-				</div><!-- /.mini-cart__item-content -->
-			</div><!-- /.mini-cart__item -->
-			<div class="mini-cart__item">
-				<img src="assets/images/products/cart-1-3.jpg" alt="">
-				<div class="mini-cart__item-content">
-					<div class="mini-cart__item-top">
-						<h3><a href="product-details.php">Bread</a></h3>
-						<p>$9.99</p>
-					</div><!-- /.mini-cart__item-top -->
-					<div class="quantity-box">
-						<button type="button" class="sub">-</button>
-						<input type="number" id="2" value="1" />
-						<button type="button" class="add">+</button>
-					</div>
-				</div><!-- /.mini-cart__item-content -->
-			</div><!-- /.mini-cart__item -->
-			<a href="checkout.php" class="thm-btn mini-cart__checkout">Proceed To Checkout</a>
-		</div><!-- /.mini-cart__content -->
-	</div><!-- /.cart-toggler -->
-
-	<div class="search-popup">
-		<div class="search-popup__overlay search-toggler"></div>
-		<!-- /.search-popup__overlay -->
-		<div class="search-popup__content">
-			<form action="products.php" method="GET">
-				<label for="search" class="sr-only">search here</label><!-- /.sr-only -->
-				<input type="text" id="search" name="search" placeholder="Search Here..." />
-				<button type="submit" aria-label="search submit" class="thm-btn">
-					<i class="organik-icon-magnifying-glass"></i>
-				</button>
-			</form>
-		</div>
-		<!-- /.search-popup__content -->
-	</div>
-	<!-- /.search-popup -->
-	<script>
-		function chooseAddress() {
-			var choose = document.getElementById("choose-address").value;
-
-			document.getElementById("set-area").selected = "true";
-			document.getElementById("set-state").selected = "true";
-			document.getElementById("set-postcode").selected = "true";
-
-
-			switch (choose) {
-				case '1':
-					document.getElementById("set-fname").value = fname[0];
-					document.getElementById("set-lname").value = lname[0];
-					document.getElementById("set-email").value = email[0];
-					document.getElementById("set-phone").value = phone[0];
-					document.getElementById("set-address").value = address[0];
-
-					document.getElementById("set-area").innerHTML = area[0];
-					document.getElementById("set-state").innerHTML = state[0];
-					document.getElementById("set-postcode").innerHTML = postcode[0];
-
-					document.getElementById("set-area").value = area[0];
-					document.getElementById("set-state").value = state[0];
-					document.getElementById("set-postcode").value = postcode[0];
-
-					break;
-				case '2':
-					document.getElementById("set-fname").value = fname[1];
-					document.getElementById("set-lname").value = lname[1];
-					document.getElementById("set-email").value = email[1];
-					document.getElementById("set-phone").value = phone[1];
-					document.getElementById("set-address").value = address[1];
-
-					document.getElementById("set-area").value = area[1];
-					document.getElementById("set-state").value = state[1];
-					document.getElementById("set-postcode").value = postcode[1];
-
-					document.getElementById("set-area").innerHTML = area[1];
-					document.getElementById("set-state").innerHTML = state[1];
-					document.getElementById("set-postcode").innerHTML = postcode[1];
-
-					break;
-				case '3':
-					document.getElementById("set-fname").value = fname[2];
-					document.getElementById("set-lname").value = lname[2];
-					document.getElementById("set-email").value = email[2];
-					document.getElementById("set-phone").value = phone[2];
-					document.getElementById("set-address").value = address[2];
-					document.getElementById("set-area").value = area[2];
-					document.getElementById("set-state").value = state[2];
-					document.getElementById("set-postcode").value = postcode[2];
-					break;
-				case '4':
-					document.getElementById("set-fname").value = fname[3];
-					document.getElementById("set-lname").value = lname[3];
-					document.getElementById("set-email").value = email[3];
-					document.getElementById("set-phone").value = phone[3];
-					document.getElementById("set-address").value = address[3];
-					document.getElementById("set-area").value = area[3];
-					document.getElementById("set-state").value = state[3];
-					document.getElementById("set-postcode").value = postcode[3];
-					break;
-				case '5':
-					document.getElementById("set-fname").value = fname[4];
-					document.getElementById("set-lname").value = lname[4];
-					document.getElementById("set-email").value = email[4];
-					document.getElementById("set-phone").value = phone[4];
-					document.getElementById("set-address").value = address[4];
-					document.getElementById("set-area").value = area[4];
-					document.getElementById("set-state").value = state[4];
-					document.getElementById("set-postcode").value = postcode[4];
-					break;
-				case '6':
-					document.getElementById("set-fname").value = fname[5];
-					document.getElementById("set-lname").value = lname[5];
-					document.getElementById("set-email").value = email[5];
-					document.getElementById("set-phone").value = phone[5];
-					document.getElementById("set-address").value = address[5];
-					document.getElementById("set-area").value = area[5];
-					document.getElementById("set-state").value = state[5];
-					document.getElementById("set-postcode").value = postcode[5];
-					break;
-			}
+				break;
+			case '3':
+				document.getElementById("set-fname").value = fname[2];
+				document.getElementById("set-lname").value = lname[2];
+				document.getElementById("set-email").value = email[2];
+				document.getElementById("set-phone").value = phone[2];
+				document.getElementById("set-address").value = address[2];
+				document.getElementById("set-area").value = area[2];
+				document.getElementById("set-state").value = state[2];
+				document.getElementById("set-postcode").value = postcode[2];
+				break;
+			case '4':
+				document.getElementById("set-fname").value = fname[3];
+				document.getElementById("set-lname").value = lname[3];
+				document.getElementById("set-email").value = email[3];
+				document.getElementById("set-phone").value = phone[3];
+				document.getElementById("set-address").value = address[3];
+				document.getElementById("set-area").value = area[3];
+				document.getElementById("set-state").value = state[3];
+				document.getElementById("set-postcode").value = postcode[3];
+				break;
+			case '5':
+				document.getElementById("set-fname").value = fname[4];
+				document.getElementById("set-lname").value = lname[4];
+				document.getElementById("set-email").value = email[4];
+				document.getElementById("set-phone").value = phone[4];
+				document.getElementById("set-address").value = address[4];
+				document.getElementById("set-area").value = area[4];
+				document.getElementById("set-state").value = state[4];
+				document.getElementById("set-postcode").value = postcode[4];
+				break;
+			case '6':
+				document.getElementById("set-fname").value = fname[5];
+				document.getElementById("set-lname").value = lname[5];
+				document.getElementById("set-email").value = email[5];
+				document.getElementById("set-phone").value = phone[5];
+				document.getElementById("set-address").value = address[5];
+				document.getElementById("set-area").value = area[5];
+				document.getElementById("set-state").value = state[5];
+				document.getElementById("set-postcode").value = postcode[5];
+				break;
 		}
+	}
 
 
-		function chooseCard() {
-			var choose = document.getElementById("choose-card").value;
+	function chooseCard() {
+		var choose = document.getElementById("choose-card").value;
 
-			switch (choose) {
-				case '1':
-					document.getElementById("set-cardno").value = cardno[0];
-					document.getElementById("set-cvv").value = cardcvv[0];
-					document.getElementById("set-expmonth").value = expmonth[0];
-					document.getElementById("set-expyear").value = expyear[0];
-					break;
-				case '2':
-					document.getElementById("set-cardno").value = cardno[1];
-					document.getElementById("set-cvv").value = cardcvv[1];
-					document.getElementById("set-expmonth").value = expmonth[1];
-					document.getElementById("set-expyear").value = expyear[1];
+		switch (choose) {
+			case '1':
+				document.getElementById("set-cardno").value = cardno[0];
+				document.getElementById("set-cvv").value = cardcvv[0];
+				document.getElementById("set-expmonth").value = expmonth[0];
+				document.getElementById("set-expyear").value = expyear[0];
+				break;
+			case '2':
+				document.getElementById("set-cardno").value = cardno[1];
+				document.getElementById("set-cvv").value = cardcvv[1];
+				document.getElementById("set-expmonth").value = expmonth[1];
+				document.getElementById("set-expyear").value = expyear[1];
 
-					break;
-				case '3':
-					document.getElementById("set-cardno").value = cardno[2];
-					document.getElementById("set-cvv").value = cardcvv[2];
-					document.getElementById("set-expmonth").value = expmonth[2];
-					document.getElementById("set-expyear").value = expyear[2];
-					break;
-				case '4':
-					document.getElementById("set-cardno").value = cardno[3];
-					document.getElementById("set-cvv").value = cardcvv[3];
-					document.getElementById("set-expmonth").value = expmonth[3];
-					document.getElementById("set-expyear").value = expyear[3];
-					break;
-				case '5':
-					document.getElementById("set-cardno").value = cardno[4];
-					document.getElementById("set-cvv").value = cardcvv[4];
-					document.getElementById("set-expmonth").value = expmonth[4];
-					document.getElementById("set-expyear").value = expyear[4];
-					break;
-			}
+				break;
+			case '3':
+				document.getElementById("set-cardno").value = cardno[2];
+				document.getElementById("set-cvv").value = cardcvv[2];
+				document.getElementById("set-expmonth").value = expmonth[2];
+				document.getElementById("set-expyear").value = expyear[2];
+				break;
+			case '4':
+				document.getElementById("set-cardno").value = cardno[3];
+				document.getElementById("set-cvv").value = cardcvv[3];
+				document.getElementById("set-expmonth").value = expmonth[3];
+				document.getElementById("set-expyear").value = expyear[3];
+				break;
+			case '5':
+				document.getElementById("set-cardno").value = cardno[4];
+				document.getElementById("set-cvv").value = cardcvv[4];
+				document.getElementById("set-expmonth").value = expmonth[4];
+				document.getElementById("set-expyear").value = expyear[4];
+				break;
 		}
+	}
 
-		document.getElementById("set-cardno").onkeyup = function() {
+	document.getElementById("set-cardno").onkeyup = function() {
 
-			var CCNValue = $("#set-cardno").val();
-			CCNValue = CCNValue.replace(/ /g, '');
-			var CCNLength = CCNValue.length;
-			var m = 1;
-			var arr = CCNValue.split('');
-			var ccnnewval = "";
+		var CCNValue = $("#set-cardno").val();
+		CCNValue = CCNValue.replace(/ /g, '');
+		var CCNLength = CCNValue.length;
+		var m = 1;
+		var arr = CCNValue.split('');
+		var ccnnewval = "";
 
-			if (arr.length > 0) {
-				for (var m = 0; m < arr.length; m++) {
-					if (m == 4 || m == 8 || m == 12) {
-						ccnnewval = ccnnewval + ' ';
-					}
+		if (arr.length > 0) {
+			for (var m = 0; m < arr.length; m++) {
+				if (m == 4 || m == 8 || m == 12) {
+					ccnnewval = ccnnewval + ' ';
+				}
 
-					if (m <= 11) {
-						ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
-					} else {
-						ccnnewval = ccnnewval + arr[m];
-					}
+				if (m <= 11) {
+					ccnnewval = ccnnewval + arr[m].replace(/[0-9]/g, "*");
+				} else {
+					ccnnewval = ccnnewval + arr[m];
 				}
 			}
-
-			$("#set-cardno").val(ccnnewval);
 		}
-	</script>
-	<a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
-	<script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-	<script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-	<script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-	<script src="assets/vendors/jarallax/jarallax.min.js"></script>
-	<script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-	<script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-	<script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-	<script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-	<script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-	<script src="assets/vendors/nouislider/nouislider.min.js"></script>
-	<script src="assets/vendors/odometer/odometer.min.js"></script>
-	<script src="assets/vendors/swiper/swiper.min.js"></script>
-	<script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-	<script src="assets/vendors/wnumb/wNumb.min.js"></script>
-	<script src="assets/vendors/wow/wow.js"></script>
-	<script src="assets/vendors/isotope/isotope.js"></script>
-	<script src="assets/vendors/countdown/countdown.min.js"></script>
-	<!-- template js -->
-	<script src="assets/js/organik.js"></script>
-</body>
+		$("#set-cardno").val(ccnnewval);
+	}
+</script>
 
-</html>
+<?php include 'cust_footer.php'; ?>

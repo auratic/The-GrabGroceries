@@ -292,7 +292,6 @@
         if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
             location.href = "admin_category.php";
         } else {
-
         }
 
         var active_checkboxes = document.getElementsByName('select-active');

@@ -51,8 +51,22 @@
         if(empty($name_err) && empty($rating_err) && empty($review_err))
         {
             $sql = "INSERT INTO cust_review (user_id, reviews, rating, cust_name) VALUES (".$_SESSION['userid'].", '$review', '$rating', '$name');";
+            $sql_reset_review = "UPDATE users SET review = 'false' WHERE user_id = ". $_SESSION["userid"];
+
             if(mysqli_query($link, $sql))
             {
+                if(mysqli_query($link, $sql_reset_review))
+                {
+
+                }
+                else
+                {
+                    echo'
+                    <script>
+                        alert("Something went wrong.")
+                    </script>
+                    ';
+                }
                 echo'
                 <script>
                     alert("We have received your comment.")
@@ -283,11 +297,15 @@
                 </div><!-- /.testimonials-one__single -->
 
                 <?php
-                    if(isset($_SESSION["loggedin"]))
+                    $sql = "SELECT review FROM users WHERE user_id = ". $_SESSION["userid"];
+                    $result = mysqli_query($link, $sql);
+                    $row = mysqli_fetch_assoc($result);
+
+                    if(isset($_SESSION["loggedin"]) && ($row["review"] == 'true'))
                     {
                         echo"
                             <div class='form-group' style='text-align: left; margin-right: 1rem'>
-                                <button class='btn btn-success' style='margin-left: 1018px;' onclick='return addReview();'>Leave a review</button>
+                                <button class='thm-btn' style='margin-left: 950px;' onclick='return addReview();'>Leave a review</button>
                             </div>
                         ";
                     }
@@ -311,13 +329,13 @@
                                 style="text-align: left">
                                     <div class="form-group">
                                         <label>Your Name</label> </br>
-                                        <input type="name" name="name" class="form-control" placeholder="John Doe">
+                                        <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $name; ?>">
                                         <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                                     </div> 
 
                                     <div class="form-group">
                                         <label>Rating</label> </br>
-                                        <select name="rating" id="rating" class="form-control" value="">
+                                        <select name="rating" id="rating" class="form-control" value="<?php echo $rating; ?>">
                                             <option disabled selected value></option>
                                                 <option value="Poor">Poor</option>
                                                 <option value="Fair">Fair</option>
@@ -330,7 +348,7 @@
 
                                     <div class="form-group" style="text-align: left">
                                         <label><b>Your comment</b></label> </br>
-                                        <textarea name="review" class="form-control" rows="4" cols="50" ></textarea>
+                                        <textarea name="review" class="form-control" rows="4" cols="50" value="<?php echo $review; ?>"></textarea>
                                         <span class="invalid-feedback d-block"><?php echo $review_err; ?></span>
                                     </div>
 

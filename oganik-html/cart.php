@@ -249,7 +249,7 @@
                                                         <td>
                                                         <div class="quantity-box">
                                                             <button type="button" class="sub">-</button>
-                                                                <input type="number" name="item_quantity" value="'.$row['quantity'].'" min="1" max="999" data-mask="00">
+                                                                <input type="number" name="item_quantity" value="'.$row['quantity'].'" min="1" max="'.$row['stock'].'" data-mask="00">
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>

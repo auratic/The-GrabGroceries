@@ -42,9 +42,18 @@ Bcrypt - https://bcrypt-generator.com/
 //////////////////////////////////////////
 JS
 //////////////////////////////////////////
+SweetAlert2 - https://sweetalert2.github.io/#download
 Check if page is reloaded - https://stackoverflow.com/questions/5004978/check-if-page-gets-reloaded-or-refreshed-in-javascript
 AJAX allows submit data without refreshing page - https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
 jQuery AJAX - https://stackoverflow.com/questions/2866063/submit-form-without-page-reloading
 AJAX to same file - https://stackoverflow.com/questions/27634131/jquery-ajax-post-to-php-in-the-same-file-not-working
 Prevent resubmission on refresh - https://stackoverflow.com/questions/6320113/how-to-prevent-form-resubmission-when-page-is-refreshed-f5-ctrlr
 Character replace algorithm - https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+
+
+//////////////////////////////////////////
+Date
+//////////////////////////////////////////
+(JS/PHP) Set min/max input date to today - https://stackoverflow.com/questions/32378590/set-date-input-fields-max-date-to-today
+PHP get date input from HTML form - https://stackoverflow.com/questions/35343569/from-input-type-date-value-to-a-php-variable/39598980
+Manipulate date - https://stackoverflow.com/questions/5741632/javascript-date-7-days

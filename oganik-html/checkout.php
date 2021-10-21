@@ -180,6 +180,8 @@ if (isset($_POST["place-order"])) {
 					}
 
 					$sql_update_stock = "UPDATE item SET stock = $new_stock WHERE item_id = " . $_POST["item_id"][$x];
+
+					$sql_review = "UPDATE users SET review = 'true' WHERE user_id = ".$_SESSION['userid'];
 					
 					if (mysqli_query($link, $sql_transaction)) {
 
@@ -195,6 +197,14 @@ if (isset($_POST["place-order"])) {
 						} else {
 							
 							echo "<script>alert('Error: Fail to update stock')</script>";
+
+						}
+
+						if (mysqli_query($link, $sql_review)) {
+
+						} else {
+							
+							echo "<script>alert('Error: Fail update review.')</script>";
 
 						}
 

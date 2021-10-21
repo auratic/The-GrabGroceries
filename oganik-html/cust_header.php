@@ -68,9 +68,6 @@ require "config.php";
     <link rel="stylesheet" href="assets/css/organik.css" />
 
     <style>
-        body {
-            background-image: url(https://i.pinimg.com/originals/9e/ec/3c/9eec3cd5c2a2064be3005409dca25f01.jpg);
-        }
         .mode {
             color: #fff;
             background-color: #4CAF50;

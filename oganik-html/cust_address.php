@@ -519,7 +519,7 @@ for ($x = 0; $x < 5; $x++) {
         if (pass) {
             $.ajax({
                 type: "post",
-                url: "address.php",
+                url: "cust_address.php",
                 data: {
                     'details': true,
                     'no': counter,

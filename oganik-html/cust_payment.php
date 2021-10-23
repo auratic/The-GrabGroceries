@@ -345,7 +345,7 @@ for ($x = 0; $x < 5; $x++) {
         if (pass) {
             $.ajax({
                 type: "post",
-                url: "payment.php",
+                url: "cust_payment.php",
                 data: {
                     'detail': true,
                     'no': counter,

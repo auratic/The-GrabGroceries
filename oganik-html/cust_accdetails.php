@@ -5,8 +5,13 @@ include 'cust_header.php';
 if (!isset($_SESSION["loggedin"])) {
     echo "
         <script>
-        alert('Please login');
-        location.href='login.php';
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log in.',
+            icon: 'error'
+        }).then(function() {
+        location.href = 'login.php'
+        })
         </script>";
 }
 
@@ -90,14 +95,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_query($link, $sql)) {
             echo "
                 <script>
-                    alert('Your details have been updated!');
-                    location.href = 'accdetails.php'
+                    Swal.fire({
+                        title: 'Successful',
+                        text: 'Your details have been updated!',
+                        icon: 'success'
+                    }).then(function() {
+                    location.href = 'cust_accdetails.php'
+                    })
                 </script>";
         } else {
             echo "
                 <script>
                     alert('Errors occur!!!')
-                    location.href = 'accdetails.php'
+                    location.href = 'cust_accdetails.php'
                 </script>";
         }
     }

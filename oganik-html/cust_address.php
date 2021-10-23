@@ -3,10 +3,15 @@ include 'cust_header.php';
 
 if (!isset($_SESSION["loggedin"])) {
     echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
+        <script>
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log in.',
+            icon: 'error'
+        }).then(function() {
+        location.href = 'login.php'
+        })
+        </script>";
 }
 
 $fname = $lname = $default_address = $default_phone = $default_pcode = $default_state = $default_area = "";
@@ -534,8 +539,15 @@ for ($x = 0; $x < 5; $x++) {
                 },
                 cache: false,
                 success: function(html) {
-                    alert('Details updated');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Details updated!',
+                        confirmButtonText: 'Okay',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = 'cust_address.php';
+                        }
+                    })
                 }
             });
         }

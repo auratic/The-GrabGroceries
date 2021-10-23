@@ -159,8 +159,13 @@ if (isset($_POST["new-pass"])) {
 	if (mysqli_query($link, $sql)) {
 		echo "
 		<script>
-			alert('Password updated');
-			location.href = 'login.php';
+			Swal.fire({
+                title: 'Successful',
+                text: 'Password updated',
+                icon: 'success'
+            }).then(function() {
+            location.href = 'login.php'
+            })
 		</script>";
 	} else {
 		echo "
@@ -428,8 +433,15 @@ if (isset($_POST["new-pass"])) {
 				},
 				cache: false,
 				success: function(html) {
-					alert('Password updated');
-					location.href = 'login.php';
+					Swal.fire({
+                        icon: 'success',
+                        title: 'Password updated',
+                        confirmButtonText: 'Okay',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = 'login.php';
+                        }
+                    })
 				}
 			});
 		}

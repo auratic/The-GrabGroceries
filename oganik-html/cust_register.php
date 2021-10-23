@@ -126,8 +126,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
                             echo "
                             <script>
-                            alert('New account created');
-                            location.href = 'login.php';
+                                Swal.fire({
+                                    title: 'Successful',
+                                    text: 'New account created',
+                                    icon: 'success'
+                                }).then(function() {
+                                location.href = 'login.php'
+                                })
                             </script>";
                         } else {
                             echo "

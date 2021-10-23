@@ -3,10 +3,16 @@ include 'cust_header.php';
 
 if (!isset($_SESSION['loggedin'])) {
 	echo "
-	<script>
-		alert('Please log in first to checkout.'); location.href='login.php'
-	</script>
-	";
+        <script>
+            Swal.fire({
+                title: 'Error',
+                text: 'Please log in first to checkout.',
+                icon: 'error'
+            }).then(function() {
+            location.href = 'login.php'
+            })
+        </script>
+    ";
 }
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
@@ -203,7 +209,16 @@ if (isset($_POST["place-order"])) {
 					}
 				}
 
-				echo "<script>alert('Transaction success'); location.href = 'view_order.php'</script>";
+				echo "
+				<script>
+					Swal.fire({
+						title: 'Successful',
+						text: 'Transaction success',
+						icon: 'success'
+					}).then(function() {
+					location.href = 'cust_view_order.php'
+					})
+				</script>";
 			} else {
 
 				echo "<script>alert('Error: Receipt fail')</script>";
@@ -211,7 +226,16 @@ if (isset($_POST["place-order"])) {
 		}
 	} else {
 
-		echo "<script>alert('You cart is empty!')</script>";
+		echo "
+		<script>
+			Swal.fire({
+				title: 'Error',
+				text: 'Your cart is empty.',
+				icon: 'error'
+			}).then(function() {
+			location.href = 'cart.php'
+			})
+		</script>";
 	}
 }
 ?>

@@ -5,7 +5,13 @@ include 'cust_header.php';
 if (!isset($_SESSION['loggedin'])) {
     echo "
         <script>
-            alert('Please log in first to view cart.'); location.href='login.php'
+            Swal.fire({
+                title: 'Error',
+                text: 'Please log in first to view cart.',
+                icon: 'error'
+            }).then(function() {
+            location.href = 'login.php'
+            })
         </script>
         ";
 }
@@ -16,12 +22,17 @@ if (isset($_POST['update'])) {
 
     $sql = "UPDATE cust_cart SET quantity = $newQty WHERE cart_id = $cart_id";
     if (mysqli_query($link, $sql)) {
-        echo '
+        echo "
             <script>
-                alert("Updated ' . $_POST["iname"] . ' to ' . $newQty . ' quantity");    
-                location.href = "cart.php";
+                Swal.fire({
+                    title: 'Successful',
+                    text: 'Updated ".$_POST["iname"]." to ".$newQty." quantity.',
+                    icon: 'success'
+                }).then(function() {
+                location.href = 'cart.php'
+                })
             </script>  
-            ';
+            ";
     }
 }
 
@@ -30,12 +41,17 @@ if (isset($_POST['remove'])) {
 
     $sql = "DELETE FROM cust_cart where cart_id = $cart_id";
     if (mysqli_query($link, $sql)) {
-        echo '
+        echo "
             <script>
-                alert("Success remove ' . $_POST["iname"] . '");    
-                location.href = "cart.php";
+                Swal.fire({
+                    title: 'Successful',
+                    text: 'Removed all ".$_POST["iname"]."',
+                    icon: 'success'
+                }).then(function() {
+                location.href = 'cart.php'
+                })
             </script>  
-            ';
+            ";
     }
 }
 ?>

@@ -45,10 +45,10 @@
                             <a href="about.php">About</a>
                         </li>
                         <li>
-                            <a href="contact.php">Contact</a>
+                            <a href="cust_contact.php">Contact</a>
                         </li>
                         <li>
-                            <a href="contact.php">Help</a>
+                            <a href="cust_contact.php">Help</a>
                         </li>
                     </ul><!-- /.list-unstyled footer-widget__contact -->
                 </div><!-- /.footer-widget -->
@@ -64,10 +64,10 @@
                             <a href="cust_profile.php">My Account</a>
                         </li>
                         <li>
-                            <a href="contact.php">Support</a>
+                            <a href="cust_contact.php">Support</a>
                         </li>
                         <li>
-                            <a href="contact.php">FAQs</a>
+                            <a href="cust_contact.php">FAQs</a>
                         </li>
                     </ul><!-- /.list-unstyled footer-widget__contact -->
                 </div><!-- /.footer-widget -->

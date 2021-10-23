@@ -5,8 +5,13 @@ include 'cust_header.php';
 if (!isset($_SESSION["loggedin"])) {
     echo "
         <script>
-        alert('Please login');
-        location.href='login.php';
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log .',
+            icon: 'error'
+        }).then(function() {
+        location.href = 'login.php'
+        })
         </script>";
 }
 
@@ -41,10 +46,16 @@ if (count($_POST) > 0) {
                 $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
 
                 if (mysqli_query($link, $sql_update_password)) {
-                    echo " 
-                        <script>
-                        alert('Your password have updated!');
-                        </script>";
+                    echo "
+                    <script>
+                        Swal.fire({
+                            title: 'Successful',
+                            text: 'Your password have updated!',
+                            icon: 'success'
+                        }).then(function() {
+                        location.href = 'cust_password.php'
+                        })
+                    </script>";
                 } else {
                     echo "
                         <script>

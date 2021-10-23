@@ -97,7 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //alertBox();
         echo "
         <script>
-            alert('Message sent. Thank you for contacting us!');
+            Swal.fire({
+                title: 'Successful',
+                text: 'Message sent. Thank you for contacting us!',
+                icon: 'success'
+            }).then(function() {
+            location.href = 'cust_contact.php'
+            })
         </script>";
     } else {
         //alertBox();

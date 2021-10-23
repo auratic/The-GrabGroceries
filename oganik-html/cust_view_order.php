@@ -3,10 +3,15 @@ include 'cust_header.php';
 
 if (!isset($_SESSION["loggedin"])) {
     echo "
-     <script>
-       alert('Please login');
-       location.href='login.php';
-     </script>";
+        <script>
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log in.',
+            icon: 'error'
+        }).then(function() {
+        location.href = 'login.php'
+        })
+        </script>";
 }
 
 $sql_receipt = "SELECT receipt_id FROM cust_receipt 

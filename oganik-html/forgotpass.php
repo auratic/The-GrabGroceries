@@ -152,8 +152,10 @@ if (isset($_POST["confirm-code"])) {
 
 if (isset($_POST["new-pass"])) {
 
+	$newPass = $_POST['new-pass'];
+
 	$sql = "UPDATE users
-			SET password = '" . $_POST['new-pass'] . "' 
+			SET password = '" . password_hash($newPass, PASSWORD_DEFAULT) . "' 
 			WHERE user_id = " . $_SESSION["resetid"];
 
 	if (mysqli_query($link, $sql)) {

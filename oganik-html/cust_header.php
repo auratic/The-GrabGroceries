@@ -212,7 +212,7 @@ require "config.php";
                             <a href="#">More</a>
                             <ul>
                                 <li><a href='news.php'>News</a></li>
-                                <li><a href="contact.php">Contact Us</a></li>
+                                <li><a href="cust_contact.php">Contact Us</a></li>
                                 <li><a href="about.php">About Us</a></li>
                             </ul>
                         </li>

@@ -248,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </li>
 
                         <li>
-                            <a href="contact.php">Contact Us</a>
+                            <a href="cust_contact.php">Contact Us</a>
                         </li>
 
                         <li class="dropdown">

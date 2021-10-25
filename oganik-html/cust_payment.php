@@ -4,8 +4,13 @@ include 'cust_header.php';
 if (!isset($_SESSION["loggedin"])) {
     echo "
         <script>
-        alert('Please login');
-        location.href='login.php';
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log in.',
+            icon: 'error'
+        }).then(function() {
+        location.href = 'login.php'
+        })
         </script>";
 }
 
@@ -30,7 +35,11 @@ if (isset($_POST['detail'])) {
     if (mysqli_query($link, $sql_insert_cc)) {
         echo "
             <script>
-                alert('Payment method updated!');
+                Swal.fire({
+                    title: 'Successful',
+                    text: 'Payment method updated!',
+                    icon: 'success'
+                })
             </script>";
     } else {
         echo "
@@ -345,7 +354,7 @@ for ($x = 0; $x < 5; $x++) {
         if (pass) {
             $.ajax({
                 type: "post",
-                url: "payment.php",
+                url: "cust_payment.php",
                 data: {
                     'detail': true,
                     'no': counter,
@@ -357,8 +366,15 @@ for ($x = 0; $x < 5; $x++) {
                 },
                 cache: false,
                 success: function(html) {
-                    alert('Payment updated');
-                    location.reload();
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Payment method updated!',
+                        confirmButtonText: 'Okay',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = 'cust_payment.php';
+                        }
+                    })
                 }
             });
         }

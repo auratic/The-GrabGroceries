@@ -47,12 +47,17 @@ if (isset($_POST['add'])) {
                     </script>
                     ';
             }
-            echo '
+            echo "
                 <script>
-                    alert("We have received your comment.")
-                    location.href = "review.php";
+                    Swal.fire({
+                        title: 'Successful',
+                        text: 'We have received your comment',
+                        icon: 'success'
+                    }).then(function() {
+                    location.href = 'review.php'
+                    })
                 </script>
-                ';
+                ";
         } else {
             echo '
                 <script>

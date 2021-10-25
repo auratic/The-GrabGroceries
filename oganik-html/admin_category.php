@@ -156,7 +156,7 @@
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $count_sql = "SELECT * from item WHERE category = '" . $row['category_name'] . "'";
+                                                    $count_sql = "SELECT * from item WHERE category_id = '" . $row['category_id'] . "'";
                                                     $count_result = mysqli_query($link, $count_sql);
                                                     $no_of_item = mysqli_num_rows($count_result);
 

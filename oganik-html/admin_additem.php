@@ -22,10 +22,10 @@ if (isset($_POST["add-item"])) {
     $item_name = ucwords(trim($_POST["item-name"]));
   }
 
-  if (empty(trim($_POST["category"]))) {
+  if (empty(trim($_POST["category_id"]))) {
     $category_err = "Please select a category";
   } else {
-    $category = trim($_POST["category"]);
+    $category = trim($_POST["category_id"]);
   }
 
   if (empty(trim($_POST["desc"]))) {
@@ -69,7 +69,7 @@ if (isset($_POST["add-item"])) {
     $exp_err == ""
   ) {
 
-    $sql = "INSERT INTO item (item, category, description, stock, image, cost, exp_date)
+    $sql = "INSERT INTO item (item, category_id, description, stock, image, cost, exp_date)
                  VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
 
 
@@ -129,15 +129,22 @@ if (isset($_POST["add-item"])) {
 
             <div class="form-group col-md-4" style="text-align: left">
               <label><b>Category</b></label> </br>
-              <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>">
-                <option value="<?php echo $category; ?>" selected hidden><?php echo $category; ?></option>
+              <select id="category" name="category_id" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>">
+                
                 <?php
                 $get_category = "SELECT * FROM category WHERE category_status = 'Active'";
 
                 if ($result = mysqli_query($link, $get_category)) {
 
                   while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<option value="' . $row["category_name"] . '">' . $row["category_name"] . '</option>';
+
+                    if($category == $row["category_id"]) {
+                      echo  "<option value='$category' selected hidden>". $row["category_name"] ."</option>";
+                    } else if (empty($category)) {
+                      echo  "<option value='$category' selected hidden>$category</option>";
+                    }
+
+                    echo '<option value="' . $row["category_id"] . '">' . $row["category_name"] . '</option>';
                   }
                 }
                 ?>

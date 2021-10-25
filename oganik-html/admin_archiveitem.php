@@ -183,9 +183,6 @@ if (isset($_GET["restore"])) {
                                                 <div class="form-group" style="text-align: left; margin-right: 1rem">
                                                     <button class="btn btn-info btn-sm" onclick="return restoreItem();">Restore</button>
                                                 </div>
-                                                <div class="form-group" style="text-align: left">
-                                                    <button class="btn btn-info btn-sm" onclick="return deleteItem();">Delete</button>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -204,7 +201,7 @@ if (isset($_GET["restore"])) {
                                                 <th></th>
                                             </tr>
                                             <?php
-                                            $sql = "SELECT * from item";
+                                            $sql = "SELECT * from item INNER JOIN category ON item.category_id = category.category_id";
 
                                             if ($result = mysqli_query($link, $sql)) {
 
@@ -215,7 +212,7 @@ if (isset($_GET["restore"])) {
                                                     <tr>
                                                         <td>' . $row['item_id'] . '</td>
                                                         <td>' . $row['item'] . '</td>
-                                                        <td>' . $row['category'] . '</td>
+                                                        <td>' . $row['category_name'] . '</td>
                                                         <td>' . $row['description'] . '</td>
                                                         <td>' . $row['stock'] . '</td>
                                                         <td><img src="assets/images/items/' . $row['image'] . '" style="width:100%;height:200px;object-fit:contain;"></td>
@@ -302,15 +299,6 @@ if (isset($_GET["restore"])) {
         } else {}
 
         return false;
-    }
-
-    function deleteItem() {
-        if (confirm("Delete permenantly? Press 'OK' to continue")) {
-            alert("Not working yet");
-        } else {
-
-        }
-
     }
 </script>
 

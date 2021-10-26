@@ -1413,6 +1413,29 @@ h6 {
   }
 }
 
+.check-btn {
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  border: none;
+  outline: none !important;
+  background-color: var(--thm-base);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--thm-font);
+  padding: 16.5px 39.5px;
+  transition: 500ms;
+  background-color: var(--thm-base);
+  color: #fff;
+}
+
+.check-btn:hover {
+  color: var(--thm-base);
+  background-color: #fff;
+}
+
 .thm-btn {
   display: inline-block;
   vertical-align: middle;

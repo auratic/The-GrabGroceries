@@ -367,99 +367,11 @@ if (isset($_POST["place-order"])) {
 
 
 						<div class="col-md-12">
-							<hr>
-							<h3>Payment Details</h3>
-						</div>
-						<!--
-										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
-											<li>
-												<h2 class="para-title active">
-													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-														Direct Bank Transfer
-													</span>
-												</h2>
-												<div id="collapseTwo" class="collapse show" role="button" aria-labelledby="collapseTwo" data-parent="#accordion">
-													<p>Make your payment directly into our bank account. Please
-														use your Order ID as the payment reference. Your order
-														wont be shipped until the funds have cleared.</p>
-												</div>
-											</li>
-											<li>
-												<h2 class="para-title ">
-													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-														Paypal Payment
-														<img src="assets/images/products/paypal-1-1.jpg" alt="">
-													</span>
-												</h2>
-												<div id="collapseOne" class="collapse " aria-labelledby="collapseOne" data-parent="#accordion">
-													<p>Make your payment directly into our bank account. Please
-														use your Order ID as the payment reference. Your order
-														wont be shipped until the funds have cleared.</p>
-												</div>
-											</li>
-										</ul>
-										-->
-						<div class="col-md-12">
-							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
-								<option value="" style="display:none">Choose existing card</option>
-								<option value="" style="<?php
-														if (
-															$cardno[0] == "" &&
-															$cardno[1] == "" &&
-															$cardno[2] == "" &&
-															$cardno[3] == "" &&
-															$cardno[4] == ""
-														) {
-															echo 'display:block';
-														} else {
-															echo 'display:none';
-														}
-														?>" disabled>
-									No existing address
-								</option>
-								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
-								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
-								<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2] . " (" . $cardname[2] . ")"; ?></option>
-								<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3] . " (" . $cardname[3] . ")"; ?></option>
-								<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4] . " (" . $cardname[4] . ")"; ?></option>
-							</select>
-
-						</div><!-- /.col-md-12 -->
-
-						<div class="col-md-12">
-							<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
-							<input type="text" name="cardno" id="set-cardno" maxlength="19">
-							<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
-						</div><!-- /.col-md-12 -->
-
-						<div class="col-md-4">
-							<label>CVV<i style="color:lightgray" required> (123)</i></label>
-							<input type="text" name="cvv" id="set-cvv" maxlength="3">
-							<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
-						</div><!-- /.col-md-4 -->
-
-						<div class="col-md-4">
-							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-							<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
-							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
-						</div><!-- /.col-md-4 -->
-
-						<div class="col-md-4">
-							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-							<input type="text" name="expyear" id="set-expyear" maxlength="2">
-							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
-						</div><!-- /.col-md-4 -->
-
-						<input type="hidden" id="cart-empty" name="cart_empty">
-
-					</div><!-- /.row -->
-				</div><!-- /.col-lg-6 -->
-
-				<div class="col-lg-6">
-					<h3>
+						<h3>
+						<hr>
 						Your Orders
-					</h3>
-					<div class="table-responsive">
+						</h3>
+						<div class="table-responsive">
 						<table class="table cart-table">
 							<thead>
 								<tr>
@@ -534,9 +446,102 @@ if (isset($_POST["place-order"])) {
 							<span>Grand Total (RM)</span>
 							<span><?php echo $total ?></span>
 						</p>
-						<hr>
-						<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
+						<hr >
+						<input type="submit" class="check-btn" value="Place Your Order" name="place-order" >
 					</div><!-- /.order-details -->
+						</div>
+
+
+						
+
+					</div><!-- /.row -->
+				</div><!-- /.col-lg-6 -->
+
+				<div class="col-lg-6">
+				
+							<h3>Payment Details</h3>
+				<!--
+										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
+											<li>
+												<h2 class="para-title active">
+													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+														Direct Bank Transfer
+													</span>
+												</h2>
+												<div id="collapseTwo" class="collapse show" role="button" aria-labelledby="collapseTwo" data-parent="#accordion">
+													<p>Make your payment directly into our bank account. Please
+														use your Order ID as the payment reference. Your order
+														wont be shipped until the funds have cleared.</p>
+												</div>
+											</li>
+											<li>
+												<h2 class="para-title ">
+													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+														Paypal Payment
+														<img src="assets/images/products/paypal-1-1.jpg" alt="">
+													</span>
+												</h2>
+												<div id="collapseOne" class="collapse " aria-labelledby="collapseOne" data-parent="#accordion">
+													<p>Make your payment directly into our bank account. Please
+														use your Order ID as the payment reference. Your order
+														wont be shipped until the funds have cleared.</p>
+												</div>
+											</li>
+										</ul>
+										-->
+										<div class="col-md-12">
+							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
+								<option value="" style="display:none">Choose existing card</option>
+								<option value="" style="<?php
+														if (
+															$cardno[0] == "" &&
+															$cardno[1] == "" &&
+															$cardno[2] == "" &&
+															$cardno[3] == "" &&
+															$cardno[4] == ""
+														) {
+															echo 'display:block';
+														} else {
+															echo 'display:none';
+														}
+														?>" disabled>
+									No existing address
+								</option>
+								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
+								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
+								<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2] . " (" . $cardname[2] . ")"; ?></option>
+								<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3] . " (" . $cardname[3] . ")"; ?></option>
+								<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4] . " (" . $cardname[4] . ")"; ?></option>
+							</select>
+
+						</div><!-- /.col-md-12 -->
+
+                        <div class="col-md-12">
+							<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
+							<input type="text" name="cardno" id="set-cardno" maxlength="19">
+							<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
+						</div><!-- /.col-md-12 -->
+
+						<div class="col-md-4">
+							<label>CVV<i style="color:lightgray" required> (123)</i></label>
+							<input type="text" name="cvv" id="set-cvv" maxlength="3">
+							<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
+						</div><!-- /.col-md-4 -->
+
+						<div class="col-md-4">
+							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
+							<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
+							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
+						</div><!-- /.col-md-4 -->
+
+						<div class="col-md-4">
+							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
+							<input type="text" name="expyear" id="set-expyear" maxlength="2">
+							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
+						</div><!-- /.col-md-4 -->
+
+						<input type="hidden" id="cart-empty" name="cart_empty">	
+					
 
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->

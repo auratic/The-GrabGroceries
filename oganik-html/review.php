@@ -123,11 +123,36 @@ if (isset($_POST['add'])) {
                 $sql_review = "SELECT * FROM cust_review";
                 $result = mysqli_query($link, $sql_review);
                 while ($row = mysqli_fetch_assoc($result)) {
+                    if($row['rating'] == 'Poor')
+                    {
+                        $star = "<i class='fa fa-star'></i>";
+                    }
+                    else if($row['rating'] == 'Fair')
+                    {
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                    }
+                    else if($row['rating'] == 'Average')
+                    {
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                    }
+                    else if($row['rating'] == 'Good')
+                    {
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                    }
+                    else if($row['rating'] == 'Excellent')
+                    {
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                    }
                     echo "
-                                <div>
-                                    <p>" . $row['reviews'] . "</p>
-                                    <h3>" . $row['cust_name'] . "</h3><br>
-                                    <span>" . $row['rating'] . "</span><hr>
+                                <div class='row'style='text-align: left;'>
+                                    <div class='col-2'>
+                                        <img src='assets/images/cust.jpg' alt='' style='margin-left: -10px; margin-top: 20px; width: 140px; height: 140px;'>
+                                    </div>
+                                    <div class='col-10'>
+                                        <p>" . $row['reviews'] . "</p>
+                                        <h3>" . $row['cust_name'] . "</h3><br>
+                                        <span style='margin-top: -40px;'>" .$star. "</span><hr>
+                                    </div>
                                 </div>
                             ";
                 }

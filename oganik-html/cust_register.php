@@ -159,6 +159,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
             alert('Error: " . $sql . "\n" . mysqli_error($link) . "')
           </script>";
         }
+
+        $date = date("F j, Y, g:i a");
+        $to = "1191201218@student.mmu.edu.my"; //send to our email
+        $subject = "Account Created";
+        $message = '
+        <html>
+            <body style="
+                padding:20px; 
+                background-color:gray;
+                width: 500px;
+                height: 600px;
+                color: white;"
+                >
+            <h1>Dear customer,</h1>
+            <br>
+
+            <h1 style="
+                padding:20px; 
+                font-size:25px; 
+                width: 400px; 
+                height: 40px; 
+                text-align: center;
+                background-color:seagreen;
+                color:white;
+                border-radius:25px;
+                font-family:Arial, Helvetica, sans-serif;
+                margin: auto"
+                >
+                Registration Successful
+            </h1>
+            <br>
+            <h3>
+                Congratulations, your TheGrabGroceries account has successfully created on  <i>' . $date . '</i>.
+            </h3>
+            <br>
+            
+            <p style="color: white;">Enjoy your stay on TheGrabGroceries website!</p>
+            
+            <p style="color: white;">If this is not sent by you, please ignore this email</p>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <p style="color: white;">Best Regards,</p></br>
+            <p style="color: white;">TheGrabGroceries Staff</p>
+            </body>
+        </html>
+        ';
+
+        $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
+        $headers .= 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
+        mail($to, $subject, $message, $headers);
     }
     // Close connection
     mysqli_close($link);

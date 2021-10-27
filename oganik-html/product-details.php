@@ -103,7 +103,19 @@ if (isset($_POST["addtocart"])) {
                         </div>
         </form>
         <ul class="list-unstyled category_tag_list">
-            <li><span>Category:</span> <?php echo $row["category"] ?></li>
+            <li><span>Category:</span> 
+                <?php 
+                    $id = $row['category_id'];
+                    $sqls = "SELECT * FROM category WHERE category_id = '$id' ";
+                    $results = mysqli_query($link, $sqls);
+                    while ($rows = mysqli_fetch_assoc($results))
+                    {
+                        $category = $rows['category_name'];
+                    }
+
+                    echo $category;
+                ?>
+            </li>
         </ul>
         <div class="product_detail_share_box">
             <div class="share_box_title">

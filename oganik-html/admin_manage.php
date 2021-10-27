@@ -101,6 +101,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+if (isset($_GET["deactivate"])) {
+    $user_id = $_GET["user_id"];
+
+    $sql = "UPDATE users SET mode = 'deactivate' where user_id = $user_id";
+
+    if (mysqli_query($link, $sql)) {
+        header("Location: admin_manage.php");
+        die();
+    }
+}
+
+if (isset($_GET["activate"])) {
+    $user_id = $_GET["user_id"];
+
+    $sql = "UPDATE users SET mode = 'admin' where user_id = $user_id";
+
+    if (mysqli_query($link, $sql)) {
+        header("Location: admin_manage.php");
+        die();
+    }
+}
+
 ?>
 
 <section class="">
@@ -177,50 +200,113 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="col-sm-7">
-                <h4>Admin list</h4>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-8">
-                    </div>
-                    <div class="col-sm-4" style="
+                <!--
+                
+                -->
+                <div class="product-tab-box tabs-box" style="margin:0">
+                    <ul class="tab-btns tab-buttons clearfix list-unstyled">
+                        <li data-tab="#desc" class="tab-btn active-btn"><span>Active admin</span></li>
+                        <li data-tab="#addi__info" class="tab-btn"><span>Inactive admin</span></li>
+                    </ul>
+                    <div class="tabs-content">
+                        <div class="tab active-tab" id="desc">
+                            <div class="product-details-content" style="padding: 20px 30px;">
+                                <div class="desc-content-box">
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                        </div>
+                                        <div class="col-sm-4" style="
                                         display: flex;
                                         align-items: center;
                                         justify-content: flex-end;">
-                        <div class="form-group" style="text-align: left; margin-right: 1rem">
-                            <button class="btn btn-info btn-sm" onclick="return addAdmin();">Add</button>
-                        </div>
-                        <div class="form-group" style="text-align: left">
-                            <button class="btn btn-info btn-sm" onclick="return deleteAdmin();">Delete</button>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-bordered table-striped table-hover table-condensed">
-                    <tr>
-                        <th>User ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                    <?php
+                                            <div class="form-group" style="text-align: left; margin-right: 1rem">
+                                                <button class="btn btn-info btn-sm" onclick="return addAdmin();">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered table-striped table-hover table-condensed">
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th></th>
+                                        </tr>
+                                        <?php
 
-                    $sql = "SELECT * FROM users WHERE mode = 'admin'";
+                                        $sql = "SELECT * FROM users WHERE mode = 'admin'";
 
-                    if ($result = mysqli_query($link, $sql)) {
+                                        if ($result = mysqli_query($link, $sql)) {
 
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo '
                                             <tr>
                                                 <td>' . $row['user_id'] . '</td>
                                                 <td>' . $row['firstname'] . '</td>
                                                 <td>' . $row['lastname'] . '</td>
                                                 <td>' . $row['email'] . '</td>
                                                 <td>' . $row['phone'] . '</td>
+                                                <td>
+                                                    <div class="form-group" style="text-align: left">
+                                                        <button class="btn btn-info btn-sm" onclick="return deactivateAdmin(' . $row['user_id'] . ');">Deactivate</button>
+                                                    </div>
+                                                </td>
                                             </tr>';
-                        }
-                    }
-                    ?>
-                </table>
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab" id="addi__info">
+                            <div class="product-details-content" style="padding: 20px 30px;">
+                                <div class="desc-content-box">
+
+                                    <table class="table table-bordered table-striped table-hover table-condensed">
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th></th>
+                                        </tr>
+                                        <?php
+
+                                        $sql = "SELECT * FROM users WHERE mode = 'deactivate'";
+
+                                        if ($result = mysqli_query($link, $sql)) {
+
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo '
+                                        <tr>
+                                            <td>' . $row['user_id'] . '</td>
+                                            <td>' . $row['firstname'] . '</td>
+                                            <td>' . $row['lastname'] . '</td>
+                                            <td>' . $row['email'] . '</td>
+                                            <td>' . $row['phone'] . '</td>
+                                            <td>
+                                                <div class="form-group" style="text-align: left">
+                                                    <button class="btn btn-info btn-sm" onclick="return activateAdmin(' . $row['user_id'] . ');">Activate</button>
+                                                </div>
+                                            </td>
+                                        </tr>';
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -314,6 +400,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     function closeModal() {
         $('#add-modal').fadeOut();
+        return false;
+    }
+
+    function deactivateAdmin(id) {
+
+        Swal.fire({
+            title: 'Deactivate this admin ?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "get",
+                    url: "admin_manage.php",
+                    data: {
+                        'deactivate': true,
+                        'user_id': id
+                    },
+                    cache: false,
+                    success: function(html) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Updated',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_manage.php';
+                            }
+                        })
+                    }
+                });
+            }
+        });
+        return false;
+    }
+
+    function activateAdmin(id) {
+
+        Swal.fire({
+            title: 'Activate this admin ?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "get",
+                    url: "admin_manage.php",
+                    data: {
+                        'activate': true,
+                        'user_id': id
+                    },
+                    cache: false,
+                    success: function(html) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Updated',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_manage.php';
+                            }
+                        })
+                    }
+                });
+            }
+        });
         return false;
     }
 </script>

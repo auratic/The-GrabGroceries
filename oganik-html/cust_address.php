@@ -278,7 +278,7 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '">
+                                                <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '" placeholder="60123456789">
                                                 <span class="invalid-feedback d-block" id="phone_err0"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
@@ -418,7 +418,7 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="60122228888" maxlength=12 required />
+                                                <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="60123456789" maxlength=12 required />
                                                 <span class="invalid-feedback d-block" id="phone_err' . $counter . '"></span>
                                             </div>
                                         </div>

@@ -111,7 +111,7 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                 <div class="row" style="padding: 50px 0 50px 0;">
                     <div class="main-menu__login" style="margin-left: 5%;">
                         <a href="<?php if (isset($_SESSION["lname"])) {
-                                        echo "admin_profile.php";
+                                        echo "admin_dashboard.php";
                                     } else {
                                         echo "login.php";
                                     } ?>">
@@ -173,13 +173,22 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">
+                                <a href="admin_dashboard.php">
+                                    Dashboard
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
                                 <a href="admin_profile.php">
                                     Profile
                                 </a>
                             </h5>
                         </div>
                     </div>
-
                     <div class="card">
 
                         <div class="card-header" id="headingThree">

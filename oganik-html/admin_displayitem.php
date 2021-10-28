@@ -7,25 +7,16 @@ if (isset($_GET["archive"])) {
     $item_id = $_GET["item_id"];
 
     $date = date('Y-m-d H:i:s');
-    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'archive item', '$date', '";
+    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'archive item', '$date', '$item_id')";
 
-    for ($i = 0; $i < count($item_id); $i++) {
-        $sql = "UPDATE item SET item_status = 'Inactive' WHERE item_id = " . $item_id[$i];
+    $sql = "UPDATE item SET item_status = 'Inactive' WHERE item_id = " . $item_id;
 
-        if ($i < 1) {
-            $activity_sql .= $item_id[$i];
-        } else {
-            $activity_sql .= "," . $item_id[$i];
-        }
-
-        if (mysqli_query($link, $sql)) {
-            echo "<script>alert('Updated');</script>";
-        } else {
-            echo "<script>alert('Some error occured');</script>";
-        }
+    if (mysqli_query($link, $sql)) {
+        echo "<script>alert('Updated');</script>";
+        mysqli_query($link, $activity_sql);
+    } else {
+        echo "<script>alert('Some error occured');</script>";
     }
-    $activity_sql .= "')";
-    mysqli_query($link, $activity_sql);
 }
 ?>
 
@@ -37,76 +28,7 @@ if (isset($_GET["archive"])) {
     <div class="container" style="padding:2%; background-color:rgba(255,255,255,0.8);">
         <div class="row">
 
-            <div class="col-sm-2" style="
-                        border: gray solid 1px;
-                        border-radius: 10px;
-                        padding: 1%;">
-                <form>
-                    <div class="form-group" style="text-align: left">
-                        <label><b>Search by name</b></label> </br>
-                        <input type="text" name="search_name" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo ""; ?>">
-                        <span class="invalid-feedback"><?php echo $name_err; ?></span>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <label><b>Search by id</b></label> </br>
-                        <input type="text" name="search_id" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo ""; ?>">
-                        <span class="invalid-feedback"><?php echo $id_err; ?></span>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-group" style="text-align: left">
-                        <label><b>Search by category</b></label> </br>
-                        <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $category; ?>">
-                            <option value="Fruit & Vegetables">Fruit & Vegetables</option>
-                            <option value="Meat">Meat</option>
-                            <option value="Seafood">Seafood</option>
-                            <option value="Snack">Snack</option>
-                        </select>
-                        <span class="invalid-feedback"><?php echo $category_err; ?></span>
-                    </div>
-
-                    <hr>
-
-                    <label><b>Date added</b></label> </br>
-                    <div class="form-group" style="text-align: left">
-                        <p>from</p>
-                        <input type="date" name="date_added_from" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                        <span class="invalid-feedback"><?php echo $added_from_err; ?></span>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <p>to</p>
-                        <input type="date" name="date_added_to" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                        <span class="invalid-feedback"><?php echo $added_to_err; ?></span>
-                    </div>
-
-                    <hr>
-
-                    <label><b>Expiry Date</b></label> </br>
-                    <div class="form-group" style="text-align: left">
-                        <p>from</p>
-                        <input type="date" name="exp_date_from" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                        <span class="invalid-feedback"><?php echo $exp_from_err; ?></span>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <p>to</p>
-                        <input type="date" name="exp_date_to" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                        <span class="invalid-feedback"><?php echo $exp_to_err; ?></span>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-group" style="text-align: left">
-                        <input type="submit" class="btn btn-primary" value="Filter">
-                    </div>
-
-                </form>
-            </div>
-
-            <div class="col-sm-10">
+            <div class="col-sm-12">
 
                 <div class="product-tab-box tabs-box" style="margin:0">
 
@@ -123,114 +45,69 @@ if (isset($_GET["archive"])) {
 
                                 <div class="desc-content-box">
 
-                                    <div class='row' style="margin: 1%">
-                                        <div class="col-sm-8">
-                                            <!--
-                                                <form>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <label><b>Date added</b></label> </br>
-                                                            <div class="form-group" style="text-align: left">
-                                                                <p>from</p>
-                                                                <input type="date" name="date_added_from" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                                                                <span class="invalid-feedback"><?php echo $added_from_err; ?></span>
-                                                            </div>   
-                                                            
-                                                            <div class="form-group" style="text-align: left">
-                                                                <p>to</p>
-                                                                <input type="date" name="date_added_to" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                                                                <span class="invalid-feedback"><?php echo $added_to_err; ?></span>
-                                                            </div>
-                                                        </div>      
-
-                                                        <div class="col-sm-6">
-                                                            <label><b>Expiry Date</b></label> </br>
-                                                            <div class="form-group" style="text-align: left">
-                                                                <p>from</p>
-                                                                <input type="date" name="exp_date_from" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                                                                <span class="invalid-feedback"><?php echo $exp_from_err; ?></span>
-                                                            </div>   
-
-                                                            <div class="form-group" style="text-align: left">
-                                                                <p>to</p>
-                                                                <input type="date" name="exp_date_to" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>">
-                                                                <span class="invalid-feedback"><?php echo $exp_to_err; ?></span>
-                                                            </div>   
-                                                        </div>      
-                                                    </div>
-
-                                                </form>
-                                                -->
-                                        </div>
-
-                                        <!--
-                                                <div class="col-sm-3" 
-                                                    style="
-                                                    display:flex; 
-                                                    align-items:flex-end; 
-                                                    justify-content: flex-end" 
-                                                    >
-                                                -->
-                                        <div class="col-sm-4">
-                                            <form style="
-                                                        display: flex;
-                                                        align-items: center;
-                                                        justify-content: flex-end;">
-                                                <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                                    <input type="checkbox" id="select-all" />
-                                                    <label for="select-all">Select All</label>
-                                                </div>
-                                                <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                                    <button class="btn btn-info btn-sm" onclick="return archiveItem();">Archive</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                     <div style="padding: 1%;">
-                                        <table class="table table-bordered table-striped table-hover table-condensed">
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Item name</th>
-                                                <th>Category</th>
-                                                <th>Description</th>
-                                                <th>Stock</th>
-                                                <th>Image</th>
-                                                <th>Cost</th>
-                                                <th>Expiry Date</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                            <?php
-                                            $sql = "SELECT * from item INNER JOIN category ON item.category_id = category.category_id";
-
-                                            if ($result = mysqli_query($link, $sql)) {
-
-                                                while ($row = mysqli_fetch_assoc($result)) {
-
-                                                    if ($row["item_status"] == "Active") {
-                                                        echo '
+                                        <table id="dtBasicExample" class="display">
+                                            <thead>
                                                 <tr>
-                                                <td>' . $row['item_id'] . '</td>
-                                                <td>' . $row['item'] . '</td>
-                                                <td>' . $row['category_name'] . '</td>
-                                                <td>' . $row['description'] . '</td>
-                                                <td>' . $row['stock'] . '</td>
-                                                <td><img src="assets/images/items/' . $row['image'] . '" style="width:100%;height:200px;object-fit:contain;"></td>
-                                                <td>RM' . $row['cost'] . '</td>
-                                                <td>' . $row['exp_date'] . '</td>
-                                                <td>
-                                                    <a href="admin_updateitem.php?id=' . $row['item_id'] . '">
-                                                    <button class="btn btn-info btn-sm">Edit</button>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <input type="checkbox" name="select-item" value="' . $row['item_id'] . '">
-                                                </td>
+                                                    <th>ID</th>
+                                                    <th>Item name</th>
+                                                    <th>Category</th>
+                                                    <th>Description</th>
+                                                    <th>Stock</th>
+                                                    <th>Image</th>
+                                                    <th>Cost</th>
+                                                    <th>Expiry Date</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sql = "SELECT * from item INNER JOIN category ON item.category_id = category.category_id";
+
+                                                if ($result = mysqli_query($link, $sql)) {
+
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                                        if ($row["item_status"] == "Active") {
+                                                            echo '
+                                                <tr>
+                                                    <td>' . $row['item_id'] . '</td>
+                                                    <td>' . $row['item'] . '</td>
+                                                    <td>' . $row['category_name'] . '</td>
+                                                    <td>' . $row['description'] . '</td>
+                                                    <td>' . $row['stock'] . '</td>
+                                                    <td><img src="assets/images/items/' . $row['image'] . '" style="width:100%;height:200px;object-fit:contain;"></td>
+                                                    <td>RM' . $row['cost'] . '</td>
+                                                    <td>' . $row['exp_date'] . '</td>
+                                                    <td>
+                                                        <a href="admin_updateitem.php?id=' . $row['item_id'] . '">
+                                                        <button class="btn btn-info btn-sm">Edit</button>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-sm" onclick="return archiveItem(' . $row['item_id'] . ')">Archive</button>
+                                                    </td>
                                                 </tr>';
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            ?>
+                                                ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Item name</th>
+                                                    <th>Category</th>
+                                                    <th>Description</th>
+                                                    <th>Stock</th>
+                                                    <th>Image</th>
+                                                    <th>Cost</th>
+                                                    <th>Expiry Date</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -252,53 +129,55 @@ if (isset($_GET["archive"])) {
 
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 <script>
-    var checkboxes = document.getElementsByName('select-item');
-    var select_all = document.getElementById("select-all");
-
-    select_all.onclick = () => {
-
-        if (select_all.checked) {
-            //console.log("yes")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = true;
+    function archiveItem(id) {
+        Swal.fire({
+            title: 'Deactivate this item ?',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "get",
+                    url: "admin_displayitem.php",
+                    data: {
+                        'archive': true,
+                        'item_id': id
+                    },
+                    cache: false,
+                    success: function(html) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Updated',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_displayitem.php';
+                            }
+                        })
+                    }
+                });
             }
-        } else {
-            //console.log("no")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = false;
-            }
-        }
-    }
-
-    function archiveItem() {
-        var item_id = [];
-
-        for (var i = 0, n = checkboxes.length; i < n; i++) {
-            if (checkboxes[i].checked == true) {
-                item_id.push(checkboxes[i].value);
-            }
-        }
-        if (confirm("Move to archive? Press 'OK' to continue")) {
-            $.ajax({
-                type: "get",
-                url: "admin_displayitem.php",
-                data: {
-                    'archive': true,
-                    'item_id': item_id
-                },
-                cache: false,
-                success: function(html) {
-                    alert('Updated');
-                    location.href = 'admin_displayitem.php';
-                }
-            });
-
-            //alert("Updated");
-        } else {}
-
+        });
         return false;
     }
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                'pdf',
+                'csv',
+                'excel',
+                'colvis'
+            ],
+        });
 
+        table.buttons().container()
+            .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+    });
 </script>
 
 <!-- template js -->

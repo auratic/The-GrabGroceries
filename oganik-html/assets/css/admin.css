@@ -73,3 +73,7 @@ section {
 .card-body {
   background-color: lightgray;
 }
+
+#dtBasicExample tr, #dtBasicExample td{
+  background-color: rgba(255,255,255,0.3);
+}

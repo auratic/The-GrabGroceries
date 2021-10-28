@@ -57,3 +57,9 @@ Date
 (JS/PHP) Set min/max input date to today - https://stackoverflow.com/questions/32378590/set-date-input-fields-max-date-to-today
 PHP get date input from HTML form - https://stackoverflow.com/questions/35343569/from-input-type-date-value-to-a-php-variable/39598980
 Manipulate date - https://stackoverflow.com/questions/5741632/javascript-date-7-days
+
+//////////////////////////////////////////
+Datatable
+//////////////////////////////////////////
+Change background color - https://datatables.net/forums/discussion/53319/change-the-background-colour-based-on-the-value
+Button with Bootstrap 5 - https://datatables.net/extensions/buttons/examples/styling/bootstrap5.html

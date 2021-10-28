@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'login', NULL, '$date')";
                         mysqli_query($link, $sql);
 
-                        header("location: admin_profile.php");
+                        header("location: admin_dashboard.php");
                     } else {
                         header("location: index.php");
                     }

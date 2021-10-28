@@ -35,7 +35,7 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
 
     <!-- Sweet Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
@@ -68,6 +68,24 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
     <link rel="stylesheet" href="assets/vendors/tiny-slider/tiny-slider.min.css" />
     <link rel="stylesheet" type="assets/css" href="css/organik.css">
 
+    <!-- Datatable CDN -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap5.min.css" />
+
+    <!-- PDFMake -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
     <!-- template styles -->
     <link rel="stylesheet" type="text/css" href="assets/css/organik.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/admin.css" />
@@ -86,15 +104,12 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <header class="main-header">
+        <header class="main-header" id="main-header">
 
             <nav class="main-menu">
 
                 <div class="row" style="padding: 50px 0 50px 0;">
-                    <button id="instruction" type="button" class="btn instruction" onclick="toggleNav()" style="margin: 0 3%" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Click here to view menu">
-                        &#9776;
-                    </button>
-                    <div class="main-menu__login" style="margin: auto 0;">
+                    <div class="main-menu__login" style="margin-left: 5%;">
                         <a href="<?php if (isset($_SESSION["lname"])) {
                                         echo "admin_profile.php";
                                     } else {
@@ -151,10 +166,8 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
 
-        <div id="admin-overlay" class="admin-overlay">
-            <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
-
-            <div class="admin-overlay-content">
+        <div class="sidenav" id="sidenav">
+            <div id="admin-overlay" class="admin-overlay">
                 <div id="accordion">
 
                     <div class="card">
@@ -171,12 +184,12 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
 
                         <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="display: flex; justify-content: space-between;">
+                                <a class="collapsed" data-toggle="collapse" data-target="#sidebarCollapse" aria-expanded="false" aria-controls="collapseThree" style="display: flex; justify-content: space-between;">
                                     Products <i class="fas fa-plus" style="margin: 0"></i>
                                 </a>
                             </h5>
                         </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div id="sidebarCollapse" class="collapse" data-parent="#accordion">
                             <div class="card-body">
                                 <a href="admin_additem.php">
                                     Add Products
@@ -202,10 +215,10 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                             </h5>
                         </div>
                     </div>
-                    <?php 
+                    <?php
 
-                        if($_SESSION["mode"] == "superadmin") {
-                            echo '
+                    if ($_SESSION["mode"] == "superadmin") {
+                        echo '
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="mb-0">
@@ -215,8 +228,8 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                                     </h5>
                                 </div>
                             </div>';
-                        }
-                        
+                    }
+
                     ?>
                 </div>
                 <div class="card" style="background-color:black">
@@ -229,16 +242,14 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                     </div>
                 </div>
             </div>
-            <script>
-                function toggleNav() {
-                    var x = document.getElementById("admin-overlay");
-
-                    if (x.style.width === "100%") {
-                        x.style.width = "0%";
-                    } else {
-                        x.style.width = "100%";
-                    }
-
-                }
-            </script>
         </div>
+
+        <script>
+            var headerHeight = document.getElementById("main-header").offsetHeight;
+            document.getElementById("sidenav").style.paddingTop = headerHeight + "px";
+
+            window.onresize = () => {
+                headerHeight = document.getElementById("main-header").offsetHeight;
+                document.getElementById("sidenav").style.paddingTop = headerHeight + "px";
+            }
+        </script>

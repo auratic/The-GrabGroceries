@@ -124,31 +124,31 @@ if ($result = mysqli_query($link, $sql)) {
                     }
 
                     echo '
-                                                                <div class="row">
-                                                                    <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                                                        <p>Full name: <strong>  ' . $fname . ' ' . $lname . '</strong></p>
-                                                                        <p>Email   &#160&#160&#160&#160&#160 : ' . $default_email . '</span></p>
-                                                                        <p>Address  &#160&#160: ' . $default_address . '</span> </p>
-                                                                        <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $default_area . '</span> </p>
-                                                                        <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $default_state . '</span> </p>
-                                                                        <p>Postcode : ' . $default_pcode . '</span> </p>
-                                                                        <p>Contact  &#160&#160: ' . $default_phone . '</span></p>
-                                                                        <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span>
-                                                                    </div>';
+                        <div class="row">
+                            <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
+                                <p>Full name: <strong>  ' . $fname . ' ' . $lname . '</strong></p>
+                                <p>Email   &#160&#160&#160&#160&#160 : ' . $default_email . '</span></p>
+                                <p>Address  &#160&#160: ' . $default_address . '</span> </p>
+                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $default_area . '</span> </p>
+                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $default_state . '</span> </p>
+                                <p>Postcode : ' . $default_pcode . '</span> </p>
+                                <p>Contact  &#160&#160: ' . $default_phone . '</span></p>
+                                <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span>
+                            </div>';
                     $counterr = 0;
                     for ($x = 0; $x < 5; $x++) {
                         $counterr++;
                         echo '
-                                                                            <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                                                                <p>Full name: <strong>  ' . $name[$x] . ' ' . $lastname[$x] . '</strong></p>
-                                                                                <p>Email    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
-                                                                                <p>Address &#160 : ' . $address[$x] . '</span></p>
-                                                                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
-                                                                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $state[$x] . '</span></p>
-                                                                                <p>Postcode&#160: ' . $pcode[$x] . '</span></p>
-                                                                                <p>Contact &#160&#160 : ' . $phone[$x] . '</span></p>
-                                                                                <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>Edit</a>
-                                                                            </div>';
+                            <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
+                                <p>Full name: <strong>  ' . $name[$x] . ' ' . $lastname[$x] . '</strong></p>
+                                <p>Email    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
+                                <p>Address &#160 : ' . $address[$x] . '</span></p>
+                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
+                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $state[$x] . '</span></p>
+                                <p>Postcode&#160: ' . $pcode[$x] . '</span></p>
+                                <p>Contact &#160&#160 : ' . $phone[$x] . '</span></p>
+                                <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>Edit</a>
+                            </div>';
                     }
 
                     echo "</div>";

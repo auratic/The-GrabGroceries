@@ -45,10 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["verified"] = "true";
             $_SESSION["ver_code"] = "";
             echo "
-            <script>
-                alert('Account successfully verified');
-                location.href = 'index.php'
-            </script>";
+                <script>
+                    Swal.fire({
+                        title: 'Successful',
+                        text: 'Your account has been verified.',
+                        icon: 'success'
+                    }).then(function() {
+                    location.href = 'index.php'
+                    })
+                </script>";
         } else {
             echo "
             <script>

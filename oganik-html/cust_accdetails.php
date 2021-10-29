@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fname_err = $lname_err = $phone_err = $email_err = "";
 
 
-    if (empty($_POST["fname"])) {
+    /*if (empty($_POST["fname"])) {
         $fname_err = "Name is required";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
         $fname_err = "Only letters and white space allowed";
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lname_err = "Only letters and white space allowed";
     } else {
         $new_lname = ucwords(test_input($_POST["lname"]));
-    }
+    }*/
 
     if (empty($_POST["phone"])) {
         $phone_err = "Phone number is required";
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $new_phone = $_POST["phone"];
     }
 
-    $new_email = test_input($_POST["email"]);
+    /*$new_email = test_input($_POST["email"]);
 
     if (empty($_POST["email"])) {
         $email_err = "Email is required";
@@ -80,16 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $email_err = "Email is taken";
             }
         }
-    }
+    }*/
 
-    if (empty($fname_err) && empty($lname_err) && empty($phone_err) && empty($email_err)) {
+    if (empty($phone_err)) {
         $sql = "
             UPDATE users SET
-            lastname = '$new_lname',
-            firstname = '$new_fname',
-            phone = '$new_phone',
-            verified = 'false',
-            email = '$new_email'
+            phone = '$new_phone'
             WHERE user_id = " . $_SESSION["userid"];
 
         if (mysqli_query($link, $sql)) {
@@ -127,17 +123,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-md-8">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post">
                                 <div class="row">
+
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <span><b>Email Address</b></span>
+                                            <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="<?php echo $email ?>" style="width:100%" value="" disabled>
+                                            <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <span><b>First Name</b></span>
-                                            <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="<?php echo $fname ?>" style="width:100%" value="">
+                                            <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="<?php echo $fname ?>" style="width:100%" value="" disabled>
                                             <span class="invalid-feedback"><?php echo $fname_err; ?></span>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <span><b>Last Name</b></span>
-                                            <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="<?php echo $lname ?>" style="width:100%" value="">
+                                            <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="<?php echo $lname ?>" style="width:100%" value="" disabled>
                                             <span class="invalid-feedback"><?php echo $lname_err; ?></span>
                                         </div>
                                     </div>
@@ -149,16 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <span><b>Phone Number</b></span>
                                             <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="">
                                             <span class="invalid-feedback"><?php echo $phone_err; ?></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <span><b>Email Address</b></span>
-                                            <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="<?php echo $email ?>" style="width:100%" value="">
-                                            <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                         </div>
                                     </div>
                                 </div>

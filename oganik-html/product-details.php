@@ -88,7 +88,6 @@ if (isset($_POST["addtocart"])) {
                             <p><?php echo $row["description"] ?></p>
                         </div>
                         <ul class="list-unstyled product_detail_address">
-                            <li>Item ID: <?php echo $row["item_id"] ?></li>
                             <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
                             <li><i><?php echo $row["stock"] ?> piece available</i></li>
                         </ul>
@@ -100,9 +99,6 @@ if (isset($_POST["addtocart"])) {
                             </div>
                             <div class="addto-cart-box">
                                 <input type="submit" class="thm-btn" value="Add to Cart" name="addtocart">
-                            </div>
-                            <div class="wishlist_btn">
-                                <a href="#" class="thm-btn">Add to Wishlist</a>
                             </div>
                         </div>
         </form>
@@ -132,10 +128,10 @@ if (isset($_POST["addtocart"])) {
 
                     <div class="tab active-tab" id="addi__info">
                         <ul class="additionali_nfo list-unstyled">
-                            <li><span>Name:</span><?php echo $row["item"] ?></li>
-                            <li><span>Expiry Date:</span><?php echo $row["exp_date"] ?></li>
-                            <li><span>Category:</span><?php echo $category_row["category_name"] ?></li>
-                            <li><span>Stock:</span><?php echo $row["stock"] ?></li>
+                            <li><span>Name&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["item"] ?></li>
+                            <li><span>Expiry Date&nbsp:</span><?php echo $row["exp_date"] ?></li>
+                            <li><span>Category&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $category_row["category_name"] ?></li>
+                            <li><span>Stock&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["stock"] ?></li>
                         </ul>
                     </div>
                 </div>
@@ -144,115 +140,6 @@ if (isset($_POST["addtocart"])) {
     </div>
     </div>
 </section>
-
-<section class="product-two">
-    <div class="container">
-        <div class="block-title text-center">
-            <div class="block-title__decor"></div><!-- /.block-title__decor -->
-            <p>Recently Added</p>
-            <h3>Similar Products</h3>
-        </div><!-- /.block-title -->
-        <div class="thm-tiny__slider" id="product-two__carousel" data-tiny-options='{
-                    "container": "#product-two__carousel",
-                    "items": 1,
-                    "slideBy": "page",
-                    "gutter": 0,
-                    "mouseDrag": true,
-                    "autoplay": true,
-                    "nav": false,
-                    "controlsPosition": "bottom",
-                    "controlsText": ["<i class=\"fa fa-angle-left\"></i>", "<i class=\"fa fa-angle-right\"></i>"],
-                    "autoplayButtonOutput": false,
-                    "responsive": {
-                        "640": {
-                        "items": 2,
-                        "gutter": 30
-                        },
-                        "992": {
-                        "gutter": 30,
-                        "items": 3
-                        },
-                        "1200": {
-                        "disable": true
-                        }
-                    }
-                    }'>
-            <div>
-                <div class="product-card__two">
-                    <div class="product-card__two-image">
-                        <span class="product-card__two-sale">sale</span>
-                        <img src="assets/images/products/product-2-1.jpg" alt="">
-                        <div class="product-card__two-image-content">
-                            <a href="#"><i class="organik-icon-visibility"></i></a>
-                            <a href="#"><i class="organik-icon-heart"></i></a>
-                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                        </div><!-- /.product-card__two-image-content -->
-                    </div><!-- /.product-card__two-image -->
-                    <div class="product-card__two-content">
-                        <h3><a href="product-details.php">Banana</a></h3>
-                        <div class="product-card__two-stars">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div><!-- /.product-card__two-stars -->
-                        <p>$1.00</p>
-
-                    </div><!-- /.product-card__two-content -->
-                </div><!-- /.product-card__two -->
-            </div>
-            <div>
-                <div class="product-card__two">
-                    <div class="product-card__two-image">
-                        <img src="assets/images/products/product-2-2.jpg" alt="">
-                        <div class="product-card__two-image-content">
-                            <a href="#"><i class="organik-icon-visibility"></i></a>
-                            <a href="#"><i class="organik-icon-heart"></i></a>
-                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                        </div><!-- /.product-card__two-image-content -->
-                    </div><!-- /.product-card__two-image -->
-                    <div class="product-card__two-content">
-                        <h3><a href="product-details.php">Olive Oil</a></h3>
-                        <div class="product-card__two-stars">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div><!-- /.product-card__two-stars -->
-                        <p>$7.00</p>
-
-                    </div><!-- /.product-card__two-content -->
-                </div><!-- /.product-card__two -->
-            </div>
-            <div>
-                <div class="product-card__two">
-                    <div class="product-card__two-image">
-                        <img src="assets/images/products/product-2-3.jpg" alt="">
-                        <div class="product-card__two-image-content">
-                            <a href="#"><i class="organik-icon-visibility"></i></a>
-                            <a href="#"><i class="organik-icon-heart"></i></a>
-                            <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
-                        </div><!-- /.product-card__two-image-content -->
-                    </div><!-- /.product-card__two-image -->
-                    <div class="product-card__two-content">
-                        <h3><a href="product-details.php">Eggs</a></h3>
-                        <div class="product-card__two-stars">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div><!-- /.product-card__two-stars -->
-                        <p>$3.00</p>
-
-                    </div><!-- /.product-card__two-content -->
-                </div><!-- /.product-card__two -->
-            </div>
-        </div>
-    </div><!-- /.container -->
-</section><!-- /.product-two -->
 
 <script>
     function addToCartFunction() {

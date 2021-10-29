@@ -226,6 +226,8 @@
 
 <!-- template js -->
 <script src="assets/js/organik.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 

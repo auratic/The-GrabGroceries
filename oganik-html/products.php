@@ -62,7 +62,7 @@ else
                 <div class="product-sidebar">
                     <div class="product-sidebar__single product-sidebar__search-widget">
                         <form action="#">
-                            <input type="text" placeholder="Search" class="search-toggler">
+                            <button style="width: 300px;"class="thm-btn search-toggler">Search</button>
                         </form>
                     </div><!-- /.product-sidebar__single -->
                     <div class="product-sidebar__single">
@@ -90,7 +90,7 @@ else
                             <h3>Categories</h3>
                             <ul class="list-unstyled product-sidebar__links">
                                 <?php
-                                    $brand_query = "SELECT * FROM category";
+                                    $brand_query = "SELECT * FROM category WHERE category_status = 'Active'";
                                     $brand_query_run  = mysqli_query($link, $brand_query);
 
                                     if(mysqli_num_rows($brand_query_run) > 0)
@@ -115,7 +115,7 @@ else
                                     
                                 ?>
                             </ul><!-- /.list-unstyled product-sidebar__links -->
-                            <button type="submit" class="thm-btn">Search</button>
+                            <button type="submit" class="thm-btn" style="padding: 2px 10px;">Search</button>
                         </div><!-- /.product-sidebar__single -->
                     </form>
                 </div><!-- /.product-sidebar -->

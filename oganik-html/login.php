@@ -163,6 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 360px;
             padding: 20px;
         }
+        
     </style>
 </head>
 
@@ -297,7 +298,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="form-group" style="text-align: left">
                     <label><b>Password</b></label> </br>
-                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                    <input type="password" id="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                    <label style="cursor: pointer;"><input style="cursor: pointer; margin-top: 5px;" type="checkbox" onclick="myFunction()"> Show Password</label>
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
@@ -312,5 +314,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>Don't have an account? <a href="cust_register.php">Sign Up Now</a>.</p>
             </form>
         </div>
+        <script>
+            function myFunction() {
+                var x = document.getElementById("password");
 
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
         <?php include 'cust_footer.php'; ?>

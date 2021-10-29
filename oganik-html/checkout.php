@@ -474,6 +474,7 @@ if (isset($_POST["place-order"])) {
 												$counter++;
 												$item_total_cost = $row["quantity"] * $row["cost"];
 												$subtotal += $item_total_cost;
+												$shipping_cost = 0;
 
 												echo '
 														<tr>
@@ -487,6 +488,14 @@ if (isset($_POST["place-order"])) {
 														';
 											}
 										}
+										if ($subtotal>99)
+										{
+											$shipping_cost = 0;
+										}
+										else
+										{
+											$shipping_cost = 8;
+										}	
 										$total = $subtotal + $shipping_cost;
 										echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
 									}
@@ -501,15 +510,15 @@ if (isset($_POST["place-order"])) {
 							</div><!-- /.order-details__top -->
 							<p>
 								<span>Subtotal (RM)</span>
-								<span><?php echo $subtotal ?></span>
+								<span><?php echo number_format($subtotal,2) ?></span>
 							</p>
 							<p>
 								<span>Shipping (RM)</span>
-								<span>0.00</span>
+								<span><?php echo number_format($shipping_cost,2)?></span>
 							</p>
 							<p>
 								<span>Grand Total (RM)</span>
-								<span><?php echo $total ?></span>
+								<span><?php echo number_format($total,2) ?></span>
 							</p>
 							<hr>
 							<i>Free shipping if orders over RM100   </i><i class="fas fa-truck-moving"></i>

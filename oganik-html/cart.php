@@ -150,7 +150,10 @@ if (isset($_POST['remove'])) {
                             RM
                             <?php
                             if ($empty_cart)
-                                echo "0";
+                            {
+                                $subtotal = 0;
+                                echo number_format($subtotal,2);
+                            }
                             else {
                                 echo number_format($subtotal, 2);
                             }
@@ -163,15 +166,21 @@ if (isset($_POST['remove'])) {
                         <span>
                             RM
                            <?php
+                           
+                            
                             if ($empty_cart)
                             {
-                                echo $shipping_fee = 0;
+                                $shipping_fee = 0;
                             }
-                            else if($subtotal<100)
+                            else if($subtotal<=99)
                             {
-                                echo $shipping_fee = 8;
+                                $shipping_fee = 8.00;
                             }
-                                
+                            else if($subtotal>=100)
+                            {
+                                $shipping_fee = 0;
+                            }
+                                echo number_format($shipping_fee,2);
                             ?>
                         </span>
                     </li>
@@ -182,7 +191,11 @@ if (isset($_POST['remove'])) {
                             <?php
 
                             if ($empty_cart)
-                                echo "0";
+                            {
+                                $grand_total = 0;
+                                echo number_format($grand_total,2);
+                            }
+
                             else {
                                 $grand_total = $subtotal + $shipping_fee;
                                 echo number_format($grand_total, 2);
@@ -191,8 +204,9 @@ if (isset($_POST['remove'])) {
                         </span>
                     </li>
                 </ul><!-- /.cart-total -->
-                <div class="button-box" style="margin-left: 151px;">
-                    <a href="checkout.php" class="thm-btn"><i class="far fa-credit-card"></i> Checkout</a><!-- /.thm-btn -->
+                <div class="button-box" style="margin-left: -20px;">
+                    <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> Cancel</a><!-- /.thm-btn -->
+                    <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> Checkout</a><!-- /.thm-btn -->
                 </div><!-- /.button-box -->
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->

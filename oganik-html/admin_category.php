@@ -206,17 +206,18 @@
 
                                                         <td>
                                                             <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
+
                                                             <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                            <div>
+                                                                <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                                <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                            </div>
                                                         </td>
 
                                                         <td><p>' . $no_of_item . '</p></td>
                                                         <td style="display: flex;
                                                                 justify-content: space-evenly;
                                                                 align-items: center;">
-
-                                                            <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none">Save</button>
-                                                            <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
-
                                                             ';
 
                                                             if($row['category_name'] == "Not Set") {
@@ -279,16 +280,16 @@
                                                     <td>
                                                         <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
                                                         <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                        <div>
+                                                            <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                            <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                        </div>
                                                     </td>
 
                                                     <td><p>' . $no_of_item . '</p></td>
                                                     <td style="display: flex;
                                                             justify-content: space-evenly;
                                                             align-items: center;">
-
-                                                        <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none">Save</button>
-                                                        <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
-
                                                         ';
 
                                                         if($row['category_name'] == "Not Set") {
@@ -434,9 +435,8 @@
             document.getElementById("p-" + id).style.display = "none";
             document.getElementById("text-" + id).style.display = "block";
 
-            document.getElementById("edit-" + id).style.display = "none";
-            document.getElementById("save-" + id).style.display = "block";
-            document.getElementById("cancel-" + id).style.display = "block";
+            document.getElementById("save-" + id).style.display = "inline-block";
+            document.getElementById("cancel-" + id).style.display = "inline-block";
 
 
             $( ".edit-button" ).prop('disabled', true);
@@ -446,7 +446,6 @@
             document.getElementById("p-" + id).style.display = "block";
             document.getElementById("text-" + id).style.display = "none";
 
-            document.getElementById("edit-" + id).style.display = "block";
             document.getElementById("save-" + id).style.display = "none";
             document.getElementById("cancel-" + id).style.display = "none";
 

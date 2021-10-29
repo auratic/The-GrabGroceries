@@ -176,7 +176,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                 </div>
 
                                                                                 <div class="modal-footer" style="background-color:var(--thm-base)">
-                                                                                    <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Cancel</button>
+                                                                                    <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Close</button>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>

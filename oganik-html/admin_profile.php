@@ -260,7 +260,7 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span><b>Phone Number</b></span>
-                                <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" value="<?php echo $phone ?>  " style="width:100%">
+                                <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" value="<?php echo $phone ?>" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                             </div>
                         </div>

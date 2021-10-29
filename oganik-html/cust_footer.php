@@ -80,7 +80,7 @@
             <div class="inner-container text-center">
                 <div class="bottom-footer__social">
                     <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
-                    <a href="https://facebook.com/" class="fab fa-facebook-square" target="_blank"></a>
+                    <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
                     <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
                 </div><!-- /.bottom-footer__social -->
                 <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>

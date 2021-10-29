@@ -125,36 +125,36 @@ if (isset($_POST['add'])) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     if($row['rating'] == 'Poor')
                     {
-                        $star = "<i class='fa fa-star'></i>";
+                        $star = "<i class='fa fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>";
                     }
                     else if($row['rating'] == 'Fair')
                     {
-                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>";
                     }
                     else if($row['rating'] == 'Average')
                     {
-                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>";
                     }
                     else if($row['rating'] == 'Good')
                     {
-                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+                        $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='far fa-star'></i>";
                     }
                     else if($row['rating'] == 'Excellent')
                     {
                         $star = "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
                     }
                     echo "
-                                <div class='row'style='text-align: left;'>
-                                    <div class='col-2'>
-                                        <img src='assets/images/cust.jpg' alt='' style='margin-left: -10px; margin-top: 20px; width: 140px; height: 140px;'>
-                                    </div>
-                                    <div class='col-10'>
-                                        <p>" . $row['reviews'] . "</p>
-                                        <h3>" . $row['cust_name'] . "</h3><br>
-                                        <span style='margin-top: -40px;'>" .$star. "</span><hr>
-                                    </div>
-                                </div>
-                            ";
+                        <div class='row'style='text-align: left;'>
+                            <div class='col-2'>
+                                <img src='assets/images/cust.jpg' alt='' style='margin-left: -10px; margin-top: 20px; width: 140px; height: 140px;'>
+                            </div>
+                            <div class='col-10'>
+                                <h3>" . $row['cust_name'] . "</h3><span style>" .$star. "</span>
+                                <p>" . $row['reviews'] . "</p>
+                                <hr>
+                            </div>
+                        </div>
+                    ";
                 }
                 ?>
             </div><!-- /.testimonials-one__content -->

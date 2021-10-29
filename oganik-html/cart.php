@@ -81,7 +81,7 @@ if (isset($_POST['remove'])) {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        <th style="text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,8 +121,8 @@ if (isset($_POST['remove'])) {
                                                         </div>
                                                         </td>
                                                         <td>RM ' . $item_total . '</td>
-                                                        <td><button name="update" class="btn btn-warning">Update</button></td>
-                                                        <td><button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
+                                                        <td style="text-align: center;"><button style="" class="btn btn-gray" name="update"><img src="assets/images/update.png" alt="Update Item" /></button>
+                                                        <button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
                                                     </tr>
                                                 </form>
                                             ';
@@ -142,6 +142,7 @@ if (isset($_POST['remove'])) {
                 </form><!-- /.contact-one__form -->
             </div><!-- /.col-lg-8 -->
             <div class="col-lg-4">
+                <i style="margin-left: 90px;">Free shipping if orders over RM100   </i><i class="fas fa-truck-moving"></i><hr>
                 <ul class="cart-total list-unstyled">
                     <li>
                         <span>Subtotal</span>
@@ -149,7 +150,10 @@ if (isset($_POST['remove'])) {
                             RM
                             <?php
                             if ($empty_cart)
-                                echo "0";
+                            {
+                                $subtotal = 0;
+                                echo number_format($subtotal,2);
+                            }
                             else {
                                 echo number_format($subtotal, 2);
                             }
@@ -158,14 +162,25 @@ if (isset($_POST['remove'])) {
                         </span>
                     </li>
                     <li>
-                        <span>Shipping Cost</span>
+                      <span>Shipping Cost</span>
                         <span>
                             RM
-                            <?php
+                           <?php
+                           
+                            
                             if ($empty_cart)
-                                echo "0";
-                            else
-                                echo $shipping_fee;
+                            {
+                                $shipping_fee = 0;
+                            }
+                            else if($subtotal<=99)
+                            {
+                                $shipping_fee = 8.00;
+                            }
+                            else if($subtotal>=100)
+                            {
+                                $shipping_fee = 0;
+                            }
+                                echo number_format($shipping_fee,2);
                             ?>
                         </span>
                     </li>
@@ -176,7 +191,11 @@ if (isset($_POST['remove'])) {
                             <?php
 
                             if ($empty_cart)
-                                echo "0";
+                            {
+                                $grand_total = 0;
+                                echo number_format($grand_total,2);
+                            }
+
                             else {
                                 $grand_total = $subtotal + $shipping_fee;
                                 echo number_format($grand_total, 2);
@@ -185,8 +204,9 @@ if (isset($_POST['remove'])) {
                         </span>
                     </li>
                 </ul><!-- /.cart-total -->
-                <div class="button-box" style="margin-left: 151px;">
-                    <a href="checkout.php" class="thm-btn"><i class="far fa-credit-card"></i> Checkout</a><!-- /.thm-btn -->
+                <div class="button-box" style="margin-left: -20px;">
+                    <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> Cancel</a><!-- /.thm-btn -->
+                    <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> Checkout</a><!-- /.thm-btn -->
                 </div><!-- /.button-box -->
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->

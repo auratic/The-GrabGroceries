@@ -67,7 +67,7 @@ else
                         </form>
                     </div><!-- /.product-sidebar__single -->
                     <div class="product-sidebar__single">
-                        <h3>Price</h3>
+                        <h3>Price (RM)</h3>
                         <div class="product-sidebar__price-range">
                             <form action="" method="GET">
                                 <div class="row">

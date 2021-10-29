@@ -19,7 +19,15 @@ if (isset($_POST["add-item"])) {
   if (empty(trim($_POST["item-name"]))) {
     $name_err = "Please enter name";
   } else {
-    $item_name = ucwords(trim($_POST["item-name"]));
+
+    $sql = "SELECT * FROM item WHERE item = '". ucfirst(trim($_POST["item-name"])) ."'";
+    $result = mysqli_query($link, $sql);
+
+    if(mysqli_num_rows($result) > 0) {
+      $name_err = "Name is taken";
+    } else {
+      $item_name = ucwords(trim($_POST["item-name"]));
+    }
   }
 
   if (empty(trim($_POST["category_id"]))) {
@@ -35,15 +43,39 @@ if (isset($_POST["add-item"])) {
   }
 
   if (empty(trim($_POST["cost"]))) {
+
     $cost_err = "Please enter cost";
+
+  } else if (trim($_POST["cost"]) <= 0) {
+
+    $cost_err = "Please enter valid cost";
+
+  } else if (!is_numeric(trim($_POST["cost"]))) {
+
+    $cost_err = "Please enter valid cost";
+
   } else {
+
     $cost = trim($_POST["cost"]);
+
   }
 
   if (empty(trim($_POST["stock"]))) {
+
     $stock_err = "Please enter stock";
+
+  } else if (!is_numeric(trim($_POST["stock"]))) {
+
+    $stock_err = "Please enter valid stock";
+
+  } else if (trim($_POST["stock"]) <= 0) {
+
+    $stock_err = "Please enter valid stock";
+
   } else {
+
     $stock = trim($_POST["stock"]);
+
   }
 
   if (empty(trim($_POST["exp-date"]))) {
@@ -122,8 +154,8 @@ if (isset($_POST["add-item"])) {
           <div class="row">
 
             <div class="form-group col-md-8" style="text-align: left">
-              <label><b>Item name</b></label> </br>
-              <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>">
+              <label><b>Item name </b><i> (Max-length:20)</i></label> </br>
+              <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>" maxlength="20">
               <span class="invalid-feedback"><?php echo $name_err; ?></span>
             </div>
 
@@ -155,8 +187,8 @@ if (isset($_POST["add-item"])) {
           </div>
 
           <div class="form-group" style="text-align: left">
-            <label><b>Description</b></label> </br>
-            <textarea name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!"><?php echo $desc; ?></textarea>
+            <label><b>Description </b><i> (Max-length:500)</i></label> </br>
+            <textarea name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!" maxlength="500"><?php echo $desc; ?></textarea>
             <span class="invalid-feedback"><?php echo $desc_err; ?></span>
           </div>
 

@@ -99,6 +99,63 @@
             }
         }
     }
+
+    if(isset($_GET["save"])) {
+
+        
+        $sql = "SELECT category_name FROM category WHERE category_name = '" . $_GET["category"] . "'";
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if(empty($_GET["category"])) {
+            echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Empty input field !'
+            });
+            </script>";
+        } else if (mysqli_num_rows($result) > 0) {
+
+            if ($row["category_name"] != $_GET["cur_category"]) {
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Category name is taken !'
+                });
+                </script>";
+
+            } else {
+                
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No name changed'
+                });
+                </script>";
+
+            }
+
+        } else {
+
+            $sql = "UPDATE category SET category_name = '" .ucwords($_GET["category"]). "' WHERE category_id = " . $_GET["id"];
+            if(mysqli_query($link, $sql)) {
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Updated',
+                    text: 'Category name updated!'
+                });
+                </script>";
+            }
+        }
+    }
     ?>
 
     <section>
@@ -141,17 +198,44 @@
 
                                                     echo '
                                                 <tr>
-                                                    <td>' . $row['category_id'] . '</td>
-                                                    <td><textarea disabled>' . $row['category_name'] . '</textarea></td>
-                                                    <td>' . $no_of_item . '</td>
-                                                    <td style="display: flex;
-                                                            justify-content: space-evenly;
-                                                            align-items: center;">
-                                                        <input type="submit" class="btn btn-primary" value="Edit" ';
-                                                    echo ($row['category_name'] == "Not Set") ? "disabled" : "";
-                                                    echo '/>
-                                                        <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');">Deactivate</button>
-                                                    </td>
+                                                    <form method="GET" action="#">
+
+                                                        <input type="hidden" name="id" value="'.$row['category_id'].'">
+                                                        <input type="hidden" name="cur_category" value="'.$row['category_name'].'">
+                                                        <td><p>' . $row['category_id'] . '</p></td>
+
+                                                        <td>
+                                                            <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
+
+                                                            <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                            <div>
+                                                                <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                                <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td><p>' . $no_of_item . '</p></td>
+                                                        <td style="display: flex;
+                                                                justify-content: space-evenly;
+                                                                align-items: center;">
+                                                            ';
+
+                                                            if($row['category_name'] == "Not Set") {
+
+                                                                echo '
+                                                            <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary" disabled> Edit </button>
+                                                            <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" disabled> Deactivate </button>';
+
+                                                            } else {
+
+                                                                echo '
+                                                            <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary edit-button" onclick="onEdit(' . $row['category_id'] . ')" /> Edit </button>
+                                                            <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" > Deactivate</button>';
+                                                            
+                                                            }
+                                                            echo '
+                                                        </td>
+                                                    </form>
                                                 </tr>';
                                                 }
                                             }
@@ -185,19 +269,46 @@
                                                     $no_of_item = mysqli_num_rows($count_result);
 
                                                     echo '
-                                                    <tr>
-                                                        <td>' . $row['category_id'] . '</td>
-                                                        <td>' . $row['category_name'] . '</td>
-                                                        <td>' . $no_of_item . '</td>
-                                                        <td style="display: flex;
-                                                                justify-content: space-evenly;
-                                                                align-items: center;">
-                                                            <input type="submit" class="btn btn-primary" value="Edit" ';
-                                                    echo ($row['category_name'] == "Not Set") ? "disabled" : "";
-                                                    echo '/>
-                                                            <button class="btn btn-info btn-sm" onclick="return setActive(' . $row['category_id'] . ');">Activate</button>
-                                                        </td>
-                                                    </tr>';
+                                                   
+                                                <tr>
+                                                <form method="GET" action="#">
+
+                                                    <input type="hidden" name="id" value="'.$row['category_id'].'">
+                                                    <input type="hidden" name="cur_category" value="'.$row['category_name'].'">
+                                                    <td><p>' . $row['category_id'] . '</p></td>
+
+                                                    <td>
+                                                        <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
+                                                        <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                        <div>
+                                                            <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                            <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                        </div>
+                                                    </td>
+
+                                                    <td><p>' . $no_of_item . '</p></td>
+                                                    <td style="display: flex;
+                                                            justify-content: space-evenly;
+                                                            align-items: center;">
+                                                        ';
+
+                                                        if($row['category_name'] == "Not Set") {
+
+                                                            echo '
+                                                        <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary" disabled> Edit </button>
+                                                        <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" disabled> Activate </button>';
+
+                                                        } else {
+
+                                                            echo '
+                                                        <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary edit-button" onclick="onEdit(' . $row['category_id'] . ')" /> Edit </button>
+                                                        <button class="btn btn-info btn-sm" onclick="return setActive(' . $row['category_id'] . ');" > Activate</button>';
+                                                        
+                                                        }
+                                                        echo '
+                                                    </td>
+                                                </form>
+                                            </tr>';
                                                 }
                                             }
                                             ?>
@@ -211,7 +322,7 @@
                                 <div class="product-details-content">
                                     <div class="desc-content-box">
 
-                                        <form action="" method="GET">
+                                        <form action="#" method="GET">
 
                                             <div class="form-group col-md-6" style="text-align: left">
                                                 <label><b>Category Name</b></label> </br>
@@ -318,6 +429,27 @@
             });
 
             return false;
+        }
+
+        function onEdit(id) {
+            document.getElementById("p-" + id).style.display = "none";
+            document.getElementById("text-" + id).style.display = "block";
+
+            document.getElementById("save-" + id).style.display = "inline-block";
+            document.getElementById("cancel-" + id).style.display = "inline-block";
+
+
+            $( ".edit-button" ).prop('disabled', true);
+        }
+
+        function offEdit(id) {
+            document.getElementById("p-" + id).style.display = "block";
+            document.getElementById("text-" + id).style.display = "none";
+
+            document.getElementById("save-" + id).style.display = "none";
+            document.getElementById("cancel-" + id).style.display = "none";
+
+            $( ".edit-button" ).prop('disabled', false);
         }
     </script>
     </body>

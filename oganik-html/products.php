@@ -8,28 +8,29 @@ if (isset($_GET["search"]))
 {
     $search = $_GET["search"];
 
-    $getid_sql = "SELECT * FROM item 
-                    WHERE item LIKE '%$search%'
-                    OR description LIKE '%$search%'";
+    $getid_sql = "SELECT * FROM category INNER JOIN item 
+                    ON item.category_id = category.category_id 
+                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active' AND 
+                    item LIKE '%$search%' OR description LIKE '%$search%'";
 
     if ($result = mysqli_query($link, $getid_sql)) {
 
         while ($row = mysqli_fetch_assoc($result)) {
 
-            if ($row['item_status'] == "Active")
                 array_push($id_array, $row["item_id"]);
         }
     }
 } 
 else 
 {
-    $getid_sql = "SELECT * FROM item";
+    $getid_sql = "SELECT * FROM category INNER JOIN item 
+                    ON item.category_id = category.category_id 
+                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'";
 
     if ($result = mysqli_query($link, $getid_sql)) {
 
         while ($row = mysqli_fetch_assoc($result)) {
 
-            if ($row['item_status'] == "Active")
                 array_push($id_array, $row["item_id"]);
         }
     }
@@ -66,7 +67,7 @@ else
                         </form>
                     </div><!-- /.product-sidebar__single -->
                     <div class="product-sidebar__single">
-                        <h3>Price</h3>
+                        <h3>Price (RM)</h3>
                         <div class="product-sidebar__price-range">
                             <form action="" method="GET">
                                 <div class="row">
@@ -90,7 +91,7 @@ else
                             <h3>Categories</h3>
                             <ul class="list-unstyled product-sidebar__links">
                                 <?php
-                                    $brand_query = "SELECT * FROM category WHERE category_status = 'Active'";
+                                    $brand_query = "SELECT * FROM category WHERE category_status = 'Active' AND category_name != 'Not Set'";
                                     $brand_query_run  = mysqli_query($link, $brand_query);
 
                                     if(mysqli_num_rows($brand_query_run) > 0)
@@ -149,7 +150,9 @@ else
                         $startprice = $_GET['start_price'];
                         $endprice = $_GET['end_price'];
                     
-                        $query = "SELECT * FROM item WHERE cost BETWEEN $startprice AND $endprice ";
+                        $query = "SELECT * FROM category INNER JOIN item 
+                                    ON category.category_id = item.category_id 
+                                    WHERE item.cost BETWEEN $startprice AND $endprice AND category.category_status = 'Active' AND category.category_name != 'Not Set' ";
                         $fil = mysqli_query($link, $query);
                         if(mysqli_num_rows($fil) > 0)
                         {
@@ -196,22 +199,34 @@ else
                         if($_GET['sort'] == 'ASC')
                         {
                             $sort_option = "ASC";
-                            $sort = "SELECT * FROM item ORDER BY item $sort_option";
+                            $sort = "SELECT * FROM category INNER JOIN item 
+                                    ON category.category_id = item.category_id
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    ORDER BY item.item $sort_option";
                         }
                         else if($_GET['sort'] == 'DESC')
                         {
                             $sort_option = "DESC"; 
-                            $sort = "SELECT * FROM item ORDER BY item $sort_option";
+                            $sort = "SELECT * FROM category INNER JOIN item 
+                                    ON category.category_id = item.category_id
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    ORDER BY item.item $sort_option";
                         }
                         else if($_GET['sort'] == 'lth')
                         {
                             $sort_option = "ASC"; 
-                            $sort = "SELECT * FROM item ORDER BY cost $sort_option";
+                            $sort = "SELECT * FROM category INNER JOIN item 
+                                    ON category.category_id = item.category_id
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    ORDER BY item.cost $sort_option";
                         }
                         else if($_GET['sort'] == 'htl')
                         {
                             $sort_option = "DESC"; 
-                            $sort = "SELECT * FROM item ORDER BY cost $sort_option";
+                            $sort = "SELECT * FROM category INNER JOIN item 
+                                    ON category.category_id = item.category_id
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    ORDER BY item.cost $sort_option";
                         }
                         
                         
@@ -256,7 +271,7 @@ else
                         foreach($branchecked as $rowbrand)
                         {
                             // echo $rowbrand;
-                            $products = "SELECT * FROM item WHERE category_id IN ($rowbrand)";
+                            $products = "SELECT * FROM item WHERE category_id = $rowbrand AND item_status = 'Active'";
                             $products_run = mysqli_query($link, $products);
                             if(mysqli_num_rows($products_run) > 0)
                             {

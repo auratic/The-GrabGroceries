@@ -78,44 +78,8 @@ if (isset($_POST["filter"])) {
 
     <div class="container" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
-            <div class="col-sm-2" style="
-                            border: gray solid 1px;
-                            border-radius: 10px;
-                            padding: 1%;
-                            background-color: lightgray;">
-                <form action="admin_view_transaction.php" method="post">
 
-
-                    <div class="form-group" style="text-align: left">
-                        <label>Search by Receipt ID</label> <br>
-                        <input type="text" name="search-id" class="form-control"></input>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <label>Search by email</label> <br>
-                        <input type="text" name="search-id" class="form-control"></input>
-                    </div>
-
-                    <hr>
-
-                    <label><b>Transaction Date</b></label> </br>
-                    <div class="form-group" style="text-align: left">
-                        <p>from</p>
-                        <input type="date" name="date-from" class="form-control"></input>
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <p>to</p>
-                        <input type="date" name="date-to" class="form-control"></input>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <input class="btn btn-primary" type="submit" value="Filter" name="filter">
-                    </div>
-
-                </form>
-            </div>
-
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class='row' style="margin: 1%">
                     <div class="col-sm-6"></div>
 
@@ -166,7 +130,7 @@ if (isset($_POST["filter"])) {
                             } else {
 
                                 echo '
-                                        <table class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                        <table id="dtBasicExample" class="display" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th><h5>Receipt ID</h5></th>
@@ -177,7 +141,8 @@ if (isset($_POST["filter"])) {
                                                     <th><h5>Action</h5></th>
                                                     <th><h5></h5></th>
                                                 </tr>
-                                            </thead>';
+                                            </thead>
+                                            <tbody>';
 
                                 foreach ($receipt_array as $x => $x_value) {
                                     $display_sql = "SELECT * FROM cust_receipt 
@@ -202,7 +167,6 @@ if (isset($_POST["filter"])) {
                                         $uid = $display_row['user_id'];
                                     }
                                     echo '
-                                            <tbody>
                                                 <tr>
                                                     <td>' . $rID . '</td>
                                                     <td>' . $Fname . ' ' . $rName . '</td>
@@ -224,7 +188,6 @@ if (isset($_POST["filter"])) {
                                                     </td>
                                                     <td> <input type="checkbox" name="select-item" value="' . $rID . '"> </td>
                                                 </tr>
-                                            </tbody>
                                             ';
 
                                     //Modal
@@ -315,6 +278,18 @@ if (isset($_POST["filter"])) {
                                             ';
                                 }
                                 echo '
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th><h5>Receipt ID</h5></th>
+                                                    <th><h5>Receipt Name</h5></th>
+                                                    <th><h5>Transaction Date</h5></th>
+                                                    <th><h5>Total(RM)</h5></th>
+                                                    <th><h5>Status</h5></th>
+                                                    <th><h5>Action</h5></th>
+                                                    <th><h5></h5></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>';
                             }
 
@@ -422,6 +397,24 @@ if (isset($_POST["filter"])) {
         });
         return false;
     }
+    
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                'pdf',
+                'csv',
+                'excel',
+                'colvis'
+            ],
+        });
+
+        table.buttons().container()
+            .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+    });
 </script>
 <!-- /.search-popup -->
 

@@ -15,6 +15,20 @@ if (!isset($_SESSION['loggedin'])) {
     ";
 }
 
+if ($_SESSION["verified"] == 'false') {
+	echo "
+        <script>
+            Swal.fire({
+                title: 'Error',
+                text: 'Please verify your email first, if you want to place an order',
+                icon: 'error'
+            }).then(function() {
+            location.href = 'verify.php'
+            })
+        </script>
+    ";
+}
+
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
 $sql = "SELECT * FROM cust_address 
@@ -163,7 +177,7 @@ if (isset($_POST["place-order"])) {
 						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Online Banking', '" . $_POST["cardno"] . "')";
+						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "')";
 
 			if (mysqli_query($link, $sql_receipt)) {
 
@@ -414,13 +428,13 @@ if (isset($_POST["place-order"])) {
 
 						<div class="col-md-4">
 							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-							<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
+							<input type="number" name="expmonth" id="set-expmonth" min="1" max="12" maxlength="2" data-mask="00">
 							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
 						<div class="col-md-4">
 							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-							<input type="text" name="expyear" id="set-expyear" maxlength="2">
+							<input type="number" name="expyear" id="set-expyear" min="21" max="28" maxlength="2" data-mask="00" >
 							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
@@ -450,7 +464,7 @@ if (isset($_POST["place-order"])) {
 								<tbody>
 									<?php
 									$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
-
+									$empty = false;
 									$counter = 0;
 									$item_total_cost = 0;
 									$subtotal = 0;
@@ -459,6 +473,7 @@ if (isset($_POST["place-order"])) {
 
 									if ($result = mysqli_query($link, $sql)) {
 										if (mysqli_num_rows($result) == 0) {
+											$empty = true;
 											echo '
 												<tr>
 													<td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
@@ -492,10 +507,13 @@ if (isset($_POST["place-order"])) {
 										{
 											$shipping_cost = 0;
 										}
-										else
+										else if($empty)
+										{
+											$shipping_cost = 0;
+										}else
 										{
 											$shipping_cost = 8;
-										}	
+										}
 										$total = $subtotal + $shipping_cost;
 										echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
 									}

@@ -102,6 +102,7 @@ else
                                             {
                                                 $checked = $_GET['brands'];
                                             }
+                                            if($brandlist['category_name'] != "Not Set") {
                                             ?>
                                                 <div>
                                                     <input type="checkbox" name="brands[]" value="<?php echo $brandlist['category_id']; ?>" 
@@ -110,6 +111,7 @@ else
                                                     <?php echo $brandlist['category_name']; ?>
                                                 </div>
                                             <?php
+                                            }
                                         }
                                     }
                                     

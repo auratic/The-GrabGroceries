@@ -3,39 +3,71 @@
 include 'admin_header.php';
 
 if (isset($_GET["update"])) {
-    $receipt_id = $_GET["receipt_id"];
+    $receipt_id = $_GET["id"];
     $status = $_GET["status"];
     $date = date('Y-m-d H:i:s');
-    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '";
+    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '$receipt_id')";
 
-    for ($i = 0; $i < count($receipt_id); $i++) {
 
-        if ($i < 1) {
-            $activity_sql .= $receipt_id[$i];
-        } else {
-            $activity_sql .= "," . $receipt_id[$i];
-        }
+    if ($result = mysqli_query($link, "SELECT * FROM cust_receipt WHERE receipt_id = $receipt_id")) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row["product_status"] == $status) {
+                echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Nothing is updated..',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_view_transaction.php';
+                            }
+                        })
+                        </script>";
+            } else {
+                if ($status == "Not Set") {
+                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id;
+                } elseif ($status == "Preparing") {
+                    $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
+                } elseif ($status == "Delivering") {
+                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
+                } elseif ($status == "Received") {
+                    $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
+                } elseif ($status == "Cancelled") {
+                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id;
+                }
 
-        if ($status == "Not Set") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id[$i];
-        } elseif ($status == "Preparing") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id[$i];
-        } elseif ($status == "Delivering") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id[$i];
-        } elseif ($status == "Received") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id[$i];
-        }
-
-        if (mysqli_query($link, $sql)) {
-            echo "
-            <script>alert('Updated')</script>";
-        } else {
-            echo "
-            <script>alert('Something went wrong')</script>";
+                if (mysqli_query($link, $sql)) {
+                    mysqli_query($link, $activity_sql);
+                    echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Receipt : $receipt_id updated to \"$status\"',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_view_transaction.php';
+                            }
+                        })
+                        </script>";
+                } else {
+                    echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Cannot update to database',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'admin_view_transaction.php';
+                            }
+                        })
+                        </script>";
+                }
+            }
         }
     }
-    $activity_sql .= "')";
-    mysqli_query($link, $activity_sql);
 }
 
 $sql_receipt = "SELECT receipt_id FROM cust_receipt";
@@ -80,44 +112,6 @@ if (isset($_POST["filter"])) {
         <div class="row">
 
             <div class="col-sm-12">
-                <div class='row' style="margin: 1%">
-                    <div class="col-sm-6"></div>
-
-                    <div class="col-sm-6">
-                        <form style="
-                                        display: flex;
-                                        justify-content: flex-end;">
-                            <!--
-                                        <select id="status" name="status">
-                                            <option value="'.$display_row["product_status"].'" selected disabled hidden>'.$display_row["product_status"].'</option>
-                                            <option value="Not Set">Not set</option>
-                                            <option value="Preparing">Preparing</option>
-                                            <option value="Delivering">Delivering</option>
-                                            <option value="Received">Received</option>
-                                        </select>
-                                        -->
-                            <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                <label>Status</label> <br>
-                                <select id="status" name="status" style="text-align: left; margin-right: 1rem">
-                                    <option value="--Status--" selected disabled hidden>--Status--</option>
-                                    <option value="Not Set">Not set</option>
-                                    <option value="Preparing">Preparing</option>
-                                    <option value="Delivering">Delivering</option>
-                                    <option value="Received">Received</option>
-                                </select>
-                                <p id="status-err" style="font-style: italic; color: crimson;"></p>
-                            </div>
-                            <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                <label for="select-all">Select All</label> <br>
-                                <input type="checkbox" id="select-all" />
-                            </div>
-                            <div class="form-group" style="text-align: left;">
-                                <button class="btn btn-info btn-sm" onclick="return updateStatus();">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel-group" id="accordion">
@@ -168,25 +162,37 @@ if (isset($_POST["filter"])) {
                                     }
                                     echo '
                                                 <tr>
-                                                    <td>' . $rID . '</td>
-                                                    <td>' . $Fname . ' ' . $rName . '</td>
-                                                    <td>' . $tDate . '</td>
-                                                    <td>' . $total . '</td>
-                                                    <td>' . $status . '</td>
-                                                    <td>
-                                                        <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            More option
-                                                        </a>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item" onclick="openModal(' . $rID . ')" target="_blank" style="cursor:pointer">
-                                                                View Details
+                                                    <form method="GET" action="#">
+                                                        <input type="hidden" value="' . $rID . '" name="id">
+                                                        <td>' . $rID . '</td>
+                                                        <td>' . $Fname . ' ' . $rName . '</td>
+                                                        <td>' . $tDate . '</td>
+                                                        <td>' . $total . '</td>
+                                                        <td>
+                                                            <select name="status" class="form-control" >
+                                                                <option value="' . $status . '" selected hidden>' . $status . '</option>
+                                                                <option value="Not Set">Not Set</option>
+                                                                <option value="Preparing">Preparing</option>
+                                                                <option value="Delivering">Delivering</option>
+                                                                <option value="Received">Received</option>
+                                                                <option value="Cancelled">Cancelled</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                More option
                                                             </a>
-                                                            <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $rID . '" target="_blank">
-                                                                Invoice
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td> <input type="checkbox" name="select-item" value="' . $rID . '"> </td>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                <a class="dropdown-item" onclick="openModal(' . $rID . ')" target="_blank" style="cursor:pointer">
+                                                                    View Details
+                                                                </a>
+                                                                <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $rID . '" target="_blank">
+                                                                    Invoice
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td> <input type="submit" class="btn-sm btn-primary" name="update" value="Update"> </td>
+                                                    </form>
                                                 </tr>
                                             ';
 
@@ -271,7 +277,7 @@ if (isset($_POST["filter"])) {
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="background-color:var(--thm-base)">
-                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Cancel</button>
+                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Close</button>
                                                     </div> 
                                                 </div>
                                             </div>
@@ -329,26 +335,7 @@ if (isset($_POST["filter"])) {
         console.info("This page is not reloaded");
     }
 
-    var checkboxes = document.getElementsByName('select-item');
-    var select_all = document.getElementById("select-all");
-
-    select_all.onclick = () => {
-
-        if (select_all.checked) {
-            //console.log("yes")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = true;
-            }
-        } else {
-            //console.log("no")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = false;
-            }
-        }
-    }
-
-    function updateStatus() {
-        var receipt_id = [];
+    function updateStatus(id) {
         var status = document.getElementById("status").value;
 
         if (status === "--Status--") {
@@ -397,7 +384,7 @@ if (isset($_POST["filter"])) {
         });
         return false;
     }
-    
+
     $(document).ready(function() {
         var table = $('#dtBasicExample').DataTable({
             "scrollY": "50vh",
@@ -412,8 +399,8 @@ if (isset($_POST["filter"])) {
             ],
         });
 
-        table.buttons().container()
-            .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+        //table.buttons().container()
+        //    .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
     });
 </script>
 <!-- /.search-popup -->

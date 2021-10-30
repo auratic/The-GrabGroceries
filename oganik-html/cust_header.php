@@ -240,6 +240,8 @@ require "config.php";
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
 <?php 
+if(isset($_SESSION['loggedin']))
+{
     if($_SESSION["verified"] == "false") 
     {
         echo "
@@ -253,4 +255,5 @@ require "config.php";
                 })
             </script>";
     }
+}   
 ?>

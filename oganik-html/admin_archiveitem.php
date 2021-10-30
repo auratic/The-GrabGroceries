@@ -58,7 +58,6 @@ if (isset($_GET["restore"])) {
                                                     <th>Cost</th>
                                                     <th>Expiry Date</th>
                                                     <th></th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -81,11 +80,6 @@ if (isset($_GET["restore"])) {
                                                             <td>RM' . $row['cost'] . '</td>
                                                             <td>' . $row['exp_date'] . '</td>
                                                             <td>
-                                                                <a href="admin_updateitem.php?id=' . $row['item_id'] . '">
-                                                                <button class="btn btn-info btn-sm">Edit</button>
-                                                                </a>
-                                                            </td>
-                                                            <td>
                                                                 <button class="btn btn-info btn-sm" onclick="return restoreItem(' . $row['item_id'] . ')">Restore</button>
                                                             </td>
                                                         </tr>';
@@ -104,7 +98,6 @@ if (isset($_GET["restore"])) {
                                                     <th>Image</th>
                                                     <th>Cost</th>
                                                     <th>Expiry Date</th>
-                                                    <th></th>
                                                     <th></th>
                                                 </tr>
                                             </tfoot>

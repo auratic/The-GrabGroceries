@@ -295,7 +295,7 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>Current Password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($cur_pass_err)) ? 'is-invalid' : ''; ?>" name="cur_pass" style="width:100%">
+                                <input id="cur-pass" type="password" class="form-control <?php echo (!empty($cur_pass_err)) ? 'is-invalid' : ''; ?>" name="cur_pass" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $cur_pass_err; ?></span>
                             </div>
                         </div>
@@ -304,7 +304,7 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>New password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($new_pass_err)) ? 'is-invalid' : ''; ?>" onkeyup="validatePassword(this.value);" name="new_pass" style="width:100%"><span id="msg"></span>
+                                <input id="new-pass" type="password" class="form-control <?php echo (!empty($new_pass_err)) ? 'is-invalid' : ''; ?>" onkeyup="validatePassword(this.value);" name="new_pass" style="width:100%"><span id="msg"></span>
                                 <span class="invalid-feedback"><?php echo $new_pass_err; ?></span>
                             </div>
                         </div>
@@ -313,12 +313,30 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>Confirm password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($con_pass_err)) ? 'is-invalid' : ''; ?>" name="con_pass" style="width:100%">
+                                <input id="con-pass" type="password" class="form-control <?php echo (!empty($con_pass_err)) ? 'is-invalid' : ''; ?>" name="con_pass" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $con_pass_err; ?></span>
                             </div>
                         </div>
                     </div>
 
+                    <input type="checkbox" onclick="showPass()"><label style="margin: 2%; margin-top: 0;">Show password</label>
+                    <script>
+                        function showPass() {
+                            var x = document.getElementById("new-pass");
+                            var y = document.getElementById("con-pass");
+                            var z = document.getElementById("cur-pass");
+
+                            if(x.type == "password") {
+                                x.type = "text";
+                                y.type = "text";
+                                z.type = "text";
+                            } else {
+                                x.type = "password";
+                                y.type = "password";
+                                z.type = "password";
+                            }
+                        }
+                    </script>
                     <hr>
 
                     <div class="row">
@@ -357,6 +375,7 @@ if (isset($_POST["reset_pass"])) {
 <script src="assets/js/organik.js"></script>
 
 <script>
+    
     window.onload = () => {
         var reset_page = document.getElementById("reset_page").innerHTML;
 

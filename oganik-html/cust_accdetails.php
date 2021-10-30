@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
     else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"]))
     {
-        $phone_err = "Please enter valid phone number";
+        $phone_err = "Please enter valid phone number (60123456789)";
     } 
     else 
     {

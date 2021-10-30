@@ -77,7 +77,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         header("location: admin_dashboard.php");
                     } else {
-                        header("location: index.php");
+                        if($_SESSION["verified"] == 'true')
+                        {
+                            header("location: index.php");
+                        }
+                        else if($_SESSION["verified"] == 'false')
+                        {
+                            header("location: verify.php");
+                        }
+                        
                     }
                 } else {
                     $login_err = "Email or password is invalid";

@@ -128,6 +128,7 @@ if (isset($_POST["ver_code"])) {
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Verify">
+            <input type="button" class="btn btn-danger" value="Logout" onclick="location.href = 'logout.php';">
         </div>
     </form>
 </div>

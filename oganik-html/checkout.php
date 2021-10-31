@@ -79,7 +79,7 @@ function test_input($data)
 	$data = htmlspecialchars($data);
 	return $data;
 }
-
+	
 $fname_err = $lname_err = $email_err = $address_err = $phone_err = $area_err = $state_err = $postcode_err = $cardcvv_err = $cardnum_err = $cardexpm_err = $cardexpy_err = "";
 if (isset($_POST["place-order"])) {
 
@@ -178,6 +178,15 @@ if (isset($_POST["place-order"])) {
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
 						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "')";
+
+			$sql_chk_address = "SELECT address FROM users WHERE address is null AND user_id = " . $_SESSION["userid"];
+			$result_add = mysqli_query($link, $sql_chk_address);
+	
+			if(mysqli_num_rows($result_add) != 0)
+			{
+				$insert_add = "UPDATE users SET phone = ('".$_POST["phone"]."') , address = ('" . $_POST["address"] . "'), postcode = ('" . $_POST["postcode"] . "'), state = ('" . $_POST["state"] . "'), area = ('" . $_POST["area"] . "') WHERE user_id = ". $_SESSION["userid"];
+				mysqli_query($link, $insert_add);
+			}
 
 			if (mysqli_query($link, $sql_receipt)) {
 

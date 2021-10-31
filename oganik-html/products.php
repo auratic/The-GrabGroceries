@@ -73,11 +73,11 @@ else
                                 <div class="row">
                                     <label for="">From:</label> 
                                     <div class="input-group input-group-sm mb-3">
-                                        <input type="number" name="start_price" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; }else{echo "1";} ?>" class="form-control">
+                                        <input type="number" name="start_price" min="1" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; }else{echo "1";} ?>" class="form-control">
                                     </div>
                                     <label for="">To:</label> 
                                     <div class="input-group input-group-sm mb-3">
-                                        <input type="number" name="end_price" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; }else{echo "2";} ?>" class="form-control">
+                                        <input type="number" name="end_price" min="1" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; }else{echo "2";} ?>" class="form-control">
                                     </div>
                                     <div class="input-group input-group-sm mb-3">
                                         <button type="submit" class="thm-btn">Filter</button>
@@ -148,7 +148,7 @@ else
                     if(isset($_GET['start_price']) && isset($_GET['end_price']))
                     {
                         $startprice = $_GET['start_price'];
-                        $endprice = $_GET['end_price'];
+                        $endprice = $_GET['end_price']; 
                     
                         $query = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id 

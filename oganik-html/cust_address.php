@@ -297,7 +297,7 @@ echo '
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(0)">Close</button>
+                                <button type="button" class="btn btn-danger" onclick="return closeModal(0)">Close</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -436,7 +436,7 @@ for ($x = 0; $x < 5; $x++) {
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(' . $counter . ')">Close</button>
+                                <button type="button" class="btn btn-danger" onclick="return closeModal(' . $counter . ')">Close</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>

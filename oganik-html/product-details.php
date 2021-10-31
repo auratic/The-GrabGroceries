@@ -80,8 +80,7 @@ if (isset($_POST["addtocart"])) {
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#" class="deactive"><i class="fa fa-star"></i></a>
-                                <span>2 Customer Reviews</span>
+                                <a href="#"><i class="fa fa-star"></i></a>
                             </div>
                         </div>
                         <div class="product_detail_text">

@@ -18,7 +18,11 @@ if (isset($_POST['add'])) {
     $registering = "true";
     if (empty($_POST['name'])) {
         $name_err = "Please enter your name.";
-    } else {
+    }
+    else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
+        $name_err = "Only letters and white space allowed";
+    }  
+    else {
         $name = $_POST['name'];
     }
 

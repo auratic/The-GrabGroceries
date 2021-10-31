@@ -152,7 +152,7 @@ else
                     
                         $query = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id 
-                                    WHERE item.cost BETWEEN $startprice AND $endprice AND category.category_status = 'Active' AND category.category_name != 'Not Set' ";
+                                    WHERE item.cost BETWEEN $startprice AND $endprice AND category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'";
                         $fil = mysqli_query($link, $query);
                         if(mysqli_num_rows($fil) > 0)
                         {
@@ -201,7 +201,7 @@ else
                             $sort_option = "ASC";
                             $sort = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id
-                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'
                                     ORDER BY item.item $sort_option";
                         }
                         else if($_GET['sort'] == 'DESC')
@@ -209,7 +209,7 @@ else
                             $sort_option = "DESC"; 
                             $sort = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id
-                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'
                                     ORDER BY item.item $sort_option";
                         }
                         else if($_GET['sort'] == 'lth')
@@ -217,7 +217,7 @@ else
                             $sort_option = "ASC"; 
                             $sort = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id
-                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'
                                     ORDER BY item.cost $sort_option";
                         }
                         else if($_GET['sort'] == 'htl')
@@ -225,7 +225,7 @@ else
                             $sort_option = "DESC"; 
                             $sort = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id
-                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set'
+                                    WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active'
                                     ORDER BY item.cost $sort_option";
                         }
                         

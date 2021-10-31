@@ -142,7 +142,11 @@
         </div><!-- /.new-products__top -->
         <div class="row">
             <?php
-            $sql = "SELECT * from item";
+            $sql = "
+                SELECT * FROM category INNER JOIN item ON category.category_id = item.category_id
+                WHERE item.item_status = 'Active' AND category.category_status = 'Active' AND category.category_name != 'Not Set'
+                ORDER BY RAND()
+                LIMIT 6";
 
             if ($result = mysqli_query($link, $sql)) {
 
@@ -284,8 +288,8 @@
 </section><!-- /.call-to-action -->
 
 
+<!--
 <p id="verified" style="display: none;"><?php echo (isset($_SESSION["loggedin"]) && (isset($_SESSION["verified"]) && $_SESSION["verified"] == "false")) ? "false" : "true"; ?></p>
-
 <div id="snackbar">
     <div>
         <h4 style="color: var(--thm-base)">Verify email</h4>
@@ -298,9 +302,10 @@
         <button type="button" class="btn btn-default" id="verified-btn">Close</button>
     </div>
 </div>
-
+        -->
 
 <script>
+    /*
     var verified = document.querySelector("#verified").innerHTML;
     var snackbar = document.querySelector("#snackbar");
 
@@ -316,6 +321,7 @@
 
         }, 900);
     }
+    */
 </script>
 
 <?php include 'cust_footer.php'; ?>

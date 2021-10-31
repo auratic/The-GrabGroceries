@@ -218,7 +218,7 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label" style="margin-left:5px;"><i class="fas fa-credit-card"> Card Number</i></label>
-                                                <input type="text" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
+                                                <input type="" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
                                                 <span class="invalid-feedback d-block" id="cno_err' . $counter . '"></span>
                                             </div>
                                         </div>
@@ -303,7 +303,7 @@ for ($x = 0; $x < 5; $x++) {
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">Cancel</button>
+                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">Close</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -329,10 +329,17 @@ for ($x = 0; $x < 5; $x++) {
         if (cardName == "") {
             document.getElementById("cname_err" + counter).innerHTML = "Card Name is required";
             pass = false;
+        }else if (!/^[a-zA-Z-' ]*$/.test(cardName)) {
+            document.getElementById("cname_err" + counter).innerHTML = "Please enter valid Card Name";
+            pass = false;
         }
 
         if (cardNum == "") {
             document.getElementById("cno_err" + counter).innerHTML = "Card Number is required";
+            pass = false;
+        }else if(/[a-zA-Z]/g.test(cardNum))
+        {
+            document.getElementById("cno_err" + counter).innerHTML = "Only number allowed";
             pass = false;
         }
 
@@ -471,4 +478,5 @@ for ($x = 0; $x < 5; $x++) {
      }
     */
 </script>
+
 <?php include 'cust_footer.php'; ?>

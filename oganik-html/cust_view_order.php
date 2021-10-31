@@ -29,7 +29,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 <?php include 'cust_profile_layout.php' ?>
 <div class="col-xl-10 col-md-10">
     <div class="tab-content my-account-tab" id="pills-tabContent">
-        <h4 class="account-title">Orders</h4>
+        <h4 class="account-title"><?php echo $lang['order']?></h4>
 
         <div class="panel-group" id="accordion">
             <div class="panel panel-default text-center">
@@ -41,12 +41,12 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                         <table class="table table-striped table-bordered table-hover" style="width: 100%;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th><h5>Receipt ID</h5></th>
-                                                                    <th><h5>Receipt Name</h5></th>
-                                                                    <th><h5>Transaction Date</h5></th>
-                                                                    <th><h5>Total (RM)</h5></th>
-                                                                    <th><h5>Status</h5></th>
-                                                                    <th><h5>Action</h5></th>
+                                                                    <th><h5>'.$lang['rid'].'</h5></th>
+                                                                    <th><h5>'.$lang['rname'].'</h5></th>
+                                                                    <th><h5>'.$lang['tdate'].'</h5></th>
+                                                                    <th><h5>'.$lang['total'].'</h5></th>
+                                                                    <th><h5>'.$lang['status'].'</h5></th>
+                                                                    <th><h5>'.$lang['action'].'</h5></th>
                                                                 </tr>
                                                             </thead>';
                     foreach ($receipt_array as $x => $x_value) {

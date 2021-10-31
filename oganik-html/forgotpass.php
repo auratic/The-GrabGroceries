@@ -177,7 +177,6 @@ if (isset($_POST["new-pass"])) {
 		</script>";
 	}
 }
-
 ?>
 
 <style>
@@ -200,15 +199,15 @@ if (isset($_POST["new-pass"])) {
 		<div class="row">
 			<div class="col-md-6" style="margin:auto">
 
-				<h2>Reset Password</h2>
-				<p>Please enter your email to receive password reset PIN</p>
+				<h2><?php echo $lang['resetpwd']?></h2>
+				<p><?php echo $lang['p5']?></p>
 
 				<form action="forgotpass.php" method="post">
 
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Enter your email</label>
+								<label><?php echo $lang['p6']?></label>
 								<input type="email" name="email" id="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
 								<span class="invalid-feedback email-err"><?php echo $email_err; ?></span>
 							</div>
@@ -218,7 +217,7 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-2">
 							<div class="form-group">
-								<input type="submit" name="send-email" id="submit" class="btn btn-primary" value="Send">
+								<input type="submit" name="send-email" id="submit" class="btn btn-primary" value="<?php echo $lang['send']?>">
 							</div>
 						</div>
 						</br>

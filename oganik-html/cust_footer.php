@@ -8,12 +8,12 @@
                     <a href="index.php" class="footer-widget__logo">
                         <img src="assets/images/tgg.png" alt="" width="150" height="150">
                     </a>
-                    <p class="thm-text-dark">We are here to provide you <br>with just the greatest stuff.</p>
+                    <p class="thm-text-dark"><?php echo $lang['slogan1']?><br><?php echo $lang['slogan2']?></p>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-sm-12 col-md-6 -->
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-widget footer-widget__contact-widget">
-                    <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                    <h3 class="footer-widget__title"><?php echo $lang['fcontact']?></h3><!-- /.footer-widget__title -->
                     <ul class="list-unstyled footer-widget__contact">
                         <li>
                             <i class="fa fa-phone-square"></i>
@@ -33,41 +33,41 @@
             </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-widget footer-widget__links-widget">
-                    <h3 class="footer-widget__title">Links</h3><!-- /.footer-widget__title -->
+                    <h3 class="footer-widget__title"><?php echo $lang['links']?></h3><!-- /.footer-widget__title -->
                     <ul class="list-unstyled footer-widget__links">
                         <li>
-                            <a href="index.php">Top Sellers</a>
+                            <a href="index.php"><?php echo $lang['top']?></a>
                         </li>
                         <li>
-                            <a href="products.php">Shopping</a>
+                            <a href="products.php"><?php echo $lang['shopping']?></a>
                         </li>
                         <li>
-                            <a href="about.php">About</a>
+                            <a href="about.php"><?php echo $lang['fabout']?></a>
                         </li>
                         <li>
-                            <a href="cust_contact.php">Contact</a>
+                            <a href="cust_contact.php"><?php echo $lang['fcontact']?></a>
                         </li>
                         <li>
-                            <a href="cust_contact.php">Help</a>
+                            <a href="cust_contact.php"><?php echo $lang['help']?></a>
                         </li>
                     </ul><!-- /.list-unstyled footer-widget__contact -->
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-sm-12 col-md-6 col-lg-2 -->
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2">
                 <div class="footer-widget">
-                    <h3 class="footer-widget__title">Explore</h3><!-- /.footer-widget__title -->
+                    <h3 class="footer-widget__title"><?php echo $lang['explore']?></h3><!-- /.footer-widget__title -->
                     <ul class="list-unstyled footer-widget__links">
                         <li>
-                            <a href="products.php">New Products</a>
+                            <a href="products.php"><?php echo $lang['new_prod']?></a>
                         </li>
                         <li>
-                            <a href="cust_profile.php">My Account</a>
+                            <a href="cust_profile.php"><?php echo $lang['account']?></a>
                         </li>
                         <li>
-                            <a href="cust_contact.php">Support</a>
+                            <a href="cust_contact.php"><?php echo $lang['support']?></a>
                         </li>
                         <li>
-                            <a href="cust_contact.php">FAQs</a>
+                            <a href="cust_contact.php"><?php echo $lang['faq']?></a>
                         </li>
                     </ul><!-- /.list-unstyled footer-widget__contact -->
                 </div><!-- /.footer-widget -->
@@ -83,7 +83,7 @@
                     <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
                     <a href="https://instagram.com/" class="fab fa-instagram" target="_blank"></a>
                 </div><!-- /.bottom-footer__social -->
-                <p class="thm-text-dark">© Copyright <span class="dynamic-year"></span> by TGG</p>
+                <p class="thm-text-dark">© <?php echo $lang['cpyright']?> <span class="dynamic-year"></span> by TGG</p>
             </div><!-- /.inner-container -->
         </div><!-- /.container -->
     </div><!-- /.bottom-footer -->

@@ -21,10 +21,10 @@ if (!isset($_SESSION["loggedin"])) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-dashboard" aria-labelledby="pills-dashboard-tab">
             <div class="my-account-dashboard account-wrapper">
-                <h4 class="account-title">Dashboard</h4>
+                <h4 class="account-title"><?php echo $lang['dboard']?></h4>
                 <div class="welcome-dashboard m-t-30">
-                    <p>Hello, (If not
-                        <?php
+                    <p>
+                        <?php echo $lang['p1'];
                         $sql = "SELECT * FROM users WHERE user_id = " . $_SESSION['userid'];
                         $result = mysqli_query($link, $sql);
 
@@ -32,15 +32,13 @@ if (!isset($_SESSION["loggedin"])) {
                             $fname = $row['firstname'];
                             $lname = $row['lastname'];
                         }
-                        echo "<strong>  " . $fname . " " . $lname . "</strong>"
-                        ?>
+                        echo "<strong>  " . $fname . " " . $lname . " </strong>"
+                        .$lang['p2']?>
 
-                        please <a href="logout.php">Logout</a> )
+                        <a href="logout.php"> <?php echo $lang['p3']?></a>)
                     </p>
                 </div>
-                <p class="m-t-25">From your account dashboard. you can easily check &amp; view your
-                    recent orders, manage your shipping and billing addresses and edit your password and
-                    account details.
+                <p class="m-t-25"> <?php echo $lang['p4']?>
                 </p>
             </div>
         </div>

@@ -255,15 +255,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         </div>
 
         <div class="form-group">
-            <label>Password</label> </br>
-            <input type="password" name="password" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>"><span id="msg"></span>
+            <label>Password</label><i><span id="msg"></span></i></br>
+            <input type="password" name="password" id="pwd" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
             <span class="invalid-feedback"><?php echo $password_err; ?></span>
         </div>
         <div class="form-group" style="text-align: left">
             <label>Confirm Password</label> </br>
-            <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+            <input type="password" name="confirm_password" id="cpwd" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
             <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
         </div>
+
+        <div style="margin-top: -10px;">
+            <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+        </div>
+
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Submit">
             <input type="reset" class="btn btn-secondary ml-2" value="Reset">
@@ -300,15 +305,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
             case 0:
             case 1:
             case 2:
-                strength = " Very Weak";
+                strength = " (Very Weak)";
                 color = "red";
                 break;
             case 3:
-                strength = " Medium";
+                strength = " (Medium)";
                 color = "orange";
                 break;
             case 4:
-                strength = " Strong";
+                strength = " (Strong)";
                 color = "green";
                 break;
         }
@@ -316,8 +321,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         document.getElementById("msg").style.color = color;
     }
 
-    function ValidateEmail(email) {
+    function myFunction() {
+        var x = document.getElementById("pwd");
+        var y = document.getElementById("cpwd");
 
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+
+        if (y.type === "password") {
+            y.type = "text";
+        } else {
+            y.type = "password";
+        }
     }
 </script>
 

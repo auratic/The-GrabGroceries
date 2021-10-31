@@ -112,7 +112,7 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["phone"])) {
 		$phone_err = "Phone number is required";
-	} else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
+	} else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"])) {
 		$phone_err = "Please enter valid phone number";
 	} else {
 		$receipt_phone = $_POST['phone'];

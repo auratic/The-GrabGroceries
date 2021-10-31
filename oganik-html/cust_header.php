@@ -163,7 +163,7 @@ require "config.php";
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+60186620551">+60123456789</a></p>
+                            <p>Phone <a href="tel:+60186620551">+60123608370</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>

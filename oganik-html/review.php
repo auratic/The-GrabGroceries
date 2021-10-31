@@ -223,7 +223,7 @@ if (isset($_POST['add'])) {
                     <!-- Modal Body-->
 
                     <div class="modal-footer" style="background-color:var(--thm-base)">
-                        <button type="button" class="btn btn-danger" onclick="return closeModal()">Cancel</button>
+                        <button type="button" class="btn btn-danger" onclick="return closeModal()">Close</button>
                     </div>
                     <!-- Modal Footer-->
                 </div>

@@ -56,9 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["phone"])) {
         $phone_err = "Phone number is required";
-    } else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
-        $phone_err = "Please enter valid phone number";
-    } else {
+    } 
+    else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"]))
+    {
+        $phone_err = "Please enter valid phone number (60123456789)";
+    } 
+    else 
+    {
         $new_phone = $_POST["phone"];
     }
 
@@ -151,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <span><b>Phone Number</b></span>
+                                            <span><b>Phone Number</b><i></i></span>
                                             <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="">
                                             <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                         </div>

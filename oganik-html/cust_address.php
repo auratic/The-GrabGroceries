@@ -474,8 +474,8 @@ for ($x = 0; $x < 5; $x++) {
         if (phone == "") {
             document.getElementById("phone_err" + counter).innerHTML = "Phone Number is required";
             pass = false;
-        } else if (isNaN(phone)) {
-            document.getElementById("phone_err" + counter).innerHTML = "Please enter valid number";
+        } else if (!/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/.test(phone)) {
+            document.getElementById("phone_err" + counter).innerHTML = "Please enter valid number (60123456789)";
             pass = false;
         }
 

@@ -239,21 +239,3 @@ require "config.php";
         <div class="stricky-header stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-<?php 
-if(isset($_SESSION['loggedin']))
-{
-    if($_SESSION["verified"] == "false") 
-    {
-        echo "
-            <script>
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Please verify your email first.',
-                    icon: 'error'
-                }).then(function() {
-                location.href = 'verify.php'
-                })
-            </script>";
-    }
-}   
-?>

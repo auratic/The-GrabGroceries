@@ -1,108 +1,3 @@
-<?php
-
-date_default_timezone_set("Asia/Kuala_Lumpur");
-
-// Initialize the session
-session_start();
-
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: index.php");
-    exit;
-}
-
-// Include config file
-require_once "config.php";
-
-// Define variables and initialize with empty values
-$email = $password = "";
-$email_err = $password_err = $login_err = $recaptcha_err = "";
-
-// Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Check if email is empty
-    if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter email.";
-    } else {
-        $email = trim($_POST["email"]);
-    }
-
-    // Check if password is empty
-    if (empty($_POST["password"])) {
-        $password_err = "Please enter your password.";
-    } else {
-        $password = $_POST["password"];
-    }
-
-    if (isset($_POST['g-recaptcha-response'])) {
-        // RECAPTCHA SETTINGS
-        $captcha = $_POST['g-recaptcha-response'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-
-        // RECAPTCH RESPONSE
-        $recaptcha_response = file_get_contents($url . '?secret=' . $key . '&response=' . $captcha . '&remoteip=' . $ip);
-        $data = json_decode($recaptcha_response);
-
-        if (isset($data->success) &&  $data->success === true) {
-        } else {
-            $recaptcha_err = 'Verify your reCAPTCHA';
-        }
-    }
-
-    // Validate credentials
-    if (empty($email_err) && empty($password_err) && empty($recaptcha_err)) {
-        // Prepare a select statement
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-        $result = mysqli_query($link, $sql);
-
-        if (mysqli_num_rows($result) == 1) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                if (password_verify($password, $row['password'])) {
-                    session_start();
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["mode"] = $row["mode"];
-                    $_SESSION["lname"] = $row["lastname"];
-                    $_SESSION["userid"] = $row["user_id"];
-                    $_SESSION["verified"] = $row["verified"];
-
-                    echo "Login successful.";
-                    if ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin") {
-
-                        $date = date('Y-m-d H:i:s');
-                        $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'login', NULL, '$date')";
-                        mysqli_query($link, $sql);
-
-                        header("location: admin_dashboard.php");
-                    } else {
-                        if($_SESSION["verified"] == 'true')
-                        {
-                            header("location: index.php");
-                        }
-                        else if($_SESSION["verified"] == 'false')
-                        {
-                            header("location: verify.php");
-                        }
-                        
-                    }
-                } else {
-                    $login_err = "Email or password is invalid";
-                }
-            }
-        } else {
-            $login_err = "Email or password is invalid";
-            //echo "Error: " . $sql . "<br>" . mysqli_error($link);
-        }
-    }
-
-    //reCAPTCHA
-
-    // Close connection
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -163,19 +58,139 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <style>
         body {
-                font: 14px sans-serif;
-                background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
+            font: 14px sans-serif;
+            background-image: url("https://cdn.wallpapersafari.com/68/37/Gwgjo6.jpg")
         }
-        
+
         .signup-form {
             width: 360px;
             padding: 20px;
         }
-        
     </style>
 </head>
 
 <body>
+    <?php
+
+    date_default_timezone_set("Asia/Kuala_Lumpur");
+
+    // Initialize the session
+    session_start();
+
+    // Check if the user is already logged in, if yes then redirect him to welcome page
+    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+        header("location: index.php");
+        exit;
+    }
+
+    // Include config file
+    require_once "config.php";
+
+    // Define variables and initialize with empty values
+    $email = $password = "";
+    $email_err = $password_err = $login_err = $recaptcha_err = "";
+
+    // Processing form data when form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // Check if email is empty
+        if (empty(trim($_POST["email"]))) {
+            $email_err = "Please enter email.";
+        } else {
+            $email = trim($_POST["email"]);
+        }
+
+        // Check if password is empty
+        if (empty($_POST["password"])) {
+            $password_err = "Please enter your password.";
+        } else {
+            $password = $_POST["password"];
+        }
+
+        if (isset($_POST['g-recaptcha-response'])) {
+            // RECAPTCHA SETTINGS
+            $captcha = $_POST['g-recaptcha-response'];
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $key = '6LcwLAQcAAAAAHg2kPKE7VdugnrUrY1q4an9sa0E';
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+            // RECAPTCH RESPONSE
+            $recaptcha_response = file_get_contents($url . '?secret=' . $key . '&response=' . $captcha . '&remoteip=' . $ip);
+            $data = json_decode($recaptcha_response);
+
+            if (isset($data->success) &&  $data->success === true) {
+            } else {
+                $recaptcha_err = 'Verify your reCAPTCHA';
+            }
+        }
+
+        // Validate credentials
+        if (empty($email_err) && empty($password_err) && empty($recaptcha_err)) {
+            // Prepare a select statement
+
+            $sql = "SELECT * FROM users WHERE email = '$email'";
+            $result = mysqli_query($link, $sql);
+
+            if (mysqli_num_rows($result) == 1) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    if (password_verify($password, $row['password'])) {
+
+                        if ($row["mode"] == "deactivate") {
+
+                            echo "
+                            <script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Your account is deactivated..',
+                                    icon: 'warning'
+                                })
+                                /*
+                                .then(function() {
+                                    location.href = 'login.php'
+                                })
+                                */
+                            </script>";
+                        } else if ($row["verified"] == "false") {
+
+                            echo "
+                            <script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Please verify your email first.',
+                                    icon: 'warning'
+                                }).then(function() {
+                                    location.href = 'verify.php?verify&id=" . $row["user_id"] . "'
+                                })
+                            </script>";
+                        } else {
+                            session_start();
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["mode"] = $row["mode"];
+                            $_SESSION["lname"] = $row["lastname"];
+                            $_SESSION["userid"] = $row["user_id"];
+
+                            if ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin") {
+
+                                $date = date('Y-m-d H:i:s');
+                                $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'login', NULL, '$date')";
+                                mysqli_query($link, $sql);
+
+                                header("location: admin_dashboard.php");
+                            } else {
+                                header("location: cust_profile.php");
+                            }
+                        }
+                    } else {
+                        $login_err = "Email or password is invalid";
+                    }
+                }
+            } else {
+                $login_err = "Email or password is invalid";
+                //echo "Error: " . $sql . "<br>" . mysqli_error($link);
+            }
+        }
+    }
+    ?>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>

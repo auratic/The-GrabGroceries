@@ -86,17 +86,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err)) {
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (email, password, mode, firstname, lastname, phone) VALUES ('$email', '$password', 'admin', '$fname', '$lname', '$phone');";
+        $sql = "INSERT INTO users (email, password, mode, firstname, lastname, phone) VALUES ('$email', '".password_hash($password, PASSWORD_DEFAULT)."', 'admin', '$fname', '$lname', '$phone');";
 
         if (mysqli_query($link, $sql)) {
             $date = date('Y-m-d H:i:s');
             $sql = "INSERT INTO admin_activity (user_id, activity, target, activity_time) VALUES (" . $_SESSION["userid"] . ", 'add admin', '$lname $fname', '$date')";
             mysqli_query($link, $sql);
 
+            $date = date("F j, Y, g:i a");
+            $to = "1191201218@student.mmu.edu.my"; //send to our email
+            $subject = "Hi admin!";
+            $message = '
+                <html>
+                    <body style="
+                        padding:20px; 
+                        background-color:gray;
+                        width: 500px;
+                        height: 600px;
+                        color: white;"
+                        >
+                    <h1>Dear '.$lname.' '. $fname .',</h1>
+                    <br>
+
+                    <h1 style="
+                        padding:20px; 
+                        font-size:25px; 
+                        width: 400px; 
+                        height: 40px; 
+                        text-align: center;
+                        background-color:seagreen;
+                        color:white;
+                        border-radius:25px;
+                        font-family:Arial, Helvetica, sans-serif;
+                        margin: auto"
+                        >
+                        Admin Registration Successful
+                    </h1>
+                    <br>
+                    <h3>
+                        Congratulations, you have been added as TheGrabGroceries admin on  <i>' . $date . '</i>.
+                    </h3>
+                    <br>
+                    
+                    <p style="color: white;">
+                        Here is your login details:<br>
+                        Email: '.$email.'<br>
+                        Password: '.$password.'<br>
+                    </p>
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <p style="color: white;">This is auto generated email</p></br>
+                    </body>
+                </html>
+                ';
+
+            $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
+            $headers .= 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
+            mail($to, $subject, $message, $headers);
+
+            
             echo "
                 <script>
-                    alert('New admin added');
-                    location.href = 'admin_manage.php';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'New admin added',
+                    confirmButtonText: 'Okay',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = 'admin_manage.php';
+                    }
+                })
                 </script>";
         }
     }
@@ -133,7 +198,7 @@ if (isset($_GET["activate"])) {
 
     <div class="container admin-content" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <div>
                     <h4>Admin's Activities</h4>
                     <hr>
@@ -199,7 +264,7 @@ if (isset($_GET["activate"])) {
                 </div>
             </div>
 
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <!--
                 
                 -->
@@ -212,7 +277,7 @@ if (isset($_GET["activate"])) {
                         <div class="tab active-tab" id="desc">
                             <div class="product-details-content" style="padding: 20px 30px;">
                                 <div class="desc-content-box">
-
+                                    <!--
                                     <div class="row">
                                         <div class="col-sm-8">
                                         </div>
@@ -225,15 +290,19 @@ if (isset($_GET["activate"])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <table class="table table-bordered table-striped table-hover table-condensed">
-                                        <tr>
-                                            <th>User ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th></th>
-                                        </tr>
+                                    -->
+                                    <table id="dtBasicExample" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         <?php
 
                                         $sql = "SELECT * FROM users WHERE mode = 'admin'";
@@ -257,6 +326,17 @@ if (isset($_GET["activate"])) {
                                             }
                                         }
                                         ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>User ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
 
                                 </div>
@@ -267,7 +347,8 @@ if (isset($_GET["activate"])) {
                             <div class="product-details-content" style="padding: 20px 30px;">
                                 <div class="desc-content-box">
 
-                                    <table class="table table-bordered table-striped table-hover table-condensed">
+                                    <table id="dtTableInactive" class="display">
+                                        <thead>
                                         <tr>
                                             <th>User ID</th>
                                             <th>First Name</th>
@@ -276,6 +357,8 @@ if (isset($_GET["activate"])) {
                                             <th>Phone</th>
                                             <th></th>
                                         </tr>
+                                        </thead>
+                                        <tbody>
                                         <?php
 
                                         $sql = "SELECT * FROM users WHERE mode = 'deactivate'";
@@ -299,6 +382,17 @@ if (isset($_GET["activate"])) {
                                             }
                                         }
                                         ?>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
                                     </table>
 
                                 </div>
@@ -353,15 +447,31 @@ if (isset($_GET["activate"])) {
 
                     <div class="form-group">
                         <label>Password</label> </br>
-                        <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                        <input id="pass" type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                         <span class="invalid-feedback"><?php echo $password_err; ?></span>
                     </div>
 
                     <div class="form-group" style="text-align: left">
                         <label>Confirm Password</label> </br>
-                        <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+                        <input id="con-pass" type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
                     </div>
+
+                    <input type="checkbox" onclick="showPass()"><label style="margin: 2%; margin-top: 0;">Show password</label>
+                    <script>
+                        function showPass() {
+                            var x = document.getElementById("pass");
+                            var y = document.getElementById("con-pass");
+
+                            if(x.type == "password") {
+                                x.type = "text";
+                                y.type = "text";
+                            } else {
+                                x.type = "password";
+                                y.type = "password";
+                            }
+                        }
+                    </script>
 
                     <div class="form-group">
                         <input type="submit" name="add" class="btn btn-primary" value="Submit">
@@ -470,6 +580,35 @@ if (isset($_GET["activate"])) {
         });
         return false;
     }
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                'pdf',
+                {
+                text: 'Add admin',
+                action: function ( e, dt, node, config ) {
+                    $('#add-modal').fadeIn();
+                }
+            }
+            ],
+        });
+
+        var table = $('#dtTableInactive').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                'pdf'
+            ],
+        });
+        //table.buttons().container()
+        //    .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+    });
 </script>
 <!-- template js -->
 <script src="assets/js/organik.js"></script>

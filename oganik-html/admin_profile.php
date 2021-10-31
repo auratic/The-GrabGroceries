@@ -106,58 +106,61 @@ if (isset($_POST["reset_info"])) {
     }
 }
 
+$curPwd = $newPwd = $cfmPwd = "";
+
 if (isset($_POST["reset_pass"])) {
     $reset_page = "pass";
     $cur_pass_err = $new_pass_err = $con_pass_err = "";
 
-    $curPwd = $_POST["cur_pass"];
-    $newPwd = $_POST["new_pass"];
-    $cfmPwd = $_POST["con_pass"];
+    $curPwd = trim($_POST["cur_pass"]);
+    $newPwd = trim($_POST["new_pass"]);
+    $cfmPwd = trim($_POST["con_pass"]);
 
     $sql = "SELECT * from users WHERE user_id=" . $_SESSION["userid"];
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_assoc($result);
 
     //hashing part
-    if (password_verify($curPwd, $row["password"])) {
-        $uppercase = preg_match('@[A-Z]@', $newPwd);
-        $lowercase = preg_match('@[a-z]@', $newPwd);
-        $number    = preg_match('@[0-9]@', $newPwd);
-        $specialChars = preg_match('@[^\w]@', $newPwd);
+    $uppercase = preg_match('@[A-Z]@', $newPwd);
+    $lowercase = preg_match('@[a-z]@', $newPwd);
+    $number    = preg_match('@[0-9]@', $newPwd);
+    $specialChars = preg_match('@[^\w]@', $newPwd);
 
-        if (!$uppercase || !$lowercase || !$number || !$specialChars || (strlen(trim($newPwd)) < 8)) {
-            $new_pass_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
-        } else if ($_POST["new_pass"] != $_POST["con_pass"]) {
-            $con_pass_err = "Password did not match";
-        }
+    if (empty($curPwd)) {
+        $cur_pass_err = "Please fill in the section";
+    } else if (!password_verify($curPwd, $row["password"])) {
+        $cur_pass_err = "Current Password is not correct";
+    }
 
-        if (empty($cur_pass_err) && empty($new_pass_err) && empty($con_pass_err)) {
-            if ($curPwd != $newPwd) {
-                $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+    if (empty($newPwd)) {
+        $new_pass_err = "Please fill in the section";
+    } else if ($curPwd === $newPwd) {
+        $new_pass_err = "Password cannot be the same";
+    } else if (!$uppercase || !$lowercase || !$number || !$specialChars || (strlen(trim($newPwd)) < 8)) {
+        $new_pass_err = "Password should be at least 8 characters, including at least one upper case letter, one number, and one special character.";
+    }
 
-                if (mysqli_query($link, $sql_update_password)) {
-                    echo "
+    if (empty($cfmPwd)) {
+        $con_pass_err = "Please fill in the section";
+    } else if ($_POST["new_pass"] != $_POST["con_pass"]) {
+        $con_pass_err = "Password did not match";
+    }
+
+    if (empty($cur_pass_err) && empty($new_pass_err) && empty($con_pass_err)) {
+        $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
+
+        if (mysqli_query($link, $sql_update_password)) {
+            echo "
                     <script>
                         Swal.fire({
                             title: 'Successful',
-                            text: 'Your password have updated!',
+                            text: 'New password updated!',
                             icon: 'success'
                         }).then(function() {
                         location.href = 'admin_profile.php'
                         })
                     </script>";
-                } else {
-                    echo "
-                        <script>
-                        alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
-                        </script>";
-                }
-            } else {
-                echo "
-                    <script>
-                        alert('The current password cannot be the same as the new password.');
-                    </script>";
-            }
+
 
             $date = date("F j, Y, g:i a");
             $to = "1191201218@student.mmu.edu.my"; //send to our email
@@ -215,16 +218,19 @@ if (isset($_POST["reset_pass"])) {
             $headers .= 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
             mail($to, $subject, $message, $headers);
+        } else {
+            echo "
+                        <script>
+                        alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
+                        </script>";
         }
-    } else {
-        $currentPassword_err = "Current Password is not correct";
     }
 }
 ?>
 ?>
 
 <section>
-    <p id="reset_page" style="display:none"><?php echo $reset_page?></p>
+    <p id="reset_page" style="display:none"><?php echo $reset_page ?></p>
     <div class="container" style="padding:1%; margin-top:1%; margin-bottom:1%; background-color:rgba(255,255,255,0.8); text-align:center">
 
         <h1>Profile</h1>
@@ -295,7 +301,7 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>Current Password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($cur_pass_err)) ? 'is-invalid' : ''; ?>" name="cur_pass" style="width:100%">
+                                <input id="cur-pass" type="password" class="form-control <?php echo (!empty($cur_pass_err)) ? 'is-invalid' : ''; ?>" name="cur_pass" value="<?php echo $curPwd; ?>" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $cur_pass_err; ?></span>
                             </div>
                         </div>
@@ -304,7 +310,7 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>New password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($new_pass_err)) ? 'is-invalid' : ''; ?>" onkeyup="validatePassword(this.value);" name="new_pass" style="width:100%"><span id="msg"></span>
+                                <input id="new-pass" type="password" class="form-control <?php echo (!empty($new_pass_err)) ? 'is-invalid' : ''; ?>" onkeyup="validatePassword(this.value);" name="new_pass" value="<?php echo $newPwd; ?>" style="width:100%"><span id="msg"></span>
                                 <span class="invalid-feedback"><?php echo $new_pass_err; ?></span>
                             </div>
                         </div>
@@ -313,12 +319,30 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <span><b>Confirm password</b></span>
-                                <input type="password" class="form-control <?php echo (!empty($con_pass_err)) ? 'is-invalid' : ''; ?>" name="con_pass" style="width:100%">
+                                <input id="con-pass" type="password" class="form-control <?php echo (!empty($con_pass_err)) ? 'is-invalid' : ''; ?>" name="con_pass" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $con_pass_err; ?></span>
                             </div>
                         </div>
                     </div>
 
+                    <input type="checkbox" onclick="showPass()"><label style="margin: 2%; margin-top: 0;">Show password</label>
+                    <script>
+                        function showPass() {
+                            var x = document.getElementById("new-pass");
+                            var y = document.getElementById("con-pass");
+                            var z = document.getElementById("cur-pass");
+
+                            if (x.type == "password") {
+                                x.type = "text";
+                                y.type = "text";
+                                z.type = "text";
+                            } else {
+                                x.type = "password";
+                                y.type = "password";
+                                z.type = "password";
+                            }
+                        }
+                    </script>
                     <hr>
 
                     <div class="row">
@@ -360,8 +384,8 @@ if (isset($_POST["reset_pass"])) {
     window.onload = () => {
         var reset_page = document.getElementById("reset_page").innerHTML;
 
-        if(reset_page == "info") {
-            
+        if (reset_page == "info") {
+
             document.getElementById("reset-info").style.display = "block";
             document.getElementById("reset-pass").style.display = "none";
 

@@ -15,20 +15,6 @@ if (!isset($_SESSION['loggedin'])) {
     ";
 }
 
-if ($_SESSION["verified"] == 'false') {
-	echo "
-        <script>
-            Swal.fire({
-                title: 'Error',
-                text: 'Please verify your email first, if you want to place an order',
-                icon: 'error'
-            }).then(function() {
-            location.href = 'verify.php'
-            })
-        </script>
-    ";
-}
-
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
 $sql = "SELECT * FROM cust_address 

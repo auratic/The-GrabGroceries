@@ -101,11 +101,11 @@ if (isset($_POST['add'])) {
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2>Testimonials</h2>
+        <h2><?php echo $lang['review']?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php"><?php echo $lang['home']?></a></li>
             <li>/</li>
-            <li><span>Testimonials</span></li>
+            <li><span><?php echo $lang['review']?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -115,8 +115,8 @@ if (isset($_POST['add'])) {
         <div class="container">
             <div class="block-title text-center">
                 <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                <p>Our Testimonials</p>
-                <h3>What People Say?</h3>
+                <p><?php echo $lang['ourTest']?></p>
+                <h3><?php echo $lang['pplsay']?></h3>
             </div><!-- /.block-title -->
         </div><!-- /.container -->
     </div><!-- /.testimonials-one__head -->
@@ -173,7 +173,7 @@ if (isset($_POST['add'])) {
                 if (isset($_SESSION["loggedin"]) && ($row["review"] == 'true')) {
                     echo "
                                     <div class='form-group' style='text-align: left; margin-right: 1rem'>
-                                        <button class='thm-btn' style='margin-left: 950px;' onclick='return addReview();'>Leave a review</button>
+                                        <button class='thm-btn' style='margin-left: 950px;' onclick='return addReview();'>".$lang['rBtn']."</button>
                                     </div>
                                 ";
                 }
@@ -187,7 +187,7 @@ if (isset($_POST['add'])) {
 
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:var(--thm-base)">
-                        <h4 class="modal-title"><span style="color:white;">Leave a Message</span></h4>
+                        <h4 class="modal-title"><span style="color:white;"><?php echo $lang['mtitle']?></span></h4>
                         <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                     </div>
                     <!-- Modal Header-->
@@ -195,13 +195,13 @@ if (isset($_POST['add'])) {
                     <div class="modal-body">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                             <div class="form-group">
-                                <label>Your Name</label> </br>
+                                <label><?php echo $lang['mName']?></label> </br>
                                 <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $name; ?>">
                                 <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                             </div>
 
                             <div class="form-group">
-                                <label>Rating</label> </br>
+                                <label><?php echo $lang['mRating']?></label> </br>
                                 <select name="rating" id="rating" class="form-control" value="<?php echo $rating; ?>">
                                     <option disabled selected value></option>
                                     <option value="Poor">Poor</option>
@@ -214,20 +214,20 @@ if (isset($_POST['add'])) {
                             </div>
 
                             <div class="form-group" style="text-align: left">
-                                <label><b>Your comment</b></label> </br>
+                                <label><b><?php echo $lang['mComment']?></b></label> </br>
                                 <textarea name="review" class="form-control" rows="4" cols="50" value="<?php echo $review; ?>"></textarea>
                                 <span class="invalid-feedback d-block"><?php echo $review_err; ?></span>
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" name="add" class="btn btn-primary" value="Send">
+                                <input type="submit" name="add" class="btn btn-primary" value="<?php echo $lang['send']?>">
                             </div>
                         </form>
                     </div>
                     <!-- Modal Body-->
 
                     <div class="modal-footer" style="background-color:var(--thm-base)">
-                        <button type="button" class="btn btn-danger" onclick="return closeModal()">Close</button>
+                        <button type="button" class="btn btn-danger" onclick="return closeModal()"><?php echo $lang['close']?></button>
                     </div>
                     <!-- Modal Footer-->
                 </div>

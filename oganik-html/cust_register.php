@@ -43,27 +43,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
     // Validate first name
     if (empty($_POST["fname"])) {
-        $fname_err = "Name is required";
+        $fname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
-        $fname_err = "Only letters and white space allowed";
+        $fname_err = $lang['nameF'];
     } else {
         $fname = ucwords(test_input($_POST["fname"]));
     }
 
     // Validate last name
     if (empty($_POST["lname"])) {
-        $lname_err = "Name is required";
+        $lname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
-        $lname_err = "Only letters and white space allowed";
+        $lname_err = $lang['nameF'];
     } else {
         $lname = ucwords(test_input($_POST["lname"]));
     }
 
     // Validate email
     if (empty($_POST["email"])) {
-        $email_err = "Email is required";
+        $email_err = $lang['re_email'];
     } else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", test_input($_POST["email"]))) {
-        $email_err = "Invalid email format";
+        $email_err = $lang['iFormat'];
     } else {
         // Prepare a select statement
 
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-            $email_err = "Email is taken";
+            $email_err = $lang['tEmail'];
         } else {
             $email = test_input($_POST["email"]);
         }
@@ -86,21 +86,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
     $specialChars = preg_match('@[^\w]@', $password);
 
     if (empty($_POST["password"])) {
-        $password_err = "Please enter a password.";
+        $password_err = $lang['rPass'];
     } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-        $password_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+        $password_err = $lang['passF'];
     } else {
         $password = $_POST["password"];
     }
 
     // Validate confirm password
     if (empty($_POST["confirm_password"])) {
-        $confirm_password_err = "Please confirm password.";
+        $confirm_password_err = $lang['rCpass'];
     } else {
         $confirm_password = $_POST["confirm_password"];
 
         if (empty($password_err) && ($password != $confirm_password)) {
-            $confirm_password_err = "Password did not match.";
+            $confirm_password_err = $lang['notmatch'];
         }
     }
 
@@ -127,8 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                             echo "
                             <script>
                                 Swal.fire({
-                                    title: 'Successful',
-                                    text: 'New account created',
+                                    title: '".$lang['success']."',
+                                    text: '".$lang['created']."',
                                     icon: 'success'
                                 }).then(function() {
                                 location.href = 'login.php'

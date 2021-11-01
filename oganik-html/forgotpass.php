@@ -61,7 +61,7 @@ if (isset($_POST["send-email"])) {
 			$_SESSION["resetemail"] = $row["email"];
 		}
 	} else {
-		$email_err = "E-mail could not be found.";
+		$email_err = $lang['nFound'];
 	}
 
 	if ($email_err == "") {
@@ -162,8 +162,8 @@ if (isset($_POST["new-pass"])) {
 		echo "
 		<script>
 			Swal.fire({
-                title: 'Successful',
-                text: 'Password updated',
+                title: '".$lang['success']."',
+                text: '".$lang['updatedP']."',
                 icon: 'success'
             }).then(function() {
             location.href = 'login.php'
@@ -246,19 +246,19 @@ if (isset($_POST["new-pass"])) {
 		<!-- Modal content-->
 		<div class="modal-content ver-modal">
 			<div class="modal-header" style="background-color:var(--thm-base)">
-				<h4 class="modal-title" style="color: white">Verify PIN</h4>
+				<h4 class="modal-title" style="color: white"><?php echo $lang['verifyP']?></h4>
 			</div>
 			<!-- Modal Header-->
 
 			<div class="modal-body">
-				<h5>Email Sent. Check your email to get your PIN</h5>
+				<h5><?php echo $lang['sent']?></h5>
 
 				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Key in your code</label>
+								<label><?php echo $lang['yourcode']?></label>
 								<input type="text" name="ver-code" id="ver-code" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $code; ?>">
 								<span class="invalid-feedback"><?php echo $code_err; ?></span>
 							</div>
@@ -268,7 +268,7 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-2">
 							<div class="form-group">
-								<input type="submit" name="confirm-code" id="verify-btn" class="btn btn-primary" value="Enter">
+								<input type="submit" name="confirm-code" id="verify-btn" class="btn btn-primary" value="<?php echo $lang['submit']?>">
 							</div>
 						</div>
 					</div>
@@ -299,7 +299,7 @@ if (isset($_POST["new-pass"])) {
 		<!-- Modal content-->
 		<div class="modal-content reset-modal">
 			<div class="modal-header" style="background-color:var(--thm-base)">
-				<h4 class="modal-title" style="color: white;">Reset Password</h4>
+				<h4 class="modal-title" style="color: white;"><?php echo $lang['resetP']?></h4>
 			</div>
 			<!-- Modal Header-->
 
@@ -310,7 +310,7 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>New password</label>
+								<label><?php echo $lang['newPass']?></label>
 								<input type="password" name="new-pass" id="new-pass" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>"><span id="msg"></span>
 								<span class="new-pass-err" style="color:crimson"></span>
 							</div>
@@ -320,7 +320,7 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Confirm password</label>
+								<label><?php echo $lang['cfmpwd']?></label>
 								<input type="password" name="confirm-pass" id="confirm-pass" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>">
 								<span class="con-pass-err" style="color:crimson"></span>
 							</div>
@@ -330,7 +330,7 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-2">
 							<div class="form-group">
-								<input type="submit" class="btn btn-primary" value="Enter" onclick="return passReset()">
+								<input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>" onclick="return passReset()">
 							</div>
 						</div>
 					</div>

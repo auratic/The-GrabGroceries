@@ -22,6 +22,7 @@ $card_expyr = array();
 
 
 if (isset($_POST['detail'])) {
+
     $sql_insert_cc = "
             UPDATE cust_card
             SET 
@@ -142,7 +143,7 @@ if ($result = mysqli_query($link, $sql)) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
             <div class="my-account-payment account-wrapper">
-                <h4 class="account-title">Payment Method</h4>
+                <h4 class="account-title"><?php echo $lang['payment']?></h4>
                 <div class="row">
                     <?php
                     $counterr = 0;
@@ -158,7 +159,7 @@ if ($result = mysqli_query($link, $sql)) {
                                     <p class="card_namee">' . $card_name[$x] . ' </p>
                                     <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px; color: black;"></i>
                                 </div>
-                                <a class="box-btn m-t-25 " id="add-card' . $counterr . '" onclick="return addCard(' . $counterr . ')"><i class="far fa-edit"></i>Edit</a>
+                                <a class="box-btn m-t-25 " id="add-card' . $counterr . '" onclick="return addCard(' . $counterr . ')"><i class="far fa-edit"></i>'.$lang['edit'].'</a>
                             </div>';
                     }
                     ?>
@@ -292,7 +293,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Save" onclick="return updateCard(' . $counter . ');">
+                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateCard(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +304,7 @@ for ($x = 0; $x < 5; $x++) {
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">Close</button>
+                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">'.$lang['close'].'</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -340,6 +341,10 @@ for ($x = 0; $x < 5; $x++) {
         }else if(/[a-zA-Z]/g.test(cardNum))
         {
             document.getElementById("cno_err" + counter).innerHTML = "Only number allowed";
+            pass = false;
+        }else if(cardNum.length < 19)
+        {
+            document.getElementById("cno_err" + counter).innerHTML = "Please enter valid card number";
             pass = false;
         }
 

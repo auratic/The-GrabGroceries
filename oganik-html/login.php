@@ -186,8 +186,8 @@
                             echo "
                             <script>
                                 Swal.fire({
-                                    title: 'Error',
-                                    text: 'Please verify your email first.',
+                                    title: '".$lang['error']."',
+                                    text: '".$lang['verify']."',
                                     icon: 'warning'
                                 }).then(function() {
                                     location.href = 'verify.php?verify&id=" . $row["user_id"] . "'

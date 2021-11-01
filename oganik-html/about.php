@@ -4,11 +4,11 @@
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2>About Us</h2>
+        <h2><?php echo $lang['about']?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php"><?php echo $lang['home']?></a></li>
             <li>/</li>
-            <li><span>About</span></li>
+            <li><span><?php echo $lang['about']?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -24,24 +24,20 @@
                 <div class="about-one__content">
                     <div class="block-title text-left">
                         <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                        <p>Get to Know</p>
-                        <h3>We’re Selling Quality
-                            Products</h3>
+                        <p><?php echo $lang['gtk']?></p>
+                        <h3><?php echo $lang['selling']?></h3>
                     </div><!-- /.block-title -->
-                    <p>Spare more with TheGrabGroceries ! We give you the most minimal costs
-                        on the entirety of your grocery needs.</p>
-                    <p>TheGrabGroceries is a low-cost online general store that gets items crosswise
-                        over classifications like grocery, natural products and vegetables, excellence and health,
-                        family unit care, infant care, pet consideration and meats and fish conveyed to your doorstep.</p>
+                    <p><?php echo $lang['spare']?></p>
+                    <p><?php echo $lang['desc']?></p>
                     <div class="row">
                         <div class="col-md-6 col-lg-6">
                             <div class="about-one__box">
-                                <h3><i class="fa fa-check-circle"></i>No base request amount required.</h3>
+                                <h3><i class="fa fa-check-circle"></i><?php echo $lang['baser']?></h3>
                             </div><!-- /.about-one__box -->
                         </div><!-- /.col-md-6 -->
                         <div class="col-md-6 col-lg-6">
                             <div class="about-one__box">
-                                <h3><i class="fa fa-check-circle"></i>Free Shipping on requests above RM100</h3>
+                                <h3><i class="fa fa-check-circle"></i><?php echo $lang['freeS']?></h3>
                             </div><!-- /.about-one__box -->
                         </div><!-- /.col-md-6 -->
                     </div><!-- /.row -->
@@ -51,108 +47,14 @@
     </div><!-- /.container -->
 </section><!-- /.about-one -->
 
-<div class="client-carousel ">
-    <div class="container">
-        <div class="thm-swiper__slider swiper-container" data-swiper-options='{"spaceBetween": 140, "slidesPerView": 5, "autoplay": { "delay": 5000 }, "breakpoints": {
-                "0": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 2
-                },
-                "375": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 2
-                },
-                "575": {
-                    "spaceBetween": 30,
-                    "slidesPerView": 3
-                },
-                "767": {
-                    "spaceBetween": 50,
-                    "slidesPerView": 4
-                },
-                "991": {
-                    "spaceBetween": 50,
-                    "slidesPerView": 5
-                },
-                "1199": {
-                    "spaceBetween": 100,
-                    "slidesPerView": 5
-                }
-            }}'>
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                    <img src="assets/images/resources/brand-1-1.png" alt="">
-                </div><!-- /.swiper-slide -->
-            </div><!-- /.swiper-wrapper -->
-        </div><!-- /.thm-swiper__slider -->
-    </div><!-- /.container -->
-</div><!-- /.client-carousel -->
-
 <section class="video-one jarallax" data-jarallax data-speed="0.3" data-imgPosition="50% 50%">
     <img src="assets/images/backgrounds/video-bg-1-1.jpg" alt="" class="jarallax-img">
     <div class="container text-center">
         <a href="https://www.youtube.com/watch?v=u5l4cdUjau4" class="video-popup">
             <i class="fa fa-play"></i>
         </a><!-- /.video-popup -->
-        <h3><span>Get</span> Always Fresh <br>
-            Organic Food</h3>
+        <h3><span><?php echo $lang['get']?></span> <?php echo $lang['alwaysf']?> <br>
+        <?php echo $lang['organicF']?></h3>
     </div><!-- /.container -->
 </section><!-- /.video-one -->
 
@@ -162,8 +64,8 @@
     <div class="container">
         <div class="block-title text-center">
             <div class="block-title__decor"></div><!-- /.block-title__decor -->
-            <p>Professional People</p>
-            <h3>Meet the Team</h3>
+            <p><?php echo $lang['pPeople']?></p>
+            <h3><?php echo $lang['ourTeam']?></h3>
         </div><!-- /.block-title -->
         <div class="row">
             <div class="col-sm-4">

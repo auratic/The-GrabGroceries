@@ -229,7 +229,6 @@ include  $_SESSION['lang']. ".php";
                         <li class="dropdown">
                             <a href="#"><?php echo $lang['more']?></a>
                             <ul>
-                                <li><a href='news.php'><?php echo $lang['news']?></a></li>
                                 <li><a href="cust_contact.php"><?php echo $lang['contact']?></a></li>
                                 <li><a href="about.php"><?php echo $lang['about']?></a></li>
                             </ul>

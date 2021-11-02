@@ -112,6 +112,12 @@
         "unit"    => "Unit Cost",
         "t_cost"  => "Total Cost",
         "close"   => "Close",
+        "notset"  => "Not set",
+        "deliver" => "Delivering",
+        "preparin"=> "Preparing",
+        "cancelle"=> "Cancelled",
+        "received"=> "Received",
+        "pmethod" => "pmethod",
         //payment
         "edit"    => "Edit",
         "save"    => "Save",

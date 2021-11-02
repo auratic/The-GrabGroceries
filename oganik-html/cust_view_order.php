@@ -66,6 +66,16 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             $uid = $row['user_id'];
                         }
 
+                        if($status == "Not set")
+                            $display = $lang['notset'];
+                        elseif($status == "Delivering")
+                            $display = $lang['deliver'];
+                        elseif($status == "Preparing")
+                            $display = $lang['preparin'];
+                        elseif($status == "Cancelled")
+                            $display = $lang['cancelle'];
+                        elseif($status == "Received")
+                            $display = $lang['received'];
                         echo '
                                                                         <tbody>
                                                                             <tr>
@@ -73,7 +83,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                 <td>' . $Fname . ' ' . $rName . '</td>
                                                                                 <td>' . $tDate . '</td>
                                                                                 <td>' . number_format($total, 2) . '</td>
-                                                                                <td>' . $status . '</td>
+                                                                                <td>' . $display . '</td>
                                                                                 <td>
                                                                                     <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                         '.$lang['option'].'
@@ -90,6 +100,8 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                             </tr>
                                                                         </tbody>
                                                                     ';
+                                                                    if($method == "Credit/Debit Cards")
+                                                                        $dispMethod = $lang['pmethod'];
                         echo '
                                                                         <div id="receipt-' . $rID . '" class="modal" role="dialog">
                                                                             <div class="modal-dialog modal-lg">
@@ -105,7 +117,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                             <h4>Receipt Details</h4>
                                                                                             <hr>
                                                                                             <p>'.$lang['rid'].': ' . $rID . '</p>
-                                                                                            <p>'.$lang['payment'].': ' . $method . '</p>
+                                                                                            <p>'.$lang['payment'].': ' . $dispMethod . '</p>
                                                                                             <p>'.$lang['pcost'].': ' . $total . '</p>
                                                                                             <p>'.$lang['tdate'].': ' . $tDate . '</p>
                                                                                         </div>

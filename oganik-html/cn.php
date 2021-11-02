@@ -112,6 +112,12 @@
         "unit"    => "单价",
         "t_cost"  => "总价",
         "close"   => "关闭",
+        "notset"  => "未设置",
+        "deliver" => "配送中",
+        "preparin"=> "准备中",
+        "cancelle"=> "已取消",
+        "received"=> "已收货",
+        "pmethod" => "信用卡",
         //payment
         "edit"    => "编辑",
         "save"    => "保存",

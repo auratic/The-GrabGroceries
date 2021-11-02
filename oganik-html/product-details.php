@@ -97,7 +97,7 @@ if (isset($_POST["addtocart"])) {
                                 <button type="button" class="add">+</button>
                             </div>
                             <div class="addto-cart-box">
-                                <input type="submit" class="thm-btn" value="Add to Cart" name="addtocart">
+                                <input type="submit" class="thm-btn" value="<?php echo $lang['addtoCrt']?>" name="addtocart">
                             </div>
                         </div>
         </form>

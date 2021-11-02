@@ -278,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="contact-infos__single">
                     <i class="organik-icon-calling"></i>
                     <h3><?php echo $lang['contact']?></h3>
-                    <p><a href="tel:92-666-888-0000">+60123456789</a> <br>
+                    <p><a href="tel:0123608370">+60123608370</a> <br>
                     </p>
                 </div><!-- /.contact-infos__single -->
             </div>

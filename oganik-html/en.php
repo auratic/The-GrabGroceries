@@ -176,6 +176,7 @@
         "category"=> "Category",
         "stk"     => "Stock",
         "share"   => "Share with friends",
+        "addtoCrt"=> "Add to Cart",
         //testimonials
         "ourTest" => "Our Testimonials",
         "pplsay"  => "What People Say?",

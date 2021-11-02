@@ -63,7 +63,7 @@ else
                 <div class="product-sidebar">
                     <div class="product-sidebar__single product-sidebar__search-widget">
                         <form action="#">
-                            <button style="width: 300px;"class="thm-btn search-toggler">Search</button>
+                            <button style="width: 300px;"class="thm-btn search-toggler"><?php echo $lang['search']?></i></button>
                         </form>
                     </div><!-- /.product-sidebar__single -->
                     <div class="product-sidebar__single">

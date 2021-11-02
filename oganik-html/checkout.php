@@ -252,11 +252,11 @@ if (isset($_POST["place-order"])) {
 	<div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
 	<!-- /.page-header__bg -->
 	<div class="container">
-		<h2>Checkout</h2>
+		<h2><?php echo $lang['chkout']?></h2>
 		<ul class="thm-breadcrumb list-unstyled">
-			<li><a href="index.php">Home</a></li>
+			<li><a href="index.php"><?php echo $lang['home']?></a></li>
 			<li>/</li>
-			<li><span>Checkout</span></li>
+			<li><span><?php echo $lang['chkout']?></span></li>
 		</ul><!-- /.thm-breadcrumb list-unstyled -->
 	</div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -267,11 +267,11 @@ if (isset($_POST["place-order"])) {
 		<form action="#" class="contact-one__form" method="POST">
 			<div class="row">
 				<div class="col-md-6">
-					<h3>Shipping Details</h3>
+					<h3><?php echo $lang['shipD']?></h3>
 					<div class="row">
 						<div class="col-md-12">
 							<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
-								<option value="" style="display:none">Choose existing address</option>
+								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
 								<option value="" style="<?php
 														if (
 															$address[0] == "" &&
@@ -286,7 +286,7 @@ if (isset($_POST["place-order"])) {
 															echo 'display:none';
 														}
 														?>" disabled>
-									No existing address
+									<?php echo $lang['noAdd']?>
 								</option>
 								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0] ?></option>
 								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1] ?></option>
@@ -297,37 +297,37 @@ if (isset($_POST["place-order"])) {
 							</select>
 						</div><!-- /.col-md-12 -->
 						<div class="col-md-6">
-							<label>First Name <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
+							<label><?php echo $lang['fname']?> <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
 							<input type="text" name="fname" id="set-fname">
 							<span class="invalid-feedback d-block"><?php echo $fname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>Last Name / Surname <i style="color:lightgray"> (eg. Lim etc.)</i></label>
+							<label><?php echo $lang['lname']?> <i style="color:lightgray"> (eg. Lim etc.)</i></label>
 							<input type="text" name="lname" id="set-lname">
 							<span class="invalid-feedback d-block"><?php echo $lname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-12">
-							<label>E-mail <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
+							<label><?php echo $lang['email']?> <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
 							<input type="text" name="email" id="set-email">
 							<span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
-							<label>Phone <i style="color:lightgray"> (eg. 60123334444)</i></label>
+							<label><?php echo $lang['phone']?> <i style="color:lightgray"> (eg. 60123334444)</i></label>
 							<input type="text" name="phone" id="set-phone">
 							<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
-							<label>Address <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
+							<label><?php echo $lang['address']?> <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
 							<input type="text" name="address" id="set-address">
 							<span class="invalid-feedback d-block"><?php echo $address_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-6">
-							<label>Area</label> <br>
+							<label><?php echo $lang['area']?></label> <br>
 							<select name="area" class="form-select form-select-lg" style="width: 100%">
 								<option disabled selected style="display: none;"></option>
 								<option id="set-area" style="display: none;"></option>
@@ -339,7 +339,7 @@ if (isset($_POST["place-order"])) {
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>State</label> <br>
+							<label><?php echo $lang['state']?></label> <br>
 							<select name="state" class="form-select form-select-lg" style="width: 100%">
 								<option disabled selected style="display: none;"></option>
 								<option id="set-state" style="display: none;"></option>
@@ -349,7 +349,7 @@ if (isset($_POST["place-order"])) {
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>Postcode</label> <br>
+							<label><?php echo $lang['pcode']?></label> <br>
 							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
 								<option disabled selected style="display: none;"></option>
 								<option id="set-postcode" style="display: none;"></option>
@@ -379,12 +379,12 @@ if (isset($_POST["place-order"])) {
 
 				
 				<div class="col-md-6">
-					<h3>Payment Details</h3>
+					<h3><?php echo $lang['payD']?></h3>
 					<div class="row">
 				
 						<div class="col-md-12">
 							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
-								<option value="" style="display:none">Choose existing card</option>
+								<option value="" style="display:none"><?php echo $lang['existC']?></option>
 								<option value="" style="<?php
 														if (
 															$cardno[0] == "" &&
@@ -398,7 +398,7 @@ if (isset($_POST["place-order"])) {
 															echo 'display:none';
 														}
 														?>" disabled>
-									No existing address
+									<?php echo $lang['noCard']?>
 								</option>
 								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
 								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
@@ -443,17 +443,17 @@ if (isset($_POST["place-order"])) {
 					<div class="col-md-12">
 					<hr>
 						<h3>
-							Your Orders
+							<?php echo $lang['yourOdr']?>
 						</h3>
 						<div class="table-responsive">
 							<table class="table cart-table">
 								<thead>
 									<tr>
 										<th></th>
-										<th>Item</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total</th>
+										<th><?php echo $lang['items']?></th>
+										<th><?php echo $lang['prices']?></th>
+										<th><?php echo $lang['qtys']?></th>
+										<th><?php echo $lang['totals']?></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -518,25 +518,25 @@ if (isset($_POST["place-order"])) {
 
 						<div class="order-details">
 							<div class="order-details__top">
-								<p>Product</p>
-								<p>Price</p>
+								<p><?php echo $lang['pdt']?></p>
+								<p><?php echo $lang['price']?></p>
 							</div><!-- /.order-details__top -->
 							<p>
-								<span>Subtotal (RM)</span>
+								<span><?php echo $lang['sbbtots']?> (RM)</span>
 								<span><?php echo number_format($subtotal,2) ?></span>
 							</p>
 							<p>
-								<span>Shipping (RM)</span>
+								<span><?php echo $lang['ships']?> (RM)</span>
 								<span><?php echo number_format($shipping_cost,2)?></span>
 							</p>
 							<p>
-								<span>Grand Total (RM)</span>
+								<span><?php echo $lang['gtotal']?> (RM)</span>
 								<span><?php echo number_format($total,2) ?></span>
 							</p>
 							<hr>
-							<i>Free shipping if orders over RM100   </i><i class="fas fa-truck-moving"></i>
-							<a href="index.php" class="thm-btn" style="text-decoration: none; margin-left: 436px;">Cancel</a>
-							<input type="submit" class="thm-btn" value="Place Your Order" name="place-order">
+							<i><?php echo $lang['freeshps']?>   </i><i class="fas fa-truck-moving"></i>
+							<a href="index.php" class="thm-btn" style="text-decoration: none; margin-left: 436px;"><?php echo $lang['cancels']?></a>
+							<input type="submit" class="thm-btn" value="<?php echo $lang['placeOdr']?>" name="place-order">
 						</div><!-- /.order-details -->
 					</div><!-- /.col-lg-6 -->
 				</div>

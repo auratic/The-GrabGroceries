@@ -60,11 +60,11 @@ if (isset($_POST['remove'])) {
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2>Cart</h2>
+        <h2><?php echo $lang['cart']?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php"><?php echo $lang['home']?></a></li>
             <li>/</li>
-            <li><span>Cart</span></li>
+            <li><span><?php echo $lang['cart']?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -77,11 +77,11 @@ if (isset($_POST['remove'])) {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Item</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th style="text-align: center;">Action</th>
+                        <th><?php echo $lang['items']?></th>
+                        <th><?php echo $lang['prices']?></th>
+                        <th><?php echo $lang['qtys']?></th>
+                        <th><?php echo $lang['totals']?></th>
+                        <th style="text-align: center;"><?php echo $lang['acts']?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,7 +116,7 @@ if (isset($_POST['remove'])) {
                                                         <td>
                                                         <div class="quantity-box">
                                                             <button type="button" class="sub">-</button>
-                                                                <input type="number" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="' . $row['stock'] . '" data-mask="00">
+                                                                <input type="number" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="' . $row['stock'] . '" data-mask="000">
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>
@@ -136,16 +136,16 @@ if (isset($_POST['remove'])) {
         </div><!-- /.table-responsive -->
         <div class="row">
             <div class="col-lg-8">
-                <form action="#" class="contact-one__form">
+                <!--<form action="#" class="contact-one__form">
                     <input type="text" placeholder="Enter Coupon Code">
-                    <button type="submit" class="thm-btn">Apply Coupon</button><!-- /.thm-btn -->
-                </form><!-- /.contact-one__form -->
+                    <button type="submit" class="thm-btn">Apply Coupon</button> /.thm-btn -->
+                <!-- /.contact-one__form -->
             </div><!-- /.col-lg-8 -->
             <div class="col-lg-4">
-                <i style="margin-left: 90px;">Free shipping if orders over RM100   </i><i class="fas fa-truck-moving"></i><hr>
+                <i style="margin-left: 90px;"><?php echo $lang['freeshps']?>   </i><i class="fas fa-truck-moving"></i><hr>
                 <ul class="cart-total list-unstyled">
                     <li>
-                        <span>Subtotal</span>
+                        <span><?php echo $lang['subtots']?></span>
                         <span>
                             RM
                             <?php
@@ -162,7 +162,7 @@ if (isset($_POST['remove'])) {
                         </span>
                     </li>
                     <li>
-                      <span>Shipping Cost</span>
+                      <span><?php echo $lang['shpcosts']?></span>
                         <span>
                             RM
                            <?php
@@ -185,7 +185,7 @@ if (isset($_POST['remove'])) {
                         </span>
                     </li>
                     <li>
-                        <span>Total</span>
+                        <span><?php echo $lang['totals']?></span>
                         <span>
                             RM
                             <?php
@@ -205,8 +205,8 @@ if (isset($_POST['remove'])) {
                     </li>
                 </ul><!-- /.cart-total -->
                 <div class="button-box" style="margin-left: -20px;">
-                    <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> Cancel</a><!-- /.thm-btn -->
-                    <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> Checkout</a><!-- /.thm-btn -->
+                    <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> <?php echo $lang['cancels']?></a><!-- /.thm-btn -->
+                    <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> <?php echo $lang['chkout']?></a><!-- /.thm-btn -->
                 </div><!-- /.button-box -->
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->

@@ -205,6 +205,29 @@
         "alwaysf" => "Always Fresh",
         "organicF"=> "Organic Food",
         "pPeople" => "Professional People",
-        "ourTeam" => "Meet the Team"
+        "ourTeam" => "Meet the Team",
+        //cart
+        "items"   => "Item",
+        "prices"  => "Price",
+        "qtys"    => "Quantity",
+        "totals"  => "Total",
+        "acts"    => "Action",
+        "freeshps"=> "Free shipping if orders over RM100",
+        "subtots" => "Subtotal",
+        "shpcosts"=> "Shipping Cost",
+        "cancels" => "Cancel",
+        "chkout"  => "Checkout",
+        //checkout
+        "shipD"   => "Shipping Details",
+        "existAdd"=> "Choose existing address",
+        "payD"    => "Payment Details",
+        "yourOdr" => "Your Orders",
+        "placeOdr"=> "Place your order",
+        "existC"  => "Choose existing card",
+        "noCard"  => "No existing card",
+        "pdt"     => "Product",
+        "sbbtots" => "Subtotal",
+        "gtotal"  => "Grand Total",
+        "ships"   => "Shipping"
     ); 
 ?>

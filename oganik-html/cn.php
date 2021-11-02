@@ -205,6 +205,30 @@
         "alwaysf" => "时都获得",
         "organicF"=> "有机产品",
         "pPeople" => "专业团队",
-        "ourTeam" => "与团队见面"
+        "ourTeam" => "与团队见面",
+        //cart
+        "items"   => "物品",
+        "prices"  => "单价",
+        "qtys"    => "数量",
+        "totals"  => "总价",
+        "acts"    => "更多",
+        "freeshps"=> "订单满RM100免运费",
+        "subtots" => "小计",
+        "shpcosts"=> "运费",
+        "cancels" => "取消",
+        "chkout"  => "结账",
+        //checkout
+        "shipD"   => "运输资料",
+        "existAdd"=> "选择地址",
+        "noAdd"   => "尚未设置地址",
+        "payD"    => "付款详情",
+        "yourOdr" => "您的订单",
+        "placeOdr"=> "结算",
+        "existC"  => "选择信用卡",
+        "noCard"  => "尚未设置信用卡",
+        "pdt"     => "物品",
+        "sbbtots" => "价格",
+        "gtotal"  => "总价",
+        "ships"   => "运费"
     );
 ?>

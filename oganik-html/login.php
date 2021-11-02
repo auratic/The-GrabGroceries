@@ -54,7 +54,7 @@
     <script src="assets/vendors/countdown/countdown.min.js"></script>
 
     <!-- re-captcha -->
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=en"></script>
 
     <link rel="stylesheet" href="assets/vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendors/bootstrap-select/bootstrap-select.min.css" />
@@ -208,7 +208,7 @@
 
                                 header("location: admin_dashboard.php");
                             } else {
-                                header("location: cust_profile.php");
+                                header("location: index.php");
                             }
                         }
                     } else {

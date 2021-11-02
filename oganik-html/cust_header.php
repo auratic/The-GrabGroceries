@@ -164,9 +164,7 @@ include  $_SESSION['lang']. ".php";
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
                             <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>

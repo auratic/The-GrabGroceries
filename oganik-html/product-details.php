@@ -106,12 +106,10 @@ if (isset($_POST["addtocart"])) {
         </ul>
         <div class="product_detail_share_box">
             <div class="share_box_title">
-                <h2>Share with friends</h2>
+                <h2><?php echo $lang["share"]?></h2>
             </div>
             <div class="share_box_social">
-                <a href="#"><i class="fab fa-facebook-square"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/thegrabgroceries" target="_blank"><i class="fab fa-facebook-square"></i></a>
             </div>
         </div>
     </div>

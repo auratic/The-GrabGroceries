@@ -53,9 +53,6 @@
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
 
-    <!-- re-captcha -->
-    <script src="https://www.google.com/recaptcha/api.js?hl=en"></script>
-
     <link rel="stylesheet" href="assets/vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendors/bootstrap-select/bootstrap-select.min.css" />
     <link rel="stylesheet" href="assets/vendors/animate/animate.min.css" />
@@ -222,6 +219,9 @@
         }
     }
 ?>
+    <!-- re-captcha -->
+    <script src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang['recap']?>"></script>
+
     <title><?php echo $lang['title']?></title>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />

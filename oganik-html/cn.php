@@ -36,6 +36,7 @@
         "support" => "求助",
         "faq"     => "常问问题",
         "cpyright"=> "版权所有",
+        "recap"   => "cn",
         //login
         "login"   => "登录",
         "cred"    => "请填写您的资料以登录。",
@@ -174,6 +175,7 @@
         "expDate" => "过期",
         "category"=> "类别",
         "stk"     => "库存",
+        "share"   => "与朋友分享",
         //testimonials
         "ourTest" => "感言",
         "pplsay"  => "人们都说了什么?",

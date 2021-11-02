@@ -45,6 +45,7 @@
         "no_acc"  => "Don't have an account?",
         "register"=> "Sign Up Now",
         "verify"  => "Please verify your email first",
+        "recap"   => "en",
         //register
         "signup"  => "Sign Up",
         "fillform"=> "Please fill this form to create an account.",
@@ -174,6 +175,7 @@
         "expDate" => "Expiry Date",
         "category"=> "Category",
         "stk"     => "Stock",
+        "share"   => "Share with friends",
         //testimonials
         "ourTest" => "Our Testimonials",
         "pplsay"  => "What People Say?",

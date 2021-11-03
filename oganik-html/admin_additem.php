@@ -94,7 +94,7 @@ if (isset($_POST["add-item"])) {
   ) {
 
     $sql = "INSERT INTO item (item, category_id, description, stock, image, cost, exp_date)
-                 VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '$cost', '$exp_date')";
+                 VALUES ('$item_name', '$category', '$desc', '$stock', '$filename', '".sprintf('%.2f', $cost)."', '$exp_date')";
 
 
     if (move_uploaded_file($tempname, $folder)) {

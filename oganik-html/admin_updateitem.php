@@ -147,7 +147,7 @@ if (isset($_POST["update-item"])) {
 
     if ($upload_img == true) {
       $sql = "UPDATE item
-                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', image = '$filename', cost = '$cost', exp_date = '$exp_date'
+                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', image = '$filename', cost = '".sprintf('%.2f', $cost)."', exp_date = '$exp_date'
                     WHERE item_id = '$id'";
 
       if (move_uploaded_file($tempname, $folder)) {
@@ -160,7 +160,7 @@ if (isset($_POST["update-item"])) {
       }
     } else {
       $sql = "UPDATE item
-                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', cost = '$cost', exp_date = '$exp_date'
+                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', cost = '". sprintf('%.2f', $cost) ."', exp_date = '$exp_date'
                     WHERE item_id = '$id'";
     }
 

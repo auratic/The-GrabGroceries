@@ -70,25 +70,22 @@ if (isset($_POST["update-item"])) {
   if (empty(trim($_POST["item-name"]))) {
 
     $name_err = "Please enter name";
-
   } else {
 
-    $sql = "SELECT * FROM item WHERE item = '". ucfirst(trim($_POST["item-name"])) ."'";
+    $sql = "SELECT * FROM item WHERE item = '" . ucfirst(trim($_POST["item-name"])) . "'";
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    if(mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) {
 
-      if($row["item"] != $item_name) {
+      if ($row["item"] != $item_name) {
 
         $name_err = "Name is taken";
-
       } else {
 
         $item_name = ucwords(trim($_POST["item-name"]));
-
       }
-    } 
+    }
   }
 
   if (empty(trim($_POST["category_id"]))) {
@@ -106,37 +103,29 @@ if (isset($_POST["update-item"])) {
   if (empty(trim($_POST["cost"]))) {
 
     $cost_err = "Please enter cost";
-
   } else if (trim($_POST["cost"]) <= 0) {
 
     $cost_err = "Please enter valid cost";
-
   } else if (!is_numeric(trim($_POST["cost"]))) {
 
     $cost_err = "Please enter valid cost";
-
   } else {
 
     $cost = trim($_POST["cost"]);
-
   }
 
   if (empty(trim($_POST["stock"]))) {
 
     $stock_err = "Please enter stock";
-
   } else if (!is_numeric(trim($_POST["stock"]))) {
 
     $stock_err = "Please enter valid stock";
-
   } else if (trim($_POST["stock"]) <= 0) {
 
     $stock_err = "Please enter valid stock";
-
   } else {
 
     $stock = trim($_POST["stock"]);
-
   }
 
   if (empty(trim($_POST["exp-date"]))) {
@@ -260,11 +249,18 @@ if (isset($_POST["update-item"])) {
           <div class="row">
 
             <div class="form-group col-md-12" style="text-align: left">
-              <label><b>Description </b><i> (Max-length:500)</i></label> </br>
-              <textarea name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!" maxlength="500"><?php echo $desc; ?></textarea>
+              <label><b>Description </b><i id="count-desc"> (Max-length:<span>500</span>)</i></label> </br>
+              <textarea id="get-desc" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!" maxlength="500"><?php echo $desc; ?></textarea>
               <span class="invalid-feedback"><?php echo $desc_err; ?></span>
             </div>
+            <script>
+              var count_desc = document.querySelector("#count-desc > span");
+              var get_desc = document.getElementById("get-desc");
 
+              get_desc.onkeyup = () => {
+                count_desc.innerHTML = 500 - get_desc.value.length;
+              }
+            </script>
           </div>
 
           <div class="row">

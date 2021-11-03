@@ -27,45 +27,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $date = date("Y-m-d H:i:s");
 
-    if(empty($_POST['name']))
-    {
+    if (empty($_POST['name'])) {
         $name_err = "Please enter your name";
-    }
-    else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"]))
-    {
+    } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
         $name_err = "Only letters and white space allowed";
-    }
-    else
-    {
+    } else {
         $name = $_POST["name"];
     }
-    
+
     if (empty($_POST["email"])) {
         $email_err = "Email is required";
-    } else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",$_POST["email"])) {
+    } else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $_POST["email"])) {
         $email_err = "Invalid email format";
-    } else{
+    } else {
         $email = $_POST["email"];
     }
 
-    if(empty($_POST['phone']))
-    {
+    if (empty($_POST['phone'])) {
         $phone_err = "Please enter your phone number";
-    }
-    else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"]))
-    {
+    } else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"])) {
         $phone_err = "Please enter valid phone number (60123456789)";
-    }
-    else
-    {
+    } else {
         $phone = $_POST["phone"];
     }
-    
+
     $title = $_POST["subject"];
     $user_message = $_POST["message"];
 
-    if(empty($name_err) && empty($email_err) && empty($phone_err))
-    {
+    if (empty($name_err) && empty($email_err) && empty($phone_err)) {
         $to      = "1191201218@student.mmu.edu.my"; // Send email to our user //$email
         $subject = 'Contact Us | TheGrabGroceries'; // Give the email a subject 
         $message = '
@@ -148,7 +137,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </script>";
         }
     }
-    
 }
 
 /*get_brightness($hex) { 
@@ -174,11 +162,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2><?php echo $lang['contact']?></h2>
+        <h2><?php echo $lang['contact'] ?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php"><?php echo $lang['home']?></a></li>
+            <li><a href="index.php"><?php echo $lang['home'] ?></a></li>
             <li>/</li>
-            <li><span><?php echo $lang['contact']?></span></li>
+            <li><span><?php echo $lang['contact'] ?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -190,40 +178,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <div class="block-title text-center">
             <div class="block-title__decor"></div><!-- /.block-title__decor -->
-            <p><?php echo $lang['getintch']?></p>
-            <h3><?php echo $lang['question']?> <br>
-            <?php echo $lang['writemsg']?></h3>
+            <p><?php echo $lang['getintch'] ?></p>
+            <h3><?php echo $lang['question'] ?> <br>
+                <?php echo $lang['writemsg'] ?></h3>
         </div><!-- /.block-title -->
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="contact-one__form" method="post">
             <div class="row">
                 <div class="col-md-6">
-                    <label><strong><?php echo $lang['contactN']?></strong></label>
-                    <input type="text" name="name" placeholder="Your Name" value="<?php echo $name?>"required>
+                    <label><strong><?php echo $lang['contactN'] ?></strong></label>
+                    <input type="text" name="name" placeholder="Your Name" value="<?php echo $name ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
-                    <label><strong><?php echo $lang['contactE']?></strong></label>
-                    <input type="email" placeholder="thegrabgroceries@gmail.com" name="email" value="<?php echo $email?>" required>
+                    <label><strong><?php echo $lang['contactE'] ?></strong></label>
+                    <input type="email" placeholder="youremail@gmail.com" name="email" value="<?php echo $email ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
-                    <label><strong><?php echo $lang['contactP']?></strong></label>
-                    <input type="text" placeholder="0123456789" name="phone" value="<?php echo $phone?>" required>
+                    <label><strong><?php echo $lang['contactP'] ?></strong></label>
+                    <input type="text" placeholder="0123456789" name="phone" value="<?php echo $phone ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
-                    <label><strong><?php echo $lang['contactS']?></strong></label>
-                    <input type="text" placeholder="How to order?" name="subject" value="<?php echo $title?>" required>
+                    <label><strong><?php echo $lang['contactS'] ?></strong><i id="count-subj"><?php echo $lang['contactSS'] ?></i></label>
+                    <input type="text" placeholder="How to order?" name="subject" value="<?php echo $title ?>" required id="get-subj" maxlength="20">
                     <span class="invalid-feedback d-block"><?php echo $subject_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-12">
-                    <label><strong><?php echo $lang['contactM']?></strong></label>
-                    <textarea placeholder="Write a Message" name="message" value="<?php echo $user_message?>" required></textarea>
+                    <label><strong><?php echo $lang['contactM'] ?></strong><i id="count-char"><?php echo $lang['contactMM'] ?></i></label>
+                    <textarea placeholder="Write a Message" name="message" value="<?php echo $user_message ?>" required id="get-char" maxlength="500"></textarea>
                     <span class="invalid-feedback d-block"><?php echo $message_err; ?></span>
                 </div><!-- /.col-md-12 -->
+                <script>
+                    var count_char = document.querySelector("#count-char > span");
+                    var get_char = document.getElementById("get-char");
+
+                    get_char.onkeyup = () => {
+                        count_char.innerHTML = 500 - get_char.value.length;
+                    }
+
+                    var count_subj = document.querySelector("#count-subj > span");
+                    var get_subj = document.getElementById("get-subj");
+
+                    get_subj.onkeyup = () => {
+                        count_subj.innerHTML = 20 - get_subj.value.length;
+                    }
+
+                </script>
                 <div class="col-md-12 text-center">
-                    <input type="submit" class="thm-btn" value="<?php echo $lang['sendBtn']?>">
+                    <input type="submit" class="thm-btn" value="<?php echo $lang['sendBtn'] ?>">
                 </div><!-- /.col-md-12 -->
             </div><!-- /.row -->
         </form>
@@ -261,14 +265,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>
                 <div class="contact-infos__single">
                     <i class="organik-icon-location"></i>
-                    <h3><?php echo $lang['visit']?></h3>
+                    <h3><?php echo $lang['visit'] ?></h3>
                     <p>66 Melaka Street, Melaka. Malaysia</p>
                 </div><!-- /.contact-infos__single -->
             </div>
             <div>
                 <div class="contact-infos__single">
                     <i class="organik-icon-email"></i>
-                    <h3><?php echo $lang['sendmail']?></h3>
+                    <h3><?php echo $lang['sendmail'] ?></h3>
                     <p>
                         <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a>
                     </p>
@@ -277,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>
                 <div class="contact-infos__single">
                     <i class="organik-icon-calling"></i>
-                    <h3><?php echo $lang['contact']?></h3>
+                    <h3><?php echo $lang['contact'] ?></h3>
                     <p><a href="tel:0123608370">+60123608370</a> <br>
                     </p>
                 </div><!-- /.contact-infos__single -->

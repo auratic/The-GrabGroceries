@@ -79,7 +79,7 @@ if (isset($_GET["archive"])) {
                                                     <td>' . $row['stock'] . '</td>
                                                     <td><img src="assets/images/items/' . $row['image'] . '" style="width:100%;height:200px;object-fit:contain;"></td>
                                                     <td>RM' . $row['cost'] . '</td>
-                                                    <td>' . $row['exp_date'] . '</td>
+                                                    <td><b><div class="exp-date" data-toggle="tooltip" data-placement="bottom" data-html="true" title="">' . date("Y-m-d",strtotime($row['exp_date'])) . '</div></b></td>
                                                     <td>
                                                         <a href="admin_updateitem.php?id=' . $row['item_id'] . '">
                                                         <button class="btn btn-info btn-sm">Edit</button>
@@ -129,6 +129,62 @@ if (isset($_GET["archive"])) {
 
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 <script>
+    window.onload = () => {
+        var exp_date = document.getElementsByClassName("exp-date");
+        var today = new Date();   
+
+        $('.exp-date').each(function() {
+            var get_date = new Date(this.innerHTML);
+            //test
+            
+            var dateOneUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+            var dateTwoUTC = Date.UTC(get_date.getFullYear(), get_date.getMonth(), get_date.getDate())
+            var difference = (dateTwoUTC - dateOneUTC) / (1000 * 60 * 60* 24);
+
+            $(this).attr({
+                /*
+                'date-toggle': 'tooltip',
+                'data-placement': "bottom",
+                'data-html': "true",
+                */
+                'title': "Expires within " + ((difference <= 0) ? '0' : difference) + " days"
+            });
+            
+            if(difference <= 7)
+                this.style.color = "red";
+            else if(difference <= 30)
+                this.style.color = "orange";
+
+        });
+        /*
+        for (var i = 0; i < exp_date.length; i++) {
+            
+            var get_date = new Date(exp_date[i].innerHTML)
+            
+            var dateOneUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+            var dateTwoUTC = Date.UTC(get_date.getFullYear(), get_date.getMonth(), get_date.getDate())
+            var difference = (dateTwoUTC - dateOneUTC) / (1000 * 60 * 60* 24);
+            //console.log((dateTwoUTC - dateOneUTC) / (1000 * 60 * 60* 24)); 
+
+            //data-toggle="tooltip" data-placement="bottom" data-html="true" title="Red: expires within 7 days<br>Orange: expires within 30 days"
+
+            $(".exp-date["+i+"]").attr({
+                'date-toggle': 'tooltip',
+                'data-placement': "bottom",
+                'data-html': "true",
+                'title': "Expires within " + difference + " days"
+            })
+
+            if(difference <= 7)
+                exp_date[i].style.color = "red";
+            else if(difference <= 30)
+                exp_date[i].style.color = "orange";
+
+        }
+        */
+    }
+
+
     function archiveItem(id) {
         Swal.fire({
             title: 'Deactivate this item ?',
@@ -173,11 +229,16 @@ if (isset($_GET["archive"])) {
                 'excel',
                 'colvis'
             ],
+            "order": [[ 7, "asc" ]]
         });
 
         table.buttons().container()
             .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    }) //Bootstrap tooltip
 </script>
 
 <!-- template js -->

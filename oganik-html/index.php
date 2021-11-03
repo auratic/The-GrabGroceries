@@ -87,7 +87,8 @@
                     }'>
                 <div>
                     <div class="feature-box__single">
-                        <i class="organik-icon-global-shipping feature-box__icon"></i>
+                        <i style="margin: 0; height: auto" class="fas fa-check-double feature-box__icon"></i>
+                        <!--<i class="organik-icon-global-shipping feature-box__icon"></i>-->
                         <div class="feature-box__content">
                             <h3><?php echo $lang['return']?></h3>
                             <p><?php echo $lang['p7']?></p>
@@ -96,7 +97,8 @@
                 </div>
                 <div>
                     <div class="feature-box__single">
-                        <i class="organik-icon-delivery-truck feature-box__icon"></i>
+                        <i  style="margin: 0; height: auto" class="fas fa-cart-arrow-down feature-box__icon"></i>
+                        <!--<i class="organik-icon-delivery-truck feature-box__icon"></i>-->
                         <div class="feature-box__content">
                             <h3><?php echo $lang['freeship']?></h3>
                             <p><?php echo $lang['over100']?></p>
@@ -105,7 +107,9 @@
                 </div>
                 <div>
                     <div class="feature-box__single">
-                        <i class="organik-icon-online-store feature-box__icon"></i>
+                        <i style="margin: 0; height: auto" class="fas fa-shipping-fast feature-box__icon"></i>
+                        
+                        <!--<i class="organik-icon-online-store feature-box__icon"></i>-->
                         <div class="feature-box__content">
                             <h3><?php echo $lang['locator']?></h3>
                             <p><?php echo $lang['nearest']?></p>

@@ -183,6 +183,7 @@
         "stk"     => "Stock",
         "share"   => "Share with friends",
         "addtoCrt"=> "Add to Cart",
+        "emptyStock"=> "Out of stock",
         //testimonials
         "ourTest" => "Our Testimonials",
         "pplsay"  => "What People Say?",

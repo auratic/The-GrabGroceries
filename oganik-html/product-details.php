@@ -97,7 +97,14 @@ if (isset($_POST["addtocart"])) {
                                 <button type="button" class="add">+</button>
                             </div>
                             <div class="addto-cart-box">
-                                <input type="submit" class="thm-btn" value="<?php echo $lang['addtoCrt']?>" name="addtocart">
+                                <input type="submit" class="thm-btn" 
+                                    <?php 
+                                        echo 
+                                        (($row["stock"] <= 0) 
+                                        ? "value='".$lang['emptyStock']."' disabled style='background-color: white; color: gray'" 
+                                        :  "value='".$lang['addtoCrt']."'")
+                                    ?> 
+                                    name="addtocart">
                             </div>
                         </div>
         </form>

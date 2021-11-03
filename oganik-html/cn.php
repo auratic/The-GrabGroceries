@@ -183,6 +183,7 @@
         "stk"     => "库存",
         "share"   => "与朋友分享",
         "addtoCrt"=> "加入购物车",
+        "emptyStock"=> "已售完",
         //testimonials
         "ourTest" => "感言",
         "pplsay"  => "人们都说了什么?",

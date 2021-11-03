@@ -128,8 +128,12 @@ if (isset($_POST["place-order"])) {
 		$receipt_postcode = $_POST['postcode'];
 	}
 
+	$cardnum = $_POST["cardno"];
+
 	if (empty($_POST["cardno"])) {
 		$cardnum_err = "Card Number is required";
+	} elseif (ctype_alpha($cardnum) /*preg_match("/^[a-zA-Z]+$/", $cardnum)*/ ) {
+		$cardnum_err = "Only number allowed";
 	} else {
 		$receipt_cardnum = $_POST['cardno'];
 	}

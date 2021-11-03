@@ -4,6 +4,7 @@ include 'cust_header.php';
 if (!isset($_SESSION["loggedin"])) {
     echo "
         <script>
+        $('.preloader').css('display','none');
         Swal.fire({
             title: 'Error',
             text: 'Please log in.',

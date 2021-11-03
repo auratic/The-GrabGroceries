@@ -138,7 +138,14 @@ require "config.php";
             <div class="topbar">
                 <div class="container">
                     <div class="main-logo">
-                        <a href="index.php" class="logo">
+                        <a href="
+                            <?php  
+                                if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
+                                    echo "admin_dashboard.php";
+                                } else {
+                                    echo "index.php";
+                                } ?>" 
+                            class="logo">
                             <img src="assets/images/Logo6.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -176,7 +183,10 @@ require "config.php";
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if (isset($_SESSION["lname"])) {
+                        <a href="<?php  
+                                    if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
+                                        echo "admin_dashboard.php";
+                                    } elseif (isset($_SESSION["lname"])) {
                                         echo "cust_profile.php";
                                     } else {
                                         echo "login.php";
@@ -222,15 +232,6 @@ require "config.php";
                             </ul>
                         </li>
                     </ul>
-                    <div class="main-menu__language">
-                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
-                        <label class="sr-only" for="language-select">select language</label>
-                        <!-- /#language-select.sr-only -->
-                        <select class="selectpicker" id="language-select-header">
-                            <option value="english">English</option>
-                            <option value="arabic">Arabic</option>
-                        </select>
-                    </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
             <!-- /.main-menu -->

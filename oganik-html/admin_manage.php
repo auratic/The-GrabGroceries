@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($lname_err) && empty($fname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err)) {
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (email, password, mode, firstname, lastname, phone) VALUES ('$email', '".password_hash($password, PASSWORD_DEFAULT)."', 'admin', '$fname', '$lname', '$phone');";
+        $sql = "INSERT INTO users (email, password, mode, firstname, lastname, phone, verified) VALUES ('$email', '".password_hash($password, PASSWORD_DEFAULT)."', 'admin', '$fname', '$lname', '$phone', 'true');";
 
         if (mysqli_query($link, $sql)) {
             $date = date('Y-m-d H:i:s');

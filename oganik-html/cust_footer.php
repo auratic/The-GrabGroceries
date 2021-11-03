@@ -116,15 +116,6 @@
             </li>
         </ul><!-- /.mobile-nav__contact -->
         <div class="mobile-nav__top">
-            <div class="mobile-nav__language">
-                <img src="assets/images/resources/flag-1-1.jpg" alt="">
-                <label class="sr-only" for="language-select">select language</label>
-                <!-- /#language-select.sr-only -->
-                <select class="selectpicker" id="language-select">
-                    <option value="english">English</option>
-                    <option value="arabic">Arabic</option>
-                </select>
-            </div><!-- /.mobile-nav__language -->
             <div class="main-menu__login">
                 <a href="<?php if (isset($_SESSION["lname"])) {
                                 echo "cust_profile.php";

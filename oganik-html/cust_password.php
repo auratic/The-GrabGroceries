@@ -140,32 +140,32 @@ if (count($_POST) > 0) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
             <div class="my-account-details account-wrapper">
-                <h4 class="account-title">Password Changes</h4>
+                <h4 class="account-title"><?php echo $lang['pwd_chg']?></h4>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                     <div class="form-group">
-                        <label>Current Password</label> </br>
+                        <label><?php echo $lang['newpwd']?></label> </br>
                         <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
                         <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
                     </div>
 
                     <div class="form-group">
-                        <label>New Password</label><i><span id="msg"></span></i></br>
+                        <label><?php echo $lang['newpwd']?></label><i><span id="msg"></span></i></br>
                         <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>" required><br>
                         <span class="invalid-feedback"><?php echo $newPassword_err; ?></span>
                     </div>
                     <div>
-                        <label>Confirm Password</label> </br>
+                        <label><?php echo $lang['cfmpwd']?></label> </br>
                         <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required><span id="msg"></span>
                         <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
                     </div>
 
                     <div style="margin-top: 10px;">
-                        <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+                        <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
                     </div>
 
                     <div class="form-group" style="margin: 1%;">
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
+                        <input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>">
+                        <input type="reset" class="btn btn-secondary ml-2" value="<?php echo $lang['reset']?>" style="outline: none">
                     </div>
                 </form>
             </div>

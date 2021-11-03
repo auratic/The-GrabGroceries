@@ -43,27 +43,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
     // Validate first name
     if (empty($_POST["fname"])) {
-        $fname_err = "Name is required";
+        $fname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
-        $fname_err = "Only letters and white space allowed";
+        $fname_err = $lang['nameF'];
     } else {
         $fname = ucwords(test_input($_POST["fname"]));
     }
 
     // Validate last name
     if (empty($_POST["lname"])) {
-        $lname_err = "Name is required";
+        $lname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
-        $lname_err = "Only letters and white space allowed";
+        $lname_err = $lang['nameF'];
     } else {
         $lname = ucwords(test_input($_POST["lname"]));
     }
 
     // Validate email
     if (empty($_POST["email"])) {
-        $email_err = "Email is required";
+        $email_err = $lang['re_email'];
     } else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", test_input($_POST["email"]))) {
-        $email_err = "Invalid email format";
+        $email_err = $lang['iFormat'];
     } else {
         // Prepare a select statement
 
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         $result = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-            $email_err = "Email is taken";
+            $email_err = $lang['tEmail'];
         } else {
             $email = test_input($_POST["email"]);
         }
@@ -86,21 +86,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
     $specialChars = preg_match('@[^\w]@', $password);
 
     if (empty($_POST["password"])) {
-        $password_err = "Please enter a password.";
+        $password_err = $lang['rPass'];
     } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-        $password_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";
+        $password_err = $lang['passF'];
     } else {
         $password = $_POST["password"];
     }
 
     // Validate confirm password
     if (empty($_POST["confirm_password"])) {
-        $confirm_password_err = "Please confirm password.";
+        $confirm_password_err = $lang['rCpass'];
     } else {
         $confirm_password = $_POST["confirm_password"];
 
         if (empty($password_err) && ($password != $confirm_password)) {
-            $confirm_password_err = "Password did not match.";
+            $confirm_password_err = $lang['notmatch'];
         }
     }
 
@@ -127,8 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                             echo "
                             <script>
                                 Swal.fire({
-                                    title: 'Successful',
-                                    text: 'New account created',
+                                    title: '".$lang['success']."',
+                                    text: '".$lang['created']."',
                                     icon: 'success'
                                 }).then(function() {
                                 location.href = 'login.php'
@@ -231,49 +231,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 </style>
 
 <div class="signup-form container loginbox">
-    <h2>Sign Up</h2>
-    <p>Please fill this form to create an account.</p>
+    <h2><?php echo $lang['signup']?></h2>
+    <p><?php echo $lang['fillform']?></p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
         <div class="form-group">
-            <label>E-mail</label> </br>
+            <label><?php echo $lang['email']?></label> </br>
             <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
             <span class="invalid-feedback"><?php echo $email_err; ?></span>
         </div>
 
         <div class="form-group" style="display: flex; justify-content: space-between">
             <div>
-                <label>First Name</label> </br>
+                <label><?php echo $lang['fname']?></label> </br>
                 <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
                 <span class="invalid-feedback"><?php echo $fname_err; ?></span>
             </div>
 
             <div>
-                <label>Last Name</label> </br>
+                <label><?php echo $lang['lname']?></label> </br>
                 <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
                 <span class="invalid-feedback"><?php echo $lname_err; ?></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label>Password</label><i><span id="msg"></span></i></br>
+            <label><?php echo $lang['password']?></label><i><span id="msg"></span></i></br>
             <input type="password" name="password" id="pwd" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
             <span class="invalid-feedback"><?php echo $password_err; ?></span>
         </div>
         <div class="form-group" style="text-align: left">
-            <label>Confirm Password</label> </br>
+            <label><?php echo $lang['cfmpwd']?></label> </br>
             <input type="password" name="confirm_password" id="cpwd" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
             <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
         </div>
 
         <div style="margin-top: -10px;">
-            <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+            <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Submit">
-            <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+            <input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>">
+            <input type="reset" class="btn btn-secondary ml-2" value="<?php echo $lang['reset']?>">
         </div>
-        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        <p><?php echo $lang['have_acc']?><a href="login.php"><?php echo $lang['backtolg']?></a>.</p>
     </form>
 </div>
 

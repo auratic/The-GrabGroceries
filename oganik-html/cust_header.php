@@ -6,6 +6,19 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 
 require "config.php";
 
+if(!isset($_SESSION['lang']))
+{
+    $_SESSION['lang'] = 'en';
+}
+else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
+{
+    if($_GET['lang'] == 'en')
+    $_SESSION['lang'] = 'en';
+    else if($_GET['lang'] == 'cn')
+    $_SESSION['lang'] = 'cn';
+}
+
+include  $_SESSION['lang']. ".php";
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +27,7 @@ require "config.php";
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TheGrabGroceries</title>
+    <title><?php echo $lang['title']?></title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -158,19 +171,17 @@ require "config.php";
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
                             <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
+                            <p><?php echo $lang['email']?> <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+60186620551">+60123456789</a></p>
+                            <p><?php echo $lang['phone']?> <a href="tel:+60186620551">+60123608370</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -197,7 +208,7 @@ require "config.php";
                             if (isset($_SESSION["lname"])) {
                                 echo $_SESSION['lname'];
                             } else {
-                                echo "Login / Register";
+                                echo $lang['login/re'];
                             }
 
                             ?>
@@ -205,33 +216,44 @@ require "config.php";
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php">Home</a>
+                            <a href="index.php"><?php echo $lang['home']?></a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php">Shop</a>
+                            <a href="products.php"><?php echo $lang['shop']?></a>
                             <?php 
                                 if(isset($_SESSION["loggedin"]))
                                     echo "
                                     <ul>
-                                        <li><a href='cart.php'>Cart Page</a></li>
-                                        <li><a href='checkout.php'>Checkout</a></li>
+                                        <li><a href='cart.php'>".$lang['cart']."</a></li>
+                                        <li><a href='checkout.php'>".$lang['checkout']."</a></li>
                                     </ul>";
                             ?>
                         </li>
 
                         <li>
-                            <a href='review.php'>Testimonial</a>
+                            <a href='review.php'><?php echo $lang['review']?></a>
                         </li>
 
                         <li class="dropdown">
-                            <a href="#">More</a>
+                            <a href="#"><?php echo $lang['more']?></a>
                             <ul>
-                                <li><a href='news.php'>News</a></li>
-                                <li><a href="cust_contact.php">Contact Us</a></li>
-                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="cust_contact.php"><?php echo $lang['contact']?></a></li>
+                                <li><a href="about.php"><?php echo $lang['about']?></a></li>
                             </ul>
                         </li>
                     </ul>
+                    <div class="main-menu__language">
+                        <label class="sr-only" for="language-select">select language</label>
+                        <!-- /#language-select.sr-only -->
+                        <form action="" method="GET">
+                            <select class="selectpicker" name="lang" id="language-select-header">
+                                <option value="en"><?php echo $lang['chglg']?></option>
+                                <option value="en"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'en'){echo "selected";}?>><?php echo $lang['eng']?></option>
+                                <option value="cn"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'cn'){echo "selected";}?>><?php echo $lang['man']?></option>
+                            </select>
+                            <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save']?></button>
+                        </form>
+                    </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
             <!-- /.main-menu -->

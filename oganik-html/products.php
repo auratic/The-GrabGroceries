@@ -20,7 +20,7 @@ if (isset($_GET["search"]))
                 array_push($id_array, $row["item_id"]);
         }
     }
-} 
+}
 else 
 {
     $getid_sql = "SELECT * FROM category INNER JOIN item 
@@ -42,11 +42,11 @@ else
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2>Products</h2>
+        <h2><?php echo $lang['products']?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php"><?php echo $lang['home']?></a></li>
             <li>/</li>
-            <li><span>Products</span></li>
+            <li><span><?php echo $lang['products']?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -63,24 +63,24 @@ else
                 <div class="product-sidebar">
                     <div class="product-sidebar__single product-sidebar__search-widget">
                         <form action="#">
-                            <button style="width: 300px;"class="thm-btn search-toggler">Search</button>
+                            <button style="width: 300px;"class="thm-btn search-toggler"><?php echo $lang['search']?></i></button>
                         </form>
                     </div><!-- /.product-sidebar__single -->
                     <div class="product-sidebar__single">
-                        <h3>Price (RM)</h3>
+                        <h3><?php echo $lang['price']?> (RM)</h3>
                         <div class="product-sidebar__price-range">
                             <form action="" method="GET">
                                 <div class="row">
-                                    <label for="">From:</label> 
+                                    <label for=""><?php echo $lang['from']?>:</label> 
                                     <div class="input-group input-group-sm mb-3">
-                                        <input type="number" name="start_price" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; }else{echo "1";} ?>" class="form-control">
+                                        <input type="number" name="start_price" min="1" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; }else{echo "1";} ?>" class="form-control">
                                     </div>
-                                    <label for="">To:</label> 
+                                    <label for=""><?php echo $lang['to']?>:</label> 
                                     <div class="input-group input-group-sm mb-3">
-                                        <input type="number" name="end_price" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; }else{echo "2";} ?>" class="form-control">
+                                        <input type="number" name="end_price" min="1" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; }else{echo "2";} ?>" class="form-control">
                                     </div>
                                     <div class="input-group input-group-sm mb-3">
-                                        <button type="submit" class="thm-btn">Filter</button>
+                                        <button type="submit" class="thm-btn"><?php echo $lang['filter']?></button>
                                     </div>
                                 </div>
                             </form>
@@ -88,7 +88,7 @@ else
                     </div><!-- /.product-sidebar__single -->
                     <form action="" method="GET">
                         <div class="product-sidebar__single">
-                            <h3>Categories</h3>
+                            <h3><?php echo $lang['cate']?></h3>
                             <ul class="list-unstyled product-sidebar__links">
                                 <?php
                                     $brand_query = "SELECT * FROM category WHERE category_status = 'Active' AND category_name != 'Not Set'";
@@ -116,7 +116,7 @@ else
                                     
                                 ?>
                             </ul><!-- /.list-unstyled product-sidebar__links -->
-                            <button type="submit" class="thm-btn" style="padding: 2px 10px;">Search</button>
+                            <button type="submit" class="thm-btn" style="padding: 2px 10px;"><?php echo $lang['search']?></button>
                         </div><!-- /.product-sidebar__single -->
                     </form>
                 </div><!-- /.product-sidebar -->
@@ -125,17 +125,17 @@ else
             <div class="col-sm-12 col-md-12 col-lg-9">
 
                 <div class="product-sorter">
-                    <p>Showing 1–9 of 12 results</p>
+                    <p><?php echo $lang['products']?>:</p>
                     <form action="" method="GET">
                         <div class="product-sorter__select" style="margin-right: 150px;">
                             <select class="selectpicker" name="sort" >
-                                <option value="ASC">--Select Option--</option>
-                                <option value="ASC" <?php if(isset($_GET['sort']) && $_GET['sort'] == 'a-z'){echo "selected";}?>>Sort by Ascending</option>
-                                <option value="DESC" <?php if(isset($_GET['sort']) && $_GET['sort'] == 'z-a'){echo "selected";}?>>Sort by Descending</option>
-                                <option value="lth"<?php if(isset($_GET['sort']) && $_GET['sort'] == 'cost'){echo "selected";}?>>Sort by Price Low to High</option>
-                                <option value="htl"<?php if(isset($_GET['sort']) && $_GET['sort'] == 'cost'){echo "selected";}?>>Sort by Price High to Low</option>
+                                <option value="ASC"><?php echo $lang['selectop']?></option>
+                                <option value="ASC" <?php if(isset($_GET['sort']) && $_GET['sort'] == 'a-z'){echo "selected";}?>><?php echo $lang['ascen']?></option>
+                                <option value="DESC" <?php if(isset($_GET['sort']) && $_GET['sort'] == 'z-a'){echo "selected";}?>><?php echo $lang['descen']?></option>
+                                <option value="lth"<?php if(isset($_GET['sort']) && $_GET['sort'] == 'cost'){echo "selected";}?>><?php echo $lang['plth']?></option>
+                                <option value="htl"<?php if(isset($_GET['sort']) && $_GET['sort'] == 'cost'){echo "selected";}?>><?php echo $lang['phtl']?></option>
                             </select>
-                            <button style="margin-left: 300px; margin-top: -109px;"type="submit" class="thm-btn">Sort</button>
+                            <button style="margin-left: 300px; margin-top: -109px;"type="submit" class="thm-btn"><i class="fa fa-search"></i></button>
                         </div><!-- /.product-sorter__select -->
                     </form>
                 </div><!-- /.product-sorter -->
@@ -148,7 +148,7 @@ else
                     if(isset($_GET['start_price']) && isset($_GET['end_price']))
                     {
                         $startprice = $_GET['start_price'];
-                        $endprice = $_GET['end_price'];
+                        $endprice = $_GET['end_price']; 
                     
                         $query = "SELECT * FROM category INNER JOIN item 
                                     ON category.category_id = item.category_id 
@@ -349,7 +349,7 @@ else
                     <!-- /.col-md-6 col-lg-4 -->
                 </div><!-- /.row -->
                 <div class="text-center">
-                    <a href="#" class="thm-btn products__load-more">Load More</a><!-- /.thm-btn -->
+                    <a href="#" class="thm-btn products__load-more"><?php echo $lang['load']?></a><!-- /.thm-btn -->
                 </div><!-- /.text-center -->
             </div><!-- /.col-sm-12 col-md-12 col-lg-9 -->
         </div><!-- /.row -->

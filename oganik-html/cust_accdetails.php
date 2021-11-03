@@ -6,7 +6,7 @@ if (!isset($_SESSION["loggedin"])) {
     echo "
         <script>
         Swal.fire({
-            title: 'Error',
+            title: '".$lang['error']."',
             text: 'Please log in.',
             icon: 'error'
         }).then(function() {
@@ -96,8 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "
                 <script>
                     Swal.fire({
-                        title: 'Successful',
-                        text: 'Your details have been updated!',
+                        title: '".$lang['success']."',
+                        text: '".$lang['updated']."',
                         icon: 'success'
                     }).then(function() {
                     location.href = 'cust_accdetails.php'
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
             <div class="my-account-details account-wrapper">
-                <h4 class="account-title">Account Details</h4>
+                <h4 class="account-title"><?php echo $lang['accd']?></h4>
                 <div class="account-details">
                     <div class="row">
                         <div class="col-md-8">
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="col-md-10">
                                         <div class="form-group">
-                                            <span><b>Email Address</b></span>
+                                            <span><b><?php echo $lang['email']?></b></span>
                                             <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" placeholder="<?php echo $email ?>" style="width:100%" value="" disabled>
                                             <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                         </div>
@@ -138,14 +138,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <span><b>First Name</b></span>
+                                            <span><b><?php echo $lang['fname']?></b></span>
                                             <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" placeholder="<?php echo $fname ?>" style="width:100%" value="" disabled>
                                             <span class="invalid-feedback"><?php echo $fname_err; ?></span>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <span><b>Last Name</b></span>
+                                            <span><b><?php echo $lang['lname']?></b></span>
                                             <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" placeholder="<?php echo $lname ?>" style="width:100%" value="" disabled>
                                             <span class="invalid-feedback"><?php echo $lname_err; ?></span>
                                         </div>
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <span><b>Phone Number</b><i></i></span>
+                                            <span><b><?php echo $lang['tel']?></b><i></i></span>
                                             <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="">
                                             <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                         </div>

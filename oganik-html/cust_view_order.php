@@ -29,7 +29,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 <?php include 'cust_profile_layout.php' ?>
 <div class="col-xl-10 col-md-10">
     <div class="tab-content my-account-tab" id="pills-tabContent">
-        <h4 class="account-title">Orders</h4>
+        <h4 class="account-title"><?php echo $lang['order']?></h4>
 
         <div class="panel-group" id="accordion">
             <div class="panel panel-default text-center">
@@ -41,12 +41,12 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                         <table class="table table-striped table-bordered table-hover" style="width: 100%;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th><h5>Receipt ID</h5></th>
-                                                                    <th><h5>Receipt Name</h5></th>
-                                                                    <th><h5>Transaction Date</h5></th>
-                                                                    <th><h5>Total (RM)</h5></th>
-                                                                    <th><h5>Status</h5></th>
-                                                                    <th><h5>Action</h5></th>
+                                                                    <th><h5>'.$lang['rid'].'</h5></th>
+                                                                    <th><h5>'.$lang['rname'].'</h5></th>
+                                                                    <th><h5>'.$lang['tdate'].'</h5></th>
+                                                                    <th><h5>'.$lang['total'].'</h5></th>
+                                                                    <th><h5>'.$lang['status'].'</h5></th>
+                                                                    <th><h5>'.$lang['action'].'</h5></th>
                                                                 </tr>
                                                             </thead>';
                     foreach ($receipt_array as $x => $x_value) {
@@ -66,6 +66,16 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             $uid = $row['user_id'];
                         }
 
+                        if($status == "Not set")
+                            $display = $lang['notset'];
+                        elseif($status == "Delivering")
+                            $display = $lang['deliver'];
+                        elseif($status == "Preparing")
+                            $display = $lang['preparin'];
+                        elseif($status == "Cancelled")
+                            $display = $lang['cancelle'];
+                        elseif($status == "Received")
+                            $display = $lang['received'];
                         echo '
                                                                         <tbody>
                                                                             <tr>
@@ -73,29 +83,31 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                 <td>' . $Fname . ' ' . $rName . '</td>
                                                                                 <td>' . $tDate . '</td>
                                                                                 <td>' . number_format($total, 2) . '</td>
-                                                                                <td>' . $status . '</td>
+                                                                                <td>' . $display . '</td>
                                                                                 <td>
                                                                                     <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                        More option
+                                                                                        '.$lang['option'].'
                                                                                     </a>
                                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                                         <a class="dropdown-item" onclick="openModal(' . $rID . ')" target="_blank" style="cursor:pointer">
-                                                                                            View Details
+                                                                                            '.$lang['details'].'
                                                                                         </a>
                                                                                         <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $rID . '" target="_blank">
-                                                                                            Invoice
+                                                                                            '.$lang['invoice'].'
                                                                                         </a>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     ';
+                                                                    if($method == "Credit/Debit Cards")
+                                                                        $dispMethod = $lang['pmethod'];
                         echo '
                                                                         <div id="receipt-' . $rID . '" class="modal" role="dialog">
                                                                             <div class="modal-dialog modal-lg">
                                                                                 <div class="modal-content" style="text-align: left;">
                                                                                     <div class="modal-header" style="background-color:var(--thm-base)">
-                                                                                        <h4 class="modal-title"><span style="color:white;">Details</span></h4>
+                                                                                        <h4 class="modal-title"><span style="color:white;">'.$lang['detail'].'</span></h4>
                                                                                         <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                                                                                     </div> 
                                                                                     <!-- Modal Header-->
@@ -104,41 +116,41 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                         <div>
                                                                                             <h4>Receipt Details</h4>
                                                                                             <hr>
-                                                                                            <p>Receipt ID: ' . $rID . '</p>
-                                                                                            <p>Payment Method: ' . $method . '</p>
-                                                                                            <p>Payment Cost: ' . $total . '</p>
-                                                                                            <p>Transaction Date: ' . $tDate . '</p>
+                                                                                            <p>'.$lang['rid'].': ' . $rID . '</p>
+                                                                                            <p>'.$lang['payment'].': ' . $dispMethod . '</p>
+                                                                                            <p>'.$lang['pcost'].': ' . $total . '</p>
+                                                                                            <p>'.$lang['tdate'].': ' . $tDate . '</p>
                                                                                         </div>
 
                                                                                         <div>
                                                                                             <hr>
-                                                                                            <h4>Buyer\'s Details</h4>
+                                                                                            <h4>'.$lang['buyer'].'</h4>
                                                                                             <hr>
-                                                                                            <p>User ID: ' . $uid . '</p>
-                                                                                            <p>Name: ' . $Fname . ' ' . $rName . '</p>
-                                                                                            <p>Email: ' . $rEmail . '</p>
-                                                                                            <p>Phone: ' . $rPhone . '</p>
-                                                                                            <p>Address: ' . $rAdds . '</p>
+                                                                                            <p>'.$lang['uid'].': ' . $uid . '</p>
+                                                                                            <p>'.$lang['name'].': ' . $Fname . ' ' . $rName . '</p>
+                                                                                            <p>'.$lang['email'].': ' . $rEmail . '</p>
+                                                                                            <p>'.$lang['phone'].': ' . $rPhone . '</p>
+                                                                                            <p>'.$lang['address'].': ' . $rAdds . '</p>
                                                                                         </div>
 
                                                                                         <div>
                                                                                             <hr>
-                                                                                            <h4>Purchased Products</h4>
+                                                                                            <h4>'.$lang['purchase'].'</h4>
                                                                                             <hr>
                                                                                             <div class="row">
                                                                                                 <div class="col-md-2">
                                                                                                 </div>
                                                                                                 <div class="col-md-2">
-                                                                                                    <p><b>Item name</b></p>
+                                                                                                    <p><b>'.$lang['item'].'</b></p>
                                                                                                 </div>
                                                                                                 <div class="col-md-2">
-                                                                                                    <p><b>Amount</b></p>
+                                                                                                    <p><b>'.$lang['amount'].'</b></p>
                                                                                                 </div>
                                                                                                 <div class="col-md-2">
-                                                                                                    <p><b>Unit Cost</b></p>
+                                                                                                    <p><b>'.$lang['unit'].'</b></p>
                                                                                                 </div>
                                                                                                 <div class="col-md-2">
-                                                                                                    <p><b>Total Cost</b></p>
+                                                                                                    <p><b>'.$lang['t_cost'].'</b></p>
                                                                                                 </div>
                                                                                             </div>
                                                                                             ';
@@ -176,7 +188,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                 </div>
 
                                                                                 <div class="modal-footer" style="background-color:var(--thm-base)">
-                                                                                    <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Close</button>
+                                                                                    <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">'.$lang['close'].'</button>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>

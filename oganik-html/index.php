@@ -22,8 +22,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 text-center">
-                            <h2><span>TheGrabGroceries</span> <br></h2>
-                            <a href="products.php" class=" thm-btn">Shop Now</a>
+                            <h2><span><?php echo $lang['title']?></span> <br></h2>
+                            <a href="products.php" class=" thm-btn"><?php echo $lang['shopnow']?></a>
                             <!-- /.thm-btn dynamic-radius -->
                         </div><!-- /.col-lg-7 text-right -->
                     </div><!-- /.row -->
@@ -36,8 +36,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 text-center">
-                            <h2><span>TheGrabGroceries</span> <br></h2>
-                            <a href="about.php" class=" thm-btn">About Us</a>
+                            <h2><span><?php echo $lang['title']?></span> <br></h2>
+                            <a href="about.php" class=" thm-btn"><?php echo $lang['about']?></a>
                             <!-- /.thm-btn dynamic-radius -->
                         </div><!-- /.col-lg-7 text-right -->
                     </div><!-- /.row -->
@@ -89,8 +89,8 @@
                     <div class="feature-box__single">
                         <i class="organik-icon-global-shipping feature-box__icon"></i>
                         <div class="feature-box__content">
-                            <h3>Return Policy</h3>
-                            <p>Money back guarantee</p>
+                            <h3><?php echo $lang['return']?></h3>
+                            <p><?php echo $lang['p7']?></p>
                         </div><!-- /.feature-box__content -->
                     </div><!-- /.feature-box__single -->
                 </div>
@@ -98,8 +98,8 @@
                     <div class="feature-box__single">
                         <i class="organik-icon-delivery-truck feature-box__icon"></i>
                         <div class="feature-box__content">
-                            <h3>Free Shipping</h3>
-                            <p>On all orders over RM100.00</p>
+                            <h3><?php echo $lang['freeship']?></h3>
+                            <p><?php echo $lang['over100']?></p>
                         </div><!-- /.feature-box__content -->
                     </div><!-- /.feature-box__single -->
                 </div>
@@ -107,8 +107,8 @@
                     <div class="feature-box__single">
                         <i class="organik-icon-online-store feature-box__icon"></i>
                         <div class="feature-box__content">
-                            <h3>Store Locator</h3>
-                            <p>Find your nearest store</p>
+                            <h3><?php echo $lang['locator']?></h3>
+                            <p><?php echo $lang['nearest']?></p>
                         </div><!-- /.feature-box__content -->
                     </div><!-- /.feature-box__single -->
                 </div>
@@ -123,22 +123,9 @@
         <div class="new-products__top">
             <div class="block-title ">
                 <div class="block-title__decor"></div><!-- /.block-title__decor -->
-                <p id="p2">Recently Added</p>
-                <h3>New Products</h3>
+                <p id="p2"><?php echo $lang['recent']?></p>
+                <h3><?php echo $lang['newprods']?></h3>
             </div><!-- /.block-title -->
-
-            <ul class="post-filter filters list-unstyled">
-                <li class="active filter" data-filter=".filter-item">All</li>
-                <li class="filter" data-filter=".dairy">Dairy</li>
-                <li class="filter" data-filter=".pantry">Pantry
-                </li>
-                <li class="filter" data-filter=".meat">Meat
-                </li>
-                <li class="filter" data-filter=".fruits">Fruits
-                </li>
-                <li class="filter" data-filter=".veg">Vagetables
-                </li>
-            </ul>
         </div><!-- /.new-products__top -->
         <div class="row">
             <?php
@@ -160,7 +147,6 @@
                                             <div class="product-card__image-content" style="cursor:pointer;"
                                                 onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
                                                 <a href="#"><i class="organik-icon-heart"></i></a>
-                                                <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
                                                 </div><!-- /.product-card__image-content -->
                                         </div><!-- /.product-card__image -->
                                         <div class="product-card__content">
@@ -191,18 +177,18 @@
             <div class="col-md-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
                 <div class="offer-banner__box" style="background-image: url(assets/images/resources/offer-banner-1-1.jpg);">
                     <div class="offer-banner__content">
-                        <h3><span>100%</span> <br>Original</h3>
-                        <p>Best quality products</p>
-                        <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
+                        <h3><span>100%</span> <br><?php echo $lang['ori']?></h3>
+                        <p><?php echo $lang['quality']?></p>
+                        <a href="products.php" class="thm-btn"><?php echo $lang['order_nw']?></a><!-- /.thm-btn -->
                     </div><!-- /.offer-banner__content -->
                 </div><!-- /.offer-banner__box -->
             </div><!-- /.col-md-6 -->
             <div class="col-md-6 wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="100ms">
                 <div class="offer-banner__box" style="background-image: url(assets/images/resources/offer-banner-1-2.jpg);">
                     <div class="offer-banner__content">
-                        <h3><span>100%</span> <br>Organic</h3>
-                        <p>Quality Organic Food Store</p>
-                        <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
+                        <h3><span>100%</span> <br><?php echo $lang['organic']?></h3>
+                        <p><?php echo $lang['qualityF']?></p>
+                        <a href="products.php" class="thm-btn"><?php echo $lang['order_nw']?></a><!-- /.thm-btn -->
                     </div><!-- /.offer-banner__content -->
                 </div><!-- /.offer-banner__box -->
             </div><!-- /.col-md-6 -->
@@ -217,25 +203,25 @@
             <div class="col-md-6 col-lg-3  wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
                 <div class="funfact-one__single">
                     <h3 class="odometer" data-count="8080">00</h3>
-                    <p>Organic Products Available</p>
+                    <p><?php echo $lang['p8']?></p>
                 </div><!-- /.funfact-one__single -->
             </div><!-- /.col-md-6 col-lg-3 -->
             <div class="col-md-6 col-lg-3  wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="100ms">
                 <div class="funfact-one__single">
                     <h3 class="odometer" data-count="697">00</h3>
-                    <p>Healthy Recipes</p>
+                    <p><?php echo $lang['p9']?></p>
                 </div><!-- /.funfact-one__single -->
             </div><!-- /.col-md-6 col-lg-3 -->
             <div class="col-md-6 col-lg-3  wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="200ms">
                 <div class="funfact-one__single">
                     <h3 class="odometer" data-count="440">00</h3>
-                    <p>Expert Team Mebers</p>
+                    <p><?php echo $lang['p16']?></p>
                 </div><!-- /.funfact-one__single -->
             </div><!-- /.col-md-6 col-lg-3 -->
             <div class="col-md-6 col-lg-3  wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
                 <div class="funfact-one__single">
                     <h3 class="odometer" data-count="2870">00</h3>
-                    <p>Satisfied Customers</p>
+                    <p><?php echo $lang['p10']?></p>
                 </div><!-- /.funfact-one__single -->
             </div><!-- /.col-md-6 col-lg-3 -->
         </div><!-- /.row -->
@@ -245,7 +231,7 @@
 <section class="call-to-action">
     <img src="assets/images/shapes/call-shape-1.png" alt="" class="call-to-action__shape-1">
     <img src="assets/images/shapes/call-shape-2.png" alt="" class="call-to-action__shape-2 wow fadeInLeft" data-wow-duration="1500ms">
-    <h2 class="floated-text">Oragnic</h2><!-- /.floated-text -->
+    <h2 class="floated-text"><?php echo $lang['organic']?></h2><!-- /.floated-text -->
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-6 clearfix">
@@ -256,31 +242,27 @@
                     <div class="block-title text-left">
                         <div class="block-title__decor" style="background-image: url(assets/images/shapes/leaf-2-1.png);"></div>
                         <!-- /.block-title__decor -->
-                        <p>Shopping Store</p>
-                        <h3>Organic Food Only</h3>
+                        <p><?php echo $lang['p11']?></p>
+                        <h3><?php echo $lang['p12']?></h3>
                     </div><!-- /.block-title -->
-                    <p><i>TheGrabGroceries</i> is a low-cost online general store that gets items crosswise over classifications like
-                        grocery, natural products and vegetables, excellence and health, family unit care, infant care, pet consideration
-                        and meats and fish conveyed to your doorstep.</p>
+                    <p><i><?php echo $lang['title']?></i> <?php echo $lang['p13']?></p>
                     <div class="call-to-action__wrap">
                         <div class="row no-gutters">
                             <div class="col-md-6">
                                 <div class="call-to-action__box">
                                     <i class="organik-icon-farmer"></i>
-                                    <h3>Professional
-                                        Farmers</h3>
+                                    <h3><?php echo $lang['p14']?></h3>
                                 </div><!-- /.call-to-action__box -->
                             </div><!-- /.col-md-6 -->
                             <div class="col-md-6">
                                 <div class="call-to-action__box">
                                     <i class="organik-icon-farm"></i>
-                                    <h3>Solution
-                                        for Farming</h3>
+                                    <h3><?php echo $lang['p15']?></h3>
                                 </div><!-- /.call-to-action__box -->
                             </div><!-- /.col-md-6 -->
                         </div><!-- /.row -->
                     </div><!-- /.call-to-action__wrap -->
-                    <a href="products.php" class="thm-btn">Order Now</a><!-- /.thm-btn -->
+                    <a href="products.php" class="thm-btn"><?php echo $lang['order_nw']?></a><!-- /.thm-btn -->
                 </div><!-- /.call-to-action__content -->
             </div><!-- /.col-md-12 col-lg-12 col-xl-12 -->
         </div><!-- /.row -->

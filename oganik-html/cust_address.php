@@ -106,7 +106,7 @@ if ($result = mysqli_query($link, $sql)) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-address" aria-labelledby="pills-address-tab">
             <div class="my-account-address account-wrapper">
-                <h4 class="account-title">Address</h4>
+                <h4 class="account-title"><?php echo $lang['address']?></h4>
                 <div class="account-address m-t-30 div1">
                     <?php
                     $sql = "SELECT * FROM users WHERE user_id = '" . $_SESSION['userid'] . "'";
@@ -126,28 +126,28 @@ if ($result = mysqli_query($link, $sql)) {
                     echo '
                         <div class="row">
                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                <p>Full name: <strong>  ' . $fname . ' ' . $lname . '</strong></p>
-                                <p>Email   &#160&#160&#160&#160&#160 : ' . $default_email . '</span></p>
-                                <p>Address  &#160&#160: ' . $default_address . '</span> </p>
-                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $default_area . '</span> </p>
-                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $default_state . '</span> </p>
-                                <p>Postcode : ' . $default_pcode . '</span> </p>
-                                <p>Contact  &#160&#160: ' . $default_phone . '</span></p>
-                                <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>Edit</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">Default</span>
+                                <p>'.$lang['fullname'].': <strong>  ' . $fname . ' ' . $lname . '</strong></p>
+                                <p>'.$lang['email'].'   &#160&#160&#160&#160&#160 : ' . $default_email . '</span></p>
+                                <p>'.$lang['address'].'  &#160&#160: ' . $default_address . '</span> </p>
+                                <p>'.$lang['area'].'    &#160&#160&#160&#160&#160&#160&#160 : ' . $default_area . '</span> </p>
+                                <p>'.$lang['state'].'    &#160&#160&#160&#160&#160&#160&#160: ' . $default_state . '</span> </p>
+                                <p>'.$lang['pcode'].' : ' . $default_pcode . '</span> </p>
+                                <p>'.$lang['tel'].'  &#160&#160: ' . $default_phone . '</span></p>
+                                <a class="box-btn m-t-25 " id="edit-address" onclick="return edit(0)"><i class="far fa-edit"></i>'.$lang['edit'].'</a> <span style="background-color: var(--thm-base); color: white; border-radius: 5px; padding: 4px;">'.$lang['default'].'</span>
                             </div>';
                     $counterr = 0;
                     for ($x = 0; $x < 5; $x++) {
                         $counterr++;
                         echo '
                             <div class="col-4" style="margin-bottom: 5%; margin-top: 1%;">
-                                <p>Full name: <strong>  ' . $name[$x] . ' ' . $lastname[$x] . '</strong></p>
-                                <p>Email    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
-                                <p>Address &#160 : ' . $address[$x] . '</span></p>
-                                <p>Area    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
-                                <p>State    &#160&#160&#160&#160&#160&#160&#160: ' . $state[$x] . '</span></p>
-                                <p>Postcode&#160: ' . $pcode[$x] . '</span></p>
-                                <p>Contact &#160&#160 : ' . $phone[$x] . '</span></p>
-                                <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>Edit</a>
+                                <p>'.$lang['fullname'].': <strong>  ' . $name[$x] . ' ' . $lastname[$x] . '</strong></p>
+                                <p>'.$lang['email'].'    &#160&#160&#160&#160&#160 : ' . $email[$x] . '</span></p>
+                                <p>'.$lang['address'].' &#160 : ' . $address[$x] . '</span></p>
+                                <p>'.$lang['area'].'    &#160&#160&#160&#160&#160&#160&#160 : ' . $area[$x] . '</span></p>
+                                <p>'.$lang['state'].'    &#160&#160&#160&#160&#160&#160&#160: ' . $state[$x] . '</span></p>
+                                <p>'.$lang['pcode'].'&#160: ' . $pcode[$x] . '</span></p>
+                                <p>'.$lang['tel'].' &#160&#160 : ' . $phone[$x] . '</span></p>
+                                <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>'.$lang['edit'].'</a>
                             </div>';
                     }
 
@@ -175,7 +175,7 @@ echo '
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
+                                <h4 class="modal-title"><span style="color:white;">'.$lang['editd'].'</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->
@@ -186,7 +186,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
+                                                <label>'.$lang['fname'].'</label>
                                                 <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $fname . '" disabled>
                                                 <span class="con-pass-err" style="color:crimson" id="name_err0"></span>
                                             </div>
@@ -194,7 +194,7 @@ echo '
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
+                                                <label>'.$lang['lname'].'</label>
                                                 <input type="" name="lname0" id="lname0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $lname . '" disabled>
                                                 <span class="con-pass-err" style="color:crimson" id="lname_err0"></span>
                                             </div>
@@ -204,7 +204,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Email</label>
+                                                <label>'.$lang['email'].'</label>
                                                 <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" disabled>
                                                 <span class="con-pass-err" style="color:crimson" id="email_err0"></span>
                                             </div>
@@ -214,7 +214,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>'.$lang['address'].'</label>
                                                 <input type="" name="address0" id="address0" required class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $default_address . '">
                                                 <span class="invalid-feedback d-block" id="address_err0"><?php echo $address_err; ?></span>
                                             </div>
@@ -224,7 +224,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Area</label>
+                                                <label>'.$lang['area'].'</label>
                                                 <select name="area0" id="area0" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $default_area . '">
                                                     <option disabled selected value></option>
                                                     <option value="Alor Gajah">Alor Gajah</option>
@@ -237,7 +237,7 @@ echo '
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="state">State</label>
+                                                <label for="state">'.$lang['state'].'</label>
                                                 <select name="state0" id="state0" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $default_state . '">
                                                     <option disabled selected value></option>
                                                     <option value="Melaka">Melaka</option>
@@ -250,7 +250,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Postcode</label>
+                                                <label>'.$lang['pcode'].'</label>
                                                 <select name="pcode0" id="pcode0" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $default_pcode . '">
                                                 <option disabled selected value></option>
                                                     <option value="75000">75000</option>
@@ -277,7 +277,7 @@ echo '
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Phone</label>
+                                                <label>'.$lang['phone'].'</label>
                                                 <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '" placeholder="60123456789">
                                                 <span class="invalid-feedback d-block" id="phone_err0"><?php echo $phone_err; ?></span>
                                             </div>
@@ -287,7 +287,7 @@ echo '
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress(0);">
+                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(0);">
                                             </div>
                                         </div>
                                     </div>
@@ -297,7 +297,7 @@ echo '
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(0)">Close</button>
+                                <button type="button" class="btn btn-danger" onclick="return closeModal(0)">'.$lang['close'].'</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -316,7 +316,7 @@ for ($x = 0; $x < 5; $x++) {
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:var(--thm-base)">
-                                <h4 class="modal-title"><span style="color:white;">Edit Details</span></h4>
+                                <h4 class="modal-title"><span style="color:white;">'.$lang['editd'].'</span></h4>
                                 <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
                             </div> 
                             <!-- Modal Header-->
@@ -327,7 +327,7 @@ for ($x = 0; $x < 5; $x++) {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>First Name</label>
+                                            <label>'.$lang['fname'].'</label>
                                             <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John" required />
                                             <span class="invalid-feedback d-block" id="name_err' . $counter . '"></span>
                                         </div>
@@ -335,7 +335,7 @@ for ($x = 0; $x < 5; $x++) {
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Last Name</label>
+                                            <label>'.$lang['lname'].'</label>
                                             <input type="" name="lname' . $counter . '" id="lname' . $counter . '" class="form-control ' . ((!empty($lname_err)) ? "is-invalid" : '') . '" value="' . $lastname[$x] . '" placeholder="Doe" required />
                                             <span class="invalid-feedback d-block" id="lname_err' . $counter . '"></span>
                                         </div>
@@ -345,7 +345,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Email</label>
+                                                <label>'.$lang['email'].'</label>
                                                 <input type="email" name="email' . $counter . '" id="email' . $counter . '" class="form-control ' . ((!empty($email_err)) ? "is-invalid" : '') . '" value="' . $email[$x] . '" placeholder="JohnDoe@gmail.com" required />
                                                 <span class="invalid-feedback d-block" id="email_err' . $counter . '"></span>
                                             </div>
@@ -355,7 +355,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>'.$lang['address'].'</label>
                                                 <input type="" name="address' . $counter . '" id="address' . $counter . '" class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $address[$x] . '" placeholder="No 1 Tmn Asin 70000" required />
                                                 <span class="invalid-feedback d-block" id="address_err' . $counter . '"></span>
                                             </div>
@@ -365,7 +365,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="area">Area</label>
+                                                <label for="area">'.$lang['area'].'</label>
                                                 <select name="area' . $counter . '" id="area' . $counter . '" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $area[$x] . '" >
                                                     <option value="Alor Gajah">Alor Gajah</option>
                                                     <option value="Melaka Tengah">Melaka Tengah</option>
@@ -377,7 +377,7 @@ for ($x = 0; $x < 5; $x++) {
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="state">State</label>
+                                                <label for="state">'.$lang['state'].'</label>
                                                 <select name="state' . $counter . '" id="state' . $counter . '" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $state[$x] . '" >
                                                     <option disabled selected value></option>
                                                     <option value="Melaka">Melaka</option>
@@ -390,7 +390,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Postcode</label>
+                                                <label>'.$lang['pcode'].'</label>
                                                 <select name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $pcode[$x] . '" >
                                                     <option disabled selected value></option>
                                                     <option value="75000">75000</option>
@@ -417,7 +417,7 @@ for ($x = 0; $x < 5; $x++) {
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Phone</label>
+                                                <label>'.$lang['phone'].'</label>
                                                 <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="60123456789" maxlength=12 required />
                                                 <span class="invalid-feedback d-block" id="phone_err' . $counter . '"></span>
                                             </div>
@@ -427,7 +427,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Save change" onclick="return updateAddress(' . $counter . ');">
+                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -436,7 +436,7 @@ for ($x = 0; $x < 5; $x++) {
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-default" style="background-color: azure;" onclick="return closeModal(' . $counter . ')">Close</button>
+                                <button type="button" class="btn btn-danger" onclick="return closeModal(' . $counter . ')">'.$lang['close'].'</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>

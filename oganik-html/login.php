@@ -1,10 +1,26 @@
+<?php
+
+    if(!isset($_SESSION['lang']))
+    {
+        $_SESSION['lang'] = 'en';
+    }
+    else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
+    {
+        if($_GET['lang'] == 'en')
+        $_SESSION['lang'] = 'en';
+        else if($_GET['lang'] == 'cn')
+        $_SESSION['lang'] = 'cn';
+    }
+
+    include  $_SESSION['lang']. ".php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TheGrabGroceries</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
@@ -37,9 +53,6 @@
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
 
-    <!-- re-captcha -->
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-
     <link rel="stylesheet" href="assets/vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendors/bootstrap-select/bootstrap-select.min.css" />
     <link rel="stylesheet" href="assets/vendors/animate/animate.min.css" />
@@ -67,10 +80,11 @@
             padding: 20px;
         }
     </style>
+    
 </head>
 
 <body>
-    <?php
+<?php
 
     date_default_timezone_set("Asia/Kuala_Lumpur");
 
@@ -85,6 +99,20 @@
 
     // Include config file
     require_once "config.php";
+
+    if(!isset($_SESSION['lang']))
+    {
+        $_SESSION['lang'] = 'en';
+    }
+    else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
+    {
+        if($_GET['lang'] == 'en')
+        $_SESSION['lang'] = 'en';
+        else if($_GET['lang'] == 'cn')
+        $_SESSION['lang'] = 'cn';
+    }
+
+    include  $_SESSION['lang']. ".php";
 
     // Define variables and initialize with empty values
     $email = $password = "";
@@ -155,8 +183,8 @@
                             echo "
                             <script>
                                 Swal.fire({
-                                    title: 'Error',
-                                    text: 'Please verify your email first.',
+                                    title: '".$lang['error']."',
+                                    text: '".$lang['verify']."',
                                     icon: 'warning'
                                 }).then(function() {
                                     location.href = 'verify.php?verify&id=" . $row["user_id"] . "'
@@ -177,7 +205,7 @@
 
                                 header("location: admin_dashboard.php");
                             } else {
-                                header("location: cust_profile.php");
+                                header("location: index.php");
                             }
                         }
                     } else {
@@ -190,7 +218,11 @@
             }
         }
     }
-    ?>
+?>
+    <!-- re-captcha -->
+    <script src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang['recap']?>"></script>
+
+    <title><?php echo $lang['title']?></title>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>
@@ -225,13 +257,13 @@
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
+                            <p><?php echo $lang['email']?> <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+60186620551">+60123456789</a></p>
+                            <p><?php echo $lang['phone']?> <a href="tel:+60186620551">+60123608370</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -258,7 +290,7 @@
                             if (isset($_SESSION["lname"])) {
                                 echo $_SESSION['lname'];
                             } else {
-                                echo "Login / Register";
+                                echo $lang['login/re'];
                             }
 
                             ?>
@@ -266,10 +298,10 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php">Home</a>
+                            <a href="index.php"><?php echo $lang['home']?></a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php">Shop</a>
+                            <a href="products.php"><?php echo $lang['shop']?></a>
                             <?php
                             if (isset($_SESSION["loggedin"]))
                                 echo "
@@ -280,17 +312,28 @@
                             ?>
                         </li>
 
-                        <li><a href='review.php'>Testimonial</a></li>
+                        <li><a href='review.php'><?php echo $lang['review']?></a></li>
 
                         <li class="dropdown">
-                            <a href="#">More</a>
+                            <a href="#"><?php echo $lang['more']?></a>
                             <ul>
-                                <li><a href='news.php'>News</a></li>
-                                <li><a href="cust_contact.php">Contact Us</a></li>
-                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="cust_contact.php"><?php echo $lang['contact']?></a></li>
+                                <li><a href="about.php"><?php echo $lang['about']?></a></li>
                             </ul>
                         </li>
                     </ul>
+                    <div class="main-menu__language">
+                        <label class="sr-only" for="language-select">select language</label>
+                        <!-- /#language-select.sr-only -->
+                        <form action="" method="GET">
+                            <select class="selectpicker" name="lang" id="language-select-header">
+                                <option value="en"><?php echo $lang['chglg']?></option>
+                                <option value="en"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'en'){echo "selected";}?>><?php echo $lang['eng']?></option>
+                                <option value="cn"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'cn'){echo "selected";}?>><?php echo $lang['man']?></option>
+                            </select>
+                            <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save']?></button>
+                        </form>
+                    </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
             </nav>
             <!-- /.main-menu -->
@@ -302,8 +345,8 @@
 
 
         <div class="container signup-form loginbox">
-            <h2>Login to TheGrabGroceries</h2>
-            <p>Please fill in your credentials to login.</p>
+            <h2><?php echo $lang['login'] ?><br>TheGrabGroceries</h2>
+            <p><?php echo $lang['cred'] ?></p>
 
             <?php
             if (!empty($login_err)) {
@@ -313,14 +356,14 @@
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group" style="text-align: left">
-                    <label><b>Email</b> </label> </br>
+                    <label><b><?php echo $lang['email']?></b> </label> </br>
                     <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
-                    <label><b>Password</b></label> </br>
+                    <label><b><?php echo $lang['password']?></b></label> </br>
                     <input type="password" id="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                    <label style="cursor: pointer;"><input style="cursor: pointer; margin-top: 5px;" type="checkbox" onclick="myFunction()"> Show Password</label>
+                    <label style="cursor: pointer;"><input style="cursor: pointer; margin-top: 5px;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
@@ -329,21 +372,26 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary signinbtn" value="Login">
+                    <input type="submit" class="btn btn-primary signinbtn" value="<?php echo $lang['login']?>">
                 </div>
-                <a href="forgotpass.php">Forgot password? </a>
-                <p>Don't have an account? <a href="cust_register.php">Sign Up Now</a>.</p>
+                <a href="forgotpass.php"><?php echo $lang['fgtpwd']?></a>
+                <p><?php echo $lang['no_acc']?><a href="cust_register.php"><?php echo $lang['register']?></a>.</p>
             </form>
         </div>
-        <script>
-            function myFunction() {
-                var x = document.getElementById("password");
+<script>
+    function myFunction() {
+        var x = document.getElementById("password");
 
-                if (x.type === "password") {
-                    x.type = "text";
-                } else {
-                    x.type = "password";
-                }
-            }
-        </script>
-        <?php include 'cust_footer.php'; ?>
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+<?php 
+
+include 'cust_footer.php';
+
+
+?>

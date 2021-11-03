@@ -46,11 +46,11 @@ if (isset($_POST["addtocart"])) {
     <div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2>Product</h2>
+        <h2><?php echo $lang['products']?></h2>
         <ul class="thm-breadcrumb list-unstyled">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php"><?php echo $lang['home']?></a></li>
             <li>/</li>
-            <li><span>Product</span></li>
+            <li><span><?php echo $lang['products']?></span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -80,8 +80,7 @@ if (isset($_POST["addtocart"])) {
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#" class="deactive"><i class="fa fa-star"></i></a>
-                                <span>2 Customer Reviews</span>
+                                <a href="#"><i class="fa fa-star"></i></a>
                             </div>
                         </div>
                         <div class="product_detail_text">
@@ -89,7 +88,7 @@ if (isset($_POST["addtocart"])) {
                         </div>
                         <ul class="list-unstyled product_detail_address">
                             <input type="hidden" name="iid" value="<?php echo $row["item_id"] ?>">
-                            <li><i><?php echo $row["stock"] ?> piece available</i></li>
+                            <li><i><?php echo $row["stock"] ?> <?php echo $lang['stock']?></i></li>
                         </ul>
                         <div class="product-quantity-box">
                             <div class="quantity-box">
@@ -98,21 +97,19 @@ if (isset($_POST["addtocart"])) {
                                 <button type="button" class="add">+</button>
                             </div>
                             <div class="addto-cart-box">
-                                <input type="submit" class="thm-btn" value="Add to Cart" name="addtocart">
+                                <input type="submit" class="thm-btn" value="<?php echo $lang['addtoCrt']?>" name="addtocart">
                             </div>
                         </div>
         </form>
         <ul class="list-unstyled category_tag_list">
-            <li><span>Category:</span> <?php echo $category_row["category_name"] ?></li>
+            <li><span><?php echo $lang['cate']?>:</span> <?php echo $category_row["category_name"] ?></li>
         </ul>
         <div class="product_detail_share_box">
             <div class="share_box_title">
-                <h2>Share with friends</h2>
+                <h2><?php echo $lang["share"]?></h2>
             </div>
             <div class="share_box_social">
-                <a href="#"><i class="fab fa-facebook-square"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/thegrabgroceries" target="_blank"><i class="fab fa-facebook-square"></i></a>
             </div>
         </div>
     </div>
@@ -122,16 +119,16 @@ if (isset($_POST["addtocart"])) {
         <div class="col-xl-12">
             <div class="product-tab-box tabs-box">
                 <ul class="tab-btns tab-buttons clearfix list-unstyled">
-                    <li data-tab="#addi__info" class="tab-btn active-btn"><span>Additional info</span></li>
+                    <li data-tab="#addi__info" class="tab-btn active-btn"><span><?php echo $lang['addInfo']?></span></li>
                 </ul>
                 <div class="tabs-content">
 
                     <div class="tab active-tab" id="addi__info">
                         <ul class="additionali_nfo list-unstyled">
-                            <li><span>Name&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["item"] ?></li>
-                            <li><span>Expiry Date&nbsp:</span><?php echo $row["exp_date"] ?></li>
-                            <li><span>Category&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $category_row["category_name"] ?></li>
-                            <li><span>Stock&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["stock"] ?></li>
+                            <li><span><?php echo $lang['foodN']?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["item"] ?></li>
+                            <li><span><?php echo $lang['expDate']?>&nbsp:</span><?php echo $row["exp_date"] ?></li>
+                            <li><span><?php echo $lang['category']?>&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $category_row["category_name"] ?></li>
+                            <li><span><?php echo $lang['stk']?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["stock"] ?></li>
                         </ul>
                     </div>
                 </div>

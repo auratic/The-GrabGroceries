@@ -164,10 +164,10 @@ if (isset($_POST["place-order"])) {
 
 			$date = date('Y-m-d H:i:s');
 			$sql_receipt = "INSERT INTO cust_receipt 
-						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
+						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno, product_status) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "')";
+						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Preparing')";
 
 			$sql_chk_address = "SELECT address FROM users WHERE address is null AND user_id = " . $_SESSION["userid"];
 			$result_add = mysqli_query($link, $sql_chk_address);

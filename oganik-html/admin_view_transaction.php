@@ -9,64 +9,43 @@ if (isset($_GET["update"])) {
     $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '$receipt_id')";
 
 
-    if ($result = mysqli_query($link, "SELECT * FROM cust_receipt WHERE receipt_id = $receipt_id")) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            if ($row["product_status"] == $status) {
-                echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Nothing is updated..',
-                            confirmButtonText: 'Okay',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.href = 'admin_view_transaction.php';
-                            }
-                        })
-                        </script>";
-            } else {
-                if ($status == "Not Set") {
-                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id;
-                } elseif ($status == "Preparing") {
-                    $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
-                } elseif ($status == "Delivering") {
-                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
-                } elseif ($status == "Received") {
-                    $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
-                } elseif ($status == "Cancelled") {
-                    $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id;
-                }
+    if ($status == "Preparing") {
+        $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
+    } elseif ($status == "Delivering") {
+        $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
+    } elseif ($status == "Received") {
+        $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
+    } elseif ($status == "Cancelled") {
+        $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
+    }
 
-                if (mysqli_query($link, $sql)) {
-                    mysqli_query($link, $activity_sql);
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Receipt : $receipt_id updated to \"$status\"',
-                            confirmButtonText: 'Okay',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.href = 'admin_view_transaction.php';
-                            }
-                        })
-                        </script>";
-                } else {
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Cannot update to database',
-                            confirmButtonText: 'Okay',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.href = 'admin_view_transaction.php';
-                            }
-                        })
-                        </script>";
+    if (mysqli_query($link, $sql)) {
+        mysqli_query($link, $activity_sql);
+        echo "
+            <script>
+                Swal.fire({
+                icon: 'success',
+                title: 'Receipt : $receipt_id updated to \"$status\"',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = 'admin_view_transaction.php';
                 }
-            }
-        }
+            })
+            </script>";
+    } else {
+        echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Cannot update to database',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = 'admin_view_transaction.php';
+                }
+            })
+            </script>";
     }
 }
 
@@ -168,15 +147,37 @@ if (isset($_POST["filter"])) {
                                                         <td>' . $Fname . ' ' . $rName . '</td>
                                                         <td>' . $tDate . '</td>
                                                         <td>' . $total . '</td>
-                                                        <td>
-                                                            <select name="status" class="form-control" >
-                                                                <option value="' . $status . '" selected hidden>' . $status . '</option>
-                                                                <option value="Not Set">Not Set</option>
+                                                        <td style="text-align:center">';
+                                    if ($status == "Received" || $status == "Cancelled") {
+                                        echo "
+                                                            <select class='form-control' disabled>
+                                                                <option selected>$status</option>
+                                                            </select>";
+                                    } else {
+                                        echo '
+                                                            <select id="status-' . $rID . '" name="status" class="form-control" >
+                                                                <option id="istatus-' . $rID . '" value="' . $status . '" selected hidden>' . $status . '</option>';
+                                        if ($status == "Preparing") {
+                                            echo '
                                                                 <option value="Preparing">Preparing</option>
                                                                 <option value="Delivering">Delivering</option>
                                                                 <option value="Received">Received</option>
-                                                                <option value="Cancelled">Cancelled</option>
-                                                            </select>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } elseif ($status == "Delivering") {
+                                            echo '
+                                                                <option value="Delivering">Delivering</option>
+                                                                <option value="Received">Received</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } elseif ($status == "Received") {
+                                            echo '
+                                                                <option value="Delivering">Delivering</option>
+                                                                <option value="Received">Received</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        }
+                                        echo '
+                                                            </select>';
+                                    }
+                                    echo '
                                                         </td>
                                                         <td>
                                                             <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -191,7 +192,7 @@ if (isset($_POST["filter"])) {
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td> <input type="submit" class="btn-sm btn-primary" name="update" value="Update"> </td>
+                                                        <td> <input type="submit" class="btn-sm btn-info" name="update" value="Update" ' . (($status == "Received" || $status == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`' . $rID . '`)"/> </td>
                                                     </form>
                                                 </tr>
                                             ';
@@ -253,23 +254,23 @@ if (isset($_POST["filter"])) {
                                         while ($trans_row = mysqli_fetch_assoc($trans_result)) {
                                             echo
                                             '
-                                                                                <div class="row">
-                                                                                    <div class="col-md-2">
-                                                                                        <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>' . $trans_row['item'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>x' . $trans_row['amount'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>RM' . $trans_row['cost'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>RM' . $trans_row['total_cost'] . '</p>
-                                                                                    </div>
-                                                                                </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>' . $trans_row['item'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>x' . $trans_row['amount'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>RM' . $trans_row['cost'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>RM' . $trans_row['total_cost'] . '</p>
+                                                                </div>
+                                                            </div>
                                                                             ';
                                         }
                                     }
@@ -336,35 +337,124 @@ if (isset($_POST["filter"])) {
     }
 
     function updateStatus(id) {
-        var status = document.getElementById("status").value;
+        var status = document.getElementById("status-" + id).value;
+        var init_status = document.getElementById("istatus-" + id).value;
 
-        if (status === "--Status--") {
-            document.getElementById("status-err").innerHTML = "Choose status";
-        } else {
 
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                if (checkboxes[i].checked == true) {
-                    receipt_id.push(checkboxes[i].value);
+        if (init_status == status) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Nothing is updated..',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //location.href = 'admin_view_transaction.php';
                 }
-            }
-
-            if (confirm("Set status to '" + status + "'? Press 'OK' to continue")) {
-                $.ajax({
-                    type: "get",
-                    url: "admin_view_transaction.php",
-                    data: {
-                        'update': true,
-                        'receipt_id': receipt_id,
-                        'status': status
-                    },
-                    cache: false,
-                    success: function(html) {
-                        alert('Updated');
-                        location.href = 'admin_view_transaction.php';
-                    }
-                });
-
-            } else {}
+            })
+        } else if (status == "Cancelled") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel this order ? ',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Are you sure ? This cannot be undone',
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "get",
+                                url: "admin_view_transaction.php",
+                                data: {
+                                    'update': true,
+                                    'id': id,
+                                    'status': status
+                                },
+                                cache: false,
+                                success: function(html) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Successfully Updated',
+                                        confirmButtonText: 'Okay',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.href = 'admin_view_transaction.php';
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (status == "Delivering") {
+            Swal.fire({
+                title: 'Update order status ?',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        } else if (status == "Received") {
+            Swal.fire({
+                title: 'Order received ? Action cannot be undone',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
         }
 
         return false;
@@ -392,11 +482,34 @@ if (isset($_POST["filter"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
+                /*
                 'pdf',
                 'csv',
                 'excel',
+                */
                 'colvis'
             ],
+            /*
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+    
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+    
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                });
+            }*/
         });
 
         //table.buttons().container()

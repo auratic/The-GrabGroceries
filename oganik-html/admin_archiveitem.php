@@ -78,7 +78,7 @@ if (isset($_GET["restore"])) {
                                                             <td>' . $row['stock'] . '</td>
                                                             <td><img src="assets/images/items/' . $row['image'] . '" style="width:100%;height:200px;object-fit:contain;"></td>
                                                             <td>RM' . $row['cost'] . '</td>
-                                                            <td>' . $row['exp_date'] . '</td>
+                                                            <td><b><div class="exp-date" data-toggle="tooltip" data-placement="bottom" data-html="true" title="">' . date("Y-m-d",strtotime($row['exp_date'])) . '</div></b></td>
                                                             <td>
                                                                 <button class="btn btn-info btn-sm" onclick="return restoreItem(' . $row['item_id'] . ')">Restore</button>
                                                             </td>
@@ -174,6 +174,40 @@ if (isset($_GET["restore"])) {
         table.buttons().container()
             .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
     });
+
+    
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    }) //Bootstrap tooltip
+
+    window.onload = () => {
+        var exp_date = document.getElementsByClassName("exp-date");
+        var today = new Date();   
+
+        $('.exp-date').each(function() {
+            var get_date = new Date(this.innerHTML);
+            //test
+            
+            var dateOneUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+            var dateTwoUTC = Date.UTC(get_date.getFullYear(), get_date.getMonth(), get_date.getDate())
+            var difference = (dateTwoUTC - dateOneUTC) / (1000 * 60 * 60* 24);
+
+            $(this).attr({
+                /*
+                'date-toggle': 'tooltip',
+                'data-placement': "bottom",
+                'data-html': "true",
+                */
+                'title': "Expires within " + ((difference <= 0) ? '0' : difference) + " days"
+            });
+            
+            if(difference <= 7)
+                this.style.color = "red";
+            else if(difference <= 30)
+                this.style.color = "orange";
+
+        });
+    }
 </script>
 
 <!-- template js -->

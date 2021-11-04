@@ -362,7 +362,8 @@ if (isset($_POST["filter"])) {
                 if (result.isConfirmed) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Are you sure ? This cannot be undone',
+                        title: 'Are you sure ?',
+                        text: 'This cannot be undone',
                         showCancelButton: true,
                         confirmButtonText: 'Save',
                     }).then((result) => {
@@ -426,9 +427,10 @@ if (isset($_POST["filter"])) {
             });
         } else if (status == "Received") {
             Swal.fire({
-                title: 'Order received ? Action cannot be undone',
+                title: 'Order received ?',
+                text: 'Action cannot be undone',
                 showCancelButton: true,
-                confirmButtonText: 'Save',
+                confirmButtonText: 'Received',
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
@@ -489,6 +491,7 @@ if (isset($_POST["filter"])) {
                 */
                 'colvis'
             ],
+            pageLength : 5
             /*
             initComplete: function () {
                 this.api().columns().every( function () {

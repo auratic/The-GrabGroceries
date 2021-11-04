@@ -2,17 +2,19 @@
 include 'cust_header.php';
 
 if (isset($_GET["item_id"])) {
-    $sql = "SELECT * FROM item WHERE item_id = " . $_GET["item_id"];
+    $sql = "SELECT * FROM item INNER JOIN category ON item.category_id = category.category_id WHERE item_id = " . $_GET["item_id"];
 } else {
-    $sql = "SELECT * FROM item WHERE item_id = 200000001";
+    $sql = "SELECT * FROM item INNER JOIN category ON item.category_id = category.category_id WHERE item_id = 200000001";
 }
 
 if ($result = mysqli_query($link, $sql)) {
     $row = mysqli_fetch_assoc($result);
 
+    /*
     $sql_category = "SELECT * FROM item INNER JOIN category ON item.category_id = category.category_id";
     $category_result =  mysqli_query($link, $sql_category);
     $category_row = mysqli_fetch_assoc($category_result);
+    */
 }
 
 if (isset($_POST["addtocart"])) {
@@ -109,7 +111,7 @@ if (isset($_POST["addtocart"])) {
                         </div>
         </form>
         <ul class="list-unstyled category_tag_list">
-            <li><span><?php echo $lang['cate']?>:</span> <?php echo $category_row["category_name"] ?></li>
+            <li><span><?php echo $lang['cate']?>:</span> <?php echo $row["category_name"] ?></li>
         </ul>
         <div class="product_detail_share_box">
             <div class="share_box_title">
@@ -133,8 +135,8 @@ if (isset($_POST["addtocart"])) {
                     <div class="tab active-tab" id="addi__info">
                         <ul class="additionali_nfo list-unstyled">
                             <li><span><?php echo $lang['foodN']?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["item"] ?></li>
-                            <li><span><?php echo $lang['expDate']?>&nbsp:</span><?php echo $row["exp_date"] ?></li>
-                            <li><span><?php echo $lang['category']?>&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $category_row["category_name"] ?></li>
+                            <li><span><?php echo $lang['expDate']?>&nbsp:</span><?php echo date("Y-m-d",strtotime($row['exp_date'])) ?></li>
+                            <li><span><?php echo $lang['category']?>&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["category_name"] ?></li>
                             <li><span><?php echo $lang['stk']?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</span><?php echo $row["stock"] ?></li>
                         </ul>
                     </div>

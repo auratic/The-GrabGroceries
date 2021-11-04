@@ -67,14 +67,30 @@ function test_input($data)
 }
 	
 $fname_err = $lname_err = $email_err = $address_err = $phone_err = $area_err = $state_err = $postcode_err = $cardcvv_err = $cardnum_err = $cardexpm_err = $cardexpy_err = "";
+$fnames = $lnames = $emails = $phones = $addresss = $areas = $states = $postcodes = $cardcvvs = $cardnums = $cardexpms = $cardexpys = "";
 if (isset($_POST["place-order"])) {
+	$fnames = $_POST['fname'];
+	$lnames = $_POST['lname'];
+	$emails = $_POST['email'];
+	$phones = $_POST['phone'];
+	$addresss = $_POST['address'];
+	$areas = (isset($_POST['area']))? $_POST['area']: "";
+	$states = (isset($_POST['state']))? $_POST['state']: "";
+	$postcodes = (isset($_POST['postcode']))? $_POST['postcode']: "";
+	$cardcvvs = $_POST['cvv'];
+	$cardnums = $_POST['cardno'];
+	$cardexpms = $_POST['expmonth'];
+	$cardexpys = $_POST['expyear'];
 
 	// Validate first name
 	if (empty($_POST["fname"])) {
 		$fname_err = "Name is required";
 	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
 		$fname_err = "Only letters and white space allowed";
-	} else {
+	} else if (strlen(trim($_POST["fname"])) == 0)
+    {
+        $fname_err = "Please enter name";
+    }else {
 		$receipt_fname = ucwords(test_input($_POST["fname"]));
 	}
 
@@ -83,7 +99,10 @@ if (isset($_POST["place-order"])) {
 		$lname_err = "Name is required";
 	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
 		$lname_err = "Only letters and white space allowed";
-	} else {
+	} else if (strlen(trim($_POST["lname"])) == 0)
+    {
+        $lname_err = "Please enter name";
+    }else {
 		$receipt_lname = ucwords(test_input($_POST["lname"]));
 	}
 
@@ -106,7 +125,11 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["address"])) {
 		$address_err = "Address is required";
-	} else {
+	} else if (strlen(trim($_POST["address"])) == 0)
+	{
+		$address_err = "Address is required";
+	}
+	else {
 		$receipt_address = $_POST['address'];
 	}
 
@@ -139,6 +162,9 @@ if (isset($_POST["place-order"])) {
 	}
 
 	if (empty($_POST["cvv"])) {
+		$cardcvv_err = "CVV is required";
+	} else if (strlen(trim($_POST["cvv"])) == 0)
+	{
 		$cardcvv_err = "CVV is required";
 	} else {
 		$receipt_ccvv = $_POST['cvv'];
@@ -302,38 +328,38 @@ if (isset($_POST["place-order"])) {
 						</div><!-- /.col-md-12 -->
 						<div class="col-md-6">
 							<label><?php echo $lang['fname']?> <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
-							<input type="text" name="fname" id="set-fname">
+							<input type="text" name="fname" id="set-fname" value="<?php echo $fnames; ?>">
 							<span class="invalid-feedback d-block"><?php echo $fname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
 							<label><?php echo $lang['lname']?> <i style="color:lightgray"> (eg. Lim etc.)</i></label>
-							<input type="text" name="lname" id="set-lname">
+							<input type="text" name="lname" id="set-lname" value="<?php echo $lnames; ?>">
 							<span class="invalid-feedback d-block"><?php echo $lname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-12">
 							<label><?php echo $lang['email']?> <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
-							<input type="text" name="email" id="set-email">
+							<input type="text" name="email" id="set-email" value="<?php echo $emails; ?>">
 							<span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
 							<label><?php echo $lang['phone']?> <i style="color:lightgray"> (eg. 60123334444)</i></label>
-							<input type="text" name="phone" id="set-phone">
+							<input type="text" name="phone" id="set-phone" value="<?php echo $phones; ?>">
 							<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
 							<label><?php echo $lang['address']?> <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
-							<input type="text" name="address" id="set-address">
+							<input type="text" name="address" id="set-address" value="<?php echo $addresss; ?>">
 							<span class="invalid-feedback d-block"><?php echo $address_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-6">
 							<label><?php echo $lang['area']?></label> <br>
 							<select name="area" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $areas; ?>"><?php echo $areas; ?></option>
 								<option id="set-area" style="display: none;"></option>
 								<option value="Alor Gajah">Alor Gajah</option>
 								<option value="Melaka Tengah">Melaka Tengah</option>
@@ -345,7 +371,7 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-6">
 							<label><?php echo $lang['state']?></label> <br>
 							<select name="state" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $states; ?>"><?php echo $states; ?></option>
 								<option id="set-state" style="display: none;"></option>
 								<option value="Melaka">Melaka</option>
 							</select>
@@ -355,7 +381,7 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-6">
 							<label><?php echo $lang['pcode']?></label> <br>
 							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $postcodes; ?>"><?php echo $postcodes; ?></option>
 								<option id="set-postcode" style="display: none;"></option>
 								<option value="75000">75000</option>
 								<option value="75050">75050</option>
@@ -415,25 +441,25 @@ if (isset($_POST["place-order"])) {
 
 						<div class="col-md-12">
 							<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
-							<input type="text" name="cardno" id="set-cardno" maxlength="19">
+							<input type="text" name="cardno" id="set-cardno" maxlength="19" value="<?php echo $cardnums; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-4">
 							<label>CVV<i style="color:lightgray" required> (123)</i></label>
-							<input type="text" name="cvv" id="set-cvv" maxlength="3">
+							<input type="text" name="cvv" id="set-cvv" maxlength="3" value="<?php echo $cardcvvs; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
 						<div class="col-md-4">
 							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-							<input type="number" name="expmonth" id="set-expmonth" min="1" max="12" maxlength="2" data-mask="00">
+							<input type="number" name="expmonth" id="set-expmonth" min="1" max="12" maxlength="2" data-mask="00" value="<?php echo $cardexpms; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
 						<div class="col-md-4">
 							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-							<input type="number" name="expyear" id="set-expyear" min="21" max="28" maxlength="2" data-mask="00" >
+							<input type="number" name="expyear" id="set-expyear" min="21" max="28" maxlength="2" data-mask="00" value="<?php echo $cardexpys; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
 						</div><!-- /.col-md-4 -->
 

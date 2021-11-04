@@ -31,7 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name_err = "Please enter your name";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
         $name_err = "Only letters and white space allowed";
-    } else {
+    } 
+    else if (strlen(trim($_POST["name"])) == 0)
+    {
+        $name_err = "Please enter your name";
+    }
+    else {
         $name = $_POST["name"];
     }
 
@@ -51,10 +56,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phone = $_POST["phone"];
     }
 
-    $title = $_POST["subject"];
-    $user_message = $_POST["message"];
+    if(empty($_POST['subject']))
+    {
+        $subject_err = "Please enter your subject";
+    }
+    else if (strlen(trim($_POST["subject"])) == 0)
+    {
+        $subject_err = "Please enter your subject";
+    }
+    else
+    {
+        $title = $_POST["subject"];
+    }
+    
+    if(empty($_POST['message']))
+    {
+        $message_err = "Please enter your message";
+    }
+    else if (strlen(trim($_POST["message"])) == 0)
+    {
+        $message_err = "Please enter your subject";
+    }
+    else
+    {
+        $user_message = $_POST["message"];
+    }
+    
 
-    if (empty($name_err) && empty($email_err) && empty($phone_err)) {
+    if (empty($name_err) && empty($email_err) && empty($phone_err)  && empty($subject_err)  && empty($message_err)) {
         $to      = "1191201218@student.mmu.edu.my"; // Send email to our user //$email
         $subject = 'Contact Us | TheGrabGroceries'; // Give the email a subject 
         $message = '

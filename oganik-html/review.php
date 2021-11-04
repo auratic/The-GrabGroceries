@@ -22,6 +22,10 @@ if (isset($_POST['add'])) {
     else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
         $name_err = "Only letters and white space allowed";
     }  
+    else if (strlen(trim($_POST["name"])) == 0)
+    {
+        $name_err = "Please enter your name.";
+    }
     else {
         $name = $_POST['name'];
     }
@@ -34,7 +38,13 @@ if (isset($_POST['add'])) {
 
     if (empty($_POST['review'])) {
         $review_err = "Please leave a review.";
-    } else {
+    } 
+    else if (strlen(trim($_POST["name"])) == 0)
+    {
+        $review_err = "Please leave a review.";
+    }
+    else 
+    {
         $review = $_POST['review'];
     }
 

@@ -38,7 +38,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                     echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
                 } else {
                     echo '
-                                                        <table class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                                        <table class="display" style="width: 100%;" id="dtBasicExample">
                                                             <thead>
                                                                 <tr>
                                                                     <th><h5>'.$lang['rid'].'</h5></th>
@@ -48,7 +48,8 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                     <th><h5>'.$lang['status'].'</h5></th>
                                                                     <th><h5>'.$lang['action'].'</h5></th>
                                                                 </tr>
-                                                            </thead>';
+                                                            </thead>
+                                                            <tbody>';
                     foreach ($receipt_array as $x => $x_value) {
                         $sql = "SELECT * FROM cust_receipt INNER JOIN users ON cust_receipt.user_id = users.user_id WHERE cust_receipt.receipt_id = $x_value";
                         $result = mysqli_query($link, $sql);
@@ -60,6 +61,9 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             $rEmail = $row['receipt_email'];
                             $rPhone = $row['receipt_phone'];
                             $rAdds = $row['receipt_address'];
+                            $rArea = $row['receipt_area'];
+                            $rState = $row['receipt_state'];
+                            $rPcode = $row['receipt_postcode'];
                             $total = $row['payment_cost'];
                             $status = $row['product_status'];
                             $method = $row['payment_method'];
@@ -77,7 +81,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                         elseif($status == "Received")
                             $display = $lang['received'];
                         echo '
-                                                                        <tbody>
+                                                                       
                                                                             <tr>
                                                                                 <td>' . $rID . '</td>
                                                                                 <td>' . $Fname . ' ' . $rName . '</td>
@@ -98,7 +102,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                        </tbody>
+                                                                    
                                                                     ';
                                                                     if($method == "Credit/Debit Cards")
                                                                         $dispMethod = $lang['pmethod'];
@@ -130,7 +134,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                                             <p>'.$lang['name'].': ' . $Fname . ' ' . $rName . '</p>
                                                                                             <p>'.$lang['email'].': ' . $rEmail . '</p>
                                                                                             <p>'.$lang['phone'].': ' . $rPhone . '</p>
-                                                                                            <p>'.$lang['address'].': ' . $rAdds . '</p>
+                                                                                            <p>'.$lang['address'].': ' . $rAdds . ' '.$rArea.' '.$rPcode.' '.$rState.'</p>
                                                                                         </div>
 
                                                                                         <div>
@@ -195,7 +199,19 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 ';
                     }
                     echo '
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th><h5>'.$lang['rid'].'</h5></th>
+                                                                    <th><h5>'.$lang['rname'].'</h5></th>
+                                                                    <th><h5>'.$lang['tdate'].'</h5></th>
+                                                                    <th><h5>'.$lang['total'].'</h5></th>
+                                                                    <th><h5>'.$lang['status'].'</h5></th>
+                                                                    <th><h5>'.$lang['action'].'</h5></th>
+                                                                </tr>
+                                                            </tfoot>
                                                         </table>';
+                                                        
                 }
                 ?>
             </div>
@@ -216,6 +232,23 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         $('#receipt-' + id).fadeOut();
         return false;
     }
+
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                /*
+                'pdf',
+                'csv',
+                'excel',
+                'colvis'*/
+            ],
+            
+        });
+    });
 </script>
 </div>
 </div>

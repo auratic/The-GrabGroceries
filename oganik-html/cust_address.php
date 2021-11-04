@@ -225,8 +225,8 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>'.$lang['area'].'</label>
-                                                <select name="area0" id="area0" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $default_area . '">
-                                                    <option disabled selected value></option>
+                                                <select name="area0" id="area0" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" >
+                                                    <option hidden disabled selected value="' . $default_area . '">'. $default_area .'</option>
                                                     <option value="Alor Gajah">Alor Gajah</option>
                                                     <option value="Melaka Tengah">Melaka Tengah</option>
                                                     <option value="Jasin">Jasin</option>
@@ -238,8 +238,8 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="state">'.$lang['state'].'</label>
-                                                <select name="state0" id="state0" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $default_state . '">
-                                                    <option disabled selected value></option>
+                                                <select name="state0" id="state0" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" >
+                                                    <option hidden disabled selected value="' . $default_state . '">' . $default_state . '</option>
                                                     <option value="Melaka">Melaka</option>
                                                 </select>
                                                 <span class="invalid-feedback d-block" id="state_err0"><?php echo $state_err; ?></span>
@@ -251,8 +251,8 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>'.$lang['pcode'].'</label>
-                                                <select name="pcode0" id="pcode0" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $default_pcode . '">
-                                                <option disabled selected value></option>
+                                                <select name="pcode0" id="pcode0" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '">
+                                                <option hidden disabled selected value="' . $default_pcode . '">' . $default_pcode . '</option>
                                                     <option value="75000">75000</option>
                                                     <option value="75050">75050</option>
                                                     <option value="75100">75100</option>
@@ -366,7 +366,8 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="area">'.$lang['area'].'</label>
-                                                <select name="area' . $counter . '" id="area' . $counter . '" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '" value="' . $area[$x] . '" >
+                                                <select name="area' . $counter . '" id="area' . $counter . '" class="form-control ' . ((!empty($area_err)) ? "is-invalid" : '') . '"  >
+                                                    <option hidden disabled selected value="' . $area[$x] . '">' . $area[$x] . '</option>
                                                     <option value="Alor Gajah">Alor Gajah</option>
                                                     <option value="Melaka Tengah">Melaka Tengah</option>
                                                     <option value="Jasin">Jasin</option>
@@ -378,8 +379,8 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="state">'.$lang['state'].'</label>
-                                                <select name="state' . $counter . '" id="state' . $counter . '" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '" value="' . $state[$x] . '" >
-                                                    <option disabled selected value></option>
+                                                <select name="state' . $counter . '" id="state' . $counter . '" class="form-control ' . ((!empty($state_err)) ? "is-invalid" : '') . '"  >
+                                                    <option hidden disabled selected value="' . $state[$x] . '">' . $state[$x] . '</option>
                                                     <option value="Melaka">Melaka</option>
                                                 </select>
                                                 <span class="invalid-feedback d-block" id="state_err' . $counter . '"></span>
@@ -391,8 +392,8 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>'.$lang['pcode'].'</label>
-                                                <select name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '" value="' . $pcode[$x] . '" >
-                                                    <option disabled selected value></option>
+                                                <select name="pcode' . $counter . '" id="pcode' . $counter . '" class="form-control ' . ((!empty($pcode_err)) ? "is-invalid" : '') . '"  >
+                                                    <option hidden disabled selected value="' . $pcode[$x] . '">' . $pcode[$x] . '</option>
                                                     <option value="75000">75000</option>
                                                     <option value="75050">75050</option>
                                                     <option value="75100">75100</option>
@@ -467,6 +468,9 @@ for ($x = 0; $x < 5; $x++) {
         var pass = true;
 
         if (address == "") {
+            document.getElementById("address_err" + counter).innerHTML = "Address is required";
+            pass = false;
+        }else if(!address.replace(/\s/g, '').length) {
             document.getElementById("address_err" + counter).innerHTML = "Address is required";
             pass = false;
         }

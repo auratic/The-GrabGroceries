@@ -333,12 +333,15 @@ for ($x = 0; $x < 5; $x++) {
         }else if (!/^[a-zA-Z-' ]*$/.test(cardName)) {
             document.getElementById("cname_err" + counter).innerHTML = "Please enter valid Card Name";
             pass = false;
+        }else if(!cardName.replace(/\s/g, '').length) {
+            document.getElementById("cname_err" + counter).innerHTML = "Please enter valid Card Name";
+            pass = false;
         }
 
         if (cardNum == "") {
             document.getElementById("cno_err" + counter).innerHTML = "Card Number is required";
             pass = false;
-        }else if(/[a-zA-Z]/g.test(cardNum))
+        }else if(/[a-zA-Z~`!@#$%^&()+-.,?/<>'"]/g.test(cardNum))
         {
             document.getElementById("cno_err" + counter).innerHTML = "Only number allowed";
             pass = false;
@@ -360,6 +363,10 @@ for ($x = 0; $x < 5; $x++) {
 
         if (cardCvv == "") {
             document.getElementById("ccvv_err" + counter).innerHTML = "CVV is required";
+            pass = false;
+        }else if(cardCvv.length < 3)
+        {
+            document.getElementById("ccvv_err" + counter).innerHTML = "Please enter valid card number";
             pass = false;
         }
 

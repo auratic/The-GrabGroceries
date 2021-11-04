@@ -46,7 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         $fname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
         $fname_err = $lang['nameF'];
-    } else {
+    }
+    else if (strlen(trim($_POST["fname"])) == 0)
+    {
+        $fname_err = "Please enter name";
+    }
+    else
+    {
         $fname = ucwords(test_input($_POST["fname"]));
     }
 
@@ -55,7 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         $lname_err = $lang['rName'];
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
         $lname_err = $lang['nameF'];
-    } else {
+    } 
+    else if (strlen(trim($_POST["lname"])) == 0)
+    {
+        $lname_err = "Please enter name";
+    }
+    else {
         $lname = ucwords(test_input($_POST["lname"]));
     }
 

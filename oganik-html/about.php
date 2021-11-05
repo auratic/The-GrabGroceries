@@ -40,6 +40,18 @@
                                 <h3><i class="fa fa-check-circle"></i><?php echo $lang['freeS']?></h3>
                             </div><!-- /.about-one__box -->
                         </div><!-- /.col-md-6 -->
+                    </div><!-- /.row --><br>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="about-one__box">
+                                <h3><i class="fa fa-check-circle"></i><?php echo $lang['cOrder']?></h3>
+                            </div><!-- /.about-one__box -->
+                        </div><!-- /.col-md-6 -->
+                        <div class="col-md-6 col-lg-6">
+                            <div class="about-one__box">
+                                <h3><i class="fa fa-check-circle"></i><?php echo $lang['sDayship']?></h3>
+                            </div><!-- /.about-one__box -->
+                        </div><!-- /.col-md-6 -->
                     </div><!-- /.row -->
                 </div><!-- /.about-one__content -->
             </div><!-- /.col-md-12 col-lg-6 -->

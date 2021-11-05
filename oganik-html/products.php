@@ -173,13 +173,6 @@ else
                                                 <h3><a href="product-details.php">' . $rows['item'] . '</a></h3>
                                                 <p>RM' . number_format($rows['cost'], 2) . '</p>
                                             </div><!-- /.product-card__left -->
-                                            <div class="product-card__right">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div><!-- /.product-card__right -->
                                         </div><!-- /.product-card__content -->
                                     </div><!-- /.product-card -->
                                 </div>';
@@ -251,13 +244,6 @@ else
                                                 <h3><a href="product-details.php">' . $out['item'] . '</a></h3>
                                                 <p>RM' . number_format($out[ 'cost'], 2) . '</p>
                                             </div><!-- /.product-card__left -->
-                                            <div class="product-card__right">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div><!-- /.product-card__right -->
                                         </div><!-- /.product-card__content -->
                                     </div><!-- /.product-card -->
                                 </div>';
@@ -292,13 +278,6 @@ else
                                                     <h3><a href="product-details.php">' . $proditems['item'] . '</a></h3>
                                                     <p>RM' . number_format($proditems['cost'], 2) . '</p>
                                                 </div><!-- /.product-card__left -->
-                                                <div class="product-card__right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div><!-- /.product-card__right -->
                                             </div><!-- /.product-card__content -->
                                         </div><!-- /.product-card -->
                                     </div>';
@@ -331,13 +310,6 @@ else
                                                                 <h3><a href="product-details.php">' . $row['item'] . '</a></h3>
                                                                 <p>RM' . number_format($row['cost'], 2) . '</p>
                                                             </div><!-- /.product-card__left -->
-                                                            <div class="product-card__right">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div><!-- /.product-card__right -->
                                                         </div><!-- /.product-card__content -->
                                                     </div><!-- /.product-card -->
                                                 </div>';

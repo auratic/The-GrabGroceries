@@ -17,7 +17,7 @@
                     <ul class="list-unstyled footer-widget__contact">
                         <li>
                             <i class="fa fa-phone-square"></i>
-                            <a href="tel:666-888-0000">60123456789</a>
+                            <a href="tel:666-888-0000">60123608370</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope"></i>

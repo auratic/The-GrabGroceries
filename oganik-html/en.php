@@ -13,6 +13,7 @@
         "about"  => "About Us",
         "eng"     => "English",
         "man"     => "Chinese",
+        "ms"      => "Malay",
         "save"    => "Save",
         "login/re"=> "Login / Register",
         "chglg"   => "Language",
@@ -23,7 +24,6 @@
         //footer
         "slogan1" => "We are here to provide you",
         "slogan2" => "with just the greatest stuff.",
-        "fcontact"=> "Contact Us",
         "links"   => "Links",
         "top"     => "Top Sellers",
         "shopping"=> "Shopping",
@@ -92,6 +92,8 @@
         "newPass" => "New Password",
         "updatedP"=> "Password updated",
         //vieworder
+        "cancleOD"=> "If you want to cancel your order kindly contact us on ",
+        "xcancel" => "(Order cannot be cancelled after delivery)",
         "rid"     => "Receipt ID",
         "rname"   => "Receipt Name",
         "tdate"   => "Transaction Date",
@@ -218,6 +220,8 @@
         "organicF"=> "Organic Food",
         "pPeople" => "Professional People",
         "ourTeam" => "Meet the Team",
+        "cOrder"  => "Order cannot be cancelled after delivery",
+        "sDayship"=> "Shipped same day if order made before 1pm",
         //cart
         "items"   => "Item",
         "prices"  => "Price",
@@ -229,6 +233,7 @@
         "shpcosts"=> "Shipping Cost",
         "cancels" => "Cancel",
         "chkout"  => "Checkout",
+        "shipsame"=> "Shipped same day if order made before 1pm",
         //checkout
         "shipD"   => "Shipping Details",
         "existAdd"=> "Choose existing address",
@@ -237,6 +242,7 @@
         "placeOdr"=> "Place your order",
         "existC"  => "Choose existing card",
         "noCard"  => "No existing card",
+        "noAdd"   => "No existing address",
         "pdt"     => "Product",
         "sbbtots" => "Subtotal",
         "gtotal"  => "Grand Total",

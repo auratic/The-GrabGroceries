@@ -110,6 +110,8 @@
         $_SESSION['lang'] = 'en';
         else if($_GET['lang'] == 'cn')
         $_SESSION['lang'] = 'cn';
+        else if($_GET['lang'] == 'ms')
+        $_SESSION['lang'] = 'ms';
     }
 
     include  $_SESSION['lang']. ".php";
@@ -196,6 +198,7 @@
                             $_SESSION["mode"] = $row["mode"];
                             $_SESSION["lname"] = $row["lastname"];
                             $_SESSION["userid"] = $row["user_id"];
+                            $_SESSION['email'] = $row['email'];
 
                             if ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin") {
 
@@ -329,6 +332,7 @@
                             <select class="selectpicker" name="lang" id="language-select-header">
                                 <option value="en"><?php echo $lang['chglg']?></option>
                                 <option value="en"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'en'){echo "selected";}?>><?php echo $lang['eng']?></option>
+                                <option value="ms"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'ms'){echo "selected";}?>><?php echo $lang['ms']?></option>
                                 <option value="cn"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'cn'){echo "selected";}?>><?php echo $lang['man']?></option>
                             </select>
                             <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save']?></button>

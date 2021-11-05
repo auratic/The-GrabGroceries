@@ -214,29 +214,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="contact-one__form" method="post">
             <div class="row">
+                <?php
+                    if (isset($_SESSION["lname"])) 
+                        $names = $_SESSION['lname'];
+                    else 
+                        $names = $name;
+
+                    if (isset($_SESSION["email"])) 
+                        $emails = $_SESSION['email'];
+                    else 
+                        $emails = $email;
+                ?>
                 <div class="col-md-6">
                     <label><strong><?php echo $lang['contactN'] ?></strong></label>
-                    <input type="text" name="name" placeholder="Your Name" value="<?php echo $name ?>" required>
+                    <input type="text" name="name" placeholder="(eg) Your Name" value="<?php echo $names ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
                     <label><strong><?php echo $lang['contactE'] ?></strong></label>
-                    <input type="email" placeholder="youremail@gmail.com" name="email" value="<?php echo $email ?>" required>
+                    <input type="email" placeholder="(eg) youremail@gmail.com" name="email" value="<?php echo $emails ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
                     <label><strong><?php echo $lang['contactP'] ?></strong></label>
-                    <input type="text" placeholder="0123456789" name="phone" value="<?php echo $phone ?>" required>
+                    <input type="text" placeholder="(eg) 0123456789" name="phone" value="<?php echo $phone ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
                     <label><strong><?php echo $lang['contactS'] ?></strong><i id="count-subj"><?php echo $lang['contactSS'] ?></i></label>
-                    <input type="text" placeholder="How to order?" name="subject" value="<?php echo $title ?>" required id="get-subj" maxlength="20">
+                    <input type="text" placeholder="(eg) How to order?" name="subject" value="<?php echo $title ?>" required id="get-subj" maxlength="20">
                     <span class="invalid-feedback d-block"><?php echo $subject_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-12">
                     <label><strong><?php echo $lang['contactM'] ?></strong><i id="count-char"><?php echo $lang['contactMM'] ?></i></label>
-                    <textarea placeholder="Write a Message" name="message" value="<?php echo $user_message ?>" required id="get-char" maxlength="500"></textarea>
+                    <textarea placeholder="(eg) Write a Message" name="message" value="<?php echo $user_message ?>" required id="get-char" maxlength="500"></textarea>
                     <span class="invalid-feedback d-block"><?php echo $message_err; ?></span>
                 </div><!-- /.col-md-12 -->
                 <script>

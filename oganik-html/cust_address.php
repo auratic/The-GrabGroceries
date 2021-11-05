@@ -285,10 +285,9 @@ echo '
                                     </div>
                                             
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(0);">
-                                            </div>
+                                        <div class="form-group" style="margin-left: 13px;">
+                                            <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(0);">
+                                            <input type="reset" class="btn btn-secondary" value="'.$lang['reset'].'">
                                         </div>
                                     </div>
                                 </form>
@@ -328,7 +327,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>'.$lang['fname'].'</label>
-                                            <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="John" required />
+                                            <input type="" name="name' . $counter . '" id="name' . $counter . '" class="form-control ' . ((!empty($name_err)) ? "is-invalid" : '') . '" value="' . $name[$x] . '" placeholder="(eg) John" required />
                                             <span class="invalid-feedback d-block" id="name_err' . $counter . '"></span>
                                         </div>
                                     </div>
@@ -336,7 +335,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>'.$lang['lname'].'</label>
-                                            <input type="" name="lname' . $counter . '" id="lname' . $counter . '" class="form-control ' . ((!empty($lname_err)) ? "is-invalid" : '') . '" value="' . $lastname[$x] . '" placeholder="Doe" required />
+                                            <input type="" name="lname' . $counter . '" id="lname' . $counter . '" class="form-control ' . ((!empty($lname_err)) ? "is-invalid" : '') . '" value="' . $lastname[$x] . '" placeholder="(eg) Doe" required />
                                             <span class="invalid-feedback d-block" id="lname_err' . $counter . '"></span>
                                         </div>
                                     </div>
@@ -346,7 +345,7 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>'.$lang['email'].'</label>
-                                                <input type="email" name="email' . $counter . '" id="email' . $counter . '" class="form-control ' . ((!empty($email_err)) ? "is-invalid" : '') . '" value="' . $email[$x] . '" placeholder="JohnDoe@gmail.com" required />
+                                                <input type="email" name="email' . $counter . '" id="email' . $counter . '" class="form-control ' . ((!empty($email_err)) ? "is-invalid" : '') . '" value="' . $email[$x] . '" placeholder="(eg) JohnDoe@gmail.com" required />
                                                 <span class="invalid-feedback d-block" id="email_err' . $counter . '"></span>
                                             </div>
                                         </div>
@@ -356,7 +355,7 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>'.$lang['address'].'</label>
-                                                <input type="" name="address' . $counter . '" id="address' . $counter . '" class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $address[$x] . '" placeholder="No 1 Tmn Asin 70000" required />
+                                                <input type="" name="address' . $counter . '" id="address' . $counter . '" class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $address[$x] . '" placeholder="(eg) No 1 Tmn Asin 70000" required />
                                                 <span class="invalid-feedback d-block" id="address_err' . $counter . '"></span>
                                             </div>
                                         </div>
@@ -419,17 +418,16 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>'.$lang['phone'].'</label>
-                                                <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="60123456789" maxlength=12 required />
+                                                <input type="" name="phone' . $counter . '" id="phone' . $counter . '" class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $phone[$x] . '" placeholder="(eg) 60123456789" maxlength=12 required />
                                                 <span class="invalid-feedback d-block" id="phone_err' . $counter . '"></span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(' . $counter . ');">
-                                            </div>
+                                        <div class="form-group" style="margin-left: 13px;">
+                                            <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateAddress(' . $counter . ');">
+                                            <input type="reset" class="btn btn-secondary" value="'.$lang['reset'].'">
                                         </div>
                                     </div>
                                 </form>

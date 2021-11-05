@@ -56,7 +56,7 @@
                                             <i class="fas fa-lock"></i>&nbsp<?php echo $lang['pwd_chg']?></a>
                                     </li>
                                     <li>
-                                        <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i><?php echo $lang['logout']?></a>
+                                        <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i>&nbsp<?php echo $lang['logout']?></a>
                                     </li>
                                 </ul>
                             </div>

@@ -77,13 +77,6 @@ if (isset($_POST["addtocart"])) {
                                 <p>RM<?php echo number_format($row["cost"], 2); ?></p>
                                 <input type="hidden" name="iprice" value="<?php echo $row["cost"] ?>">
                             </div>
-                            <div class="product_detail_review">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                            </div>
                         </div>
                         <div class="product_detail_text">
                             <p><?php echo $row["description"] ?></p>

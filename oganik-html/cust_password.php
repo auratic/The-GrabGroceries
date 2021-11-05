@@ -143,7 +143,7 @@ if (count($_POST) > 0) {
                 <h4 class="account-title"><?php echo $lang['pwd_chg']?></h4>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                     <div class="form-group">
-                        <label><?php echo $lang['newpwd']?></label> </br>
+                        <label><?php echo $lang['curpwd']?></label> </br>
                         <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
                         <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
                     </div>

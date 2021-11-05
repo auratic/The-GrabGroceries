@@ -142,7 +142,8 @@ if (isset($_POST['remove'])) {
                 <!-- /.contact-one__form -->
             </div><!-- /.col-lg-8 -->
             <div class="col-lg-4">
-                <i style="margin-left: 90px;"><?php echo $lang['freeshps']?>   </i><i class="fas fa-truck-moving"></i><hr>
+                <i style="margin-left: 90px;"><?php echo $lang['freeshps']?></i> <i class="fas fa-truck-moving"></i>
+                <i style="margin-left: 20px;"><?php echo $lang['shipsame']?></i> <i class="fas fa-shipping-fast"></i><hr>
                 <ul class="cart-total list-unstyled">
                     <li>
                         <span><?php echo $lang['subtots']?></span>

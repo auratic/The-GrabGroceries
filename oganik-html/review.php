@@ -206,7 +206,7 @@ if (isset($_POST['add'])) {
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                             <div class="form-group">
                                 <label><?php echo $lang['mName']?></label> </br>
-                                <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $name; ?>">
+                                <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $_SESSION["lname"]; ?>" disabled>
                                 <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                             </div>
 
@@ -214,11 +214,11 @@ if (isset($_POST['add'])) {
                                 <label><?php echo $lang['mRating']?></label> </br>
                                 <select name="rating" id="rating" class="form-control" value="<?php echo $rating; ?>">
                                     <option disabled selected value></option>
-                                    <option value="Poor">Poor</option>
-                                    <option value="Fair">Fair</option>
-                                    <option value="Average">Average</option>
-                                    <option value="Good">Good</option>
-                                    <option value="Excellent">Excellent</option>
+                                    <option value="Poor">Poor (1 star)</option>
+                                    <option value="Fair">Fair (2 star)</option>
+                                    <option value="Average">Average (3 star)</option>
+                                    <option value="Good">Good (4 star)</option>
+                                    <option value="Excellent">Excellent (5 star)</option>
                                 </select>
                                 <span class="invalid-feedback d-block"><?php echo $rating_err; ?></span>
                             </div>

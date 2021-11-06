@@ -69,11 +69,11 @@ function test_input($data)
 $fname_err = $lname_err = $email_err = $address_err = $phone_err = $area_err = $state_err = $postcode_err = $cardcvv_err = $cardnum_err = $cardexpm_err = $cardexpy_err = "";
 $fnames = $lnames = $emails = $phones = $addresss = $areas = $states = $postcodes = $cardcvvs = $cardnums = $cardexpms = $cardexpys = "";
 if (isset($_POST["place-order"])) {
-	$fnames = $_POST['fname'];
-	$lnames = $_POST['lname'];
-	$emails = $_POST['email'];
-	$phones = $_POST['phone'];
-	$addresss = $_POST['address'];
+	$fnames = test_input($_POST['fname']);
+	$lnames = test_input($_POST['lname']);
+	$emails = test_input($_POST['email']);
+	$phones = test_input($_POST['phone']);
+	$addresss = test_input($_POST['address']);
 	$areas = (isset($_POST['area']))? $_POST['area']: "";
 	$states = (isset($_POST['state']))? $_POST['state']: "";
 	$postcodes = (isset($_POST['postcode']))? $_POST['postcode']: "";
@@ -155,7 +155,7 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["cardno"])) {
 		$cardnum_err = "Card Number is required";
-	} elseif (ctype_alpha($cardnum) /*preg_match("/^[a-zA-Z]+$/", $cardnum)*/ ) {
+	} elseif (preg_match("/^[a-z]/i", $cardnum)) {
 		$cardnum_err = "Only number allowed";
 	} else {
 		$receipt_cardnum = $_POST['cardno'];
@@ -186,7 +186,19 @@ if (isset($_POST["place-order"])) {
 
 	if ($_POST["cart_empty"] != 'true') {
 
-		if (empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($address_err) && empty($area_err) && empty($state_err) && empty($postcode_err)) {
+		if (
+			empty($fname_err) && 
+			empty($lname_err) && 
+			empty($email_err) && 
+			empty($phone_err) && 
+			empty($address_err) && 
+			empty($area_err) && 
+			empty($state_err) && 
+			empty($postcode_err) &&
+			empty($cardnum_err) &&
+			empty($cardcvv_err) &&
+			empty($cardexpm_err) &&
+			empty($cardexpy_err)) {
 
 			$date = date('Y-m-d H:i:s');
 			$sql_receipt = "INSERT INTO cust_receipt 

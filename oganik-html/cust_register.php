@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                                     text: '".$lang['created']."',
                                     icon: 'success'
                                 }).then(function() {
-                                location.href = 'login.php'
+                                location.href = 'login.php?verify&id=".$row['user_id']."'
                                 })
                             </script>";
                         } else {

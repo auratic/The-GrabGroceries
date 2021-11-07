@@ -45,6 +45,7 @@
         "no_acc"  => "Tiada akaun?",
         "register"=> "Daftar akaun baru",
         "verify"  => "Sila sahkan e-mel anda dahulu",
+        "verifyacc" => "Sahkan e-mel anda?",
         "recap"   => "ms",
         //register
         "signup"  => "Daftar Sekarang",
@@ -242,7 +243,7 @@
         "placeOdr"=> "Buat pesanan anda",
         "existC"  => "Pilih kad sedia ada",
         "noCard"  => "Tiada kad sedia ada",
-        "noAdd"   => "Tiada alamat sedia ada",
+        "noAdd"   => "Tambah alamat baru",
         "pdt"     => "Produk",
         "sbbtots" => "Jumlah",
         "gtotal"  => "Jumlah keseluruhan",

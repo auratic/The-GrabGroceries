@@ -1,18 +1,15 @@
 <?php
 
-    if(!isset($_SESSION['lang']))
-    {
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'en';
+} else if (isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang'])) {
+    if ($_GET['lang'] == 'en')
         $_SESSION['lang'] = 'en';
-    }
-    else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
-    {
-        if($_GET['lang'] == 'en')
-        $_SESSION['lang'] = 'en';
-        else if($_GET['lang'] == 'cn')
+    else if ($_GET['lang'] == 'cn')
         $_SESSION['lang'] = 'cn';
-    }
+}
 
-    include  $_SESSION['lang']. ".php";
+include  $_SESSION['lang'] . ".php";
 
 ?>
 <!DOCTYPE html>
@@ -80,11 +77,11 @@
             padding: 20px;
         }
     </style>
-    
+
 </head>
 
 <body>
-<?php
+    <?php
 
     date_default_timezone_set("Asia/Kuala_Lumpur");
 
@@ -100,25 +97,46 @@
     // Include config file
     require_once "config.php";
 
-    if(!isset($_SESSION['lang']))
-    {
+    if (!isset($_SESSION['lang'])) {
         $_SESSION['lang'] = 'en';
-    }
-    else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
-    {
-        if($_GET['lang'] == 'en')
-        $_SESSION['lang'] = 'en';
-        else if($_GET['lang'] == 'cn')
-        $_SESSION['lang'] = 'cn';
-        else if($_GET['lang'] == 'ms')
-        $_SESSION['lang'] = 'ms';
+    } else if (isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang'])) {
+        if ($_GET['lang'] == 'en')
+            $_SESSION['lang'] = 'en';
+        else if ($_GET['lang'] == 'cn')
+            $_SESSION['lang'] = 'cn';
+        else if ($_GET['lang'] == 'ms')
+            $_SESSION['lang'] = 'ms';
     }
 
-    include  $_SESSION['lang']. ".php";
+    include  $_SESSION['lang'] . ".php";
 
     // Define variables and initialize with empty values
     $email = $password = "";
     $email_err = $password_err = $login_err = $recaptcha_err = "";
+
+    if (isset($_GET["verify"])) {
+
+        if($result = mysqli_query($link, "SELECT * FROM users WHERE user_id = ". $_GET["id"])) {
+
+            $row = mysqli_fetch_assoc($result);
+
+            if($row["verified"] != "true") {
+                echo "
+                    <script>
+                        Swal.fire({
+                            icon: 'warning',
+                            text: '"  . $lang['verifyacc'] ."',
+                            showCancelButton: true,
+                            confirmButtonText: 'Proceed',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = 'verify.php?verify&id=" . $_GET["id"] . "'
+                            }
+                        });
+                    </script>";
+            }
+        }
+    }
 
     // Processing form data when form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -185,8 +203,8 @@
                             echo "
                             <script>
                                 Swal.fire({
-                                    title: '".$lang['error']."',
-                                    text: '".$lang['verify']."',
+                                    title: '" . $lang['error'] . "',
+                                    text: '" . $lang['verify'] . "',
                                     icon: 'warning'
                                 }).then(function() {
                                     location.href = 'verify.php?verify&id=" . $row["user_id"] . "'
@@ -221,11 +239,11 @@
             }
         }
     }
-?>
+    ?>
     <!-- re-captcha -->
-    <script src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang['recap']?>"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang['recap'] ?>"></script>
 
-    <title><?php echo $lang['title']?></title>
+    <title><?php echo $lang['title'] ?></title>
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>
@@ -236,12 +254,12 @@
                 <div class="container">
                     <div class="main-logo">
                         <a href="
-                            <?php  
-                                if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
-                                    echo "admin_dashboard.php";
-                                } else {
-                                    echo "index.php";
-                                } ?>" class="logo">
+                            <?php
+                            if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
+                                echo "admin_dashboard.php";
+                            } else {
+                                echo "index.php";
+                            } ?>" class="logo">
                             <img src="assets/images/Logo6.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -260,13 +278,13 @@
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p><?php echo $lang['email']?> <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
+                            <p><?php echo $lang['email'] ?> <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p><?php echo $lang['phone']?> <a href="tel:+60186620551">+60123608370</a></p>
+                            <p><?php echo $lang['phone'] ?> <a href="tel:+60186620551">+60123608370</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
@@ -279,7 +297,7 @@
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php 
+                        <a href="<?php
                                     if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
                                         echo "admin_dashboard.php";
                                     } elseif (isset($_SESSION["lname"])) {
@@ -301,10 +319,10 @@
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php"><?php echo $lang['home']?></a>
+                            <a href="index.php"><?php echo $lang['home'] ?></a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php"><?php echo $lang['shop']?></a>
+                            <a href="products.php"><?php echo $lang['shop'] ?></a>
                             <?php
                             if (isset($_SESSION["loggedin"]))
                                 echo "
@@ -315,13 +333,13 @@
                             ?>
                         </li>
 
-                        <li><a href='review.php'><?php echo $lang['review']?></a></li>
+                        <li><a href='review.php'><?php echo $lang['review'] ?></a></li>
 
                         <li class="dropdown">
-                            <a href="#"><?php echo $lang['more']?></a>
+                            <a href="#"><?php echo $lang['more'] ?></a>
                             <ul>
-                                <li><a href="cust_contact.php"><?php echo $lang['contact']?></a></li>
-                                <li><a href="about.php"><?php echo $lang['about']?></a></li>
+                                <li><a href="cust_contact.php"><?php echo $lang['contact'] ?></a></li>
+                                <li><a href="about.php"><?php echo $lang['about'] ?></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -330,12 +348,18 @@
                         <!-- /#language-select.sr-only -->
                         <form action="" method="GET">
                             <select class="selectpicker" name="lang" id="language-select-header">
-                                <option value="en"><?php echo $lang['chglg']?></option>
-                                <option value="en"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'en'){echo "selected";}?>><?php echo $lang['eng']?></option>
-                                <option value="ms"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'ms'){echo "selected";}?>><?php echo $lang['ms']?></option>
-                                <option value="cn"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'cn'){echo "selected";}?>><?php echo $lang['man']?></option>
+                                <option value="en"><?php echo $lang['chglg'] ?></option>
+                                <option value="en" <?php if (isset($_GET['lang']) && $_GET['lang'] == 'en') {
+                                                        echo "selected";
+                                                    } ?>><?php echo $lang['eng'] ?></option>
+                                <option value="ms" <?php if (isset($_GET['lang']) && $_GET['lang'] == 'ms') {
+                                                        echo "selected";
+                                                    } ?>><?php echo $lang['ms'] ?></option>
+                                <option value="cn" <?php if (isset($_GET['lang']) && $_GET['lang'] == 'cn') {
+                                                        echo "selected";
+                                                    } ?>><?php echo $lang['man'] ?></option>
                             </select>
-                            <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save']?></button>
+                            <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save'] ?></button>
                         </form>
                     </div><!-- /.main-menu__language -->
                 </div><!-- /.container -->
@@ -360,14 +384,14 @@
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group" style="text-align: left">
-                    <label><b><?php echo $lang['email']?></b> </label> </br>
+                    <label><b><?php echo $lang['email'] ?></b> </label> </br>
                     <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
-                    <label><b><?php echo $lang['password']?></b></label> </br>
+                    <label><b><?php echo $lang['password'] ?></b></label> </br>
                     <input type="password" id="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                    <label style="cursor: pointer;"><input style="cursor: pointer; margin-top: 5px;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
+                    <label style="cursor: pointer;"><input style="cursor: pointer; margin-top: 5px;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd'] ?></label>
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                 </div>
                 <div class="form-group" style="text-align: left">
@@ -376,26 +400,26 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary signinbtn" value="<?php echo $lang['login']?>">
+                    <input type="submit" class="btn btn-primary signinbtn" value="<?php echo $lang['login'] ?>">
                 </div>
-                <a href="forgotpass.php"><?php echo $lang['fgtpwd']?></a>
-                <p><?php echo $lang['no_acc']?><a href="cust_register.php"><?php echo $lang['register']?></a>.</p>
+                <a href="forgotpass.php"><?php echo $lang['fgtpwd'] ?></a>
+                <p><?php echo $lang['no_acc'] ?><a href="cust_register.php"><?php echo $lang['register'] ?></a>.</p>
             </form>
         </div>
-<script>
-    function myFunction() {
-        var x = document.getElementById("password");
+        <script>
+            function myFunction() {
+                var x = document.getElementById("password");
 
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-    }
-</script>
-<?php 
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
+        <?php
 
-include 'cust_footer.php';
+        include 'cust_footer.php';
 
 
-?>
+        ?>

@@ -46,6 +46,7 @@
         "no_acc"  => "第一次来这里？ 立刻创建新账户吧。",
         "register"=> "创建账户",
         "verify"  => "请先验证您的电子邮件",
+        "verifyacc"  => "验证您的电子邮件",
         //register
         "signup"  => "注册",
         "fillform"=> "请填写此表格以创建一个帐户。",

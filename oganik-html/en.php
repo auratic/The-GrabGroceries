@@ -45,6 +45,7 @@
         "no_acc"  => "Don't have an account?",
         "register"=> "Sign Up Now",
         "verify"  => "Please verify your email first",
+        "verifyacc" => "Verify your account?",
         "recap"   => "en",
         //register
         "signup"  => "Sign Up",
@@ -242,7 +243,7 @@
         "placeOdr"=> "Place your order",
         "existC"  => "Choose existing card",
         "noCard"  => "No existing card",
-        "noAdd"   => "No existing address",
+        "noAdd"   => "Add new address",
         "pdt"     => "Product",
         "sbbtots" => "Subtotal",
         "gtotal"  => "Grand Total",

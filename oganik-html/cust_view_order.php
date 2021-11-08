@@ -255,7 +255,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 
                                             <div class="modal-body">
                                                 <div>
-                                                    <h4>Delivery Status</h4>
+                                                    <h4>'.$lang['dStatus'].'</h4>
                                                     <hr>
                                                     <div style="display: flex"><img style="height:18vh; margin:auto" src="assets/images/delivery.gif"></div>
                                                     <div class="progress-track">
@@ -300,11 +300,11 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                         echo '
                                                         </ul>
                                                     </div>
-                                                    <h5 style="text-align: center">Estimated Time: '.$del_status.'</h5>
+                                                    <h5 style="text-align: center">'.$lang['ETA'].': '.$del_display.'</h5>
                                                 </div>
                                                 <div>
                                                     <hr>
-                                                        <h4>Receipt Details</h4>
+                                                        <h4>'.$lang['receiptD'].'</h4>
                                                     <hr>
                                                     <p>' . $lang['rid'] . ': ' . $rID . '</p>
                                                     <p>' . $lang['payment'] . ': ' . $dispMethod . '</p>

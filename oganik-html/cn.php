@@ -122,6 +122,9 @@
         "received"=> "已收货",
         "pmethod" => "信用卡/借记卡",
         "cancelod"=> "取消訂單",
+        "receiptD"=> "收据",
+        "dStatus" => "邮寄状态",
+        "ETA"     => "预计时间",
         //payment
         "edit"    => "编辑",
         "save"    => "保存",

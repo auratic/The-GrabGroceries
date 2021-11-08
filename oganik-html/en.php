@@ -122,6 +122,9 @@
         "received"=> "Received",
         "pmethod" => "Credit/Debit Cards",
         "cancelod"=> "Cancel Order",
+        "receiptD"=> "Receipt Details",
+        "dStatus" => "Delivery Status",
+        "ETA"     => "Estimated Time",
         //payment
         "edit"    => "Edit",
         "save"    => "Save",

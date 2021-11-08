@@ -120,7 +120,7 @@
         "preparin"=> "Preparing",
         "cancelle"=> "Cancelled",
         "received"=> "Received",
-        "pmethod" => "pmethod",
+        "pmethod" => "Credit/Debit Cards",
         "cancelod"=> "Cancel Order",
         //payment
         "edit"    => "Edit",

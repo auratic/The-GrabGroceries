@@ -120,7 +120,7 @@
         "preparin"=> "Sedang Menyedia",
         "cancelle"=> "Order Dibatalkan",
         "received"=> "Diterima",
-        "pmethod" => "pmethod",
+        "pmethod" => "Kad Kredit/Debit",
         "cancelod"=> "Batalkan Order",
         //payment
         "edit"    => "Edit",

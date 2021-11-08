@@ -120,7 +120,7 @@
         "preparin"=> "准备中",
         "cancelle"=> "已取消",
         "received"=> "已收货",
-        "pmethod" => "信用卡",
+        "pmethod" => "信用卡/借记卡",
         "cancelod"=> "取消訂單",
         //payment
         "edit"    => "编辑",

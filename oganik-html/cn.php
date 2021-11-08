@@ -121,6 +121,7 @@
         "cancelle"=> "已取消",
         "received"=> "已收货",
         "pmethod" => "信用卡",
+        "cancelod"=> "取消訂單",
         //payment
         "edit"    => "编辑",
         "save"    => "保存",

@@ -121,6 +121,7 @@
         "cancelle"=> "Cancelled",
         "received"=> "Received",
         "pmethod" => "pmethod",
+        "cancelod"=> "Cancel Order",
         //payment
         "edit"    => "Edit",
         "save"    => "Save",

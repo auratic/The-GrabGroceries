@@ -8,16 +8,24 @@ if (isset($_GET["update"])) {
     $date = date('Y-m-d H:i:s');
     $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '$receipt_id')";
 
+    if(isset($_GET["del_status"])) {
+        $del_status = $_GET["del_status"];
+        if ($status == "Preparing") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status' WHERE receipt_id = " . $receipt_id;
+        } elseif ($status == "Received") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
+        } elseif ($status == "Cancelled") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status' WHERE receipt_id = " . $receipt_id;
+        }
 
-    if ($status == "Preparing") {
-        $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
-    } elseif ($status == "Delivering") {
-        $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
-    } elseif ($status == "Received") {
-        $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
-    } elseif ($status == "Cancelled") {
-        $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id;
+    } else {
+
+        if ($status == "Delivering") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
+        } 
+
     }
+
 
     if (mysqli_query($link, $sql)) {
         mysqli_query($link, $activity_sql);
@@ -157,23 +165,19 @@ if (isset($_POST["filter"])) {
                                         echo '
                                                             <select id="status-' . $rID . '" name="status" class="form-control" >
                                                                 <option id="istatus-' . $rID . '" value="' . $status . '" selected hidden>' . $status . '</option>';
-                                        if ($status == "Preparing") {
+                                        if ($status == "Not Set") {
                                             echo '
                                                                 <option value="Preparing">Preparing</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } elseif ($status == "Preparing") {
+                                            echo '
                                                                 <option value="Delivering">Delivering</option>
-                                                                <option value="Received">Received</option>
                                                                 <option value="Cancelled">Cancelled</option>';
                                         } elseif ($status == "Delivering") {
                                             echo '
-                                                                <option value="Delivering">Delivering</option>
                                                                 <option value="Received">Received</option>
                                                                 <option value="Cancelled">Cancelled</option>';
-                                        } elseif ($status == "Received") {
-                                            echo '
-                                                                <option value="Delivering">Delivering</option>
-                                                                <option value="Received">Received</option>
-                                                                <option value="Cancelled">Cancelled</option>';
-                                        }
+                                        } 
                                         echo '
                                                             </select>';
                                     }
@@ -351,12 +355,61 @@ if (isset($_POST["filter"])) {
                     //location.href = 'admin_view_transaction.php';
                 }
             })
+        } else if (status == "Preparing") {
+
+            Swal.fire({
+                title: 'Estimated delivery time',
+                input: 'select',
+                inputOptions: {
+                    "Within 1 hour": 'Within 1 hour',
+                    "Within 3 hour": "Within 3 hour",
+                    "Next day": 'Next day',
+                    "Within 3 days": 'Within 3 days',
+                    "Within 1 week": "Within 1 week"
+                },
+                inputPlaceholder: '--Estimated Time--',
+                showCancelButton: true
+            }).then((result) => {
+                var estimate = result.value;
+                if(estimate == undefined) {
+
+                } else if(estimate == "" ) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Select a time"
+                    });
+                } else {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status,
+                            'del_status': estimate
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+
         } else if (status == "Cancelled") {
             Swal.fire({
                 icon: 'warning',
                 title: 'Cancel this order ? ',
                 showCancelButton: true,
-                confirmButtonText: 'Save',
+                confirmButtonText: 'Proceed',
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
@@ -365,7 +418,7 @@ if (isset($_POST["filter"])) {
                         title: 'Are you sure ?',
                         text: 'This cannot be undone',
                         showCancelButton: true,
-                        confirmButtonText: 'Save',
+                        confirmButtonText: 'Proceed',
                     }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
@@ -375,7 +428,8 @@ if (isset($_POST["filter"])) {
                                 data: {
                                     'update': true,
                                     'id': id,
-                                    'status': status
+                                    'status': status,
+                                    'del_status': "Cancelled"
                                 },
                                 cache: false,
                                 success: function(html) {
@@ -440,7 +494,8 @@ if (isset($_POST["filter"])) {
                         data: {
                             'update': true,
                             'id': id,
-                            'status': status
+                            'status': status,
+                            'del_status': "Received"
                         },
                         cache: false,
                         success: function(html) {
@@ -491,7 +546,7 @@ if (isset($_POST["filter"])) {
                 */
                 'colvis'
             ],
-            pageLength : 5
+            //pageLength : 5
             /*
             initComplete: function () {
                 this.api().columns().every( function () {

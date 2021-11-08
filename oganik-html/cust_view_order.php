@@ -227,17 +227,17 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                         elseif ($status == "Preparing")
                             $display = $lang['preparin'];
                         elseif ($status == "Cancelled")
-                            $display = $lang['cancelle'];
+                            $display = '<p style="color:crimson;">'.$lang['cancelle'].'</p>';
                         elseif ($status == "Received")
-                            $display = $lang['received'];
+                            $display = '<p style="color:limegreen;">'.$lang['received'].'</p>';
                         echo '
                                                                        
                                 <tr onmouseover="this.style.backgroundColor = `lightgray`" onmouseout="this.style.backgroundColor = `white`" onclick="openModal(' . $rID . ')" style="cursor:pointer">
-                                    <td>' . $rID . '</td>
-                                    <td>' . $Fname . ' ' . $rName . '</td>
-                                    <td>' . $tDate . '</td>
-                                    <td>' . number_format($total, 2) . '</td>
-                                    <td>' . $display . '</td>
+                                    <td><p>' . $rID . '</p></td>
+                                    <td><p>' . $Fname . ' ' . $rName . '</p></td>
+                                    <td><p>' . $tDate . '</p></td>
+                                    <td><p>' . number_format($total, 2) . '</p></td>
+                                    <td><p>' . $display . '</p></td>
                                 </tr>
                                                                     
                                 ';
@@ -442,6 +442,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                 'excel',
                 'colvis'*/
             ],
+            "order": [[ 2, "dsc" ]]
 
         });
     });

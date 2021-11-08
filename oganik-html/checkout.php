@@ -459,7 +459,7 @@ if (isset($_POST["place-order"])) {
 
 				<div class="col-lg-6">
 				
-							<h3>Payment Details</h3>
+				<h3>Payment Details</h3>
 				<!--
 										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
 											<li>

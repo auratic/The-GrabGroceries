@@ -202,10 +202,10 @@ if (isset($_POST["place-order"])) {
 
 			$date = date('Y-m-d H:i:s');
 			$sql_receipt = "INSERT INTO cust_receipt 
-						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno, product_status) 
+						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, user_id, payment_cost, payment_method, receipt_cardno, product_status) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
-						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Preparing')";
+						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', " . $_SESSION["userid"] . ", 
+						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Not Set')";
 
 			$sql_chk_address = "SELECT address FROM users WHERE address is null AND user_id = " . $_SESSION["userid"];
 			$result_add = mysqli_query($link, $sql_chk_address);
@@ -312,7 +312,7 @@ if (isset($_POST["place-order"])) {
 					<h3><?php echo $lang['shipD']?></h3>
 					<div class="row">
 						<div class="col-md-12">
-							<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
+							<select class="selectpicker" id="choose-address" name="selectaddress" onchange="chooseAddress()">
 								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
 								<option value="" style="<?php
 														if (
@@ -328,14 +328,14 @@ if (isset($_POST["place-order"])) {
 															echo 'display:none';
 														}
 														?>" disabled>
-									<?php echo $lang['noAdd']?>
+									<a href="cust_address.php"><?php echo $lang['noAdd']?></a>
 								</option>
-								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0] ?></option>
-								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1] ?></option>
-								<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo $address[2] ?></option>
-								<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo $address[3] ?></option>
-								<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo $address[4] ?></option>
-								<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo $address[5] ?></option>
+								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo "Default address : " . $address[0] . ", " . $area[0] . ", ". $state[0] .", ".$postcode[0] ?></option>
+								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo "Address 2 : " . $address[1] . ", " . $area[1] . ", ". $state[1] .", ".$postcode[1] ?></option>
+								<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo "Address 3 : " . $address[2] . ", " . $area[2] . ", ". $state[2] .", ".$postcode[2] ?></option>
+								<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo "Address 4 : " . $address[3] . ", " . $area[3] . ", ". $state[3] .", ".$postcode[3] ?></option>
+								<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo "Address 5 : " . $address[4] . ", " . $area[4] . ", ". $state[4] .", ".$postcode[4] ?></option>
+								<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo "Address 6 : " . $address[5] . ", " . $area[5] . ", ". $state[5] .", ".$postcode[5] ?></option>
 							</select>
 						</div><!-- /.col-md-12 -->
 						<div class="col-md-6">

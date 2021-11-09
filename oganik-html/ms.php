@@ -120,8 +120,11 @@
         "preparin"=> "Sedang Menyedia",
         "cancelle"=> "Order Dibatalkan",
         "received"=> "Diterima",
-        "pmethod" => "pmethod",
+        "pmethod" => "Kad Kredit/Debit",
         "cancelod"=> "Batalkan Order",
+        "receiptD"=> "Butiran Resit",
+        "dStatus" => "Status Penghantaran",
+        "ETA"     => "Anggaran Masa",
         //payment
         "edit"    => "Edit",
         "save"    => "Simpan",

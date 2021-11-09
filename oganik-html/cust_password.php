@@ -60,7 +60,7 @@ if (count($_POST) > 0) {
                     </script>";
 
                     $date = date("F j, Y, g:i a");
-                    $to = "1191201218@student.mmu.edu.my"; //send to our email
+                    $to = $row['email']; //send to our email
                     $subject = "Password Changed";
                     $message = '
                     <html>

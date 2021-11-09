@@ -120,8 +120,11 @@
         "preparin"=> "Preparing",
         "cancelle"=> "Cancelled",
         "received"=> "Received",
-        "pmethod" => "pmethod",
+        "pmethod" => "Credit/Debit Cards",
         "cancelod"=> "Cancel Order",
+        "receiptD"=> "Receipt Details",
+        "dStatus" => "Delivery Status",
+        "ETA"     => "Estimated Time",
         //payment
         "edit"    => "Edit",
         "save"    => "Save",

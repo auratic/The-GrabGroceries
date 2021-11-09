@@ -1,57 +1,8 @@
 /* Admin overlay */
-
-.admin-overlay {
-    z-index: 99;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    background-color: rgba(0,0,0, 0.9);
-    overflow-x: hidden;
-    transition: 0.2s;
-  }
-  
-  .admin-overlay-content {
-    position: relative;
-    padding: 2%;
-    background-color: #f8f9fa;
-    width: 20%;
-    height: 100%;
-    overflow: auto;
-  }
-  
-  .admin-overlay a {
-    padding: 8px;
-    text-decoration: none;
-    color: #818181;
-    display: block;
-  }
   
   .admin-overlay a:hover, .admin-overlay a:focus {
     color: #60be74;
     cursor: pointer;
-  }
-  
-  .admin-overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-  }
-
-  
-  @media screen and (max-height: 450px) {
-    .admin-overlay a {font-size: 20px}
-    .admin-overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
-    }
-  }
-
-  .popover-body {
-      font-size: 25px;
-      color: crimson;
-      text-align: center;
   }
   
   .admin-logo {
@@ -83,3 +34,46 @@
     overflow-y: scroll;
     max-height: calc(100vh - 210px);
   }
+
+
+  
+.sidenav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6% 0 6% 10%;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+section {
+  margin-left: 15%; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.card {
+  background-color: transparent;
+}
+.card-body {
+  background-color: lightgray;
+}
+
+#dtBasicExample tr, #dtBasicExample td{
+  background-color: rgba(255,255,255,0.3);
+}

@@ -5032,7 +5032,7 @@ h6 {
   content: '';
   width: 100%;
   height: 100%;
-  background-color: var(--thm-base);
+  /*background-color: var(--thm-base);*/
   position: absolute;
   bottom: 0;
   left: 0;
@@ -5045,7 +5045,7 @@ h6 {
   content: '';
   width: 100%;
   height: 5px;
-  background-color: var(--thm-base);
+  /*background-color: var(--thm-base);*/
   position: absolute;
   bottom: 0;
   left: 0;
@@ -5124,7 +5124,7 @@ h6 {
 .testimonials-one__content:hover p,
 .testimonials-one__content:hover h3,
 .testimonials-one__content:hover span {
-  color: #ffffff;
+  /*color: #ffffff;*/
 }
 
 .testimonials-one .tns-outer .tns-controls {
@@ -6328,7 +6328,7 @@ h6 {
 
 .cart-table tr th:last-child {
   padding-right: 0;
-  text-align: right;
+  /*text-align: right;*/
 }
 
 .cart-table tr td {

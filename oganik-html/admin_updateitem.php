@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
       $id = $row['item_id'];
       $item_name = $row['item'];
-      $category = $row['category'];
+      $category = $row['category_id'];
       $desc = $row['description'];
       $stock = $row['stock'];
       $img = $row["image"];
@@ -32,11 +32,27 @@ if (isset($_GET['id'])) {
     }
   } else {
     echo "
-          <script>
-            alert('Item ID could not be found');
-            location.href = 'admin_displayitem.php'
-          </script>";
+    <script>
+      Swal.fire({
+          title: 'Oops',
+          text: 'Item not found',
+          icon: 'error'
+      }).then(function() {
+      location.href = 'admin_displayitem.php'
+      })
+    </script>";
   }
+} else {
+  echo "
+  <script>
+    Swal.fire({
+        title: 'Oops',
+        text: 'No item selected',
+        icon: 'error'
+    }).then(function() {
+    location.href = 'admin_displayitem.php'
+    })
+  </script>";
 }
 
 if (isset($_POST["update-item"])) {
@@ -52,15 +68,30 @@ if (isset($_POST["update-item"])) {
   }
 
   if (empty(trim($_POST["item-name"]))) {
+
     $name_err = "Please enter name";
   } else {
-    $item_name = ucwords(trim($_POST["item-name"]));
+
+    $sql = "SELECT * FROM item WHERE item = '" . ucfirst(trim($_POST["item-name"])) . "'";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if (mysqli_num_rows($result) > 0) {
+
+      if ($row["item"] != $item_name) {
+
+        $name_err = "Name is taken";
+      } else {
+
+        $item_name = ucwords(trim($_POST["item-name"]));
+      }
+    }
   }
 
-  if (empty(trim($_POST["category"]))) {
+  if (empty(trim($_POST["category_id"]))) {
     $category_err = "Please select a category";
   } else {
-    $category = trim($_POST["category"]);
+    $category = trim($_POST["category_id"]);
   }
 
   if (empty(trim($_POST["desc"]))) {
@@ -70,14 +101,30 @@ if (isset($_POST["update-item"])) {
   }
 
   if (empty(trim($_POST["cost"]))) {
+
     $cost_err = "Please enter cost";
+  } else if (trim($_POST["cost"]) <= 0) {
+
+    $cost_err = "Please enter valid cost";
+  } else if (!is_numeric(trim($_POST["cost"]))) {
+
+    $cost_err = "Please enter valid cost";
   } else {
+
     $cost = trim($_POST["cost"]);
   }
 
   if (empty(trim($_POST["stock"]))) {
+
     $stock_err = "Please enter stock";
+  } else if (!is_numeric(trim($_POST["stock"]))) {
+
+    $stock_err = "Please enter valid stock";
+  } else if (trim($_POST["stock"]) <= 0) {
+
+    $stock_err = "Please enter valid stock";
   } else {
+
     $stock = trim($_POST["stock"]);
   }
 
@@ -100,7 +147,7 @@ if (isset($_POST["update-item"])) {
 
     if ($upload_img == true) {
       $sql = "UPDATE item
-                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', image = '$filename', cost = '$cost', exp_date = '$exp_date'
+                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', image = '$filename', cost = '".sprintf('%.2f', $cost)."', exp_date = '$exp_date'
                     WHERE item_id = '$id'";
 
       if (move_uploaded_file($tempname, $folder)) {
@@ -113,7 +160,7 @@ if (isset($_POST["update-item"])) {
       }
     } else {
       $sql = "UPDATE item
-                    SET item = '$item_name', category = '$category', description = '$desc', stock = '$stock', cost = '$cost', exp_date = '$exp_date'
+                    SET item = '$item_name', category_id = '$category', description = '$desc', stock = '$stock', cost = '". sprintf('%.2f', $cost) ."', exp_date = '$exp_date'
                     WHERE item_id = '$id'";
     }
 
@@ -167,22 +214,29 @@ if (isset($_POST["update-item"])) {
           <div class="row">
 
             <div class="form-group col-md-8" style="text-align: left">
-              <label><b>Item name</b></label> </br>
-              <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>">
+              <label><b>Item name </b><i> (Max-length:20)</i></label> </br>
+              <input type="text" name="item-name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" placeholder="Salmon etc." value="<?php echo $item_name; ?>" maxlength="20">
               <span class="invalid-feedback"><?php echo $name_err; ?></span>
             </div>
 
             <div class="form-group col-md-4" style="text-align: left">
               <label><b>Category</b></label> </br>
-              <select id="category" name="category" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>">
-                <option value="<?php echo $category; ?>" selected hidden><?php echo $category; ?></option>
+              <select id="category" name="category_id" class="form-control <?php echo (!empty($category_err)) ? 'is-invalid' : ''; ?>">
+
                 <?php
                 $get_category = "SELECT * FROM category WHERE category_status = 'Active'";
 
                 if ($result = mysqli_query($link, $get_category)) {
 
                   while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<option value="' . $row["category_name"] . '">' . $row["category_name"] . '</option>';
+
+                    if ($category == $row["category_id"]) {
+                      echo  "<option value='$category' selected hidden>" . $row["category_name"] . "</option>";
+                    } else if (empty($category)) {
+                      echo  "<option value='$category' selected hidden>$category</option>";
+                    }
+
+                    echo '<option value="' . $row["category_id"] . '">' . $row["category_name"] . '</option>';
                   }
                 }
                 ?>
@@ -195,11 +249,18 @@ if (isset($_POST["update-item"])) {
           <div class="row">
 
             <div class="form-group col-md-12" style="text-align: left">
-              <label><b>Description</b></label> </br>
-              <textarea name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!"><?php echo $desc; ?></textarea>
+              <label><b>Description </b><i id="count-desc"> (Max-length:<span>500</span>)</i></label> </br>
+              <textarea id="get-desc" name="desc" class="form-control <?php echo (!empty($desc_err)) ? 'is-invalid' : ''; ?>" rows="4" cols="50" placeholder="High-quality salmon from Africa!" maxlength="500"><?php echo $desc; ?></textarea>
               <span class="invalid-feedback"><?php echo $desc_err; ?></span>
             </div>
+            <script>
+              var count_desc = document.querySelector("#count-desc > span");
+              var get_desc = document.getElementById("get-desc");
 
+              get_desc.onkeyup = () => {
+                count_desc.innerHTML = 500 - get_desc.value.length;
+              }
+            </script>
           </div>
 
           <div class="row">
@@ -275,24 +336,6 @@ if (isset($_POST["update-item"])) {
 
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
-
-<script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-<script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-<script src="assets/vendors/jarallax/jarallax.min.js"></script>
-<script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-<script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-<script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-<script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-<script src="assets/vendors/nouislider/nouislider.min.js"></script>
-<script src="assets/vendors/odometer/odometer.min.js"></script>
-<script src="assets/vendors/swiper/swiper.min.js"></script>
-<script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-<script src="assets/vendors/wnumb/wNumb.min.js"></script>
-<script src="assets/vendors/wow/wow.js"></script>
-<script src="assets/vendors/isotope/isotope.js"></script>
-<script src="assets/vendors/countdown/countdown.min.js"></script>
 <!-- template js -->
 <script src="assets/js/organik.js"></script>
 </body>

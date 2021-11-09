@@ -11,6 +11,7 @@ Email verification - https://code.tutsplus.com/tutorials/how-to-implement-email-
 Set Date and Timezone - https://stackoverflow.com/questions/19583592/how-to-i-can-show-time-with-php-code-with-malaysia-timezone
 Password Strength - https://www.codexworld.com/how-to/validate-password-strength-in-php/
 Get Last ID - https://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
+Ternary / if else within echo - https://stackoverflow.com/questions/3507042/if-block-inside-echo-statement
 
 //////////////////////////////////////////
 HTML
@@ -49,6 +50,7 @@ jQuery AJAX - https://stackoverflow.com/questions/2866063/submit-form-without-pa
 AJAX to same file - https://stackoverflow.com/questions/27634131/jquery-ajax-post-to-php-in-the-same-file-not-working
 Prevent resubmission on refresh - https://stackoverflow.com/questions/6320113/how-to-prevent-form-resubmission-when-page-is-refreshed-f5-ctrlr
 Character replace algorithm - https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+Subtract dates - https://sebhastian.com/javascript-subtracting-dates/
 
 
 //////////////////////////////////////////
@@ -57,3 +59,9 @@ Date
 (JS/PHP) Set min/max input date to today - https://stackoverflow.com/questions/32378590/set-date-input-fields-max-date-to-today
 PHP get date input from HTML form - https://stackoverflow.com/questions/35343569/from-input-type-date-value-to-a-php-variable/39598980
 Manipulate date - https://stackoverflow.com/questions/5741632/javascript-date-7-days
+
+//////////////////////////////////////////
+Datatable
+//////////////////////////////////////////
+Change background color - https://datatables.net/forums/discussion/53319/change-the-background-colour-based-on-the-value
+Button with Bootstrap 5 - https://datatables.net/extensions/buttons/examples/styling/bootstrap5.html

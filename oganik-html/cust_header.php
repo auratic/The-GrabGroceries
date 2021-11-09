@@ -6,6 +6,21 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 
 require "config.php";
 
+if(!isset($_SESSION['lang']))
+{
+    $_SESSION['lang'] = 'en';
+}
+else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
+{
+    if($_GET['lang'] == 'en')
+    $_SESSION['lang'] = 'en';
+    else if($_GET['lang'] == 'cn')
+    $_SESSION['lang'] = 'cn';
+    else if($_GET['lang'] == 'ms')
+    $_SESSION['lang'] = 'ms';
+}
+
+include  $_SESSION['lang']. ".php";
 ?>
 
 <!DOCTYPE html>
@@ -14,12 +29,14 @@ require "config.php";
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TheGrabGroceries</title>
+    <title><?php echo $lang['title']?></title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png" />
     <link rel="manifest" href="assets/images/favicons/site.webmanifest" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <meta name="description" content="Agrikon HTML Template For Agriculture Farm & Farmers" />
 
     <!-- fonts -->
@@ -46,7 +63,10 @@ require "config.php";
     <script src="assets/vendors/wow/wow.js"></script>
     <script src="assets/vendors/isotope/isotope.js"></script>
     <script src="assets/vendors/countdown/countdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+    <!--icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- re-captcha -->
     <script src="https://www.google.com/recaptcha/api.js"></script>
@@ -66,6 +86,24 @@ require "config.php";
 
     <!-- template styles -->
     <link rel="stylesheet" href="assets/css/organik.css" />
+
+    <!-- Datatable CDN -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap5.min.css" />
+
+    <!-- PDFMake -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
     <style>
         .mode {
@@ -133,7 +171,14 @@ require "config.php";
             <div class="topbar">
                 <div class="container">
                     <div class="main-logo">
-                        <a href="index.php" class="logo">
+                        <a href="
+                            <?php  
+                                if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
+                                    echo "admin_dashboard.php";
+                                } else {
+                                    echo "index.php";
+                                } ?>" 
+                            class="logo">
                             <img src="assets/images/Logo6.png" width="105" alt="">
                         </a>
                         <div class="mobile-nav__buttons">
@@ -146,23 +191,22 @@ require "config.php";
 
                     <div class="topbar__left">
                         <div class="topbar__social">
-                            <a href="https://twitter.com/" class="fab fa-twitter" target="_blank"></a>
                             <a href="https://www.facebook.com/Thegrabgroceries-100840225730842/" class="fab fa-facebook-square" target="_blank"></a>
-                            <a href="https://www.instagram.com/" class="fab fa-instagram" target="_blank"></a>
                         </div><!-- /.topbar__social -->
                         <div class="topbar__info">
                             <i class="organik-icon-email"></i>
-                            <p>Email <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
+                            <p><?php echo $lang['email']?> <a href="mailto:thegrabgroceries@gmail.com">thegrabgroceries@gmail.com</a></p>
                         </div><!-- /.topbar__info -->
                     </div><!-- /.topbar__left -->
                     <div class="topbar__right">
                         <div class="topbar__info">
                             <i class="organik-icon-calling"></i>
-                            <p>Phone <a href="tel:+60186620551">+60123456789</a></p>
+                            <p><?php echo $lang['phone']?> <a href="tel:+60186620551">+60123608370</a></p>
                         </div><!-- /.topbar__info -->
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
                             <a href="cart.php" ><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cust_view_order.php"><i class="fas fa-truck" style="margin:0; height:0;"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 
@@ -171,7 +215,10 @@ require "config.php";
             <nav class="main-menu">
                 <div class="container">
                     <div class="main-menu__login">
-                        <a href="<?php if (isset($_SESSION["lname"])) {
+                        <a href="<?php  
+                                    if (isset($_SESSION["mode"]) && ($_SESSION["mode"] == "admin" || $_SESSION["mode"] == "superadmin")) {
+                                        echo "admin_dashboard.php";
+                                    } elseif (isset($_SESSION["lname"])) {
                                         echo "cust_profile.php";
                                     } else {
                                         echo "login.php";
@@ -182,7 +229,7 @@ require "config.php";
                             if (isset($_SESSION["lname"])) {
                                 echo $_SESSION['lname'];
                             } else {
-                                echo "Login / Register";
+                                echo $lang['login/re'];
                             }
 
                             ?>
@@ -190,45 +237,45 @@ require "config.php";
                     </div><!-- /.main-menu__login -->
                     <ul class="main-menu__list">
                         <li class="dropdown">
-                            <a href="index.php">Home</a>
+                            <a href="index.php"><?php echo $lang['home']?></a>
                         </li>
                         <li class="dropdown">
-                            <a href="products.php">Shop</a>
+                            <a href="products.php"><?php echo $lang['shop']?></a>
                             <?php 
                                 if(isset($_SESSION["loggedin"]))
                                     echo "
                                     <ul>
-                                        <li><a href='cart.php'>Cart Page</a></li>
-                                        <li><a href='checkout.php'>Checkout</a></li>
+                                        <li><a href='cart.php'>".$lang['cart']."</a></li>
+                                        <li><a href='checkout.php'>".$lang['checkout']."</a></li>
                                     </ul>";
                             ?>
                         </li>
 
                         <li>
-                            <a href='review.php'>Testimonial</a>
+                            <a href='review.php'><?php echo $lang['review']?></a>
                         </li>
 
                         <li class="dropdown">
-                            <a href="#">More</a>
+                            <a href="#"><?php echo $lang['more']?></a>
                             <ul>
-                                <li><a href='news.php'>News</a></li>
-                                <li><a href="cust_contact.php">Contact Us</a></li>
-                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="cust_contact.php"><?php echo $lang['contact']?></a></li>
+                                <li><a href="about.php"><?php echo $lang['about']?></a></li>
                             </ul>
                         </li>
                     </ul>
                     <div class="main-menu__language">
-                        <img src="assets/images/resources/flag-1-1.jpg" alt="">
                         <label class="sr-only" for="language-select">select language</label>
                         <!-- /#language-select.sr-only -->
-                        <select class="selectpicker" id="language-select-header">
-                            <option value="english">English</option>
-                            <option value="arabic">Arabic</option>
-                        </select>
+                        <form action="" method="GET">
+                            <select class="selectpicker" name="lang" id="language-select-header">
+                                <option value="en"><?php echo $lang['chglg']?></option>
+                                <option value="en"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'en'){echo "selected";}?>><?php echo $lang['eng']?></option>
+                                <option value="ms"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'ms'){echo "selected";}?>><?php echo $lang['ms']?></option>
+                                <option value="cn"<?php if(isset($_GET['lang']) && $_GET['lang'] == 'cn'){echo "selected";}?>><?php echo $lang['man']?></option>
+                            </select>
+                            <button type="submit" class="btn btn-success" style="margin-left: 5px;"><?php echo $lang['save']?></button>
+                        </form>
                     </div><!-- /.main-menu__language -->
-                    <div>
-                        <button style="outline: none;" class="mode" onclick="myFunction()">Mode</button>
-                    </div>
                 </div><!-- /.container -->
             </nav>
             <!-- /.main-menu -->

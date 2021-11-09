@@ -1,3 +1,19 @@
+<?php
+
+    if(!isset($_SESSION['lang']))
+    {
+        $_SESSION['lang'] = 'en';
+    }
+    else if(isset($_GET['lang']) && $_SESSION['lang'] != $_GET['lang'] && !empty($_GET['lang']))
+    {
+        if($_GET['lang'] == 'en')
+        $_SESSION['lang'] = 'en';
+        else if($_GET['lang'] == 'cn')
+        $_SESSION['lang'] = 'cn';
+    }
+
+    include  $_SESSION['lang']. ".php";
+?>
 <style>
     body {
         font: 14px sans-serif;
@@ -17,30 +33,30 @@
                                 <ul class="nav account-menu-list flex-column nav-pills" id="pills-tab" role="tablist">
                                     <li>
                                         <a href="cust_profile.php">
-                                            <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                            <i class="fas fa-tachometer-alt"></i>&nbsp<?php echo $lang['dboard']?></a>
                                     </li>
                                     <li>
                                         <a href="cust_view_order.php">
-                                            <i class="fas fa-shopping-cart"></i> Order</a>
+                                            <i class="fas fa-shopping-cart"></i>&nbsp<?php echo $lang['order']?></a>
                                     </li>
                                     <li>
                                         <a href="cust_payment.php">
-                                            <i class="fas fa-credit-card"></i> Payment Method</a>
+                                            <i class="fas fa-credit-card"></i>&nbsp<?php echo $lang['payment']?></a>
                                     </li>
                                     <li>
                                         <a href="cust_address.php">
-                                            <i class="fas fa-map-marker-alt"></i> Address</a>
+                                            <i class="fas fa-map-marker-alt"></i>&nbsp<?php echo $lang['address']?></a>
                                     </li>
                                     <li>
                                         <a href="cust_accdetails.php">
-                                            <i class="fas fa-user"></i> Account Details</a>
+                                            <i class="fas fa-user"></i>&nbsp<?php echo $lang['accountd']?></a>
                                     </li>
                                     <li>
                                         <a href="cust_password.php">
-                                            <i class="fas fa-lock"></i> Password Changes</a>
+                                            <i class="fas fa-lock"></i>&nbsp<?php echo $lang['pwd_chg']?></a>
                                     </li>
                                     <li>
-                                        <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                        <a class="link--icon-left" href="logout.php"><i class="fas fa-sign-out-alt"></i>&nbsp<?php echo $lang['logout']?></a>
                                     </li>
                                 </ul>
                             </div>

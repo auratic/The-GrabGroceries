@@ -6,56 +6,39 @@
         $category_id = $_GET["category_id"];
 
         $date = date('Y-m-d H:i:s');
-        $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'Deactivate category', '$date', '";
+        $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'Deactivate category', '$date', $category_id)";
+        $sql = "UPDATE category SET category_status = 'Inactive' WHERE category_id = " . $category_id;
 
-        for ($i = 0; $i < count($category_id); $i++) {
-            $sql = "UPDATE category SET category_status = 'Inactive' WHERE category_id = " . $category_id[$i];
+        if (mysqli_query($link, $sql)) {
 
-            if ($i < 1) {
-                $activity_sql .= $category_id[$i];
-            } else {
-                $activity_sql .= "," . $category_id[$i];
-            }
-
-            if (mysqli_query($link, $sql)) {
-                echo "<script>alert('Updated');</script>";
-            } else {
-                echo "<script>alert('Some error occured');</script>";
-            }
+            echo "<script>alert('Updated');</script>";
+            mysqli_query($link, $activity_sql);
+        } else {
+            echo "<script>alert('Some error occured');</script>";
         }
-        $activity_sql .= "')";
-        mysqli_query($link, $activity_sql);
     }
 
     if (isset($_GET["inactive"])) {
         $category_id = $_GET["category_id"];
 
         $date = date('Y-m-d H:i:s');
-        $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'Activate category', '$date', '";
+        $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'Activate category', '$date', '$category_id')";
 
-        for ($i = 0; $i < count($category_id); $i++) {
-            $sql = "UPDATE category SET category_status = 'Active' WHERE category_id = " . $category_id[$i];
+        $sql = "UPDATE category SET category_status = 'Active' WHERE category_id = " . $category_id;
 
-            if ($i < 1) {
-                $activity_sql .= $category_id[$i];
-            } else {
-                $activity_sql .= "," . $category_id[$i];
-            }
 
-            if (mysqli_query($link, $sql)) {
-                echo "<script>
+        if (mysqli_query($link, $sql)) {
+            echo "<script>
                 Swal.fire(
                     'Good job!',
                     'You clicked the button!',
                     'success'
                 )
               </script>";
-            } else {
-                echo "<script>alert('Some error occured');</script>";
-            }
+            mysqli_query($link, $activity_sql);
+        } else {
+            echo "<script>alert('Some error occured');</script>";
         }
-        $activity_sql .= "')";
-        mysqli_query($link, $activity_sql);
     }
 
     $category = $category_err = "";
@@ -116,6 +99,63 @@
             }
         }
     }
+
+    if(isset($_GET["save"])) {
+
+        
+        $sql = "SELECT category_name FROM category WHERE category_name = '" . $_GET["category"] . "'";
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if(empty($_GET["category"])) {
+            echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Empty input field !'
+            });
+            </script>";
+        } else if (mysqli_num_rows($result) > 0) {
+
+            if ($row["category_name"] != $_GET["cur_category"]) {
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Category name is taken !'
+                });
+                </script>";
+
+            } else {
+                
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No name changed'
+                });
+                </script>";
+
+            }
+
+        } else {
+
+            $sql = "UPDATE category SET category_name = '" .ucwords($_GET["category"]). "' WHERE category_id = " . $_GET["id"];
+            if(mysqli_query($link, $sql)) {
+                echo "
+                <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Updated',
+                    text: 'Category name updated!'
+                });
+                </script>";
+            }
+        }
+    }
     ?>
 
     <section>
@@ -138,10 +178,6 @@
                             <div class="tab active-tab" id="desc">
                                 <div class="product-details-content">
                                     <div class="desc-content-box">
-                                        <div style="display: flex; justify-content: flex-end; padding: 15px; align-items: center;">
-                                            Select all <input type="checkbox" id="select-all-active" style="margin: 1%" />
-                                            <button class="btn btn-primary" id="set-inactive" onclick="return setInactive()">Set Inactive</button>
-                                        </div>
                                         <table class="table table-bordered table-striped table-hover table-condensed">
                                             <tr>
                                                 <th>Category ID</th>
@@ -156,23 +192,50 @@
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $count_sql = "SELECT * from item WHERE category = '" . $row['category_name'] . "'";
+                                                    $count_sql = "SELECT * from item WHERE category_id = '" . $row['category_id'] . "'";
                                                     $count_result = mysqli_query($link, $count_sql);
                                                     $no_of_item = mysqli_num_rows($count_result);
 
                                                     echo '
                                                 <tr>
-                                                    <td>' . $row['category_id'] . '</td>
-                                                    <td>' . $row['category_name'] . '</td>
-                                                    <td>' . $no_of_item . '</td>
-                                                    <td style="display: flex;
-                                                            justify-content: space-evenly;
-                                                            align-items: center;">
-                                                        <input type="submit" class="btn btn-primary" value="Edit" ';
-                                                    echo ($row['category_name'] == "Not Set") ? "disabled" : "";
-                                                    echo '/>
-                                                        <input type="checkbox" value="' . $row['category_id'] . '" name="select-active" />
-                                                    </td>
+                                                    <form method="GET" action="#">
+
+                                                        <input type="hidden" name="id" value="'.$row['category_id'].'">
+                                                        <input type="hidden" name="cur_category" value="'.$row['category_name'].'">
+                                                        <td><p>' . $row['category_id'] . '</p></td>
+
+                                                        <td>
+                                                            <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
+
+                                                            <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                            <div>
+                                                                <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                                <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td><p>' . $no_of_item . '</p></td>
+                                                        <td style="display: flex;
+                                                                justify-content: space-evenly;
+                                                                align-items: center;">
+                                                            ';
+
+                                                            if($row['category_name'] == "Not Set") {
+
+                                                                echo '
+                                                            <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary" disabled> Edit </button>
+                                                            <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" disabled> Deactivate </button>';
+
+                                                            } else {
+
+                                                                echo '
+                                                            <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary edit-button" onclick="onEdit(' . $row['category_id'] . ')" /> Edit </button>
+                                                            <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" > Deactivate</button>';
+                                                            
+                                                            }
+                                                            echo '
+                                                        </td>
+                                                    </form>
                                                 </tr>';
                                                 }
                                             }
@@ -186,11 +249,6 @@
                             <div class="tab" id="addi__info">
                                 <div class="product-details-content">
                                     <div class="desc-content-box">
-
-                                        <div style="display: flex; justify-content: flex-end; padding: 15px; align-items: center;">
-                                            Select all <input type="checkbox" id="select-all-inactive" style="margin: 1%" />
-                                            <button class="btn btn-primary" id="set-active" onclick="return setActive()">Set Active</button>
-                                        </div>
 
                                         <table class="table table-bordered table-striped table-hover table-condensed">
                                             <tr>
@@ -206,24 +264,51 @@
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $count_sql = "SELECT * from item WHERE category = '" . $row['category_name'] . "'";
+                                                    $count_sql = "SELECT * from item WHERE category_id = '" . $row['category_id'] . "'";
                                                     $count_result = mysqli_query($link, $count_sql);
                                                     $no_of_item = mysqli_num_rows($count_result);
 
                                                     echo '
+                                                   
                                                 <tr>
-                                                    <td>' . $row['category_id'] . '</td>
-                                                    <td>' . $row['category_name'] . '</td>
-                                                    <td>' . $no_of_item . '</td>
+                                                <form method="GET" action="#">
+
+                                                    <input type="hidden" name="id" value="'.$row['category_id'].'">
+                                                    <input type="hidden" name="cur_category" value="'.$row['category_name'].'">
+                                                    <td><p>' . $row['category_id'] . '</p></td>
+
+                                                    <td>
+                                                        <p id="p-' . $row['category_id'] . '">' . $row['category_name'] . '</p>
+                                                        <input name="category" id="text-' . $row['category_id'] . '" style="display:none; max-height: 30px; min-height: 30px;" value="' . $row['category_name'] . '">
+                                                        <div>
+                                                            <button id="save-' . $row['category_id'] . '" name="save" type="submit" class="btn btn-primary" style="display:none;">Save</button>
+                                                            <button id="cancel-' . $row['category_id'] . '" type="button" class="btn btn-primary" style="display:none; margin:1%" onclick="offEdit(' . $row['category_id'] . ')">Cancel</button>
+                                                        </div>
+                                                    </td>
+
+                                                    <td><p>' . $no_of_item . '</p></td>
                                                     <td style="display: flex;
                                                             justify-content: space-evenly;
                                                             align-items: center;">
-                                                        <input type="submit" class="btn btn-primary" value="Edit" ';
-                                                    echo ($row['category_name'] == "Not Set") ? "disabled" : "";
-                                                    echo '/>
-                                                        <input type="checkbox" value="' . $row['category_id'] . '" name="select-inactive" />
+                                                        ';
+
+                                                        if($row['category_name'] == "Not Set") {
+
+                                                            echo '
+                                                        <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary" disabled> Edit </button>
+                                                        <button class="btn btn-info btn-sm" onclick="return setInactive(' . $row['category_id'] . ');" disabled> Activate </button>';
+
+                                                        } else {
+
+                                                            echo '
+                                                        <button id="edit-' . $row['category_id'] . '" type="button" class="btn btn-primary edit-button" onclick="onEdit(' . $row['category_id'] . ')" /> Edit </button>
+                                                        <button class="btn btn-info btn-sm" onclick="return setActive(' . $row['category_id'] . ');" > Activate</button>';
+                                                        
+                                                        }
+                                                        echo '
                                                     </td>
-                                                </tr>';
+                                                </form>
+                                            </tr>';
                                                 }
                                             }
                                             ?>
@@ -237,7 +322,7 @@
                                 <div class="product-details-content">
                                     <div class="desc-content-box">
 
-                                        <form action="" method="GET">
+                                        <form action="#" method="GET">
 
                                             <div class="form-group col-md-6" style="text-align: left">
                                                 <label><b>Category Name</b></label> </br>
@@ -266,23 +351,6 @@
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 
-    <script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
-    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
-    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
-    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
-    <script src="assets/vendors/nouislider/nouislider.min.js"></script>
-    <script src="assets/vendors/odometer/odometer.min.js"></script>
-    <script src="assets/vendors/swiper/swiper.min.js"></script>
-    <script src="assets/vendors/tiny-slider/tiny-slider.min.js"></script>
-    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
-    <script src="assets/vendors/wow/wow.js"></script>
-    <script src="assets/vendors/isotope/isotope.js"></script>
-    <script src="assets/vendors/countdown/countdown.min.js"></script>
     <!-- template js -->
     <script src="assets/js/organik.js"></script>
     <script>
@@ -291,55 +359,12 @@
         }
         if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
             location.href = "admin_category.php";
-        } else {
-        }
+        } else {}
 
-        var active_checkboxes = document.getElementsByName('select-active');
-        var inactive_checkboxes = document.getElementsByName('select-inactive');
-        var select_all_active = document.getElementById("select-all-active");
-        var select_all_inactive = document.getElementById("select-all-inactive");
-
-        select_all_active.onclick = () => {
-
-            if (select_all_active.checked) {
-                //console.log("yes")
-                for (var i = 0, n = active_checkboxes.length; i < n; i++) {
-                    active_checkboxes[i].checked = true;
-                }
-            } else {
-                //console.log("no")
-                for (var i = 0, n = active_checkboxes.length; i < n; i++) {
-                    active_checkboxes[i].checked = false;
-                }
-            }
-        }
-
-        select_all_inactive.onclick = () => {
-
-            if (select_all_inactive.checked) {
-                //console.log("yes")
-                for (var i = 0, n = inactive_checkboxes.length; i < n; i++) {
-                    inactive_checkboxes[i].checked = true;
-                }
-            } else {
-                //console.log("no")
-                for (var i = 0, n = inactive_checkboxes.length; i < n; i++) {
-                    inactive_checkboxes[i].checked = false;
-                }
-            }
-        }
-
-        function setInactive() {
-            var category_id = [];
-
-            for (var i = 0, n = active_checkboxes.length; i < n; i++) {
-                if (active_checkboxes[i].checked == true) {
-                    category_id.push(active_checkboxes[i].value);
-                }
-            }
+        function setInactive(id) {
 
             Swal.fire({
-                title: 'Deactivate these category(s) ?',
+                title: 'Deactivate this category ?',
                 showCancelButton: true,
                 confirmButtonText: 'Save',
             }).then((result) => {
@@ -350,7 +375,7 @@
                         url: "admin_category.php",
                         data: {
                             'active': true,
-                            'category_id': category_id
+                            'category_id': id
                         },
                         cache: false,
                         success: function(html) {
@@ -366,22 +391,15 @@
                         }
                     });
                 }
-            })
+            });
 
             return false;
         }
 
-        function setActive() {
-            var category_id = [];
-
-            for (var i = 0, n = inactive_checkboxes.length; i < n; i++) {
-                if (inactive_checkboxes[i].checked == true) {
-                    category_id.push(inactive_checkboxes[i].value);
-                }
-            }
+        function setActive(id) {
 
             Swal.fire({
-                title: 'Activate these category(s) ?',
+                title: 'Activate this category ?',
                 showCancelButton: true,
                 confirmButtonText: 'Save',
             }).then((result) => {
@@ -392,7 +410,7 @@
                         url: "admin_category.php",
                         data: {
                             'inactive': true,
-                            'category_id': category_id
+                            'category_id': id
                         },
                         cache: false,
                         success: function(html) {
@@ -408,9 +426,30 @@
                         }
                     });
                 }
-            })
+            });
 
             return false;
+        }
+
+        function onEdit(id) {
+            document.getElementById("p-" + id).style.display = "none";
+            document.getElementById("text-" + id).style.display = "block";
+
+            document.getElementById("save-" + id).style.display = "inline-block";
+            document.getElementById("cancel-" + id).style.display = "inline-block";
+
+
+            $( ".edit-button" ).prop('disabled', true);
+        }
+
+        function offEdit(id) {
+            document.getElementById("p-" + id).style.display = "block";
+            document.getElementById("text-" + id).style.display = "none";
+
+            document.getElementById("save-" + id).style.display = "none";
+            document.getElementById("cancel-" + id).style.display = "none";
+
+            $( ".edit-button" ).prop('disabled', false);
         }
     </script>
     </body>

@@ -3,39 +3,58 @@
 include 'admin_header.php';
 
 if (isset($_GET["update"])) {
-    $receipt_id = $_GET["receipt_id"];
+    $receipt_id = $_GET["id"];
     $status = $_GET["status"];
     $date = date('Y-m-d H:i:s');
-    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '";
+    $activity_sql = "INSERT INTO admin_activity (user_id, activity, activity_time, target) VALUES (" . $_SESSION["userid"] . ", 'update receipt', '$date', '$receipt_id')";
 
-    for ($i = 0; $i < count($receipt_id); $i++) {
-
-        if ($i < 1) {
-            $activity_sql .= $receipt_id[$i];
-        } else {
-            $activity_sql .= "," . $receipt_id[$i];
-        }
-
-        if ($status == "Not Set") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = NULL, receive_date = NULL WHERE receipt_id = " . $receipt_id[$i];
-        } elseif ($status == "Preparing") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status' WHERE receipt_id = " . $receipt_id[$i];
-        } elseif ($status == "Delivering") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id[$i];
+    if(isset($_GET["del_status"])) {
+        $del_status = $_GET["del_status"];
+        if ($status == "Preparing") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status' WHERE receipt_id = " . $receipt_id;
         } elseif ($status == "Received") {
-            $sql = "UPDATE cust_receipt SET product_status = '$status', receive_date = '$date' WHERE receipt_id = " . $receipt_id[$i];
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status', receive_date = '$date' WHERE receipt_id = " . $receipt_id;
+        } elseif ($status == "Cancelled") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_status = '$del_status' WHERE receipt_id = " . $receipt_id;
         }
 
-        if (mysqli_query($link, $sql)) {
-            echo "
-            <script>alert('Updated')</script>";
-        } else {
-            echo "
-            <script>alert('Something went wrong')</script>";
-        }
+    } else {
+
+        if ($status == "Delivering") {
+            $sql = "UPDATE cust_receipt SET product_status = '$status', delivery_date = '$date' WHERE receipt_id = " . $receipt_id;
+        } 
+
     }
-    $activity_sql .= "')";
-    mysqli_query($link, $activity_sql);
+
+
+    if (mysqli_query($link, $sql)) {
+        mysqli_query($link, $activity_sql);
+        echo "
+            <script>
+                Swal.fire({
+                icon: 'success',
+                title: 'Receipt : $receipt_id updated to \"$status\"',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = 'admin_view_transaction.php';
+                }
+            })
+            </script>";
+    } else {
+        echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Cannot update to database',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = 'admin_view_transaction.php';
+                }
+            })
+            </script>";
+    }
 }
 
 $sql_receipt = "SELECT receipt_id FROM cust_receipt";
@@ -78,82 +97,8 @@ if (isset($_POST["filter"])) {
 
     <div class="container" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
-            <div class="col-sm-2" style="
-                            border: gray solid 1px;
-                            border-radius: 10px;
-                            padding: 1%;
-                            background-color: lightgray;">
-                <form action="admin_view_transaction.php" method="post">
 
-
-                    <div class="form-group" style="text-align: left">
-                        <label>Search by Receipt ID</label> <br>
-                        <input type="text" name="search-id" class="form-control"></input>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <label>Search by email</label> <br>
-                        <input type="text" name="search-id" class="form-control"></input>
-                    </div>
-
-                    <hr>
-
-                    <label><b>Transaction Date</b></label> </br>
-                    <div class="form-group" style="text-align: left">
-                        <p>from</p>
-                        <input type="date" name="date-from" class="form-control"></input>
-                    </div>
-                    <div class="form-group" style="text-align: left">
-                        <p>to</p>
-                        <input type="date" name="date-to" class="form-control"></input>
-                    </div>
-
-                    <div class="form-group" style="text-align: left">
-                        <input class="btn btn-primary" type="submit" value="Filter" name="filter">
-                    </div>
-
-                </form>
-            </div>
-
-            <div class="col-sm-10">
-                <div class='row' style="margin: 1%">
-                    <div class="col-sm-6"></div>
-
-                    <div class="col-sm-6">
-                        <form style="
-                                        display: flex;
-                                        justify-content: flex-end;">
-                            <!--
-                                        <select id="status" name="status">
-                                            <option value="'.$display_row["product_status"].'" selected disabled hidden>'.$display_row["product_status"].'</option>
-                                            <option value="Not Set">Not set</option>
-                                            <option value="Preparing">Preparing</option>
-                                            <option value="Delivering">Delivering</option>
-                                            <option value="Received">Received</option>
-                                        </select>
-                                        -->
-                            <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                <label>Status</label> <br>
-                                <select id="status" name="status" style="text-align: left; margin-right: 1rem">
-                                    <option value="--Status--" selected disabled hidden>--Status--</option>
-                                    <option value="Not Set">Not set</option>
-                                    <option value="Preparing">Preparing</option>
-                                    <option value="Delivering">Delivering</option>
-                                    <option value="Received">Received</option>
-                                </select>
-                                <p id="status-err" style="font-style: italic; color: crimson;"></p>
-                            </div>
-                            <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                <label for="select-all">Select All</label> <br>
-                                <input type="checkbox" id="select-all" />
-                            </div>
-                            <div class="form-group" style="text-align: left;">
-                                <button class="btn btn-info btn-sm" onclick="return updateStatus();">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+            <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel-group" id="accordion">
@@ -166,7 +111,7 @@ if (isset($_POST["filter"])) {
                             } else {
 
                                 echo '
-                                        <table class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                        <table id="dtBasicExample" class="display" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th><h5>Receipt ID</h5></th>
@@ -177,7 +122,8 @@ if (isset($_POST["filter"])) {
                                                     <th><h5>Action</h5></th>
                                                     <th><h5></h5></th>
                                                 </tr>
-                                            </thead>';
+                                            </thead>
+                                            <tbody>';
 
                                 foreach ($receipt_array as $x => $x_value) {
                                     $display_sql = "SELECT * FROM cust_receipt 
@@ -202,29 +148,57 @@ if (isset($_POST["filter"])) {
                                         $uid = $display_row['user_id'];
                                     }
                                     echo '
-                                            <tbody>
                                                 <tr>
-                                                    <td>' . $rID . '</td>
-                                                    <td>' . $Fname . ' ' . $rName . '</td>
-                                                    <td>' . $tDate . '</td>
-                                                    <td>' . $total . '</td>
-                                                    <td>' . $status . '</td>
-                                                    <td>
-                                                        <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            More option
-                                                        </a>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item" onclick="openModal(' . $rID . ')" target="_blank" style="cursor:pointer">
-                                                                View Details
+                                                    <form method="GET" action="#">
+                                                        <input type="hidden" value="' . $rID . '" name="id">
+                                                        <td>' . $rID . '</td>
+                                                        <td>' . $Fname . ' ' . $rName . '</td>
+                                                        <td>' . $tDate . '</td>
+                                                        <td>' . $total . '</td>
+                                                        <td style="text-align:center">';
+                                    if ($status == "Received" || $status == "Cancelled") {
+                                        echo "
+                                                            <select class='form-control' disabled>
+                                                                <option selected>$status</option>
+                                                            </select>";
+                                    } else {
+                                        echo '
+                                                            <select id="status-' . $rID . '" name="status" class="form-control" >
+                                                                <option id="istatus-' . $rID . '" value="' . $status . '" selected hidden>' . $status . '</option>';
+                                        if ($status == "Not Set") {
+                                            echo '
+                                                                <option value="Preparing">Preparing</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } elseif ($status == "Preparing") {
+                                            echo '
+                                                                <option value="Delivering">Delivering</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } elseif ($status == "Delivering") {
+                                            echo '
+                                                                <option value="Received">Received</option>
+                                                                <option value="Cancelled">Cancelled</option>';
+                                        } 
+                                        echo '
+                                                            </select>';
+                                    }
+                                    echo '
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-default dropdown-toggle" href="#" style="margin-top:-10px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                More option
                                                             </a>
-                                                            <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $rID . '" target="_blank">
-                                                                Invoice
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td> <input type="checkbox" name="select-item" value="' . $rID . '"> </td>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                <a class="dropdown-item" onclick="openModal(' . $rID . ')" target="_blank" style="cursor:pointer">
+                                                                    View Details
+                                                                </a>
+                                                                <a class="dropdown-item" href="EditableInvoice/invoice.php?id=' . $rID . '" target="_blank">
+                                                                    Invoice
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td> <input type="submit" class="btn-sm btn-info" name="update" value="Update" ' . (($status == "Received" || $status == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`' . $rID . '`)"/> </td>
+                                                    </form>
                                                 </tr>
-                                            </tbody>
                                             ';
 
                                     //Modal
@@ -284,23 +258,23 @@ if (isset($_POST["filter"])) {
                                         while ($trans_row = mysqli_fetch_assoc($trans_result)) {
                                             echo
                                             '
-                                                                                <div class="row">
-                                                                                    <div class="col-md-2">
-                                                                                        <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>' . $trans_row['item'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>x' . $trans_row['amount'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>RM' . $trans_row['cost'] . '</p>
-                                                                                    </div>
-                                                                                    <div class="col-md-2">
-                                                                                        <p>RM' . $trans_row['total_cost'] . '</p>
-                                                                                    </div>
-                                                                                </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <img src="assets/images/items/' . $trans_row['image'] . '" style="width:50%;object-fit:contain;">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>' . $trans_row['item'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>x' . $trans_row['amount'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>RM' . $trans_row['cost'] . '</p>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <p>RM' . $trans_row['total_cost'] . '</p>
+                                                                </div>
+                                                            </div>
                                                                             ';
                                         }
                                     }
@@ -308,13 +282,25 @@ if (isset($_POST["filter"])) {
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="background-color:var(--thm-base)">
-                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Cancel</button>
+                                                        <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $rID . ')">Close</button>
                                                     </div> 
                                                 </div>
                                             </div>
                                             ';
                                 }
                                 echo '
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th><h5>Receipt ID</h5></th>
+                                                    <th><h5>Receipt Name</h5></th>
+                                                    <th><h5>Transaction Date</h5></th>
+                                                    <th><h5>Total(RM)</h5></th>
+                                                    <th><h5>Status</h5></th>
+                                                    <th><h5>Action</h5></th>
+                                                    <th><h5></h5></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>';
                             }
 
@@ -354,55 +340,178 @@ if (isset($_POST["filter"])) {
         console.info("This page is not reloaded");
     }
 
-    var checkboxes = document.getElementsByName('select-item');
-    var select_all = document.getElementById("select-all");
+    function updateStatus(id) {
+        var status = document.getElementById("status-" + id).value;
+        var init_status = document.getElementById("istatus-" + id).value;
 
-    select_all.onclick = () => {
 
-        if (select_all.checked) {
-            //console.log("yes")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = true;
-            }
-        } else {
-            //console.log("no")
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = false;
-            }
-        }
-    }
-
-    function updateStatus() {
-        var receipt_id = [];
-        var status = document.getElementById("status").value;
-
-        if (status === "--Status--") {
-            document.getElementById("status-err").innerHTML = "Choose status";
-        } else {
-
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                if (checkboxes[i].checked == true) {
-                    receipt_id.push(checkboxes[i].value);
+        if (init_status == status) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Nothing is updated..',
+                confirmButtonText: 'Okay',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //location.href = 'admin_view_transaction.php';
                 }
-            }
+            })
+        } else if (status == "Preparing") {
 
-            if (confirm("Set status to '" + status + "'? Press 'OK' to continue")) {
-                $.ajax({
-                    type: "get",
-                    url: "admin_view_transaction.php",
-                    data: {
-                        'update': true,
-                        'receipt_id': receipt_id,
-                        'status': status
-                    },
-                    cache: false,
-                    success: function(html) {
-                        alert('Updated');
-                        location.href = 'admin_view_transaction.php';
-                    }
-                });
+            Swal.fire({
+                title: 'Estimated delivery time',
+                input: 'select',
+                inputOptions: {
+                    "Within 1 hour": 'Within 1 hour',
+                    "Within 3 hour": "Within 3 hour",
+                    "Next day": 'Next day',
+                    "Within 3 days": 'Within 3 days',
+                    "Within 1 week": "Within 1 week"
+                },
+                inputPlaceholder: '--Estimated Time--',
+                showCancelButton: true
+            }).then((result) => {
+                var estimate = result.value;
+                if(estimate == undefined) {
 
-            } else {}
+                } else if(estimate == "" ) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Select a time"
+                    });
+                } else {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status,
+                            'del_status': estimate
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+
+        } else if (status == "Cancelled") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel this order ? ',
+                showCancelButton: true,
+                confirmButtonText: 'Proceed',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Are you sure ?',
+                        text: 'This cannot be undone',
+                        showCancelButton: true,
+                        confirmButtonText: 'Proceed',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "get",
+                                url: "admin_view_transaction.php",
+                                data: {
+                                    'update': true,
+                                    'id': id,
+                                    'status': status,
+                                    'del_status': "Cancelled"
+                                },
+                                cache: false,
+                                success: function(html) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Successfully Updated',
+                                        confirmButtonText: 'Okay',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.href = 'admin_view_transaction.php';
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (status == "Delivering") {
+            Swal.fire({
+                title: 'Update order status ?',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        } else if (status == "Received") {
+            Swal.fire({
+                title: 'Order received ?',
+                text: 'Action cannot be undone',
+                showCancelButton: true,
+                confirmButtonText: 'Received',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_view_transaction.php",
+                        data: {
+                            'update': true,
+                            'id': id,
+                            'status': status,
+                            'del_status': "Received"
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_view_transaction.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
         }
 
         return false;
@@ -422,6 +531,48 @@ if (isset($_POST["filter"])) {
         });
         return false;
     }
+
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            dom: 'Bfrtip',
+            buttons: [
+                /*
+                'pdf',
+                'csv',
+                'excel',
+                */
+                'colvis'
+            ],
+            //pageLength : 5
+            /*
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+    
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+    
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                });
+            }*/
+        });
+
+        //table.buttons().container()
+        //    .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+    });
 </script>
 <!-- /.search-popup -->
 

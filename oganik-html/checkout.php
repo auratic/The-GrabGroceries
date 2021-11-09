@@ -65,16 +65,32 @@ function test_input($data)
 	$data = htmlspecialchars($data);
 	return $data;
 }
-
+	
 $fname_err = $lname_err = $email_err = $address_err = $phone_err = $area_err = $state_err = $postcode_err = $cardcvv_err = $cardnum_err = $cardexpm_err = $cardexpy_err = "";
+$fnames = $lnames = $emails = $phones = $addresss = $areas = $states = $postcodes = $cardcvvs = $cardnums = $cardexpms = $cardexpys = "";
 if (isset($_POST["place-order"])) {
+	$fnames = test_input($_POST['fname']);
+	$lnames = test_input($_POST['lname']);
+	$emails = test_input($_POST['email']);
+	$phones = test_input($_POST['phone']);
+	$addresss = test_input($_POST['address']);
+	$areas = (isset($_POST['area']))? $_POST['area']: "";
+	$states = (isset($_POST['state']))? $_POST['state']: "";
+	$postcodes = (isset($_POST['postcode']))? $_POST['postcode']: "";
+	$cardcvvs = $_POST['cvv'];
+	$cardnums = $_POST['cardno'];
+	$cardexpms = $_POST['expmonth'];
+	$cardexpys = $_POST['expyear'];
 
 	// Validate first name
 	if (empty($_POST["fname"])) {
 		$fname_err = "Name is required";
 	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
 		$fname_err = "Only letters and white space allowed";
-	} else {
+	} else if (strlen(trim($_POST["fname"])) == 0)
+    {
+        $fname_err = "Please enter name";
+    }else {
 		$receipt_fname = ucwords(test_input($_POST["fname"]));
 	}
 
@@ -83,7 +99,10 @@ if (isset($_POST["place-order"])) {
 		$lname_err = "Name is required";
 	} else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
 		$lname_err = "Only letters and white space allowed";
-	} else {
+	} else if (strlen(trim($_POST["lname"])) == 0)
+    {
+        $lname_err = "Please enter name";
+    }else {
 		$receipt_lname = ucwords(test_input($_POST["lname"]));
 	}
 
@@ -98,7 +117,7 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["phone"])) {
 		$phone_err = "Phone number is required";
-	} else if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{11}+$/', $_POST["phone"]) && !preg_match('/^[0-9]{12}+$/', $_POST["phone"])) {
+	} else if (!preg_match('/^(\+?601)[0|1|2|3|4|6|7|8|9]\-*[0-9]{7,8}$/', $_POST["phone"])) {
 		$phone_err = "Please enter valid phone number";
 	} else {
 		$receipt_phone = $_POST['phone'];
@@ -106,7 +125,11 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["address"])) {
 		$address_err = "Address is required";
-	} else {
+	} else if (strlen(trim($_POST["address"])) == 0)
+	{
+		$address_err = "Address is required";
+	}
+	else {
 		$receipt_address = $_POST['address'];
 	}
 
@@ -128,13 +151,20 @@ if (isset($_POST["place-order"])) {
 		$receipt_postcode = $_POST['postcode'];
 	}
 
+	$cardnum = $_POST["cardno"];
+
 	if (empty($_POST["cardno"])) {
 		$cardnum_err = "Card Number is required";
+	} elseif (preg_match("/^[a-z]/i", $cardnum)) {
+		$cardnum_err = "Only number allowed";
 	} else {
 		$receipt_cardnum = $_POST['cardno'];
 	}
 
 	if (empty($_POST["cvv"])) {
+		$cardcvv_err = "CVV is required";
+	} else if (strlen(trim($_POST["cvv"])) == 0)
+	{
 		$cardcvv_err = "CVV is required";
 	} else {
 		$receipt_ccvv = $_POST['cvv'];
@@ -156,14 +186,35 @@ if (isset($_POST["place-order"])) {
 
 	if ($_POST["cart_empty"] != 'true') {
 
-		if (empty($fname_err) && empty($lname_err) && empty($email_err) && empty($phone_err) && empty($address_err) && empty($area_err) && empty($state_err) && empty($postcode_err)) {
+		if (
+			empty($fname_err) && 
+			empty($lname_err) && 
+			empty($email_err) && 
+			empty($phone_err) && 
+			empty($address_err) && 
+			empty($area_err) && 
+			empty($state_err) && 
+			empty($postcode_err) &&
+			empty($cardnum_err) &&
+			empty($cardcvv_err) &&
+			empty($cardexpm_err) &&
+			empty($cardexpy_err)) {
 
 			$date = date('Y-m-d H:i:s');
 			$sql_receipt = "INSERT INTO cust_receipt 
-						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno) 
+						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, rating, user_id, payment_cost, payment_method, receipt_cardno, product_status) 
 						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', 'Not delivered', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Online Banking', '" . $_POST["cardno"] . "')";
+						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Preparing')";
+
+			$sql_chk_address = "SELECT address FROM users WHERE address is null AND user_id = " . $_SESSION["userid"];
+			$result_add = mysqli_query($link, $sql_chk_address);
+	
+			if(mysqli_num_rows($result_add) != 0)
+			{
+				$insert_add = "UPDATE users SET phone = ('".$_POST["phone"]."') , address = ('" . $_POST["address"] . "'), postcode = ('" . $_POST["postcode"] . "'), state = ('" . $_POST["state"] . "'), area = ('" . $_POST["area"] . "') WHERE user_id = ". $_SESSION["userid"];
+				mysqli_query($link, $insert_add);
+			}
 
 			if (mysqli_query($link, $sql_receipt)) {
 
@@ -243,11 +294,11 @@ if (isset($_POST["place-order"])) {
 	<div class="page-header__bg" style="background-image: url(assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
 	<!-- /.page-header__bg -->
 	<div class="container">
-		<h2>Checkout</h2>
+		<h2><?php echo $lang['chkout']?></h2>
 		<ul class="thm-breadcrumb list-unstyled">
-			<li><a href="index.php">Home</a></li>
+			<li><a href="index.php"><?php echo $lang['home']?></a></li>
 			<li>/</li>
-			<li><span>Checkout</span></li>
+			<li><span><?php echo $lang['chkout']?></span></li>
 		</ul><!-- /.thm-breadcrumb list-unstyled -->
 	</div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -257,12 +308,12 @@ if (isset($_POST["place-order"])) {
 	<div class="container">
 		<form action="#" class="contact-one__form" method="POST">
 			<div class="row">
-				<div class="col-lg-6">
-					<h3>Shipping Details</h3>
+				<div class="col-md-6">
+					<h3><?php echo $lang['shipD']?></h3>
 					<div class="row">
 						<div class="col-md-12">
 							<select class="selectpicker" id="choose-address" onchange="chooseAddress()">
-								<option value="" style="display:none">Choose existing address</option>
+								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
 								<option value="" style="<?php
 														if (
 															$address[0] == "" &&
@@ -277,7 +328,7 @@ if (isset($_POST["place-order"])) {
 															echo 'display:none';
 														}
 														?>" disabled>
-									No existing address
+									<?php echo $lang['noAdd']?>
 								</option>
 								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo $address[0] ?></option>
 								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo $address[1] ?></option>
@@ -288,39 +339,39 @@ if (isset($_POST["place-order"])) {
 							</select>
 						</div><!-- /.col-md-12 -->
 						<div class="col-md-6">
-							<label>First Name <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
-							<input type="text" name="fname" id="set-fname">
+							<label><?php echo $lang['fname']?> <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
+							<input type="text" name="fname" id="set-fname" value="<?php echo $fnames; ?>">
 							<span class="invalid-feedback d-block"><?php echo $fname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>Last Name / Surname <i style="color:lightgray"> (eg. Lim etc.)</i></label>
-							<input type="text" name="lname" id="set-lname">
+							<label><?php echo $lang['lname']?> <i style="color:lightgray"> (eg. Lim etc.)</i></label>
+							<input type="text" name="lname" id="set-lname" value="<?php echo $lnames; ?>">
 							<span class="invalid-feedback d-block"><?php echo $lname_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-12">
-							<label>E-mail <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
-							<input type="text" name="email" id="set-email">
+							<label><?php echo $lang['email']?> <i style="color:lightgray"> (eg. grabgrocery@gmail.com)</i></label>
+							<input type="text" name="email" id="set-email" value="<?php echo $emails; ?>">
 							<span class="invalid-feedback d-block"><?php echo $email_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
-							<label>Phone <i style="color:lightgray"> (eg. 60123334444)</i></label>
-							<input type="text" name="phone" id="set-phone">
+							<label><?php echo $lang['phone']?> <i style="color:lightgray"> (eg. 60123334444)</i></label>
+							<input type="text" name="phone" id="set-phone" value="<?php echo $phones; ?>">
 							<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
-							<label>Address <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
-							<input type="text" name="address" id="set-address">
+							<label><?php echo $lang['address']?> <i style="color:lightgray"> (eg. No. 1, Tmn Asin, Ujong Pasir)</i></label>
+							<input type="text" name="address" id="set-address" value="<?php echo $addresss; ?>">
 							<span class="invalid-feedback d-block"><?php echo $address_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-6">
-							<label>Area</label> <br>
+							<label><?php echo $lang['area']?></label> <br>
 							<select name="area" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $areas; ?>"><?php echo $areas; ?></option>
 								<option id="set-area" style="display: none;"></option>
 								<option value="Alor Gajah">Alor Gajah</option>
 								<option value="Melaka Tengah">Melaka Tengah</option>
@@ -330,9 +381,9 @@ if (isset($_POST["place-order"])) {
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>State</label> <br>
+							<label><?php echo $lang['state']?></label> <br>
 							<select name="state" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $states; ?>"><?php echo $states; ?></option>
 								<option id="set-state" style="display: none;"></option>
 								<option value="Melaka">Melaka</option>
 							</select>
@@ -340,9 +391,9 @@ if (isset($_POST["place-order"])) {
 						</div><!-- /.col-md-6 -->
 
 						<div class="col-md-6">
-							<label>Postcode</label> <br>
+							<label><?php echo $lang['pcode']?></label> <br>
 							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
-								<option disabled selected style="display: none;"></option>
+								<option hidden disabled selected style="display: none;" value="<?php echo $postcodes; ?>"><?php echo $postcodes; ?></option>
 								<option id="set-postcode" style="display: none;"></option>
 								<option value="75000">75000</option>
 								<option value="75050">75050</option>
@@ -364,134 +415,18 @@ if (isset($_POST["place-order"])) {
 							</select>
 							<span class="invalid-feedback d-block"><?php echo $postcode_err; ?></span>
 						</div><!-- /.col-md-6 -->
+					</div>
+				</div>
 
 
-						<div class="col-md-12">
-						<h3>
-						<hr>
-						Your Orders
-						</h3>
-						<div class="table-responsive">
-						<table class="table cart-table">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Item</th>
-									<th>Price</th>
-									<th>Quantity</th>
-									<th>Total</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
-
-								$counter = 0;
-								$item_total_cost = 0;
-								$subtotal = 0;
-								$total = 0;
-								$shipping_cost = 0;
-
-								if ($result = mysqli_query($link, $sql)) {
-									if (mysqli_num_rows($result) == 0) {
-										echo '
-                                            <tr>
-                                                <td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
-                                            </tr>';
-
-										echo "
-											<script>
-												document.getElementById('cart-empty').value = 'true'
-											</script>";
-									} else {
-										while ($row = mysqli_fetch_assoc($result)) {
-
-											$counter++;
-											$item_total_cost = $row["quantity"] * $row["cost"];
-											$subtotal += $item_total_cost;
-
-											echo '
-                                                    <tr>
-														<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
-                                                        <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
-                                                        <td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
-                                                        <td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
-                                                        <td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
-                                                        <td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
-                                                    </tr>
-													';
-										}
-									}
-									$total = $subtotal + $shipping_cost;
-									echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
-								}
-								?>
-						</table><!-- /.table -->
-					</div><!-- /.table-responsive -->
-
-					<div class="order-details">
-						<div class="order-details__top">
-							<p>Product</p>
-							<p>Price</p>
-						</div><!-- /.order-details__top -->
-						<p>
-							<span>Subtotal (RM)</span>
-							<span><?php echo $subtotal ?></span>
-						</p>
-						<p>
-							<span>Shipping (RM)</span>
-							<span>0.00</span>
-						</p>
-						<p>
-							<span>Grand Total (RM)</span>
-							<span><?php echo $total ?></span>
-						</p>
-						<hr >
-						<input type="submit" class="check-btn" value="Place Your Order" name="place-order" >
-					</div><!-- /.order-details -->
-						</div>
-
-
-						
-
-					</div><!-- /.row -->
-				</div><!-- /.col-lg-6 -->
-
-				<div class="col-lg-6">
 				
-				<h3>Payment Details</h3>
-				<!--
-										<ul id="accordion" class="list-unstyled" data-wow-duration="1500ms">
-											<li>
-												<h2 class="para-title active">
-													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-														Direct Bank Transfer
-													</span>
-												</h2>
-												<div id="collapseTwo" class="collapse show" role="button" aria-labelledby="collapseTwo" data-parent="#accordion">
-													<p>Make your payment directly into our bank account. Please
-														use your Order ID as the payment reference. Your order
-														wont be shipped until the funds have cleared.</p>
-												</div>
-											</li>
-											<li>
-												<h2 class="para-title ">
-													<span class="collapsed" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-														Paypal Payment
-														<img src="assets/images/products/paypal-1-1.jpg" alt="">
-													</span>
-												</h2>
-												<div id="collapseOne" class="collapse " aria-labelledby="collapseOne" data-parent="#accordion">
-													<p>Make your payment directly into our bank account. Please
-														use your Order ID as the payment reference. Your order
-														wont be shipped until the funds have cleared.</p>
-												</div>
-											</li>
-										</ul>
-										-->
-										<div class="col-md-12">
+				<div class="col-md-6">
+					<h3><?php echo $lang['payD']?></h3>
+					<div class="row">
+				
+						<div class="col-md-12">
 							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
-								<option value="" style="display:none">Choose existing card</option>
+								<option value="" style="display:none"><?php echo $lang['existC']?></option>
 								<option value="" style="<?php
 														if (
 															$cardno[0] == "" &&
@@ -505,7 +440,7 @@ if (isset($_POST["place-order"])) {
 															echo 'display:none';
 														}
 														?>" disabled>
-									No existing address
+									<?php echo $lang['noCard']?>
 								</option>
 								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
 								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
@@ -518,33 +453,135 @@ if (isset($_POST["place-order"])) {
 
                         <div class="col-md-12">
 							<label>Card Number <i style="color:lightgray" required>(0000 0000 0000 0000)</i></label>
-							<input type="text" name="cardno" id="set-cardno" maxlength="19">
+							<input type="text" name="cardno" id="set-cardno" maxlength="19" value="<?php echo $cardnums; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardnum_err; ?></span>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-4">
 							<label>CVV<i style="color:lightgray" required> (123)</i></label>
-							<input type="text" name="cvv" id="set-cvv" maxlength="3">
+							<input type="text" name="cvv" id="set-cvv" maxlength="3" value="<?php echo $cardcvvs; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardcvv_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
 						<div class="col-md-4">
 							<label>Expiry Month <i style="color:lightgray" required> (1 - 12)</i></label>
-							<input type="text" name="expmonth" id="set-expmonth" max="12" maxlength="2">
+							<input type="number" name="expmonth" id="set-expmonth" min="1" max="12" maxlength="2" data-mask="00" value="<?php echo $cardexpms; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardexpm_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
 						<div class="col-md-4">
 							<label>Expiry Year <i style="color:lightgray" required> (21 , 22..) </i></label>
-							<input type="text" name="expyear" id="set-expyear" maxlength="2">
+							<input type="number" name="expyear" id="set-expyear" min="21" max="28" maxlength="2" data-mask="00" value="<?php echo $cardexpys; ?>">
 							<span class="invalid-feedback d-block"><?php echo $cardexpy_err; ?></span>
 						</div><!-- /.col-md-4 -->
 
-						<input type="hidden" id="cart-empty" name="cart_empty">	
-					
+						<input type="hidden" id="cart-empty" name="cart_empty">
 
-				</div><!-- /.col-lg-6 -->
-			</div><!-- /.row -->
+					</div><!-- /.row -->
+				</div><!-- /.col-md-6 -->
+			</div>
+
+				<div class="row">
+					<div class="col-md-12">
+					<hr>
+						<h3>
+							<?php echo $lang['yourOdr']?>
+						</h3>
+						<div class="table-responsive">
+							<table class="table cart-table">
+								<thead>
+									<tr>
+										<th></th>
+										<th><?php echo $lang['items']?></th>
+										<th><?php echo $lang['prices']?></th>
+										<th><?php echo $lang['qtys']?></th>
+										<th><?php echo $lang['totals']?></th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$sql = "SELECT * FROM cust_cart INNER JOIN item ON cust_cart.item_id = item.item_id WHERE user_id = " . $_SESSION['userid'];
+									$empty = false;
+									$counter = 0;
+									$item_total_cost = 0;
+									$subtotal = 0;
+									$total = 0;
+									$shipping_cost = 0;
+
+									if ($result = mysqli_query($link, $sql)) {
+										if (mysqli_num_rows($result) == 0) {
+											$empty = true;
+											echo '
+												<tr>
+													<td colspan="4" style="text-align: center;">You have no products added in your Shopping Cart</td>
+												</tr>';
+
+											echo "
+												<script>
+													document.getElementById('cart-empty').value = 'true'
+												</script>";
+										} else {
+											while ($row = mysqli_fetch_assoc($result)) {
+
+												$counter++;
+												$item_total_cost = $row["quantity"] * $row["cost"];
+												$subtotal += $item_total_cost;
+												$shipping_cost = 0;
+
+												echo '
+														<tr>
+															<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
+															<td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
+															<td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
+															<td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+															<td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
+															<td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
+														</tr>
+														';
+											}
+										}
+										if ($subtotal>99)
+										{
+											$shipping_cost = 0;
+										}
+										else if($empty)
+										{
+											$shipping_cost = 0;
+										}else
+										{
+											$shipping_cost = 8;
+										}
+										$total = $subtotal + $shipping_cost;
+										echo "<input type='hidden' style='display: none;' name='total' value='$total'>";
+									}
+									?>
+							</table><!-- /.table -->
+						</div><!-- /.table-responsive -->
+
+						<div class="order-details">
+							<div class="order-details__top">
+								<p><?php echo $lang['pdt']?></p>
+								<p><?php echo $lang['price']?></p>
+							</div><!-- /.order-details__top -->
+							<p>
+								<span><?php echo $lang['sbbtots']?> (RM)</span>
+								<span><?php echo number_format($subtotal,2) ?></span>
+							</p>
+							<p>
+								<span><?php echo $lang['ships']?> (RM)</span>
+								<span><?php echo number_format($shipping_cost,2)?></span>
+							</p>
+							<p>
+								<span><?php echo $lang['gtotal']?> (RM)</span>
+								<span><?php echo number_format($total,2) ?></span>
+							</p>
+							<hr>
+							<i><?php echo $lang['freeshps']?>   </i><i class="fas fa-truck-moving"></i>
+							<a href="index.php" class="thm-btn" style="text-decoration: none; margin-left: 436px;"><?php echo $lang['cancels']?></a>
+							<input type="submit" class="thm-btn" value="<?php echo $lang['placeOdr']?>" name="place-order">
+						</div><!-- /.order-details -->
+					</div><!-- /.col-lg-6 -->
+				</div>
 		</form>
 	</div><!-- /.container -->
 </section><!-- /.checkout-page -->

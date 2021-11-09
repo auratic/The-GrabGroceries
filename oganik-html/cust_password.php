@@ -42,7 +42,9 @@ if (count($_POST) > 0) {
         }
 
         if (empty($newPassword_err) && empty($currentPassword_err) && empty($confirmPassword_err)) {
-            if ($curPwd != $newPwd) {
+            if ($curPwd == $newPwd) {
+                $newPassword_err = "The new password cannot be the same as the current password.";
+            } else {
                 $sql_update_password = "UPDATE users set password= '" . password_hash($newPwd, PASSWORD_DEFAULT) . "' WHERE user_id=" . $_SESSION["userid"];
 
                 if (mysqli_query($link, $sql_update_password)) {
@@ -56,75 +58,72 @@ if (count($_POST) > 0) {
                         location.href = 'cust_password.php'
                         })
                     </script>";
+
+                    $date = date("F j, Y, g:i a");
+                    $to = "1191201218@student.mmu.edu.my"; //send to our email
+                    $subject = "Password Changed";
+                    $message = '
+                    <html>
+                        <body style="
+                            padding:20px; 
+                            background-color:gray;
+                            width: 500px;
+                            height: 600px;
+                            color: white;"
+                            >
+                        <h1>Dear ' . $row['email'] . ',</h1>
+                        <br>
+
+                        <h1 style="
+                            padding:20px; 
+                            font-size:25px; 
+                            width: 400px; 
+                            height: 40px; 
+                            text-align: center;
+                            background-color:seagreen;
+                            color:white;
+                            border-radius:25px;
+                            font-family:Arial, Helvetica, sans-serif;
+                            margin: auto"
+                            >
+                            Did you change your password?
+                        </h1>
+                        <br>
+                        <h3>
+                            We notice the password for your TheGrabGroceries account was recently changed on <i>' . $date . '</i>. If this was you,
+                            you can safely disregard this email.
+                        </h3>
+                        <br>
+                        
+                        <p style="color: white;">Enjoy your stay on TheGrabGroceries website!</p>
+                        
+                        <p style="color: white;">If this is not sent by you, please ignore this email</p>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <p style="color: white;">Best Regards,</p></br>
+                        <p style="color: white;">TheGrabGroceries Staff</p>
+                        </body>
+                    </html>
+                    ';
+
+                    $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
+                    $headers .= 'MIME-Version: 1.0' . "\r\n";
+                    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
+                    mail($to, $subject, $message, $headers);
                 } else {
                     echo "
                         <script>
                         alert('Error: " . $sql_update_password . "\n" . mysqli_error($link) . "')
                         </script>";
                 }
-            } else {
-                echo "
-                    <script>
-                        alert('The current password cannot be the same as the new password.');
-                    </script>";
             }
 
-            $date = date("F j, Y, g:i a");
-            $to = "1191201218@student.mmu.edu.my"; //send to our email
-            $subject = "Password Changed";
-            $message = '
-            <html>
-                <body style="
-                    padding:20px; 
-                    background-color:gray;
-                    width: 500px;
-                    height: 600px;
-                    color: white;"
-                    >
-                <h1>Dear ' . $row['email'] . ',</h1>
-                <br>
-
-                <h1 style="
-                    padding:20px; 
-                    font-size:25px; 
-                    width: 400px; 
-                    height: 40px; 
-                    text-align: center;
-                    background-color:seagreen;
-                    color:white;
-                    border-radius:25px;
-                    font-family:Arial, Helvetica, sans-serif;
-                    margin: auto"
-                    >
-                    Did you change your password?
-                </h1>
-                <br>
-                <h3>
-                    We notice the password for your TheGrabGroceries account was recently changed on <i>' . $date . '</i>. If this was you,
-                    you can safely disregard this email.
-                </h3>
-                <br>
-                
-                <p style="color: white;">Enjoy your stay on TheGrabGroceries website!</p>
-                
-                <p style="color: white;">If this is not sent by you, please ignore this email</p>
-
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <p style="color: white;">Best Regards,</p></br>
-                <p style="color: white;">TheGrabGroceries Staff</p>
-                </body>
-            </html>
-            ';
-
-            $headers = 'From: TheGrabGroceries <thegrabgroceries@gmail.com>' . "\r\n";
-            $headers .= 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";  // Set from headers
-            mail($to, $subject, $message, $headers);
+            
         }
     } else {
         $currentPassword_err = "Current Password is not correct";
@@ -141,32 +140,32 @@ if (count($_POST) > 0) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-account" aria-labelledby="pills-account-tab">
             <div class="my-account-details account-wrapper">
-                <h4 class="account-title">Password Changes</h4>
+                <h4 class="account-title"><?php echo $lang['pwd_chg']?></h4>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                     <div class="form-group">
-                        <label>Current Password</label> </br>
+                        <label><?php echo $lang['curpwd']?></label> </br>
                         <input type="password" id="curPwd" name="currentPassword" style="width: 50%;" class="form-control <?php echo (!empty($currentPassword_err)) ? 'is-invalid' : ''; ?>" required>
                         <span class="invalid-feedback"><?php echo $currentPassword_err; ?></span>
                     </div>
 
                     <div class="form-group">
-                        <label>New Password</label><i><span id="msg"></span></i></br>
+                        <label><?php echo $lang['newpwd']?></label><i><span id="msg"></span></i></br>
                         <input type="password" id="newPwd" name="newPassword" onkeyup="validatePassword(this.value);" style="width: 50%;" class="form-control <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>" required><br>
                         <span class="invalid-feedback"><?php echo $newPassword_err; ?></span>
                     </div>
                     <div>
-                        <label>Confirm Password</label> </br>
+                        <label><?php echo $lang['cfmpwd']?></label> </br>
                         <input type="password" id="cfmPwd" name="confirmPassword" style="width: 50%;" class="form-control <?php echo (!empty($confirmPassword_err)) ? 'is-invalid' : ''; ?>" required><span id="msg"></span>
                         <span class="invalid-feedback"><?php echo $confirmPassword_err; ?></span>
                     </div>
 
                     <div style="margin-top: 10px;">
-                        <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()">Show Password</label>
+                        <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
                     </div>
 
                     <div class="form-group" style="margin: 1%;">
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <input type="reset" class="btn btn-secondary ml-2" value="Reset" style="outline: none">
+                        <input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>">
+                        <input type="reset" class="btn btn-secondary ml-2" value="<?php echo $lang['reset']?>" style="outline: none">
                     </div>
                 </form>
             </div>

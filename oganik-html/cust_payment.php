@@ -22,6 +22,7 @@ $card_expyr = array();
 
 
 if (isset($_POST['detail'])) {
+
     $sql_insert_cc = "
             UPDATE cust_card
             SET 
@@ -142,24 +143,24 @@ if ($result = mysqli_query($link, $sql)) {
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <div class="#" id="pills-payment" aria-labelledby="pills-payment-tab">
             <div class="my-account-payment account-wrapper">
-                <h4 class="account-title">Payment Method</h4>
+                <h4 class="account-title"><?php echo $lang['payment']?></h4>
                 <div class="row">
                     <?php
                     $counterr = 0;
                     for ($x = 0; $x < 5; $x++) {
                         $counterr++;
                         echo '
-                                                        <div class="col-4" style="margin-bottom:3%">
-                                                            <div class="card">
-                                                                <p class="card_type">Black Card</p>
-                                                                <img src="assets/images/chippp.png" style="width: 50px; object-fit: contain; margin-top:-30px; margin-left: 23px;">
-                                                                <p class="card_numberr">' . $card_no[$x] . '</p>
-                                                                <p class="card_expp">' . $card_exp[$x] . ' / ' . $card_expyr[$x] . '</p>
-                                                                <p class="card_namee">' . $card_name[$x] . ' </p>
-                                                                <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px; color: black;"></i>
-                                                            </div>
-                                                            <a class="box-btn m-t-25 " id="add-card' . $counterr . '" onclick="return addCard(' . $counterr . ')"><i class="far fa-edit"></i>Edit</a>
-                                                        </div>';
+                            <div class="col-4" style="margin-bottom:3%">
+                                <div class="card">
+                                    <p class="card_type">Black Card</p>
+                                    <img src="assets/images/chippp.png" style="width: 50px; object-fit: contain; margin-top:-30px; margin-left: 23px;">
+                                    <p class="card_numberr">' . $card_no[$x] . '</p>
+                                    <p class="card_expp">' . $card_exp[$x] . ' / ' . $card_expyr[$x] . '</p>
+                                    <p class="card_namee">' . $card_name[$x] . ' </p>
+                                    <i class="fab fa-cc-mastercard fa-2x" style="margin-left: 230px; margin-top:-35px; color: black;"></i>
+                                </div>
+                                <a class="box-btn m-t-25 " id="add-card' . $counterr . '" onclick="return addCard(' . $counterr . ')"><i class="far fa-edit"></i>'.$lang['edit'].'</a>
+                            </div>';
                     }
                     ?>
                 </div>
@@ -218,7 +219,7 @@ for ($x = 0; $x < 5; $x++) {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label" style="margin-left:5px;"><i class="fas fa-credit-card"> Card Number</i></label>
-                                                <input type="text" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
+                                                <input type="" name="card_no' . $counter . '" id="card_no' . $counter . '" onkeyup="censor(' . $counter . ')" placeholder="Card Number" maxlength="19" class="form-control ' . ((!empty($cno_err)) ? "is-invalid" : '') . '" value="' . $card_no[$x] . '">
                                                 <span class="invalid-feedback d-block" id="cno_err' . $counter . '"></span>
                                             </div>
                                         </div>
@@ -292,7 +293,7 @@ for ($x = 0; $x < 5; $x++) {
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="Save" onclick="return updateCard(' . $counter . ');">
+                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateCard(' . $counter . ');">
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +304,7 @@ for ($x = 0; $x < 5; $x++) {
                             <!-- Modal Body-->
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
-                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">Cancel</button>
+                                <button type="button" class="btn btn-danger"  onclick="return closeModal(' . $counter . ')">'.$lang['close'].'</button>
                             </div> 
                             <!-- Modal Footer-->
                         </div>
@@ -329,10 +330,24 @@ for ($x = 0; $x < 5; $x++) {
         if (cardName == "") {
             document.getElementById("cname_err" + counter).innerHTML = "Card Name is required";
             pass = false;
+        }else if (!/^[a-zA-Z-' ]*$/.test(cardName)) {
+            document.getElementById("cname_err" + counter).innerHTML = "Please enter valid Card Name";
+            pass = false;
+        }else if(!cardName.replace(/\s/g, '').length) {
+            document.getElementById("cname_err" + counter).innerHTML = "Please enter valid Card Name";
+            pass = false;
         }
 
         if (cardNum == "") {
             document.getElementById("cno_err" + counter).innerHTML = "Card Number is required";
+            pass = false;
+        }else if(/[a-zA-Z~`!@#$%^&()+-.,?/<>'"]/g.test(cardNum))
+        {
+            document.getElementById("cno_err" + counter).innerHTML = "Only number allowed";
+            pass = false;
+        }else if(cardNum.length < 19)
+        {
+            document.getElementById("cno_err" + counter).innerHTML = "Please enter valid card number";
             pass = false;
         }
 
@@ -348,6 +363,10 @@ for ($x = 0; $x < 5; $x++) {
 
         if (cardCvv == "") {
             document.getElementById("ccvv_err" + counter).innerHTML = "CVV is required";
+            pass = false;
+        }else if(cardCvv.length < 3)
+        {
+            document.getElementById("ccvv_err" + counter).innerHTML = "Please enter valid card number";
             pass = false;
         }
 
@@ -471,4 +490,5 @@ for ($x = 0; $x < 5; $x++) {
      }
     */
 </script>
+
 <?php include 'cust_footer.php'; ?>

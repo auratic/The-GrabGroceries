@@ -166,14 +166,15 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         <h4 class="account-title"><?php echo $lang['order'] ?></h4>
 
         <div class="panel-group" id="accordion">
-            <b><?php echo $lang["cancleOD"] ?><a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank"><i>Whatsapp</i></a>.
-                <i style="color: red;"><?php echo $lang['xcancel'] ?></i></b>
             <div class="panel panel-default text-center">
                 <?php
                 if (count($receipt_array) == 0) {
                     echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
                 } else {
+                    
                     echo '
+                    <b>'.$lang["cancleOD"].'<a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank"><i>Whatsapp</i></a>.
+                        <i style="color: red;">'.$lang['xcancel'].'</i></b>
                         <table class="" style="width: 100%;" id="dtBasicExample">
                             <thead>
                                 <tr>

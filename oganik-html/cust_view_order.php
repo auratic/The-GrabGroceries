@@ -166,14 +166,15 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         <h4 class="account-title"><?php echo $lang['order'] ?></h4>
 
         <div class="panel-group" id="accordion">
-            <b><?php echo $lang["cancleOD"] ?><a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank"><i>Whatsapp</i></a>.
-                <i style="color: red;"><?php echo $lang['xcancel'] ?></i></b>
             <div class="panel panel-default text-center">
                 <?php
                 if (count($receipt_array) == 0) {
                     echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
                 } else {
+                    
                     echo '
+                    <b>'.$lang["cancleOD"].'<a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank"><i>Whatsapp</i></a>.
+                        <i style="color: red;">'.$lang['xcancel'].'</i></b>
                         <table class="" style="width: 100%;" id="dtBasicExample">
                             <thead>
                                 <tr>
@@ -255,7 +256,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 
                                             <div class="modal-body">
                                                 <div>
-                                                    <h4>Delivery Status</h4>
+                                                    <h4>'.$lang['dStatus'].'</h4>
                                                     <hr>
                                                     <div style="display: flex"><img style="height:18vh; margin:auto" src="assets/images/delivery.gif"></div>
                                                     <div class="progress-track">
@@ -300,11 +301,11 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                         echo '
                                                         </ul>
                                                     </div>
-                                                    <h5 style="text-align: center">Estimated Time: '.$del_status.'</h5>
+                                                    <h5 style="text-align: center">'.$lang['ETA'].': '.$del_display.'</h5>
                                                 </div>
                                                 <div>
                                                     <hr>
-                                                        <h4>Receipt Details</h4>
+                                                        <h4>'.$lang['receiptD'].'</h4>
                                                     <hr>
                                                     <p>' . $lang['rid'] . ': ' . $rID . '</p>
                                                     <p>' . $lang['payment'] . ': ' . $dispMethod . '</p>

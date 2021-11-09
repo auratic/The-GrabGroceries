@@ -163,7 +163,7 @@ if (isset($_GET["id"])) {
 				<td colspan="2" class="blank"> </td>
 				<td colspan="2" class="total-line">Shipping Cost</td>
 				<td class="total-value">
-					<p>RM 0</p>
+					<p>RM 8.00</p>
 				</td>
 			</tr>
 			<tr>

@@ -19,7 +19,7 @@ function getName($n)
 if (isset($_GET["message"])) {
 
     $_SESSION["ver_code"] = getName($n);
-    $to      = "1191201218@student.mmu.edu.my"; // Send email to our user
+    $to      = $_SESSION['email']; // Send email to our user
     $subject = 'Signup | Verification'; // Give the email a subject 
     $message = '
     <html>

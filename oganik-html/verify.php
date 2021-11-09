@@ -17,6 +17,7 @@ if(isset($_GET["verify"])) {
         while($row = mysqli_fetch_assoc($result)) {
             $lname = $row["lastname"];
             $fname = $row["firstname"];
+            $_SESSION['email'] = $row['email'];
         }
     }
 

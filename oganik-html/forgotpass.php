@@ -67,7 +67,7 @@ if (isset($_POST["send-email"])) {
 	if ($email_err == "") {
 		$send_status = "Email sent";
 		$_SESSION["ver_code"] = getName($n);
-		$to      = "1191201218@student.mmu.edu.my"; // Send email to our user
+		$to      = $email; // Send email to our user
 		$subject = 'Reset Password'; // Give the email a subject 
 		$message = '
         <html>

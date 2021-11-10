@@ -533,9 +533,9 @@ if (isset($_POST["place-order"])) {
 															<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
 															<td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
 															<td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
-															<td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+															<td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . number_format($row['cost'],2) . '</td>
 															<td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
-															<td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
+															<td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . number_format($item_total_cost,2) . '</td>
 														</tr>
 														';
 											}

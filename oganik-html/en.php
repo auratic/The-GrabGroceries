@@ -239,6 +239,7 @@
         "cancels" => "Cancel",
         "chkout"  => "Checkout",
         "shipsame"=> "Delivery same day if order made before 1pm",
+        "contshop"=> "Continue Shopping",
         //checkout
         "shipD"   => "Delivery Details",
         "existAdd"=> "Choose existing address",

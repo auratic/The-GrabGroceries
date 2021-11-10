@@ -14,8 +14,7 @@ if($pageWasRefreshed ) {
 
 // Check if the user is logged in
 if (isset($_SESSION["loggedin"])) {
-	header("location: index.php");
-	exit;
+	echo '<script>location.href = "index.php" </script>';
 }
 
 $n = 6;

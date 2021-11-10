@@ -239,6 +239,7 @@
         "cancels" => "取消",
         "chkout"  => "结账",
         "shipsame"=> "下午1点前的订单将会当天发货",
+        "contshop"=> "繼續購物",
         //checkout
         "shipD"   => "运输资料",
         "existAdd"=> "选择地址",

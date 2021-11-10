@@ -267,8 +267,9 @@ if (isset($_POST["new-pass"])) {
 
 					<div class="row">
 						<div class="col-md-2">
-							<div class="form-group">
+							<div class="form-group" style="display: flex;">
 								<input type="submit" name="confirm-code" id="verify-btn" class="btn btn-primary" value="<?php echo $lang['submit']?>">
+								<a href="login.php" class="btn btn-danger" style="text-decoration: none; margin-left: 5%;"><?php echo $lang['cancels']?></a>
 							</div>
 						</div>
 					</div>
@@ -310,8 +311,8 @@ if (isset($_POST["new-pass"])) {
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label><?php echo $lang['newPass']?></label>
-								<input type="password" name="new-pass" id="new-pass" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>"><span id="msg"></span>
+								<label><?php echo $lang['newPass']?></label><i><span id="msg"></span></i>
+								<input type="password" name="new-pass" id="new-pass" onkeyup="validatePassword(this.value);" class="form-control <?php echo (!empty($code_err)) ? 'is-invalid' : ''; ?>">
 								<span class="new-pass-err" style="color:crimson"></span>
 							</div>
 						</div>
@@ -327,10 +328,15 @@ if (isset($_POST["new-pass"])) {
 						</div>
 					</div>
 
+					<div style="margin-top: 10px;">
+                        <label style="cursor: pointer;"><input style="cursor: pointer;" type="checkbox" onclick="myFunction()"><?php echo $lang['seepwd']?></label>
+                    </div>
+
 					<div class="row">
 						<div class="col-md-2">
-							<div class="form-group">
+							<div class="form-group" style="display: flex;">
 								<input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>" onclick="return passReset()">
+								<a href="login.php" class="btn btn-danger" style="text-decoration: none; margin-left: 5%;"><?php echo $lang['cancels']?></a>
 							</div>
 						</div>
 					</div>
@@ -419,8 +425,8 @@ if (isset($_POST["new-pass"])) {
 
 		if (newpass == "") {
 			newpasserr.innerHTML = "Please enter password";
-		} else if (newpass.length < 6) {
-			newpasserr.innerHTML = "Ensure your password is longer than 6 characters";
+		} else if (newpass.length < 8) {
+			newpasserr.innerHTML = "Ensure your password is longer than 8 characters";
 		} else if (conpass == "") {
 			conpasserr.innerHTML = "Please confirm password";
 		} else if (newpass !== conpass) {
@@ -449,6 +455,23 @@ if (isset($_POST["new-pass"])) {
 		return false;
 	}
 
+	function myFunction() {
+        var x = document.getElementById("new-pass");
+        var y = document.getElementById("confirm-pass");
+
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+
+        if (y.type === "password") {
+            y.type = "text";
+        } else {
+            y.type = "password";
+        }
+    }
+
 	function validatePassword(password) {
 		// Do not show anything when the length of password is zero.
 		if (password.length === 0) {
@@ -476,15 +499,15 @@ if (isset($_POST["new-pass"])) {
 			case 0:
 			case 1:
 			case 2:
-				strength = " Very Weak";
+				strength = " (Very Weak)";
 				color = "red";
 				break;
 			case 3:
-				strength = " Medium";
+				strength = " (Medium)";
 				color = "orange";
 				break;
 			case 4:
-				strength = " Strong";
+				strength = " (Strong)";
 				color = "green";
 				break;
 		}

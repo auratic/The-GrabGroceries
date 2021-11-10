@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
         }
 
         $date = date("F j, Y, g:i a");
-        $to = "1191201218@student.mmu.edu.my"; //send to our email
+        $to = $email; //send to oucustomerr email
         $subject = "Account Created";
         $message = '
         <html>
@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
                 height: 600px;
                 color: white;"
                 >
-            <h1>Dear customer,</h1>
+            <h1>Dear '.$lname.',</h1>
             <br>
 
             <h1 style="

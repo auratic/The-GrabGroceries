@@ -122,6 +122,9 @@
         "received"=> "Diterima",
         "pmethod" => "Kad Kredit/Debit",
         "cancelod"=> "Batalkan Order",
+        "receiptD"=> "Butiran Resit",
+        "dStatus" => "Status Penghantaran",
+        "ETA"     => "Anggaran Masa",
         //payment
         "edit"    => "Edit",
         "save"    => "Simpan",

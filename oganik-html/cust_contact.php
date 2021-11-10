@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     if (empty($name_err) && empty($email_err) && empty($phone_err)  && empty($subject_err)  && empty($message_err)) {
-        $to      = "1191201218@student.mmu.edu.my"; // Send email to our user //$email
+        $to      = $email; // Send email to our user //$email
         $subject = 'Contact Us | TheGrabGroceries'; // Give the email a subject 
         $message = '
         <html>
@@ -237,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
                     <label><strong><?php echo $lang['contactP'] ?></strong></label>
-                    <input type="text" placeholder="(eg) 0123456789" name="phone" value="<?php echo $phone ?>" required>
+                    <input type="text" placeholder="(eg) 60123456789" name="phone" value="<?php echo $phone ?>" required>
                     <span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">

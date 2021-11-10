@@ -36,8 +36,8 @@ if (isset($_POST['update'])) {
     }
 }
 
-if (isset($_POST['remove'])) {
-    $cart_id = $_POST["cart_id"];
+if (isset($_GET['remove'])) {
+    $cart_id = $_GET["cart_id"];
 
     $sql = "DELETE FROM cust_cart where cart_id = $cart_id";
     if (mysqli_query($link, $sql)) {
@@ -45,7 +45,7 @@ if (isset($_POST['remove'])) {
             <script>
                 Swal.fire({
                     title: 'Successful',
-                    text: 'Removed all ".$_POST["iname"]."',
+                    text: 'Removed all ".$_GET["iname"]."',
                     icon: 'success'
                 }).then(function() {
                 location.href = 'cart.php'
@@ -121,8 +121,10 @@ if (isset($_POST['remove'])) {
                                                         </div>
                                                         </td>
                                                         <td>RM ' . $item_total . '</td>
-                                                        <td style="text-align: center;"><button style="" class="btn btn-gray" name="update"><img src="assets/images/update.png" alt="Update Item" /></button>
-                                                        <button name="remove" class="btn btn-gray"><img src="assets/images/delete.png" alt="Remove Item" /></button></td>
+                                                        <td style="text-align: center;">
+                                                            <button style="" class="btn btn-gray" name="update"><img src="assets/images/update.png" alt="Update Item" /></button>
+                                                            <button name="remove" class="btn btn-gray" onclick="location.href = `cart.php?remove&cart_id='.$row['cart_id'].'&iname=' . $row['item'] . '`"><img src="assets/images/delete.png" alt="Remove Item" /></button>
+                                                        </td>
                                                     </tr>
                                                 </form>
                                             ';

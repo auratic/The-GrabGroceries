@@ -120,7 +120,7 @@
         "preparin"=> "准备中",
         "cancelle"=> "已取消",
         "received"=> "已收货",
-        "pmethod" => "信用卡",
+        "pmethod" => "信用卡/借记卡",
         "cancelod"=> "取消訂單",
         //payment
         "edit"    => "编辑",
@@ -236,6 +236,7 @@
         "cancels" => "取消",
         "chkout"  => "结账",
         "shipsame"=> "下午1点前的订单将会当天发货",
+        "contshop"=> "繼續購物",
         //checkout
         "shipD"   => "运输资料",
         "existAdd"=> "选择地址",

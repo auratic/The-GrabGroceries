@@ -120,7 +120,7 @@
         "preparin"=> "Preparing",
         "cancelle"=> "Cancelled",
         "received"=> "Received",
-        "pmethod" => "pmethod",
+        "pmethod" => "Credit/Debit Cards",
         "cancelod"=> "Cancel Order",
         //payment
         "edit"    => "Edit",
@@ -236,6 +236,7 @@
         "cancels" => "Cancel",
         "chkout"  => "Checkout",
         "shipsame"=> "Shipped same day if order made before 1pm",
+        "contshop"=> "Continue Shopping",
         //checkout
         "shipD"   => "Shipping Details",
         "existAdd"=> "Choose existing address",

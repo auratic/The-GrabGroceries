@@ -206,7 +206,8 @@ if (isset($_POST['remove'])) {
                     </li>
                 </ul><!-- /.cart-total -->
                 <div class="button-box" style="margin-left: -20px;">
-                    <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> <?php echo $lang['cancels']?></a><!-- /.thm-btn -->
+                    <!-- <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> <?php echo $lang['cancels']?></a> --><!-- /.thm-btn -->
+                    <a href="products.php" class="thm-btn" style="text-decoration: none;"></i><?php echo $lang['contshop']?></a><!-- /.thm-btn -->
                     <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> <?php echo $lang['chkout']?></a><!-- /.thm-btn -->
                 </div><!-- /.button-box -->
             </div><!-- /.col-lg-4 -->

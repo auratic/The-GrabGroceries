@@ -2,6 +2,10 @@
 
 include 'cust_header.php';
 
+if (isset($_SESSION["loggedin"])) {
+	echo '<script>location.href = "index.php" </script>';
+}
+
 // Define variables and initialize with empty values
 $email = $fname = $lname = $password = $confirm_password = "";
 $fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = "";

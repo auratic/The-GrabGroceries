@@ -160,6 +160,28 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 #progressbar li.active:after {
     background: rgb(252, 103, 49)
 }
+
+  .dot {
+    display: inline;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    position: relative;
+    opacity: 0;
+    animation: showHideDot 2.5s ease-in-out infinite;
+    font-size: 2em;
+  }
+
+    .one { animation-delay: 0.2s; }
+    .two { animation-delay: 0.4s; }
+    .three { animation-delay: 0.6s; }
+
+@keyframes showHideDot {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 </style>
 <div class="col-xl-10 col-md-10">
     <div class="tab-content my-account-tab" id="pills-tabContent">
@@ -207,12 +229,8 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                         }
 
                         
-                        if ($del_status == "Not set")
+                        if ($del_status == NULL)
                             $del_display = $lang['notset'];
-                        elseif ($del_status == "Delivering")
-                            $del_display = $lang['deliver'];
-                        elseif ($del_status == "Preparing")
-                            $del_display = $lang['preparin'];
                         elseif ($del_status == "Cancelled")
                             $del_display = $lang['cancelle'];
                         elseif ($del_status == "Received")
@@ -221,11 +239,11 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             $del_display = $del_status;
 
                         if ($status == "Not Set")
-                            $display = $lang['notset'];
+                            $display = '<p>'.$lang['notset'].'</p>';
                         elseif ($status == "Delivering")
-                            $display = $lang['deliver'];
+                            $display = '<p>'.$lang['deliver'].'</p>';
                         elseif ($status == "Preparing")
-                            $display = $lang['preparin'];
+                            $display = '<p>'.$lang['preparin'].'</p>';
                         elseif ($status == "Cancelled")
                             $display = '<p style="color:crimson;">'.$lang['cancelle'].'</p>';
                         elseif ($status == "Received")
@@ -233,16 +251,14 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                         echo '
                                                                        
                                 <tr onmouseover="this.style.backgroundColor = `lightgray`" onmouseout="this.style.backgroundColor = `white`" onclick="openModal(' . $rID . ')" style="cursor:pointer">
-                                    <td><p>' . $rID . '</p></td>
-                                    <td><p>' . $Fname . ' ' . $rName . '</p></td>
-                                    <td><p>' . $tDate . '</p></td>
-                                    <td><p>' . number_format($total, 2) . '</p></td>
+                                    <td><p><p>' . $rID . '</p></p></td>
+                                    <td><p><p>' . $Fname . ' ' . $rName . '</p></p></td>
+                                    <td><p><p>' . $tDate . '</p></p></td>
+                                    <td><p><p>' . number_format($total, 2) . '</p></p></td>
                                     <td><p>' . $display . '</p></td>
                                 </tr>
                                                                     
                                 ';
-                        if ($method == "Credit/Debit Cards")
-                            $dispMethod = $lang['pmethod'];
                         echo '
                                 <div id="receipt-' . $rID . '" class="modal" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -300,14 +316,18 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                         echo '
                                                         </ul>
                                                     </div>
-                                                    <h5 style="text-align: center">Estimated Time: '.$del_status.'</h5>
+                                                    <div style="text-align: center;" class="loading-dots">
+                                                        <h5 style="display: inline">Estimated Time: '.$del_display.'</h5>
+                                                        <h5 class="dot one">.</h5><h5 class="dot two">.</h5><h5 class="dot three">.</h5>
+                                                    </div>
+                                                    
                                                 </div>
                                                 <div>
                                                     <hr>
                                                         <h4>Receipt Details</h4>
                                                     <hr>
                                                     <p>' . $lang['rid'] . ': ' . $rID . '</p>
-                                                    <p>' . $lang['payment'] . ': ' . $dispMethod . '</p>
+                                                    <p>' . $lang['payment'] . ': ' . $lang['pmethod'] . '</p>
                                                     <p>' . $lang['pcost'] . ': ' . $total . '</p>
                                                     <p>' . $lang['tdate'] . ': ' . $tDate . '</p>
                                                 </div>

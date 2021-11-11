@@ -73,10 +73,11 @@ if (isset($_GET["id"])) {
 			<div id="address">
 				<p>
 					TheGrabGroceries Sdn. Bhd <br>
-					123 Dataran Pahlawan <br>
-					Appleville, WI 53719 <br> <br>
+					66 Melaka Street <br>
+					Malacca Malaysia <br>
+					<br> 
 
-					Phone: 06 888 6666
+					Phone: 60123608370
 				</p>
 			</div>
 

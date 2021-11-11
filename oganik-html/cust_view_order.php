@@ -398,7 +398,14 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                         </div>
 
                                         <div class="modal-footer" style="background-color:var(--thm-base)">';
-                                            if($status != "Received" && $status != "Cancelled") {
+                                            if($status == "Delivering") {
+
+                                                echo'
+                                                <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>
+                                                ';
+
+                                            }
+                                            else if($status != "Received" && $status != "Cancelled") {
 
                                                 echo'
                                                 <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>

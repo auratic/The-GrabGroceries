@@ -230,7 +230,8 @@ for ($x = 0; $x < 5; $x++) {
                                             <div class="form-group">
                                                 <label class="label" style="margin-left:5px;"><i class="fas fa-calendar-alt"> Expiry Date</i></label>
                                                 <select name="card_exp' . $counter . '" id="card_exp' . $counter . '" class="form-control ' . ((!empty($cxep_err)) ? "is-invalid" : '') . '" value="' . $card_exp[$x] . '" >
-                                                    <option disabled selected value></option>
+                                                    <option disabled selected value="'. $card_exp[$x] . '" >' . $card_exp[$x] . '</option>
+                                                    <option hidden value="" id="input-card_exp'.$counter.'"></option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -252,7 +253,8 @@ for ($x = 0; $x < 5; $x++) {
                                             <div class="form-group">
                                                 <label class="label" style="margin-top: 42px; margin-right: 50px;"></label>
                                                 <select name="card_expyr' . $counter . '" id="card_expyr' . $counter . '" class="form-control ' . ((!empty($cxepyr_err)) ? "is-invalid" : '') . '" value="' . $card_expyr[$x] . '" >
-                                                    <option disabled selected value></option>
+                                                    <option disabled selected value="'. $card_expyr[$x] . '" >' . $card_expyr[$x] . '</option>
+                                                    <option hidden value="" id="input-card_expyr'.$counter.'"></option>
                                                     <option value="21">2021</option>
                                                     <option value="22">2022</option>
                                                     <option value="23">2023</option>
@@ -291,10 +293,9 @@ for ($x = 0; $x < 5; $x++) {
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateCard(' . $counter . ');">
-                                            </div>
+                                        <div class="form-group" style="margin-left: 13px;">
+                                            <input type="submit" class="btn btn-primary" value="'.$lang['save'].'" onclick="return updateCard(' . $counter . ');">
+                                            <input type="reset" onclick="return ResetForm('.$counter.')" class="btn btn-secondary" value="'.$lang['reset'].'">
                                         </div>
                                     </div>
                                     
@@ -433,6 +434,16 @@ for ($x = 0; $x < 5; $x++) {
         }
 
         $("#card_no" + counter).val(ccnnewval);
+    }
+
+    function ResetForm(counter){
+        document.getElementById("card_name" + counter).value = "";
+        document.getElementById("card_cvv" + counter).value= "";
+        document.getElementById("card_no" + counter).value = "";
+        document.getElementById("input-card_exp" + counter).selected = true;
+        document.getElementById("input-card_expyr" + counter).selected = true;
+        
+        return false;
     }
 
     /*

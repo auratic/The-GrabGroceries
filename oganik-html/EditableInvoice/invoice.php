@@ -72,9 +72,9 @@ if (isset($_GET["id"])) {
 		<div id="identity">
 			<div id="address">
 				<p>
-					TheGrabGroceries Sdn. Bhd <br>
-					66 Melaka Street <br>
-					Malacca Malaysia <br>
+					TheGrabGroceries,<br>
+					66 Melaka Street, <br>
+					Malacca Malaysia. <br>
 					<br> 
 
 					Phone: 60123608370
@@ -118,7 +118,7 @@ if (isset($_GET["id"])) {
 				<tr>
 					<td class="meta-head">Grand Total</td>
 					<td>
-						<p><?php echo $grand_total; ?></p>
+						<p><?php echo "RM ".number_format($grand_total,2); ?></p>
 					</td>
 				</tr>
 
@@ -164,7 +164,7 @@ if (isset($_GET["id"])) {
 				<td colspan="2" class="blank" style="border-top: solid black 1px"> </td>
 				<td colspan="2" class="total-line" style="border-top: solid black 1px">Subtotal</td>
 				<td class="total-value" style="border-top: solid black 1px">
-					<p>RM <?php echo $subtotal; ?></p>
+					<p>RM <?php echo number_format($subtotal,2); ?></p>
 				</td>
 			</tr>
 			<tr>
@@ -178,7 +178,7 @@ if (isset($_GET["id"])) {
 				<td colspan="2" class="blank"> </td>
 				<td colspan="2" class="total-line">Grand Total</td>
 				<td class="total-value">
-					<p>RM <?php echo $grand_total; ?></p>
+					<p>RM <?php echo number_format($grand_total,2); ?></p>
 				</td>
 			</tr>
 			<tr>

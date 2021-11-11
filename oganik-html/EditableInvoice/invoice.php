@@ -45,19 +45,20 @@ if (isset($_GET["id"])) {
 	<script type='text/javascript' src='js/example.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+	<script src="pdf.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
 	<link rel="stylesheet" href="../assets/vendors/bootstrap/bootstrap.min.css" />
 	<link rel="stylesheet" href="../assets/vendors/bootstrap-select/bootstrap-select.min.css" />
-
 </head>
 
 <body>
 
 	<div class="container" style="text-align:center; margin-top: 10px">
 		<button class="hidden-print btn btn-info" onclick="window.print()">Print</button>
-		<!-- <button class="hidden-print btn btn-info" onclick="download()">Download</button> -->
+		<button class="hidden-print btn btn-info" id="download">Download as PDF</button>
 	</div>
-
+	
 	<div id="content" style="width: 800px; margin: 0 auto;">
 
 		<p id="header">INVOICE</p>
@@ -97,7 +98,7 @@ if (isset($_GET["id"])) {
 				<tr>
 					<td class="meta-head" style="border-top: solid black 1px">Invoice #</td>
 					<td style="border-top: solid black 1px">
-						<p><?php echo $receipt_id; ?></p>
+						<p id="rids"><?php echo $receipt_id; ?></p>
 					</td>
 				</tr>
 				<tr>

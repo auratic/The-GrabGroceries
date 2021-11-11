@@ -149,9 +149,9 @@ if (isset($_GET["id"])) {
 					  <tr class="item-row">
 						<td class="item-name"><img src="../assets/images/items/' . $trans_row['image'] . '" style="width:20%;object-fit:contain;"></td>
 						<td class="description"><p>' . $trans_row['item'] . '</p></td>
-						<td ><p>RM' . $trans_row['cost'] . '</p></td>
+						<td ><p>RM' . number_format($trans_row['cost'],2) . '</p></td>
 						<td ><p>x' . $trans_row['amount'] . '</p></td>
-						<td ><p>RM' . $trans_row['total_cost'] . '</p></td>
+						<td ><p>RM' . number_format($trans_row['total_cost'],2) . '</p></td>
 				 	  </tr>
 					  ';
 					$subtotal += $trans_row['total_cost'];

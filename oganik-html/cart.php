@@ -112,7 +112,7 @@ if (isset($_GET['remove'])) {
                                                         <input name="cart_id" value="' . $row['cart_id'] . '" style="display: none;">
                                                         <td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
                                                         <td><input type="hidden" name="iname" value="' . $row['item'] . '">' . $row['item'] . '</td>
-                                                        <td><input type="hidden" name="iprice" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+                                                        <td><input type="hidden" name="iprice" value="' . $row['cost'] . '">RM ' . number_format($row['cost'],2) . '</td>
                                                         <td>
                                                         <div class="quantity-box">
                                                             <button type="button" class="sub">-</button>
@@ -120,7 +120,7 @@ if (isset($_GET['remove'])) {
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>
-                                                        <td>RM ' . $item_total . '</td>
+                                                        <td>RM ' . number_format($item_total,2) . '</td>
                                                         <td style="text-align: center;">
                                                             <button style="" class="btn btn-gray" name="update"><img src="assets/images/update.png" alt="Update Item" /></button>
                                                             <button name="remove" class="btn btn-gray" onclick="location.href = `cart.php?remove&cart_id='.$row['cart_id'].'&iname=' . $row['item'] . '`"><img src="assets/images/delete.png" alt="Remove Item" /></button>

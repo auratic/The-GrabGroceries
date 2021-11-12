@@ -384,10 +384,10 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                          <p>x' . $trans_row['amount'] . '</p>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <p>RM' . $trans_row['cost'] . '</p>
+                                                        <p>RM' . number_format($trans_row['cost'],2) . '</p>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <p>RM' . $trans_row['total_cost'] . '</p>
+                                                        <p>RM' . number_format($trans_row['total_cost'],2) . '</p>
                                                     </div>
                                                 </div>
                                 ';
@@ -398,7 +398,14 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                         </div>
 
                                         <div class="modal-footer" style="background-color:var(--thm-base)">';
-                                            if($status != "Received" && $status != "Cancelled") {
+                                            if($status == "Delivering") {
+
+                                                echo'
+                                                <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>
+                                                ';
+
+                                            }
+                                            else if($status != "Received" && $status != "Cancelled") {
 
                                                 echo'
                                                 <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>

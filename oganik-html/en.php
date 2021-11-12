@@ -136,6 +136,8 @@
         "pcode"   => "Postcode",
         "tel"     => "Contact",
         "editd"   => "Edit Details",
+        "or"      => "or",
+        "setasDft"=> "Set As Default",
         //accdtails
         "accd"    => "Account Details",
         "updated" => "Your details have been updated.",

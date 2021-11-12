@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <span><b><?php echo $lang['tel']?></b><i></i></span>
-                                            <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="">
+                                            <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" placeholder="<?php echo $phone ?>  " style="width:100%" value="" maxlength="12">
                                             <span class="invalid-feedback"><?php echo $phone_err; ?></span>
                                         </div>
                                     </div>

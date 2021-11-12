@@ -136,6 +136,8 @@
         "pcode"   => "Poskod",
         "tel"     => "Telefon",
         "editd"   => "Edit Butiran",
+        "or"      => "atau",
+        "setasDft"=> "Tetapkan Sebagai Lalai",
         //accdtails
         "accd"    => "Butiran Akaun",
         "updated" => "Butiran anda telah dikemas kini.",

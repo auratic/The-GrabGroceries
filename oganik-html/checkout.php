@@ -27,11 +27,11 @@ if ($result = mysqli_query($link, $sql)) {
 		$fname = array($row["firstname"], $row["name1"], $row["name2"], $row["name3"], $row["name4"], $row["name5"]);
 		$lname = array($row["lastname"], $row["lname1"], $row["lname2"], $row["lname3"], $row["lname4"], $row["lname5"]);
 		$email = array($row["email"], $row["email1"], $row["email2"], $row["email3"], $row["email4"], $row["email5"]);
-		$phone = array($row["phone"], $row["phone1"], $row["phone2"], $row["phone3"], $row["phone4"], $row["phone5"]);
-		$address = array($row["address"], $row["address1"], $row["address2"], $row["address3"], $row["address4"], $row["address5"]);
-		$area = array($row["area"], $row["area1"], $row["area2"], $row["area3"], $row["area4"], $row["area5"]);
-		$state = array($row["state"], $row["state1"], $row["state2"], $row["state3"], $row["state4"], $row["state5"]);
-		$postcode = array($row["postcode"], $row["postcode1"], $row["postcode2"], $row["postcode3"], $row["postcode4"], $row["postcode5"]);
+		$phone = array($row["default_phone"], $row["phone1"], $row["phone2"], $row["phone3"], $row["phone4"], $row["phone5"]);
+		$address = array($row["default_address"], $row["address1"], $row["address2"], $row["address3"], $row["address4"], $row["address5"]);
+		$area = array($row["default_area"], $row["area1"], $row["area2"], $row["area3"], $row["area4"], $row["area5"]);
+		$state = array($row["default_state"], $row["state1"], $row["state2"], $row["state3"], $row["state4"], $row["state5"]);
+		$postcode = array($row["default_postcode"], $row["postcode1"], $row["postcode2"], $row["postcode3"], $row["postcode4"], $row["postcode5"]);
 
 		$cardname = array($row["cardName1"], $row["cardName2"], $row["cardName3"], $row["cardName4"], $row["cardName5"]);
 		$cardno = array($row["cardNo1"], $row["cardNo2"], $row["cardNo3"], $row["cardNo4"], $row["cardNo5"]);
@@ -44,11 +44,11 @@ if ($result = mysqli_query($link, $sql)) {
 				var fname = ['" . $row["firstname"] . "', '" . $row["name1"] . "', '" . $row["name2"] . "', '" . $row["name3"] . "', '" . $row["name4"] . "', '" . $row["name5"] . "'];
 				var lname = ['" . $row["lastname"] . "', '" . $row["lname1"] . "', '" . $row["lname2"] . "', '" . $row["lname3"] . "', '" . $row["lname4"] . "', '" . $row["lname5"] . "'];
 				var email= ['" . $row["email"] . "', '" . $row["email1"] . "', '" . $row["email2"] . "', '" . $row["email3"] . "', '" . $row["email4"] . "', '" . $row["email5"] . "'];
-				var address = ['" . $row["address"] . "', '" . $row["address1"] . "', '" . $row["address2"] . "', '" . $row["address3"] . "', '" . $row["address4"] . "', '" . $row["address5"] . "'];
-				var area = ['" . $row["area"] . "', '" . $row["area1"] . "', '" . $row["area2"] . "', '" . $row["area3"] . "', '" . $row["area4"] . "', '" . $row["area5"] . "'];
-				var state = ['" . $row["state"] . "', '" . $row["state1"] . "', '" . $row["state2"] . "', '" . $row["state3"] . "', '" . $row["state4"] . "', '" . $row["state5"] . "'];
-				var postcode= ['" . $row["postcode"] . "', '" . $row["postcode1"] . "', '" . $row["postcode2"] . "', '" . $row["postcode3"] . "', '" . $row["postcode4"] . "', '" . $row["postcode5"] . "'];
-				var phone= [" . $row["phone"] . ", " . $row["phone1"] . ", " . $row["phone2"] . ", " . $row["phone3"] . ", " . $row["phone4"] . ", " . $row["phone5"] . "];
+				var address = ['" . $row["default_address"] . "', '" . $row["address1"] . "', '" . $row["address2"] . "', '" . $row["address3"] . "', '" . $row["address4"] . "', '" . $row["address5"] . "'];
+				var area = ['" . $row["default_area"] . "', '" . $row["area1"] . "', '" . $row["area2"] . "', '" . $row["area3"] . "', '" . $row["area4"] . "', '" . $row["area5"] . "'];
+				var state = ['" . $row["default_state"] . "', '" . $row["state1"] . "', '" . $row["state2"] . "', '" . $row["state3"] . "', '" . $row["state4"] . "', '" . $row["state5"] . "'];
+				var postcode= ['" . $row["default_postcode"] . "', '" . $row["postcode1"] . "', '" . $row["postcode2"] . "', '" . $row["postcode3"] . "', '" . $row["postcode4"] . "', '" . $row["postcode5"] . "'];
+				var phone= [" . $row["default_phone"] . ", " . $row["phone1"] . ", " . $row["phone2"] . ", " . $row["phone3"] . ", " . $row["phone4"] . ", " . $row["phone5"] . "];
 
 				var cardno = ['" . $row["cardNo1"] . "', '" . $row["cardNo2"] . "', '" . $row["cardNo3"] . "', '" . $row["cardNo4"] . "', '" . $row["cardNo5"] . "'];
 				var cardcvv = [" . $row["cardCvv1"] . ", " . $row["cardCvv2"] . ", " . $row["cardCvv3"] . ", " . $row["cardCvv4"] . ", " . $row["cardCvv5"] . "];
@@ -207,12 +207,12 @@ if (isset($_POST["place-order"])) {
 						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', " . $_SESSION["userid"] . ", 
 						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Not Set')";
 
-			$sql_chk_address = "SELECT address FROM users WHERE address is null AND user_id = " . $_SESSION["userid"];
+			$sql_chk_address = "SELECT default_address FROM users WHERE default_address is null AND user_id = " . $_SESSION["userid"];
 			$result_add = mysqli_query($link, $sql_chk_address);
 	
 			if(mysqli_num_rows($result_add) != 0)
 			{
-				$insert_add = "UPDATE users SET phone = ('".$_POST["phone"]."') , address = ('" . $_POST["address"] . "'), postcode = ('" . $_POST["postcode"] . "'), state = ('" . $_POST["state"] . "'), area = ('" . $_POST["area"] . "') WHERE user_id = ". $_SESSION["userid"];
+				$insert_add = "UPDATE users SET default_phone = ('".$_POST["phone"]."') , default_email = ('".$_POST["email"]."'), default_name = ('".$_POST["fname"]."') , default_lname = ('".$_POST["lname"]."'), default_address = ('" . $_POST["address"] . "'), default_postcode = ('" . $_POST["postcode"] . "'), default_state = ('" . $_POST["state"] . "'), default_area = ('" . $_POST["area"] . "') WHERE user_id = ". $_SESSION["userid"];
 				mysqli_query($link, $insert_add);
 			}
 
@@ -358,7 +358,7 @@ if (isset($_POST["place-order"])) {
 
 						<div class="col-md-12">
 							<label><?php echo $lang['phone']?> <i style="color:lightgray"> (eg. 60123334444)</i></label>
-							<input type="text" name="phone" id="set-phone" value="<?php echo $phones; ?>">
+							<input type="text" name="phone" id="set-phone" value="<?php echo $phones; ?>" maxlength="12">
 							<span class="invalid-feedback d-block"><?php echo $phone_err; ?></span>
 						</div><!-- /.col-md-12 -->
 

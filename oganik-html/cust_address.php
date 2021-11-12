@@ -205,6 +205,7 @@ if ($result = mysqli_query($link, $sql)) {
 ?>
 
 <style>
+    #edit-address0,
     #edit-address,
     #edit-address1,
     #edit-address2,
@@ -393,8 +394,8 @@ if ($result = mysqli_query($link, $sql)) {
                                     <div class="col-12" style="margin-bottom: 5%; margin-top: 1%;">
                                         <p>
                                             <a class="box-btn m-t-25 " id="edit-address' . $counterr . '" onclick="return edit(' . $counterr . ')" ><i class="far fa-edit"></i>' . $lang['edit'] . '</a>
-                                            or
-                                            <a class="box-btn m-t-25 " href="cust_address.php?setdefault&counter=' . $counterr . '" >Set default</a>
+                                            '.$lang['or'].'
+                                            <a class="box-btn m-t-25 " href="cust_address.php?setdefault&counter=' . $counterr . '" >'. $lang['setasDft']. '</a>
                                         </p>
                                     </div>
                                 </div>
@@ -439,7 +440,7 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>' . $lang['fname'] . '</label>
-                                                <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_fname . '" >
+                                                <input type="" name="name0" id="name0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_fname . '" placeholder="(eg) John">
                                                 <span class="con-pass-err" style="color:crimson" id="name_err0"></span>
                                             </div>
                                         </div>
@@ -447,7 +448,7 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>' . $lang['lname'] . '</label>
-                                                <input type="" name="lname0" id="lname0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_lname . '" >
+                                                <input type="" name="lname0" id="lname0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_lname . '" placeholder="(eg) Doe">
                                                 <span class="con-pass-err" style="color:crimson" id="lname_err0"></span>
                                             </div>
                                         </div>
@@ -457,7 +458,7 @@ echo '
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>' . $lang['email'] . '</label>
-                                                <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" >
+                                                <input type="" name="email0" id="email0" required class="form-control ' . ((!empty($code_err)) ? "is-invalid" : '') . '" value="' . $default_email . '" placeholder="(eg) JohnDoe@gmail.com">
                                                 <span class="con-pass-err" style="color:crimson" id="email_err0"></span>
                                             </div>
                                         </div>
@@ -467,7 +468,7 @@ echo '
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>' . $lang['address'] . '</label>
-                                                <input type="" name="address0" id="address0" required class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $default_address . '">
+                                                <input type="" name="address0" id="address0" required class="form-control ' . ((!empty($address_err)) ? "is-invalid" : '') . '" value="' . $default_address . '" placeholder="(eg) No 1 Tmn Asin 70000">
                                                 <span class="invalid-feedback d-block" id="address_err0"><?php echo $address_err; ?></span>
                                             </div>
                                         </div>
@@ -533,7 +534,7 @@ echo '
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>' . $lang['phone'] . '</label>
-                                                <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '" placeholder="60123456789" maxlength=12>
+                                                <input type="" name="phone0" id="phone0" required class="form-control ' . ((!empty($phone_err)) ? "is-invalid" : '') . '" value="' . $default_phone . '" placeholder="(eg) 60123456789" maxlength=12>
                                                 <span class="invalid-feedback d-block" id="phone_err0"><?php echo $phone_err; ?></span>
                                             </div>
                                         </div>
@@ -695,7 +696,7 @@ for ($x = 0; $x < 5; $x++) {
 
                             <div class="modal-footer" style="background-color:var(--thm-base)">
                                 <a href="cust_address.php?setdefault&counter=' . $counter . '" >
-                                    <button type="button" class="btn btn-info">Set as default</button>
+                                    <button type="button" class="btn btn-info">'.$lang['setasDft'].'</button>
                                 </a>
                                 <button type="button" class="btn btn-danger" onclick="return closeModal(' . $counter . ')">' . $lang['close'] . '</button>
                             </div> 
@@ -834,11 +835,11 @@ for ($x = 0; $x < 5; $x++) {
         document.getElementById("input-state" + counter).selected = true;
         document.getElementById("input-area" + counter).selected = true;
 
-        if (counter != 0) {
+        //if (counter != 0) {
             document.getElementById("name" + counter).value = "";
             document.getElementById("email" + counter).value = "";
             document.getElementById("lname" + counter).value = "";
-        }
+        //}
 
         return false;
     }

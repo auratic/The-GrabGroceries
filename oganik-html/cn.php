@@ -136,6 +136,8 @@
         "pcode"   => "邮政编码",
         "tel"     => "联系",
         "editd"   => "编辑资料",
+        "or"      => "或",
+        "setasDft"=> "设为默认",
         //accdtails
         "accd"    => "详细资料",
         "updated" => "您的资料已更新。",

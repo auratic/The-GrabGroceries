@@ -143,6 +143,7 @@ include  $_SESSION['lang']. ".php";
             max-height: calc(100vh - 210px);
         }
 
+        /*
         .modal-header {
             border-radius: 25px 25px 0 0;
         }
@@ -150,7 +151,7 @@ include  $_SESSION['lang']. ".php";
         .modal-footer {
             border-radius: 0 0 25px 25px;
         }
-
+        */
         .fas {
             margin-left: 0;
         }

@@ -39,7 +39,7 @@ if (isset($_POST['add'])) {
     if (empty($_POST['review'])) {
         $review_err = "Please leave a review.";
     } 
-    else if (strlen(trim($_POST["name"])) == 0)
+    else if (strlen(trim($_POST["review"])) == 0)
     {
         $review_err = "Please leave a review.";
     }
@@ -206,7 +206,7 @@ if (isset($_POST['add'])) {
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
                             <div class="form-group">
                                 <label><?php echo $lang['mName']?></label> </br>
-                                <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $_SESSION["lname"]; ?>" disabled>
+                                <input type="name" name="name" class="form-control" placeholder="John Doe" value="<?php echo $_SESSION["lname"]; ?>" readonly>
                                 <span class="invalid-feedback d-block"><?php echo $name_err; ?></span>
                             </div>
 

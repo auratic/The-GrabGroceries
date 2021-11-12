@@ -314,7 +314,7 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-12">
 							<select class="selectpicker" id="choose-address" name="selectaddress" onchange="chooseAddress()">
 								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
-								<option value="" style="<?php
+								<option id="add-address" value="" style="<?php
 														if (
 															$address[0] == "" &&
 															$address[1] == "" &&
@@ -327,7 +327,7 @@ if (isset($_POST["place-order"])) {
 														} else {
 															echo 'display:none';
 														}
-														?>" disabled>
+														?>">
 									<a href="cust_address.php"><?php echo $lang['noAdd']?></a>
 								</option>
 								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo "Default address : " . $address[0] . ", " . $area[0] . ", ". $state[0] .", ".$postcode[0] ?></option>
@@ -533,9 +533,9 @@ if (isset($_POST["place-order"])) {
 															<td style="display:none"><input type="hidden" name="item_id[]" value="' . $row["item_id"] . '"></td>
 															<td><img src="assets/images/items/' . $row['image'] . '" style="width:100px; height:100px;"></td>
 															<td><input type="hidden" name="item_name" value="' . $row['item'] . '">' . $row['item'] . '</td>
-															<td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . $row['cost'] . '</td>
+															<td><input type="hidden" name="item_price" value="' . $row['cost'] . '">RM ' . number_format($row['cost'],2) . '</td>
 															<td><input type="hidden" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="999">' . $row['quantity'] . '</td>
-															<td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . $item_total_cost . '</td>
+															<td><input type="hidden" name="item_total_cost[]" value="' . $item_total_cost . '">RM ' . number_format($item_total_cost,2) . '</td>
 														</tr>
 														';
 											}
@@ -594,6 +594,9 @@ if (isset($_POST["place-order"])) {
 		document.getElementById("set-state").selected = "true";
 		document.getElementById("set-postcode").selected = "true";
 
+		if(document.getElementById("add-address").selected == "true") {
+			location.href = "cust_address.php";
+		}
 
 		switch (choose) {
 			case '1':

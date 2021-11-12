@@ -37,7 +37,13 @@ if (isset($_GET["id"])) {
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 
-	<title>Editable Invoice</title>
+	<title>Invoice</title>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="../assets/images/favicons/site.webmanifest" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel='stylesheet' type='text/css' href='css/style.css' />
 	<link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
@@ -45,19 +51,20 @@ if (isset($_GET["id"])) {
 	<script type='text/javascript' src='js/example.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+	<script src="pdf.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
 	<link rel="stylesheet" href="../assets/vendors/bootstrap/bootstrap.min.css" />
 	<link rel="stylesheet" href="../assets/vendors/bootstrap-select/bootstrap-select.min.css" />
-
 </head>
 
 <body>
 
 	<div class="container" style="text-align:center; margin-top: 10px">
 		<button class="hidden-print btn btn-info" onclick="window.print()">Print</button>
-		<!-- <button class="hidden-print btn btn-info" onclick="download()">Download</button> -->
+		<button class="hidden-print btn btn-info" id="download">Download as PDF</button>
 	</div>
-
+	
 	<div id="content" style="width: 800px; margin: 0 auto;">
 
 		<p id="header">INVOICE</p>
@@ -65,11 +72,12 @@ if (isset($_GET["id"])) {
 		<div id="identity">
 			<div id="address">
 				<p>
-					TheGrabGroceries Sdn. Bhd <br>
-					123 Dataran Pahlawan <br>
-					Appleville, WI 53719 <br> <br>
+					TheGrabGroceries,<br>
+					66 Melaka Street, <br>
+					Malacca Malaysia. <br>
+					<br> 
 
-					Phone: 06 888 6666
+					Phone: 60123608370
 				</p>
 			</div>
 
@@ -97,7 +105,7 @@ if (isset($_GET["id"])) {
 				<tr>
 					<td class="meta-head" style="border-top: solid black 1px">Invoice #</td>
 					<td style="border-top: solid black 1px">
-						<p><?php echo $receipt_id; ?></p>
+						<p id="rids"><?php echo $receipt_id; ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -110,7 +118,7 @@ if (isset($_GET["id"])) {
 				<tr>
 					<td class="meta-head">Grand Total</td>
 					<td>
-						<p><?php echo $grand_total; ?></p>
+						<p><?php echo "RM ".number_format($grand_total,2); ?></p>
 					</td>
 				</tr>
 
@@ -141,9 +149,9 @@ if (isset($_GET["id"])) {
 					  <tr class="item-row">
 						<td class="item-name"><img src="../assets/images/items/' . $trans_row['image'] . '" style="width:20%;object-fit:contain;"></td>
 						<td class="description"><p>' . $trans_row['item'] . '</p></td>
-						<td ><p>RM' . $trans_row['cost'] . '</p></td>
+						<td ><p>RM' . number_format($trans_row['cost'],2) . '</p></td>
 						<td ><p>x' . $trans_row['amount'] . '</p></td>
-						<td ><p>RM' . $trans_row['total_cost'] . '</p></td>
+						<td ><p>RM' . number_format($trans_row['total_cost'],2) . '</p></td>
 				 	  </tr>
 					  ';
 					$subtotal += $trans_row['total_cost'];
@@ -156,7 +164,7 @@ if (isset($_GET["id"])) {
 				<td colspan="2" class="blank" style="border-top: solid black 1px"> </td>
 				<td colspan="2" class="total-line" style="border-top: solid black 1px">Subtotal</td>
 				<td class="total-value" style="border-top: solid black 1px">
-					<p>RM <?php echo $subtotal; ?></p>
+					<p>RM <?php echo number_format($subtotal,2); ?></p>
 				</td>
 			</tr>
 			<tr>
@@ -170,7 +178,7 @@ if (isset($_GET["id"])) {
 				<td colspan="2" class="blank"> </td>
 				<td colspan="2" class="total-line">Grand Total</td>
 				<td class="total-value">
-					<p>RM <?php echo $grand_total; ?></p>
+					<p>RM <?php echo number_format($grand_total,2); ?></p>
 				</td>
 			</tr>
 			<tr>

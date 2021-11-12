@@ -239,6 +239,7 @@
         "cancels" => "Batal",
         "chkout"  => "Checkout",
         "shipsame"=> "Penghantaran pada hari yang sama jika pesanan dibuat sebelum 1pm",
+        "contshop"=> "Continue Shopping",
         //checkout
         "shipD"   => "Butiran Penghantaran",
         "existAdd"=> "Pilih alamat sedia ada",

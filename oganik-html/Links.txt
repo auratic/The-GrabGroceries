@@ -65,3 +65,8 @@ Datatable
 //////////////////////////////////////////
 Change background color - https://datatables.net/forums/discussion/53319/change-the-background-colour-based-on-the-value
 Button with Bootstrap 5 - https://datatables.net/extensions/buttons/examples/styling/bootstrap5.html
+
+//////////////////////////////////////////
+SQL
+//////////////////////////////////////////
+Delete Row without primary keyhttps://stackoverflow.com/questions/50495775/delete-row-from-mysql-database-without-having-a-primary-key

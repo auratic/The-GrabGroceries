@@ -314,7 +314,7 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-12">
 							<select class="selectpicker" id="choose-address" name="selectaddress" onchange="chooseAddress()">
 								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
-								<option value="" style="<?php
+								<option id="add-address" value="" style="<?php
 														if (
 															$address[0] == "" &&
 															$address[1] == "" &&
@@ -327,7 +327,7 @@ if (isset($_POST["place-order"])) {
 														} else {
 															echo 'display:none';
 														}
-														?>" disabled>
+														?>">
 									<a href="cust_address.php"><?php echo $lang['noAdd']?></a>
 								</option>
 								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo "Default address : " . $address[0] . ", " . $area[0] . ", ". $state[0] .", ".$postcode[0] ?></option>
@@ -594,6 +594,9 @@ if (isset($_POST["place-order"])) {
 		document.getElementById("set-state").selected = "true";
 		document.getElementById("set-postcode").selected = "true";
 
+		if(document.getElementById("add-address").selected == "true") {
+			location.href = "cust_address.php";
+		}
 
 		switch (choose) {
 			case '1':

@@ -24,9 +24,9 @@ $sql = "SELECT * FROM cust_address
 
 if ($result = mysqli_query($link, $sql)) {
 	while ($row = mysqli_fetch_assoc($result)) {
-		$fname = array($row["firstname"], $row["name1"], $row["name2"], $row["name3"], $row["name4"], $row["name5"]);
-		$lname = array($row["lastname"], $row["lname1"], $row["lname2"], $row["lname3"], $row["lname4"], $row["lname5"]);
-		$email = array($row["email"], $row["email1"], $row["email2"], $row["email3"], $row["email4"], $row["email5"]);
+		$fname = array($row["default_name"], $row["name1"], $row["name2"], $row["name3"], $row["name4"], $row["name5"]);
+		$lname = array($row["default_lname"], $row["lname1"], $row["lname2"], $row["lname3"], $row["lname4"], $row["lname5"]);
+		$email = array($row["default_email"], $row["email1"], $row["email2"], $row["email3"], $row["email4"], $row["email5"]);
 		$phone = array($row["default_phone"], $row["phone1"], $row["phone2"], $row["phone3"], $row["phone4"], $row["phone5"]);
 		$address = array($row["default_address"], $row["address1"], $row["address2"], $row["address3"], $row["address4"], $row["address5"]);
 		$area = array($row["default_area"], $row["area1"], $row["area2"], $row["area3"], $row["area4"], $row["area5"]);
@@ -41,9 +41,9 @@ if ($result = mysqli_query($link, $sql)) {
 
 		echo "
 			<script>
-				var fname = ['" . $row["firstname"] . "', '" . $row["name1"] . "', '" . $row["name2"] . "', '" . $row["name3"] . "', '" . $row["name4"] . "', '" . $row["name5"] . "'];
-				var lname = ['" . $row["lastname"] . "', '" . $row["lname1"] . "', '" . $row["lname2"] . "', '" . $row["lname3"] . "', '" . $row["lname4"] . "', '" . $row["lname5"] . "'];
-				var email= ['" . $row["email"] . "', '" . $row["email1"] . "', '" . $row["email2"] . "', '" . $row["email3"] . "', '" . $row["email4"] . "', '" . $row["email5"] . "'];
+				var fname = ['" . $row["default_name"] . "', '" . $row["name1"] . "', '" . $row["name2"] . "', '" . $row["name3"] . "', '" . $row["name4"] . "', '" . $row["name5"] . "'];
+				var lname = ['" . $row["default_lname"] . "', '" . $row["lname1"] . "', '" . $row["lname2"] . "', '" . $row["lname3"] . "', '" . $row["lname4"] . "', '" . $row["lname5"] . "'];
+				var email= ['" . $row["default_email"] . "', '" . $row["email1"] . "', '" . $row["email2"] . "', '" . $row["email3"] . "', '" . $row["email4"] . "', '" . $row["email5"] . "'];
 				var address = ['" . $row["default_address"] . "', '" . $row["address1"] . "', '" . $row["address2"] . "', '" . $row["address3"] . "', '" . $row["address4"] . "', '" . $row["address5"] . "'];
 				var area = ['" . $row["default_area"] . "', '" . $row["area1"] . "', '" . $row["area2"] . "', '" . $row["area3"] . "', '" . $row["area4"] . "', '" . $row["area5"] . "'];
 				var state = ['" . $row["default_state"] . "', '" . $row["state1"] . "', '" . $row["state2"] . "', '" . $row["state3"] . "', '" . $row["state4"] . "', '" . $row["state5"] . "'];
@@ -74,9 +74,22 @@ if (isset($_POST["place-order"])) {
 	$emails = test_input($_POST['email']);
 	$phones = test_input($_POST['phone']);
 	$addresss = test_input($_POST['address']);
-	$areas = (isset($_POST['area']))? $_POST['area']: "";
-	$states = (isset($_POST['state']))? $_POST['state']: "";
-	$postcodes = (isset($_POST['postcode']))? $_POST['postcode']: "";
+	
+	if (isset($_POST['area']) && $_POST['area'] != "")
+		$areas = $_POST['area'];
+	elseif ($_POST['default-area'] != "")
+		$areas = $_POST['default-area'];
+	
+	if (isset($_POST['state']) && $_POST['state'] != "")
+		$states = $_POST['state'];
+	elseif ($_POST['default-state'] != "")
+		$states = $_POST['default-state'];
+		
+	if (isset($_POST['postcode']) && $_POST['postcode'] != "")
+		$postcodes = $_POST['postcode'];
+	elseif ($_POST['default-postcode'] != "")
+		$postcodes = $_POST['default-postcode'];
+
 	$cardcvvs = $_POST['cvv'];
 	$cardnums = $_POST['cardno'];
 	$cardexpms = $_POST['expmonth'];
@@ -133,22 +146,22 @@ if (isset($_POST["place-order"])) {
 		$receipt_address = $_POST['address'];
 	}
 
-	if (empty($_POST["area"])) {
+	if (empty($areas)) {
 		$area_err = "Area is required";
 	} else {
-		$receipt_area = $_POST['area'];
+		$receipt_area = $areas;
 	}
 
-	if (empty($_POST["state"])) {
+	if (empty($states)) {
 		$state_err = "State is required";
 	} else {
-		$receipt_state = $_POST['state'];
+		$receipt_state = $states;
 	}
 
-	if (empty($_POST["postcode"])) {
+	if (empty($postcodes)) {
 		$postcode_err = "Postcode is required";
 	} else {
-		$receipt_postcode = $_POST['postcode'];
+		$receipt_postcode = $postcodes;
 	}
 
 	$cardnum = $_POST["cardno"];
@@ -203,17 +216,36 @@ if (isset($_POST["place-order"])) {
 			$date = date('Y-m-d H:i:s');
 			$sql_receipt = "INSERT INTO cust_receipt 
 						(receipt_date, receipt_fname, receipt_lname, receipt_email, receipt_phone,  receipt_address, receipt_area, receipt_state, receipt_postcode, user_id, payment_cost, payment_method, receipt_cardno, product_status) 
-						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $_POST["phone"] . "', 
-						'" . $_POST["address"] . "', '" . $_POST["area"] . "', '" . $_POST["state"] . "', '" . $_POST["postcode"] . "', " . $_SESSION["userid"] . ", 
-						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $_POST["cardno"] . "', 'Not Set')";
+						VALUES ('$date', '$receipt_fname', '$receipt_lname', '$receipt_email', '" . $receipt_phone . "', 
+						'" . $receipt_address . "', '" . $receipt_area . "', '" . $receipt_state . "', '" . $receipt_postcode . "', " . $_SESSION["userid"] . ", 
+						" . $_POST["total"] . ", 'Credit/Debit Cards', '" . $receipt_cardnum . "', 'Not Set')";
 
-			$sql_chk_address = "SELECT default_address FROM users WHERE default_address is null AND user_id = " . $_SESSION["userid"];
-			$result_add = mysqli_query($link, $sql_chk_address);
-	
-			if(mysqli_num_rows($result_add) != 0)
-			{
-				$insert_add = "UPDATE users SET default_phone = ('".$_POST["phone"]."') , default_email = ('".$_POST["email"]."'), default_name = ('".$_POST["fname"]."') , default_lname = ('".$_POST["lname"]."'), default_address = ('" . $_POST["address"] . "'), default_postcode = ('" . $_POST["postcode"] . "'), default_state = ('" . $_POST["state"] . "'), default_area = ('" . $_POST["area"] . "') WHERE user_id = ". $_SESSION["userid"];
-				mysqli_query($link, $insert_add);
+
+			if(isset($_POST["setdefault"])) {
+				$insert_add = "
+						UPDATE users SET 
+						default_phone = ('".$receipt_phone."') , 
+						default_email = ('".$receipt_email."'), 
+						default_name = ('".$receipt_fname."') , 
+						default_lname = ('".$receipt_lname."'), 
+						default_address = ('" . $receipt_address . "'), 
+						default_postcode = ('" . $receipt_postcode . "'), 
+						default_state = ('" . $receipt_state . "'), 
+						default_area = ('" . $receipt_area . "') WHERE user_id = ". $_SESSION["userid"];
+				if(mysqli_query($link, $insert_add)){
+
+				} else {
+					echo"
+					<script>
+						Swal.fire({
+							title: 'Error',
+							text: 'Failed to set default address..',
+							icon: 'error'
+						}).then(function() {
+							
+						})
+					</script>";
+				}
 			}
 
 			if (mysqli_query($link, $sql_receipt)) {
@@ -280,13 +312,27 @@ if (isset($_POST["place-order"])) {
 		echo "
 		<script>
 			Swal.fire({
-				title: 'Error',
+				title: 'warning',
 				text: 'Your cart is empty.',
 				icon: 'error'
 			}).then(function() {
 			location.href = 'cart.php'
 			})
 		</script>";
+	}
+} else {
+
+	//If there is default address, will automatically fill in the input next time checkout
+
+	if($fname[0] != "" && $lname[0] != "" && $email[0] != "" && $phone[0] != "" && $address[0] != "" && $area[0] != "" && $state[0] != "" &&  $postcode[0] != "") {
+		$fnames = $fname[0];
+		$lnames = $lname[0];
+		$emails = $email[0];
+		$phones = $phone[0];
+		$addresss = $address[0];
+		$areas = $area[0];
+		$states = $state[0];
+		$postcodes = $postcode[0];
 	}
 }
 ?>
@@ -306,16 +352,21 @@ if (isset($_POST["place-order"])) {
 <section class="checkout-page">
 
 	<div class="container">
-		<form action="#" class="contact-one__form" method="POST">
+		<form action="#" class="contact-one__form" method="POST" id="myForm">
 			<div class="row">
 				<div class="col-md-6">
 					<h3><?php echo $lang['shipD']?></h3>
 					<div class="row">
 						<div class="col-md-12">
-							<select class="selectpicker" id="choose-address" name="selectaddress" onchange="chooseAddress()">
-								<option value="" style="display:none"><?php echo $lang['existAdd']?></option>
-								<option id="add-address" value="" style="<?php
-														if (
+							<div class="dropdown">
+								<button style="width:100%; " class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<?php echo $lang['existAdd']?>
+								</button>
+
+								<div style="width:100%; overflow: auto " class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownAddress">
+
+									<a class="dropdown-item" href="cust_address.php"
+														<?php if (
 															$address[0] == "" &&
 															$address[1] == "" &&
 															$address[2] == "" &&
@@ -323,20 +374,35 @@ if (isset($_POST["place-order"])) {
 															$address[4] == "" &&
 															$address[5] == ""
 														) {
-															echo 'display:block';
+															echo 'style="display:block"';
 														} else {
-															echo 'display:none';
+															echo 'style="display:none"';
 														}
-														?>">
-									<a href="cust_address.php"><?php echo $lang['noAdd']?></a>
-								</option>
-								<option value="1" style="<?php if ($address[0] == "") echo 'display:none'; ?>"><?php echo "Default address : " . $address[0] . ", " . $area[0] . ", ". $state[0] .", ".$postcode[0] ?></option>
-								<option value="2" style="<?php if ($address[1] == "") echo 'display:none'; ?>"><?php echo "Address 2 : " . $address[1] . ", " . $area[1] . ", ". $state[1] .", ".$postcode[1] ?></option>
-								<option value="3" style="<?php if ($address[2] == "") echo 'display:none'; ?>"><?php echo "Address 3 : " . $address[2] . ", " . $area[2] . ", ". $state[2] .", ".$postcode[2] ?></option>
-								<option value="4" style="<?php if ($address[3] == "") echo 'display:none'; ?>"><?php echo "Address 4 : " . $address[3] . ", " . $area[3] . ", ". $state[3] .", ".$postcode[3] ?></option>
-								<option value="5" style="<?php if ($address[4] == "") echo 'display:none'; ?>"><?php echo "Address 5 : " . $address[4] . ", " . $area[4] . ", ". $state[4] .", ".$postcode[4] ?></option>
-								<option value="6" style="<?php if ($address[5] == "") echo 'display:none'; ?>"><?php echo "Address 6 : " . $address[5] . ", " . $area[5] . ", ". $state[5] .", ".$postcode[5] ?></option>
-							</select>
+														?>>
+										<?php echo $lang['noAdd']?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('1')" style="<?php if ($address[0] == "") echo 'display:none'; ?>" >
+										<?php echo "Default Address : " . $address[0] . ", " . $area[0] . ", ". $state[0] .", ".$postcode[0] ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('2')" style="<?php if ($address[1] == "") echo 'display:none'; ?>">
+										<?php echo "Address 1 : " . $address[1] . ", " . $area[1] . ", ". $state[1] .", ".$postcode[1] ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('3')" style="<?php if ($address[2] == "") echo 'display:none'; ?>">
+										<?php echo "Address 2 : " . $address[2] . ", " . $area[2] . ", ". $state[2] .", ".$postcode[2] ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('4')" style="<?php if ($address[3] == "") echo 'display:none'; ?>">
+										<?php echo "Address 2 : " . $address[3] . ", " . $area[3] . ", ". $state[3] .", ".$postcode[3] ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('5')" style="<?php if ($address[4] == "") echo 'display:none'; ?>">
+										<?php echo "Address 2 : " . $address[4] . ", " . $area[4] . ", ". $state[4] .", ".$postcode[4] ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseAddress('6')" style="<?php if ($address[5] == "") echo 'display:none'; ?>">
+										<?php echo "Address 2 : " . $address[5] . ", " . $area[5] . ", ". $state[5] .", ".$postcode[5] ?>
+									</a>
+
+								</div>
+
+							</div>
 						</div><!-- /.col-md-12 -->
 						<div class="col-md-6">
 							<label><?php echo $lang['fname']?> <i style="color:lightgray"> (eg. Ah Meng etc.)</i></label>
@@ -390,6 +456,10 @@ if (isset($_POST["place-order"])) {
 							<span class="invalid-feedback d-block"><?php echo $state_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
+						<input type="hidden" value="<?php echo $states; ?>" name="default-state">
+						<input type="hidden" value="<?php echo $areas; ?>" name="default-area">
+						<input type="hidden" value="<?php echo $postcodes; ?>" name="default-postcode">
+
 						<div class="col-md-6">
 							<label><?php echo $lang['pcode']?></label> <br>
 							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
@@ -425,30 +495,48 @@ if (isset($_POST["place-order"])) {
 					<div class="row">
 				
 						<div class="col-md-12">
-							<select class="selectpicker" id="choose-card" onchange="chooseCard()">
-								<option value="" style="display:none"><?php echo $lang['existC']?></option>
-								<option value="" style="<?php
-														if (
+
+						<div class="dropdown">
+								<button style="width:100%; " class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownCard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<?php echo $lang['existC']?>
+								</button>
+
+								<div style="width:100%; overflow: auto " class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCard">
+
+									<a class="dropdown-item" href="cust_payment.php"
+														<?php if (
 															$cardno[0] == "" &&
 															$cardno[1] == "" &&
 															$cardno[2] == "" &&
 															$cardno[3] == "" &&
 															$cardno[4] == ""
 														) {
-															echo 'display:block';
+															echo 'style="display:block"';
 														} else {
-															echo 'display:none';
+															echo 'style="display:none"';
 														}
-														?>" disabled>
-									<?php echo $lang['noCard']?>
-								</option>
-								<option value="1" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>"><?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?></option>
-								<option value="2" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>"><?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?></option>
-								<option value="3" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>"><?php echo $cardno[2] . " (" . $cardname[2] . ")"; ?></option>
-								<option value="4" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>"><?php echo $cardno[3] . " (" . $cardname[3] . ")"; ?></option>
-								<option value="5" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>"><?php echo $cardno[4] . " (" . $cardname[4] . ")"; ?></option>
-							</select>
+														?>>
+										<?php echo $lang['noCard']?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseCard('1')" style="<?php if ($cardno[0] == "") echo 'display:none'; ?>" >
+										<?php echo $cardno[0] . " (" . $cardname[0] . ")"; ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseCard('2')" style="<?php if ($cardno[1] == "") echo 'display:none'; ?>">
+										<?php echo $cardno[1] . " (" . $cardname[1] . ")"; ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseCard('3')" style="<?php if ($cardno[2] == "") echo 'display:none'; ?>">
+										<?php echo $cardno[2] . " (" . $cardname[2] . ")"; ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseCard('4')" style="<?php if ($cardno[3] == "") echo 'display:none'; ?>">
+										<?php echo $cardno[3] . " (" . $cardname[3] . ")"; ?>
+									</a>
+									<a class="dropdown-item" onclick="return chooseCard('5')" style="<?php if ($cardno[4] == "") echo 'display:none'; ?>">
+										<?php echo $cardno[4] . " (" . $cardname[4] . ")"; ?>
+									</a>
 
+								</div>
+
+							</div>
 						</div><!-- /.col-md-12 -->
 
 						<div class="col-md-12">
@@ -576,9 +664,16 @@ if (isset($_POST["place-order"])) {
 								<span><?php echo number_format($total,2) ?></span>
 							</p>
 							<hr>
-							<i><?php echo $lang['freeshps']?>   </i><i class="fas fa-truck-moving"></i>
-							<a href="index.php" class="thm-btn" style="text-decoration: none; margin-left: 436px;"><?php echo $lang['cancels']?></a>
-							<input type="submit" class="thm-btn" value="<?php echo $lang['placeOdr']?>" name="place-order">
+							<div style="display:flex; justify-content: space-between;">
+								<div><i><?php echo $lang['freeshps']?>   </i><i style="margin: 0" class="fas fa-truck-moving"></i></div>
+								<div><input type="checkbox" name="setdefault" id="setdefault" style="margin-right: 1em" ><i>Save address as default for easier future checkout</i></div>
+							</div>
+							
+							<div style="display:flex; justify-content: flex-end;">
+								<a href="index.php" class="thm-btn" style="margin-right:20px; margin-top:20px"><?php echo $lang['cancels']?></a>
+								<button type="button" onclick="checkDefault()" class="thm-btn" style="margin-top:20px" ><?php echo $lang['placeOdr']?></button>
+								<input type="hidden" name="place-order">
+							</div>
 						</div><!-- /.order-details -->
 					</div><!-- /.col-lg-6 -->
 				</div>
@@ -587,16 +682,50 @@ if (isset($_POST["place-order"])) {
 </section><!-- /.checkout-page -->
 
 <script>
-	function chooseAddress() {
-		var choose = document.getElementById("choose-address").value;
+	
+	function checkDefault() {
+		var setdefault = document.getElementById("setdefault");
+		var form =  document.getElementById("myForm");
+		if(setdefault.checked == false) {
+
+			form.submit();
+
+		} else {
+
+			if(address[0] == "") {
+
+				form.submit();
+
+			} else {
+
+				Swal.fire({
+					icon: 'warning',
+					title: 'Set address as default ?',
+					text: "It will replace exisiting default address",
+					showDenyButton: true,
+					showCancelButton: true,
+					confirmButtonText: 'Save',
+					denyButtonText: `Don't save`,
+				}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+					if (result.isConfirmed) {
+						form.submit();
+					} else if (result.isDenied) {
+						setdefault.checked = false;
+						form.submit();
+					}
+				});
+
+			}
+		}
+		return false
+	}
+
+	function chooseAddress(choose) {
 
 		document.getElementById("set-area").selected = "true";
 		document.getElementById("set-state").selected = "true";
 		document.getElementById("set-postcode").selected = "true";
-
-		if(document.getElementById("add-address").selected == "true") {
-			location.href = "cust_address.php";
-		}
 
 		switch (choose) {
 			case '1':
@@ -672,11 +801,11 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-postcode").value = postcode[5];
 				break;
 		}
+		return false;
 	}
 
 
-	function chooseCard() {
-		var choose = document.getElementById("choose-card").value;
+	function chooseCard(choose) {
 
 		switch (choose) {
 			case '1':
@@ -711,6 +840,7 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-expyear").value = expyear[4];
 				break;
 		}
+		return false
 	}
 
 	document.getElementById("set-cardno").onkeyup = function() {

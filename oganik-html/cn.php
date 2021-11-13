@@ -250,10 +250,11 @@
         "yourOdr" => "您的订单",
         "placeOdr"=> "结算",
         "existC"  => "选择信用卡",
-        "noCard"  => "尚未设置信用卡",
+        "noCard"  => "添加新的信用卡",
         "pdt"     => "物品",
         "sbbtots" => "价格",
         "gtotal"  => "总价",
-        "ships"   => "运费"
+        "ships"   => "运费",
+        "card"    => "信用卡"
     );
 ?>

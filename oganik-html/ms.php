@@ -249,11 +249,12 @@
         "yourOdr" => "Pesanan anda",
         "placeOdr"=> "Buat pesanan anda",
         "existC"  => "Pilih kad sedia ada",
-        "noCard"  => "Tiada kad sedia ada",
+        "noCard"  => "Tambah kad baru",
         "noAdd"   => "Tambah alamat baru",
         "pdt"     => "Produk",
         "sbbtots" => "Jumlah",
         "gtotal"  => "Jumlah keseluruhan",
-        "ships"   => "Penghantaran"
+        "ships"   => "Penghantaran",
+        "card"    => "Kad"
     ); 
 ?>

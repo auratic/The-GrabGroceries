@@ -255,6 +255,7 @@
         "sbbtots" => "Jumlah",
         "gtotal"  => "Jumlah keseluruhan",
         "ships"   => "Penghantaran",
-        "card"    => "Kad"
+        "card"    => "Kad",
+        "chkbox"  => "Simpan alamat sebagai lalai untuk pembayaran masa hadapan yang lebih mudah"
     ); 
 ?>

@@ -391,13 +391,13 @@ if (isset($_POST["place-order"])) {
 										<?php echo "Address 2 : " . $address[2] . ", " . $area[2] . ", ". $state[2] .", ".$postcode[2] ?>
 									</a>
 									<a class="dropdown-item" onclick="return chooseAddress('4')" style="<?php if ($address[3] == "") echo 'display:none'; ?>">
-										<?php echo "Address 2 : " . $address[3] . ", " . $area[3] . ", ". $state[3] .", ".$postcode[3] ?>
+										<?php echo "Address 3 : " . $address[3] . ", " . $area[3] . ", ". $state[3] .", ".$postcode[3] ?>
 									</a>
 									<a class="dropdown-item" onclick="return chooseAddress('5')" style="<?php if ($address[4] == "") echo 'display:none'; ?>">
-										<?php echo "Address 2 : " . $address[4] . ", " . $area[4] . ", ". $state[4] .", ".$postcode[4] ?>
+										<?php echo "Address 4 : " . $address[4] . ", " . $area[4] . ", ". $state[4] .", ".$postcode[4] ?>
 									</a>
 									<a class="dropdown-item" onclick="return chooseAddress('6')" style="<?php if ($address[5] == "") echo 'display:none'; ?>">
-										<?php echo "Address 2 : " . $address[5] . ", " . $area[5] . ", ". $state[5] .", ".$postcode[5] ?>
+										<?php echo "Address 5 : " . $address[5] . ", " . $area[5] . ", ". $state[5] .", ".$postcode[5] ?>
 									</a>
 
 								</div>
@@ -666,7 +666,7 @@ if (isset($_POST["place-order"])) {
 							<hr>
 							<div style="display:flex; justify-content: space-between;">
 								<div><i><?php echo $lang['freeshps']?>   </i><i style="margin: 0" class="fas fa-truck-moving"></i></div>
-								<div><input type="checkbox" name="setdefault" id="setdefault" style="margin-right: 1em" ><i>Save address as default for easier future checkout</i></div>
+								<div><label style="cursor: pointer;"><input type="checkbox" name="setdefault" id="setdefault" style="margin-right: 1em" ><i><?php echo $lang['chkbox']?></i></label></div>
 							</div>
 							
 							<div style="display:flex; justify-content: flex-end;">

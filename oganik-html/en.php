@@ -255,6 +255,7 @@
         "sbbtots" => "Subtotal",
         "gtotal"  => "Grand Total",
         "ships"   => "Delivery",
-        "card"    => "Card"
+        "card"    => "Card",
+        "chkbox"  => "Save address as default for easier future checkout"
     ); 
 ?>

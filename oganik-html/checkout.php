@@ -312,9 +312,8 @@ if (isset($_POST["place-order"])) {
 		echo "
 		<script>
 			Swal.fire({
-				title: 'warning',
-				text: 'Your cart is empty.',
-				icon: 'error'
+				title: 'Your cart is empty..',
+				icon: 'warning'
 			}).then(function() {
 			location.href = 'cart.php'
 			})

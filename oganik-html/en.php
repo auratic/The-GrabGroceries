@@ -249,11 +249,13 @@
         "yourOdr" => "Your Orders",
         "placeOdr"=> "Place your order",
         "existC"  => "Choose existing card",
-        "noCard"  => "No existing card",
+        "noCard"  => "Add new card",
         "noAdd"   => "Add new address",
         "pdt"     => "Product",
         "sbbtots" => "Subtotal",
         "gtotal"  => "Grand Total",
-        "ships"   => "Delivery"
+        "ships"   => "Delivery",
+        "card"    => "Card",
+        "chkbox"  => "Save address as default for easier future checkout"
     ); 
 ?>

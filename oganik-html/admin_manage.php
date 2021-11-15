@@ -587,7 +587,6 @@ if (isset($_GET["activate"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf',
                 {
                 text: 'Add admin',
                 action: function ( e, dt, node, config ) {
@@ -603,7 +602,6 @@ if (isset($_GET["activate"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf'
             ],
         });
         //table.buttons().container()

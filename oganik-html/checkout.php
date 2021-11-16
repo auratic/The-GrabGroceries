@@ -168,8 +168,10 @@ if (isset($_POST["place-order"])) {
 
 	if (empty($_POST["cardno"])) {
 		$cardnum_err = "Card Number is required";
-	} elseif (preg_match("/^[a-z]/i", $cardnum)) {
+	} elseif (!preg_match_all("/^[0-9*\s]+$/i", $cardnum)) {
 		$cardnum_err = "Only number allowed";
+	} elseif (strlen($cardnum) < 19) {
+		$cardnum_err = "Please enter valid card number";
 	} else {
 		$receipt_cardnum = $_POST['cardno'];
 	}

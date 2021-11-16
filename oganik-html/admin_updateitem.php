@@ -283,7 +283,7 @@ if (isset($_POST["update-item"])) {
               <span class="invalid-feedback"><?php echo $exp_err; ?></span>
               <script>
                 var today = new Date();
-                today.setDate(today.getDate() + 7);
+                today.setDate(today.getDate() + 3);
                 var dd = today.getDate();
                 var mm = today.getMonth() + 1; //January is 0!
                 var yyyy = today.getFullYear();

@@ -546,6 +546,8 @@ if (isset($_POST["filter"])) {
                 */
                 'colvis'
             ],
+            
+            "order": [[ 0, "dsc" ]]
             //pageLength : 5
             /*
             initComplete: function () {

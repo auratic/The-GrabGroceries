@@ -224,9 +224,6 @@ if (isset($_GET["archive"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf',
-                'csv',
-                'excel',
                 'colvis'
             ],
             "order": [[ 7, "asc" ]]

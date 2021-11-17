@@ -99,47 +99,69 @@
         <hr>
         <div class="row">
             <div class="col-5">
-                <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-                <script>
-                    const month = new Array();
-                    month[0] = "January";
-                    month[1] = "February";
-                    month[2] = "March";
-                    month[3] = "April";
-                    month[4] = "May";
-                    month[5] = "June";
-                    month[6] = "July";
-                    month[7] = "August";
-                    month[8] = "September";
-                    month[9] = "October";
-                    month[10] = "November";
-                    month[11] = "December";
+                <h4>Total Users</h4>
+                <div id="piechart"></div>
+                <?php
+                    $SQL = "SELECT COUNT(user_id) as vcust FROM users WHERE mode = 'customer' AND verified = 'true'";
+                    $resultss = mysqli_query($link, $SQL);
+                    if($row=mysqli_fetch_assoc($resultss))
+                    {
+                        $usersv = $row['vcust'];
+                    }
 
-                    var today = new Date();
+                    $noneVer = "SELECT COUNT(user_id) as nvcust FROM users WHERE mode = 'customer' AND verified = 'false'";
+                    $resultsss = mysqli_query($link, $noneVer);
+                    if($rowq=mysqli_fetch_assoc($resultsss))
+                    {
+                        $nusersv = $rowq['nvcust'];
+                    }
+            
+                    $sqls = "SELECT COUNT(user_id) as Admin FROM users WHERE mode = 'admin'";
+                    $resulta = mysqli_query($link, $sqls);
+                    if($roww=mysqli_fetch_assoc($resulta))
+                    {
+                        $adminlist = $roww['Admin'];
+                    }
 
-                    var xValues = [month[today.getMonth() - 4], month[today.getMonth() - 3], month[today.getMonth() - 2], month[today.getMonth() - 1], month[today.getMonth()]];
-                    var yValues = [55, 49, 44, 24, 15];
-                    var barColors = ["red", "green", "blue", "orange", "brown"];
+                    $sqlss = "SELECT COUNT(user_id) as Adminn FROM users WHERE mode = 'deactivate'";
+                    $resultaa = mysqli_query($link, $sqlss);
+                    if($rowww=mysqli_fetch_assoc($resultaa))
+                    {
+                        $adminlists = $rowww['Adminn'];
+                    }
 
-                    new Chart("myChart", {
-                        type: "bar",
-                        data: {
-                            labels: xValues,
-                            datasets: [{
-                                backgroundColor: barColors,
-                                data: yValues
-                            }]
-                        },
-                        options: {
-                            legend: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                text: "Sales report last 5 months"
-                            }
-                        }
-                    });
+                    $sqlss = "SELECT COUNT(user_id) as superadmin FROM users WHERE mode = 'superadmin'";
+                    $resultb = mysqli_query($link, $sqlss);
+                    if($rowl=mysqli_fetch_assoc($resultb))
+                    {
+                        $superadmin = $rowl['superadmin'];
+                    }
+                ?>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+                <script type="text/javascript">
+                // Load google charts
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                // Draw the chart and set the chart values
+                function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                ['Roles', 'Amount'],
+                ['Verified Customers', <?php echo $usersv?>],
+                ['None Verified Customers', <?php echo $nusersv?>],
+                ['Active Admin', <?php echo $adminlist?>],
+                ['Inactive Admin', <?php echo $adminlists?>],
+                ['Superadmin', <?php echo $superadmin?>],
+                ]);
+
+                // Optional; add a title and set the width and height of the chart
+                var options = {'title':'TheGrabGroceries', 'width':450, 'height':376};
+
+                // Display the chart inside the <div> element with id="piechart"
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+                }
                 </script>
             </div>
             <div class="col-7">

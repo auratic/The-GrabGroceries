@@ -178,7 +178,6 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 
     <div class="container" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
-        <a class="btn btn-success" style="margin: 14px;" href="excel.php">Download as Excel</a>
 
             <div class="col-sm-12">
                 <div class="row">
@@ -608,8 +607,14 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                     text: 'Rider available : <?php echo $no_rider . " / " . $total_rider ?>',
                     className: "displayRider",
                 },
+                {
+                    text: "Download as Excel",
+                    className: "excel",
+                    action: function(e, dt, node, config) {
+                        location.href = "excel.php";
+                    },
+                }
             ],
-
             "order": [
                 [0, "dsc"]
             ]
@@ -637,6 +642,10 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
             }*/
         });
 
+        $(".excel").css({
+            "background-color": "green"
+        });
+        
         $(".displayRider").css({
             "color": "black",
             "background-color": "rgba(255,255,255,0.8)"

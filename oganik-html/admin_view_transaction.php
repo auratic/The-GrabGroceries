@@ -178,6 +178,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 
     <div class="container" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
+        <a class="btn btn-success" style="margin: 14px;" href="excel.php">Download as Excel</a>
 
             <div class="col-sm-12">
                 <div class="row">
@@ -190,8 +191,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
 
                                 echo "<h1 style='text-align: center'>You have no orders yet!</h1>";
                             } else {
-
-                                echo '
+                                echo ' 
                                         <table id="dtBasicExample" class="display" style="width: 100%;">
                                             <thead>
                                                 <tr>
@@ -608,8 +608,6 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                     text: 'Rider available : <?php echo $no_rider . " / " . $total_rider ?>',
                     className: "displayRider",
                 },
-                'colvis',
-                'excel',
             ],
 
             "order": [

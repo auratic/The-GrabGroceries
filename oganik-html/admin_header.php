@@ -227,6 +227,17 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                             </h5>
                         </div>
                     </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <a href="admin_custList.php">
+                                    Customer List
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+
                     <?php
 
                     if ($_SESSION["mode"] == "superadmin") {

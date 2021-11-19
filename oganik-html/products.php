@@ -165,7 +165,6 @@ else
                                             <img src="assets/images/items/' . $rows['image'] . '" alt="">
                                             <div class="product-card__image-content" style="cursor:pointer;"
                                                 onclick="location.href = `product-details.php?item_id=' . $rows['item_id'] . '`">
-                                                <a href="#"><i class="organik-icon-heart"></i></a>
                                             </div><!-- /.product-card__image-content -->
                                         </div><!-- /.product-card__image -->
                                         <div class="product-card__content">
@@ -236,7 +235,6 @@ else
                                             <img src="assets/images/items/' . $out['image'] . '" alt="">
                                             <div class="product-card__image-content" style="cursor:pointer;"
                                                 onclick="location.href = `product-details.php?item_id=' . $out['item_id'] . '`">
-                                                <a href="#"><i class="organik-icon-heart"></i></a>
                                             </div><!-- /.product-card__image-content -->
                                         </div><!-- /.product-card__image -->
                                         <div class="product-card__content">
@@ -270,7 +268,6 @@ else
                                                 <img src="assets/images/items/' . $proditems['image'] . '" alt="">
                                                 <div class="product-card__image-content" style="cursor:pointer;"
                                                     onclick="location.href = `product-details.php?item_id=' . $proditems['item_id'] . '`">
-                                                    <a href="#"><i class="organik-icon-heart"></i></a>
                                                 </div><!-- /.product-card__image-content -->
                                             </div><!-- /.product-card__image -->
                                             <div class="product-card__content">
@@ -302,7 +299,6 @@ else
                                                             <img src="assets/images/items/' . $row['image'] . '" alt="">
                                                             <div class="product-card__image-content" style="cursor:pointer;"
                                                                 onclick="location.href = `product-details.php?item_id=' . $row['item_id'] . '`">
-                                                                <a href="#"><i class="organik-icon-heart"></i></a>
                                                             </div><!-- /.product-card__image-content -->
                                                         </div><!-- /.product-card__image -->
                                                         <div class="product-card__content">
@@ -320,9 +316,9 @@ else
                     ?>
                     <!-- /.col-md-6 col-lg-4 -->
                 </div><!-- /.row -->
-                <div class="text-center">
-                    <a href="#" class="thm-btn products__load-more"><?php echo $lang['load']?></a><!-- /.thm-btn -->
-                </div><!-- /.text-center -->
+                <!--<div class="text-center">
+                    <a href="#" class="thm-btn products__load-more"><?php echo $lang['load']?></a><!-- /.thm-btn
+                </div> /.text-center -->
             </div><!-- /.col-sm-12 col-md-12 col-lg-9 -->
         </div><!-- /.row -->
     </div><!-- /.container -->

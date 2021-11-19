@@ -194,7 +194,7 @@ include  $_SESSION['lang'] . ".php";
                             <script>
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Your account is deactivated..',
+                                    text: 'Your account is deactivated. Please contact us to activate your account.',
                                     icon: 'warning'
                                 })
                                 /*

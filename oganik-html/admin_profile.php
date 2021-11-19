@@ -249,15 +249,25 @@ if (isset($_POST["reset_pass"])) {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span><b>First Name</b></span>
-                                <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" value="<?php echo $fname ?>" style="width:100%">
+                                <input type="text" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" name="fname" value="<?php echo $fname ?>" style="width:100%" readonly>
                                 <span class="invalid-feedback"><?php echo $fname_err; ?></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span><b>Last Name</b></span>
-                                <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" value="<?php echo $lname ?>" style="width:100%">
+                                <input type="text" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" name="lname" value="<?php echo $lname ?>" style="width:100%" readonly>
                                 <span class="invalid-feedback"><?php echo $lname_err; ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span><b>Email Address</b></span>
+                                <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" value="<?php echo $email ?>" style="width:100%" readonly>
+                                <span class="invalid-feedback"><?php echo $email_err; ?></span>
                             </div>
                         </div>
                     </div>
@@ -268,16 +278,6 @@ if (isset($_POST["reset_pass"])) {
                                 <span><b>Phone Number</b></span>
                                 <input type="text" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" name="phone" value="<?php echo $phone ?>" style="width:100%">
                                 <span class="invalid-feedback"><?php echo $phone_err; ?></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <span><b>Email Address</b></span>
-                                <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" name="email" value="<?php echo $email ?>" style="width:100%">
-                                <span class="invalid-feedback"><?php echo $email_err; ?></span>
                             </div>
                         </div>
                     </div>

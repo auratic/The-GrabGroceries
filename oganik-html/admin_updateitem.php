@@ -153,10 +153,15 @@ if (isset($_POST["update-item"])) {
       if (move_uploaded_file($tempname, $folder)) {
       } else {
         echo "
-                <script>
-                    alert('Something went wrong uploading image');
-                    location.href = 'admin_updateitem.php'
-                </script>";
+        <script>
+        Swal.fire({
+            title: 'Error',
+            text: 'Failed to upload image..',
+            icon: 'error'
+        }).then(function() {
+            location.href = 'admin_additem.php'
+        })
+        </script>";
       }
     } else {
       $sql = "UPDATE item
@@ -171,16 +176,26 @@ if (isset($_POST["update-item"])) {
       mysqli_query($link, $sql);
 
       echo "
-            <script>
-              alert('Updated successfully');
-              location.href = 'admin_displayitem.php'
-            </script>";
+      <script>
+      Swal.fire({
+          title: 'Updated',
+          text: 'Product updated ! ',
+          icon: 'success'
+      }).then(function() {
+          location.href = 'admin_displayitem.php'
+      })
+      </script>";
     } else {
       echo "
-            <script>
-              alert('Something went wrong uploading data');
-              location.href = 'admin_updateitem.php'
-            </script>";
+      <script>
+      Swal.fire({
+          title: 'Error',
+          text: 'Failed to update to database..',
+          icon: 'error'
+      }).then(function() {
+          location.href = 'admin_additem.php'
+      })
+      </script>";
     }
   }
 }
@@ -283,7 +298,7 @@ if (isset($_POST["update-item"])) {
               <span class="invalid-feedback"><?php echo $exp_err; ?></span>
               <script>
                 var today = new Date();
-                today.setDate(today.getDate() + 7);
+                today.setDate(today.getDate() + 3);
                 var dd = today.getDate();
                 var mm = today.getMonth() + 1; //January is 0!
                 var yyyy = today.getFullYear();

@@ -112,6 +112,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+if(isset($_GET['deactivate']))
+{
+    $sql = "UPDATE users SET mode = 'deactivate' WHERE user_id = ".$_SESSION['userid'];
+    if(mysqli_query($link, $sql))
+    {
+        echo'
+            <script>
+                location.href = "logout.php"
+            </script>
+        ';
+    }
+}
 ?>
 
 <!-- :::::::::: Profile :::::::::: -->
@@ -169,6 +182,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <a href="cust_accdetails.php?deactivate" onclick="return Deactivate(event);">Deactivate Account?</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="col-md-4">
@@ -188,5 +209,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 </div>
 </main>
+<script>
+    function Deactivate(e){
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title:'Are you sure want to Deactivate account?',
+            text: "This action cannot be done",
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                location.href="cust_accdetails.php?deactivate";
+            } else {
+                return false;
+            }
+        });
+    }
+    </script>
 
 <?php include 'cust_footer.php'; ?>

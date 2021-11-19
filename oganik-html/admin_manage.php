@@ -198,73 +198,8 @@ if (isset($_GET["activate"])) {
 
     <div class="container admin-content" style="background-color:rgba(255,255,255,0.8); padding: 2%">
         <div class="row">
-            <div class="col-sm-4">
-                <div>
-                    <h4>Admin's Activities</h4>
-                    <hr>
-                </div>
-
-                <div id="feed" style="
-                                background-color: azure;
-                                max-height: 50vh;
-                                width: 100%;
-                                overflow: scroll;
-                                border: solid lightgreen 1px;">
-
-                    <?php
-
-                    $sql = "SELECT * FROM admin_activity 
-                                            INNER JOIN users ON admin_activity.user_id = users.user_id";
-
-                    if ($result = mysqli_query($link, $sql)) {
-
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            switch ($row["activity"]) {
-                                case 'login':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") <b>logged in</b> at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'add item':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>added a product</b> (item_name: " . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'update item':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>updated product</b> (item_id: " . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'archive item':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>archived product</b> (item_id: " . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'restore item':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>restored product</b> (item_id: " . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'delete item':
-                                    break;
-                                case 'update receipt':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>update receipt</b> (receipt_id: " . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                                case 'add admin':
-                                    echo "<p>" . $row['lastname'] . " " . $row['firstname'] . "(user_id: " . $row['user_id'] . ") 
-                                                        <b>added a new admin</b> (" . $row["target"] . ") 
-                                                        at " . $row["activity_time"] . "</p>";
-                                    break;
-                            }
-                        }
-                    }
-
-                    ?>
-
-                </div>
-            </div>
-
-            <div class="col-sm-8">
+            
+            <div class="col-sm-12">
                 <!--
                 
                 -->
@@ -587,7 +522,6 @@ if (isset($_GET["activate"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf',
                 {
                 text: 'Add admin',
                 action: function ( e, dt, node, config ) {
@@ -603,7 +537,6 @@ if (isset($_GET["activate"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf'
             ],
         });
         //table.buttons().container()

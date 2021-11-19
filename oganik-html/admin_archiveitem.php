@@ -164,9 +164,6 @@ if (isset($_GET["restore"])) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                'pdf',
-                'csv',
-                'excel',
                 'colvis'
             ],
         });

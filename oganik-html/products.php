@@ -316,9 +316,9 @@ else
                     ?>
                     <!-- /.col-md-6 col-lg-4 -->
                 </div><!-- /.row -->
-                <div class="text-center">
-                    <a href="#" class="thm-btn products__load-more"><?php echo $lang['load']?></a><!-- /.thm-btn -->
-                </div><!-- /.text-center -->
+                <!--<div class="text-center">
+                    <a href="#" class="thm-btn products__load-more"><?php echo $lang['load']?></a><!-- /.thm-btn
+                </div> /.text-center -->
             </div><!-- /.col-sm-12 col-md-12 col-lg-9 -->
         </div><!-- /.row -->
     </div><!-- /.container -->

@@ -261,6 +261,7 @@ if (isset($_POST["place-order"])) {
 					$sql_delete = "DELETE FROM cust_cart WHERE item_id = " . $_POST["item_id"][$x] . " AND user_id = " . $_SESSION["userid"];
 
 					$sql_get_stock = "SELECT stock FROM item WHERE item_id = " . $_POST["item_id"][$x];
+
 					$result_stock = mysqli_query($link, $sql_get_stock);
 					while ($stock_row = mysqli_fetch_assoc($result_stock)) {
 						$new_stock = $stock_row["stock"] - $_POST["item_quantity"];
@@ -287,23 +288,36 @@ if (isset($_POST["place-order"])) {
 						if (mysqli_query($link, $sql_review)) {
 						} else {
 
-							echo "<script>alert('Error: Fail update review.')</script>";
+							echo "<script>alert('Error: Fail to update review.')</script>";
 						}
 					} else {
 						echo "<script>alert('Error: Transaction fail')</script>";
 					}
 				}
 
-				echo "
-				<script>
-					Swal.fire({
-						title: 'Successful',
-						text: 'Transaction success',
-						icon: 'success'
-					}).then(function() {
-					location.href = 'cust_view_order.php'
-					})
-				</script>";
+				$sql_set_delivery = "INSERT INTO delivery_system (receipt_id, delivery_status) VALUES ('$last_id', 'Not Set')";
+				
+				if (mysqli_query($link, $sql_set_delivery)) {
+					$last_delivery_id  = mysqli_insert_id($link);
+					if(mysqli_query($link, "UPDATE cust_receipt SET delivery_id = '$last_delivery_id' WHERE receipt_id = '$last_id'")){
+						echo "
+						<script>
+							Swal.fire({
+								title: 'Successful',
+								text: 'Transaction success',
+								icon: 'success'
+							}).then(function() {
+							location.href = 'cust_view_order.php'
+							})
+						</script>";
+					} else {
+						echo "<script>alert('Error: Fail to set delivery id')</script>";
+					}
+
+				} else {
+					echo "<script>alert('Error: Fail to set delivery')</script>";
+				}
+				
 			} else {
 
 				echo "<script>alert('Error: Receipt fail')</script>";

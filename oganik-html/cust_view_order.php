@@ -15,9 +15,18 @@ if (!isset($_SESSION["loggedin"])) {
 }
 
 if(isset($_GET["receive"])) {
-    $sql = "UPDATE cust_receipt SET delivery_status = 'Received', product_status = 'Received' WHERE receipt_id = ".$_GET['id'];
+    
+    $date = date('Y-m-d H:i:s');
+    $sql = "UPDATE delivery_system SET delivery_status = 'Received', receive_time = '$date', estimated_time = 'Received' WHERE delivery_id = '".$_GET['id']."'";
+    $get_rider = mysqli_query($link, "SELECT rider_id FROM delivery_system WHERE delivery_id = '".$_GET['id']."'");
+
+    while($row_rider = mysqli_fetch_assoc($get_rider)) {
+        $rider_id = $row_rider["rider_id"];
+    }
+    $update_rider = "UPDATE rider SET rider_status = 'Available', current_delivery = NULL WHERE rider_id = '$rider_id'";
 
     if(mysqli_query($link, $sql)) {
+        mysqli_query($link, $update_rider);
         echo "
         <script>
         Swal.fire({
@@ -182,11 +191,23 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
   100% { opacity: 0; }
 }
 
+div.dt-buttons {
+    position: relative;
+    float: left;
+}
 </style>
 <div class="col-xl-10 col-md-10">
     <div class="tab-content my-account-tab" id="pills-tabContent">
         <h4 class="account-title"><?php echo $lang['order'] ?></h4>
-
+        <p>
+            <b>
+                <?php echo $lang["cancleOD"] ?>
+                <a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank">
+                    <i>Whatsapp</i>
+                </a>.
+                <i style="color: red;"><?php echo $lang['xcancel'] ?></i>
+            </b>
+        </p>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default text-center">
                 <?php
@@ -195,8 +216,6 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                 } else {
                     
                     echo '
-                    <b>'.$lang["cancleOD"].'<a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order." target="_blank"><i>Whatsapp</i></a>.
-                        <i style="color: red;">'.$lang['xcancel'].'</i></b>
                         <table class="" style="width: 100%;" id="dtBasicExample">
                             <thead>
                                 <tr>
@@ -209,36 +228,73 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             </thead>
                             <tbody>';
                     foreach ($receipt_array as $x => $x_value) {
-                        $sql = "SELECT * FROM cust_receipt INNER JOIN users ON cust_receipt.user_id = users.user_id WHERE cust_receipt.receipt_id = $x_value";
-                        $result = mysqli_query($link, $sql);
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $rID = $row['receipt_id'];
-                            $rName = $row['receipt_lname'];
-                            $Fname = $row['receipt_fname'];
-                            $tDate = $row['receipt_date'];
-                            $rEmail = $row['receipt_email'];
-                            $rPhone = $row['receipt_phone'];
-                            $rAdds = $row['receipt_address'];
-                            $rArea = $row['receipt_area'];
-                            $rState = $row['receipt_state'];
-                            $rPcode = $row['receipt_postcode'];
-                            $total = $row['payment_cost'];
-                            $status = $row['product_status'];
-                            $del_status = $row["delivery_status"];
-                            $method = $row['payment_method'];
-                            $uid = $row['user_id'];
-                        }
-
                         
-                        if ($del_status == NULL)
-                            $del_display = $lang['notset'];
-                        elseif ($del_status == "Cancelled")
-                            $del_display = $lang['cancelle'];
-                        elseif ($del_status == "Received")
-                            $del_display = $lang['received'];
-                        else
-                            $del_display = $del_status;
+                        $display_row = array();
+                        $get_receipt = mysqli_query($link, "SELECT * FROM cust_receipt WHERE receipt_id = $x_value");
+                        while ($receipt_row = mysqli_fetch_assoc($get_receipt)) {
+                            $display_row['receipt_id'] = $receipt_row["receipt_id"];
+                            $display_row['receipt_lname'] = $receipt_row["receipt_lname"];
+                            $display_row['receipt_fname'] = $receipt_row["receipt_fname"];
+                            $display_row['receipt_date'] = $receipt_row["receipt_date"];
+                            $display_row['receipt_email'] = $receipt_row["receipt_email"];
+                            $display_row['receipt_phone'] = $receipt_row["receipt_phone"];
+                            $display_row['receipt_address'] = $receipt_row["receipt_address"];
+                            $display_row['receipt_area'] = $receipt_row["receipt_area"];
+                            $display_row['receipt_postcode'] = $receipt_row["receipt_postcode"];
+                            $display_row['receipt_state'] = $receipt_row["receipt_state"];
+                            $display_row['payment_cost'] = $receipt_row["payment_cost"];
+                            $display_row['payment_method'] = $receipt_row["payment_method"];
+                            $display_row['user_id'] = $receipt_row["user_id"];
+                            $display_row['delivery_id'] = $receipt_row["delivery_id"];
+                        }
+                        $get_delivery = mysqli_query($link, "SELECT * FROM delivery_system WHERE delivery_id = '".$display_row['delivery_id']."'");
+                        while ($delivery_row = mysqli_fetch_assoc($get_delivery)) {
+                            $display_row['delivery_status'] = $delivery_row["delivery_status"];
+                            $display_row['rider_id'] = $delivery_row["rider_id"];
+                            $display_row['estimated_time'] = $delivery_row["estimated_time"];
+                            $display_row['delivery_time'] = $delivery_row["delivery_time"];
+                            $display_row['receive_time'] = $delivery_row["receive_time"];
+                        }
+                        echo "<script>console.log('".$display_row['delivery_id']." , ".$display_row['delivery_status']."')</script>";
+                        $get_rider = mysqli_query($link, "SELECT * FROM rider WHERE rider_id = '".$display_row['rider_id']."'");
+                        while($rider_row = mysqli_fetch_assoc($get_rider)) {
+                            $display_row['rider_fullname'] = $rider_row["rider_name"] . " " . $rider_row["rider_lastname"];
+                            $display_row['rider_phone'] = $rider_row["rider_phone"];
+                        }
+                        $rID = $display_row['receipt_id'];
+                        $rName = $display_row['receipt_lname'];
+                        $Fname = $display_row['receipt_fname'];
+                        $tDate = $display_row['receipt_date'];
+                        $rEmail = $display_row['receipt_email'];
+                        $rPhone = $display_row['receipt_phone'];
+                        $rAdds = $display_row['receipt_address'];
+                        $rArea = $display_row['receipt_area'];
+                        $rPcode = $display_row['receipt_postcode'];
+                        $rState = $display_row['receipt_state'];
+                        $total = $display_row['payment_cost'];
+                        $method = $display_row['payment_method'];
+                        $uid = $display_row['user_id'];
+                        $delStatus = $display_row['delivery_status'];
+                        $delRider = $display_row['rider_id'];
+                        $delETA = ($display_row['estimated_time'] == "") ? "<i>Your order is pending</i>" : $display_row['estimated_time'];
+                        $delID = $display_row['delivery_id'];
+                        $delTime = ($display_row['delivery_time'] == "") ? "<i>Your order is yet to deliver</i>" : $display_row['delivery_time'];
+                        $receiveTime = $display_row['receive_time'];
+                        $riderName = ($delRider == "No available rider" || $delRider == "") ? "" : $display_row['rider_fullname'];
+                        $riderPhone = $display_row['rider_phone'];
 
+                        if($delStatus == "Delivering") {
+                            $dispStatus = "<p style='color:orange'>".$lang['deliver']."</p>";
+                        } else if($delStatus == "Received") {
+                            $dispStatus = "<p style='color:limegreen'>".$lang['received']."</p>";
+                        } else if($delStatus == "Cancelled") {
+                            $dispStatus = "<p style='color:crimson'>".$lang['cancelle']."</p>";
+                        } else if($delStatus == "Not Set") {
+                            $dispStatus = "<p style='color:gray'>".$lang['notset']."</p>";
+                        } else if($delStatus == "Preparing") {
+                            $dispStatus = "<p style='color:pink'>".$lang['preparin']."</p>";
+                        }
+                        /*
                         if ($status == "Not Set")
                             $display = '<p>'.$lang['notset'].'</p>';
                         elseif ($status == "Delivering")
@@ -249,6 +305,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                             $display = '<p style="color:crimson;">'.$lang['cancelle'].'</p>';
                         elseif ($status == "Received")
                             $display = '<p style="color:limegreen;">'.$lang['received'].'</p>';
+                            */
                         echo '
                                                                        
                                 <tr onmouseover="this.style.backgroundColor = `lightgray`" onmouseout="this.style.backgroundColor = `white`" onclick="openModal(' . $rID . ')" style="cursor:pointer">
@@ -256,7 +313,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                     <td><p><p>' . $Fname . ' ' . $rName . '</p></p></td>
                                     <td><p><p>' . $tDate . '</p></p></td>
                                     <td><p><p>' . number_format($total, 2) . '</p></p></td>
-                                    <td><p>' . $display . '</p></td>
+                                    <td><p>' . $dispStatus . '</p></td>
                                 </tr>
                                                                     
                                 ';
@@ -277,7 +334,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                     <div style="display: flex"><img style="height:18vh; margin:auto" src="assets/images/delivery.gif"></div>
                                                     <div class="progress-track">
                                                         <ul id="progressbar">';
-                                                        if ($status == "Not set") {
+                                                        if ($delStatus == "Not set") {
                                                             echo 
                                                             '
                                                                 <li class="step0 active " id="step1">'.$lang['notset'].'</li>
@@ -285,7 +342,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 <li class="step0 text-right" id="step3">'.$lang['deliver'].'</li>
                                                                 <li class="step0 text-right" id="step4">'.$lang['received'].'</li>
                                                             ';
-                                                        } elseif ($status == "Preparing") {
+                                                        } elseif ($delStatus == "Preparing") {
                                                             echo 
                                                             '
                                                                 <li class="step0 active " id="step1">'.$lang['notset'].'</li>
@@ -294,7 +351,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 <li class="step0 text-right" id="step4">'.$lang['received'].'</li>
                                                             ';
                                                             
-                                                        } elseif ($status == "Delivering") {
+                                                        } elseif ($delStatus == "Delivering") {
                                                             echo 
                                                             '
                                                                 <li class="step0 active " id="step1">'.$lang['notset'].'</li>
@@ -302,26 +359,44 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 <li class="step0 active text-right" id="step3">'.$lang['deliver'].'</li>
                                                                 <li class="step0 text-right" id="step4">'.$lang['received'].'</li>
                                                             ';
-                                                        } elseif ($status == "Received") {
+                                                        } elseif ($delStatus == "Received") {
                                                             echo 
                                                             '
                                                                 <li class="step0 active " id="step1">'.$lang['notset'].'</li>
                                                                 <li class="step0 active text-center" id="step2">'.$lang['preparin'].'</li>
                                                                 <li class="step0 active text-right" id="step3">'.$lang['deliver'].'</li>
                                                                 <li class="step0 active text-right" id="step4">'.$lang['received'].'</li>
+                                                                <h5 style="text-align: center; margin-top: 12%">'.$lang['received'].'</h5>
                                                             ';
 
-                                                        } elseif ($status == "Cancelled"){
+                                                        } elseif ($delStatus == "Cancelled"){
                                                             echo '<h5 style="text-align: center">'.$lang['cancelle'].'</h5>';
                                                         }
                                                         echo '
                                                         </ul>
-                                                    </div>
+                                                    </div>';
+
+                                                    if($delStatus != "Received" && $delStatus != "Cancelled") {
+                                                        echo'
                                                     <div style="text-align: center;" class="loading-dots">
-                                                        <h5 style="display: inline">'.$lang['ETA'].': '.$del_display.'</h5>
+                                                        <h5 style="display: inline">'.$lang['ETA'].': '.$delETA.'</h5>
                                                         <h5 class="dot one">.</h5><h5 class="dot two">.</h5><h5 class="dot three">.</h5>
-                                                    </div>
+                                                    </div>';
+                                                    }
+
+                                                    echo'
                                                 </div>
+                                                
+                                                <div>
+                                                    <hr>
+                                                        <h4>Your Rider</h4>
+                                                    <hr>
+                                                    <p>Rider Name: '. (($riderName == "") ? '<i>We are finding you a rider..</i>' : $riderName) .'</p>
+                                                    <p>Rider Phone: '.$riderPhone.'</p>
+                                                    <p>Delivery time: '.$delTime.'</p>
+                                                    <p>Receive time: '.$receiveTime.'</p>
+                                                </div>
+
                                                 <div>
                                                     <hr>
                                                         <h4>'.$lang['receiptD'].'</h4>
@@ -398,17 +473,16 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                         </div>
 
                                         <div class="modal-footer" style="background-color:var(--thm-base)">';
-                                            if($status == "Delivering") {
+                                            if($delStatus == "Delivering") {
 
                                                 echo'
-                                                <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>
+                                                <button type="button" class="btn btn-primary" onclick="receiveOrder('.$delID.')">'  .$lang['received']. '</button>
                                                 ';
 
                                             }
-                                            else if($status != "Received" && $status != "Cancelled") {
+                                            else if($delStatus != "Received" && $delStatus != "Cancelled") {
 
                                                 echo'
-                                                <button type="button" class="btn btn-primary" onclick="receiveOrder('.$rID.')">'  .$lang['received']. '</button>
                                                 <button type="button" class="btn btn-primary" onclick="cancelOrder()">'  .$lang['cancelod']. '</button>';
 
                                             }
@@ -463,11 +537,15 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
             buttons: [
-                /*
-                'pdf',
-                'csv',
-                'excel',
-                'colvis'*/
+                {
+                    text: 'Contact Us',
+                    action: function ( e, dt, node, config ) {
+                        window.open(
+                            "https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20to%20cancel%20order.",
+                            '_blank' // <- This is what makes it open in a new window.
+                        );
+                    }
+                }
             ],
             "order": [[ 2, "dsc" ]]
 

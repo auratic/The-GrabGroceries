@@ -34,7 +34,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <h5 class="card-header" style="background-color: rgba(255,255,255,0.5)">Number of customer</h5>
-                        <div class="card-body" onClick="viewList();" style="cursor: pointer;" onmouseover="this.style.backgroundColor = 'azure'" onmouseout="this.style.backgroundColor = 'lightgray'">
+                        <div class="card-body" onclick="location.href='admin_custList.php'" style="cursor: pointer;" onmouseover="this.style.backgroundColor = 'azure'" onmouseout="this.style.backgroundColor = 'lightgray'">
                             <h5 class="card-title"><?php echo 'Currently we have <i>'.$users. '</i> customers registered.' ?></h5>
                             <p class="card-text"></p>
                         </div>
@@ -240,15 +240,15 @@
         </div>
     </div>
 
-    <div class="modal" id="add-modal" role="dialog">
+    <!--<div class="modal" id="add-modal" role="dialog">
         <div class="modal-dialog modal-lg">
 
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #679aeb;">
                     <h4 class="modal-title"><span style="color:white;">Customer List</span></h4>
-                    <!--<button type="button" class="close" style="margin-right: 10px">&times;</button>-->
+                    <button type="button" class="close" style="margin-right: 10px">&times;</button>
                 </div>
-                <!-- Modal Header-->
+                Modal Header
 
                 <div class="modal-body">
                     <div class="row">
@@ -288,16 +288,16 @@
                         </table>
                     </div>
                 </div>
-                <!-- Modal Body-->
+                 Modal Body
 
                 <div class="modal-footer" style="background-color: #679aeb;">
                     <button type="button" class="btn btn-danger" onclick="closeList()">Close</button>
                 </div>
-                <!-- Modal Footer-->
+                 Modal Footer
             </div>
-            <!-- Modal content-->
+             Modal content
         </div>
-    </div>
+    </div>-->
 
     <div class="modal" id="add-modals" role="dialog">
         <div class="modal-dialog modal-lg">

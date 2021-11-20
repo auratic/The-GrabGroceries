@@ -116,7 +116,7 @@ if (isset($_GET['remove'])) {
                                                         <td>
                                                         <div class="quantity-box">
                                                             <button type="button" class="sub">-</button>
-                                                                <input type="number" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="' . $row['stock'] . '" data-mask="000">
+                                                                <input type="number" name="item_quantity" value="' . $row['quantity'] . '" min="1" max="99"' . $row['stock'] . '" data-mask="000">
                                                             <button type="button" class="add">+</button>
                                                         </div>
                                                         </td>

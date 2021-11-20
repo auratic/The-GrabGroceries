@@ -165,6 +165,7 @@ if (isset($_POST["place-order"])) {
 	}
 
 	$cardnum = $_POST["cardno"];
+	$cvv = $_POST["cvv"];
 
 	if (empty($_POST["cardno"])) {
 		$cardnum_err = "Card Number is required";
@@ -180,8 +181,10 @@ if (isset($_POST["place-order"])) {
 		$cardcvv_err = "CVV is required";
 	} else if (strlen(trim($_POST["cvv"])) == 0)
 	{
-		$cardcvv_err = "CVV is required";
-	} else {
+		$cardcvv_err = "CVV is required";	
+	} elseif (!preg_match_all("/^[0-9*\s]+$/i", $cvv)) {
+		$cardcvv_err = "Only number allowed";
+	}else {
 		$receipt_ccvv = $_POST['cvv'];
 	}
 

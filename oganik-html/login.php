@@ -292,6 +292,7 @@ include  $_SESSION['lang'] . ".php";
                         <div class="topbar__buttons">
                             <a href="#" class="search-toggler"><i class="organik-icon-magnifying-glass"></i></a>
                             <a href="cart.php"><i class="organik-icon-shopping-cart"></i></a>
+                            <a href="cust_view_order.php"><i class="fas fa-truck" style="margin:0; height:0;"></i></a>
                         </div><!-- /.topbar__buttons -->
                     </div><!-- /.topbar__left -->
 

@@ -195,6 +195,12 @@ div.dt-buttons {
     position: relative;
     float: left;
 }
+
+.clockDisp
+{
+    font-weight: bold;
+    font-style: italic;
+}
 </style>
 <div class="col-xl-10 col-md-10">
     <div class="tab-content my-account-tab" id="pills-tabContent">
@@ -207,7 +213,7 @@ div.dt-buttons {
                 </a>.
                 <i style="color: red;"><?php echo $lang['xcancel'] ?></i>
             </b>
-            <div id="clockDisp"></div>
+            <div id="clockDisp" class="clockDisp"></div>
         </p>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default text-center">

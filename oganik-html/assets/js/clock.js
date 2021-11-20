@@ -29,10 +29,10 @@ function renderTime()
         if(s < 10)
             s = "0" + s;
         
-        var myClock = document.getElementById("clockDisp");
-        myClock.textContent = "" + dayarrray[day] + ", " + daym+ " " +montharray[month] + " " + year + " | " + h + ":"+ m + ":"+ s;
-        myClock.innerText = "" + dayarrray[day] + ", " + daym+ " " +montharray[month] + " " + year + " | " + h + ":"+ m + ":"+ s;
+    var myClock = document.getElementById("clockDisp");
+    myClock.textContent = "" + dayarrray[day] + ", " + daym+ " " +montharray[month] + " " + year + " | " + h + ":"+ m + ":"+ s;
+    myClock.innerText = "" + dayarrray[day] + ", " + daym+ " " +montharray[month] + " " + year + " | " + h + ":"+ m + ":"+ s;
 
-        setTimeout("renderTime()",1000);
+    setTimeout("renderTime()",1000);
 }
 renderTime();

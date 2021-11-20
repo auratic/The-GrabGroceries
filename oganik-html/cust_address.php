@@ -765,6 +765,9 @@ for ($x = 0; $x < 5; $x++) {
         } else if (!/^[a-zA-Z-' ]*$/.test(name)) {
             document.getElementById("name_err" + counter).innerHTML = "Please enter valid name";
             pass = false;
+        }else if (!name.replace(/\s/g, '').length) {
+            document.getElementById("name_err" + counter).innerHTML = "Name cannot be space.";
+            pass = false;
         }
 
         if (lname == "") {
@@ -773,6 +776,9 @@ for ($x = 0; $x < 5; $x++) {
         } else if (!/^[a-zA-Z-' ]*$/.test(lname)) {
             /* else if (!/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(lname)) */
             document.getElementById("lname_err" + counter).innerHTML = "Please enter valid name";
+            pass = false;
+        }else if (!lname.replace(/\s/g, '').length) {
+            document.getElementById("lname_err" + counter).innerHTML = "Name cannot be space.";
             pass = false;
         }
 

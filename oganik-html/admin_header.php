@@ -232,7 +232,7 @@ if (!isset($_SESSION["loggedin"]) || !isset($_SESSION["mode"]) || ($_SESSION["mo
                         <div class="card-header">
                             <h5 class="mb-0">
                                 <a href="admin_custList.php">
-                                    Customer List
+                                    Customers
                                 </a>
                             </h5>
                         </div>

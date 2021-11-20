@@ -281,7 +281,7 @@ div.dt-buttons {
                         $delTime = ($display_row['delivery_time'] == "") ? "<i>Your order is yet to deliver</i>" : $display_row['delivery_time'];
                         $receiveTime = $display_row['receive_time'];
                         $riderName = ($delRider == "No available rider" || $delRider == "") ? "" : $display_row['rider_fullname'];
-                        $riderPhone = $display_row['rider_phone'];
+                        $riderPhone = (isset($display_row['rider_phone'])) ? $display_row['rider_phone'] : "" ;
 
                         if($delStatus == "Delivering") {
                             $dispStatus = "<p style='color:orange'>".$lang['deliver']."</p>";

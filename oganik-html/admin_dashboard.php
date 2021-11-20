@@ -82,11 +82,11 @@
                         <h5 class="card-header" style="background-color: rgba(255,255,255,0.5)">Total Revenue</h5>
                         <div class="card-body" onClick="viewEarn();" style="cursor: pointer;" onmouseover="this.style.backgroundColor = 'azure'" onmouseout="this.style.backgroundColor = 'lightgray'">
                             <?php
-                                $earn = "SELECT SUM(payment_cost), product_status FROM cust_receipt WHERE product_status = 'Received'";
+                                $earn = "SELECT delivery_system.delivery_status, SUM(cust_receipt.payment_cost) FROM delivery_system INNER JOIN cust_receipt ON delivery_system.receipt_id = cust_receipt.receipt_id WHERE delivery_system.delivery_status = 'Received'";
                                 $earnt = mysqli_query($link, $earn);
                                 if($rearn=mysqli_fetch_assoc($earnt))
                                 {
-                                    $total = $rearn['SUM(payment_cost)'];
+                                    $total = $rearn['SUM(cust_receipt.payment_cost)'];
                                 }
                             ?>
                             <h5 class="card-title">RM <?php echo number_format($total,2)?></h5>
@@ -322,7 +322,7 @@
                             </thead>
                             <tbody>
                             <?php
-                                $revenue = "SELECT * FROM cust_receipt where product_status = 'Received'";
+                                $revenue = "SELECT * FROM delivery_system INNER JOIN cust_receipt ON delivery_system.receipt_id = cust_receipt.receipt_id WHERE delivery_system.delivery_status = 'Received'";
                                 $earns = mysqli_query($link, $revenue);
                                 while ($rowss = mysqli_fetch_assoc($earns)) 
                                 {

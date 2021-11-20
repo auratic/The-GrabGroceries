@@ -251,20 +251,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); /* $_SERVER["PHP_SELF"] Returns the filename of the currently executing script */ ?>" method="post" style="text-align: left">
         <div class="form-group">
             <label><?php echo $lang['email']?></label> </br>
-            <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
+            <input type="email" id="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>" placeholder="grocery@gmail.com">
             <span class="invalid-feedback"><?php echo $email_err; ?></span>
         </div>
 
         <div class="form-group" style="display: flex; justify-content: space-between">
             <div>
                 <label><?php echo $lang['fname']?></label> </br>
-                <input type="text" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
+                <input type="text" id="fname" name="fname" class="form-control <?php echo (!empty($fname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $fname; ?>">
                 <span class="invalid-feedback"><?php echo $fname_err; ?></span>
             </div>
 
             <div>
                 <label><?php echo $lang['lname']?></label> </br>
-                <input type="text" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
+                <input type="text" id="lname" name="lname" class="form-control <?php echo (!empty($lname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lname; ?>">
                 <span class="invalid-feedback"><?php echo $lname_err; ?></span>
             </div>
         </div>
@@ -286,13 +286,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // $_SERVER["REQUEST_METHOD"] Return
 
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="<?php echo $lang['submit']?>">
-            <input type="reset" class="btn btn-secondary ml-2" value="<?php echo $lang['reset']?>">
+            <input type="reset" onclick="return ResetForm()" class="btn btn-secondary ml-2" value="<?php echo $lang['reset']?>">
         </div>
         <p><?php echo $lang['have_acc']?><a href="login.php"><?php echo $lang['backtolg']?></a>.</p>
     </form>
 </div>
 
 <script>
+    function ResetForm() {
+        document.getElementById("email").value = "";
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("pwd").value = "";
+        document.getElementById("cpwd").value = "";
+
+        return false;
+    }
+
     function validatePassword(password) {
         // Do not show anything when the length of password is zero.
         if (password.length === 0) {

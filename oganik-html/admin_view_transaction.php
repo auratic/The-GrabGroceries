@@ -140,7 +140,6 @@ if (isset($_GET["update"])) {
 $rider_name = array();
 $rider_location = array();
 $rider_id = array();
-$rider_phone = array();
 $no_rider = 0;
 
 $sql_rider = "SELECT * FROM rider";
@@ -152,7 +151,6 @@ if ($rider_result = mysqli_query($link, $sql_rider)) {
             array_push($rider_name, $rider_row["rider_name"]);
             array_push($rider_location, $rider_row["rider_location"]);
             array_push($rider_id, $rider_row["rider_id"]);
-            array_push($rider_phone, $rider_row["rider_phone"]);
             $no_rider++;
         }
     }

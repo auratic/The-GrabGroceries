@@ -140,6 +140,7 @@ if (isset($_GET["update"])) {
 $rider_name = array();
 $rider_location = array();
 $rider_id = array();
+$rider_phone = array();
 $no_rider = 0;
 
 $sql_rider = "SELECT * FROM rider";
@@ -151,6 +152,7 @@ if ($rider_result = mysqli_query($link, $sql_rider)) {
             array_push($rider_name, $rider_row["rider_name"]);
             array_push($rider_location, $rider_row["rider_location"]);
             array_push($rider_id, $rider_row["rider_id"]);
+            array_push($rider_phone, $rider_row["rider_phone"]);
             $no_rider++;
         }
     }
@@ -301,7 +303,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td> <button type="button" class="btn-sm ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'btn-dark' : 'btn-primary') . '" name="update" ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`'.$delID.'`, `'.$delStatus.'`, `'.$rArea.'`, `'.$delRider.'`,`'.$delETA.'`, `'.$riderName.'`)"/>Update Status</button></td>
+                                                        <td> <button type="button" class="btn-sm ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'btn-dark' : 'btn-primary') . '" name="update" ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`'.$delID.'`, `'.$delStatus.'`, `'.$rArea.'`, `'.$delRider.'`,`'.$delETA.'`, `'.$riderName.'`, `'.$rAdds.'`)"/>Update Status</button></td>
                                                     </form>
                                                 </tr>
                                             ';
@@ -445,7 +447,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         console.info("This page is not reloaded");
     }
 
-    function updateStatus(id, init_status, c_area, init_rider, init_ETA, riderName) {
+    function updateStatus(id, init_status, c_area, init_rider, init_ETA, riderName, rAdds) {
         
         var status_select = (function() {
             if(init_status == "Not Set") {
@@ -559,6 +561,10 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                 confirmButtonText: 'Okay',
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    if(get_rider != "No available rider")
+                                    {
+                                        window.open("https://api.whatsapp.com/send?phone=60123608370&text="+rAdds, "_blank").focus();
+                                    }
                                     location.href = 'admin_view_transaction.php';
                                 }
                             })

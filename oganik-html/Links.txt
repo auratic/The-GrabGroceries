@@ -12,6 +12,7 @@ Set Date and Timezone - https://stackoverflow.com/questions/19583592/how-to-i-ca
 Password Strength - https://www.codexworld.com/how-to/validate-password-strength-in-php/
 Get Last ID - https://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
 Ternary / if else within echo - https://stackoverflow.com/questions/3507042/if-block-inside-echo-statement
+Associative Array - https://www.w3schools.com/php/php_arrays_associative.asp
 
 //////////////////////////////////////////
 HTML

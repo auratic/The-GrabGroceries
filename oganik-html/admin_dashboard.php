@@ -388,7 +388,7 @@
 
     $(document).ready(function() {
         var table = $('#dtBasicExample').DataTable({
-            "scrollY": "50vh",
+            //"scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
@@ -401,7 +401,7 @@
         });
 
         var table = $('#dtBasicExamples').DataTable({
-            "scrollY": "50vh",
+            //"scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',

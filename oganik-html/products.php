@@ -11,7 +11,7 @@ if (isset($_GET["search"]))
     $getid_sql = "SELECT * FROM category INNER JOIN item 
                     ON item.category_id = category.category_id 
                     WHERE category.category_status = 'Active' AND category.category_name != 'Not Set' AND item.item_status = 'Active' AND 
-                    item LIKE '%$search%' OR description LIKE '%$search%'";
+                    item LIKE '%$search%' OR description LIKE '%$search%' OR category.category_name LIKE '%$search%'";
 
     if ($result = mysqli_query($link, $getid_sql)) {
 

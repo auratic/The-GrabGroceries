@@ -16,7 +16,7 @@ if (isset($_GET["deactivate"])) {
 if (isset($_GET["activate"])) {
     $user_id = $_GET["user_id"];
 
-    $sql = "UPDATE users SET mode = 'admin' where user_id = $user_id";
+    $sql = "UPDATE users SET mode = 'customer' where user_id = $user_id";
 
     if (mysqli_query($link, $sql)) {
         header("Location: admin_custList.php");

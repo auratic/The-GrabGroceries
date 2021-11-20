@@ -70,18 +70,21 @@ if (isset($_POST["update-item"])) {
   if (empty(trim($_POST["item-name"]))) {
 
     $name_err = "Please enter name";
+    
   } else {
 
     if(ucwords(trim($_POST["item-name"])) != $item_name) {
-      
-    $sql = "SELECT * FROM item WHERE item = '" . ucfirst(trim($_POST["item-name"])) . "'";
-    $result = mysqli_query($link, $sql);
-    $row = mysqli_fetch_assoc($result);
+      $sql = "SELECT * FROM item WHERE item = '" . ucfirst(trim($_POST["item-name"])) . "'";
+      $result = mysqli_query($link, $sql);
+      $row = mysqli_fetch_assoc($result);
+  
+      if (mysqli_num_rows($result) > 0) {
+          $name_err = "Name is taken";
 
-    if (mysqli_num_rows($result) > 0) {
-        $name_err = "Name is taken";
       } else {
-        $item_name = ucwords(trim($_POST["item-name"]));
+
+          $item_name = ucwords(trim($_POST["item-name"]));
+
       }
     }
   }

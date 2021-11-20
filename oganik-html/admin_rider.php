@@ -2,6 +2,20 @@
 
 include 'admin_header.php';
 
+$no_rider = 0;
+
+$sql_rider = "SELECT * FROM rider";
+if ($rider_result = mysqli_query($link, $sql_rider)) {
+    $total_rider = mysqli_num_rows($rider_result);
+
+    while ($rider_row = mysqli_fetch_assoc($rider_result)) {
+        if ($rider_row["rider_status"] == "Available") {
+            $no_rider++;
+        }
+    }
+}
+
+
 // Define variables and initialize with empty values
 $email = $fname = $lname = $area = $phone = "";
 $fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = $phone_err = "";
@@ -31,6 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fname_err = "Name is required";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
         $fname_err = "Only letters and white space allowed";
+    } else if (strlen(test_input($_POST["fname"])) == 0) {
+        $fname_err = "Please enter name";
     } else {
         $fname = ucwords(test_input($_POST["fname"]));
     }
@@ -40,7 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lname_err = "Name is required";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
         $lname_err = "Only letters and white space allowed";
-    } else {
+    } else if (strlen(test_input($_POST["lname"])) == 0) {
+        $lname_err = "Please enter name";
+    }else {
         $lname = ucwords(test_input($_POST["lname"]));
     }
 
@@ -168,23 +186,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 if (isset($_GET["deactivate"])) {
-    $user_id = $_GET["user_id"];
+    $rider_id = $_GET["rider_id"];
 
-    $sql = "UPDATE users SET mode = 'deactivate' where user_id = $user_id";
+    $sql = "UPDATE rider SET rider_status = 'Inactive', current_delivery = NULL where rider_id = $rider_id";
 
     if (mysqli_query($link, $sql)) {
-        header("Location: admin_manage.php");
+        header("Location: admin_rider.php");
         die();
     }
 }
 
 if (isset($_GET["activate"])) {
-    $user_id = $_GET["user_id"];
+    $rider_id = $_GET["rider_id"];
 
-    $sql = "UPDATE users SET mode = 'admin' where user_id = $user_id";
+    $sql = "UPDATE rider SET rider_status = 'Available' where rider_id = $rider_id";
 
     if (mysqli_query($link, $sql)) {
-        header("Location: admin_manage.php");
+        header("Location: admin_rider.php");
         die();
     }
 }
@@ -205,27 +223,13 @@ if (isset($_GET["activate"])) {
                 -->
                 <div class="product-tab-box tabs-box" style="margin:0">
                     <ul class="tab-btns tab-buttons clearfix list-unstyled">
-                        <li data-tab="#desc" class="tab-btn active-btn"><span>Active admin</span></li>
-                        <li data-tab="#addi__info" class="tab-btn"><span>Inactive admin</span></li>
+                        <li data-tab="#desc" class="tab-btn active-btn"><span>Active riders</span></li>
+                        <li data-tab="#addi__info" class="tab-btn"><span>Inactive riders</span></li>
                     </ul>
                     <div class="tabs-content">
                         <div class="tab active-tab" id="desc">
                             <div class="product-details-content" style="padding: 20px 30px;">
                                 <div class="desc-content-box">
-                                    <!--
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                        </div>
-                                        <div class="col-sm-4" style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: flex-end;">
-                                            <div class="form-group" style="text-align: left; margin-right: 1rem">
-                                                <button class="btn btn-info btn-sm" onclick="return addAdmin();">Add</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    -->
                                     <table id="dtBasicExample" class="display">
                                         <thead>
                                             <tr>
@@ -235,12 +239,13 @@ if (isset($_GET["activate"])) {
                                                 <th>Phone</th>
                                                 <th>Status</th>
                                                 <th>Current Delivery</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
 
-                                            $sql = "SELECT * FROM rider";
+                                            $sql = "SELECT * FROM rider WHERE rider_status != 'Inactive'";
 
                                             if ($result = mysqli_query($link, $sql)) {
 
@@ -253,6 +258,9 @@ if (isset($_GET["activate"])) {
                                                 <td>' . $row['rider_phone'] . '</td>
                                                 <td>' . $row['rider_status'] . '</td>
                                                 <td>' . $row['current_delivery'] .'</td>
+                                                <td>
+                                                    <button class="btn btn-info btn-sm" onclick="return deactivateRider(' . $row['rider_id'] . ', `' . $row['current_delivery'] .'`);">Deactivate</button>
+                                                </td>
                                             </tr>';
                                                 }
                                             }
@@ -266,6 +274,7 @@ if (isset($_GET["activate"])) {
                                                 <th>Phone</th>
                                                 <th>Status</th>
                                                 <th>Current Delivery</th>
+                                                <th></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -286,12 +295,13 @@ if (isset($_GET["activate"])) {
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Status</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
 
-                                            $sql = "SELECT * FROM rider";
+                                            $sql = "SELECT * FROM rider WHERE rider_status = 'Inactive'";
 
                                             if ($result = mysqli_query($link, $sql)) {
 
@@ -304,9 +314,7 @@ if (isset($_GET["activate"])) {
                                             <td>' . $row['rider_phone'] . '</td>
                                             <td>' . $row['rider_status'] . '</td>
                                             <td>
-                                                <div class="form-group" style="text-align: left">
-                                                    <button class="btn btn-info btn-sm" onclick="return activateAdmin(' . $row['user_id'] . ');">Activate</button>
-                                                </div>
+                                                <button class="btn btn-info btn-sm" onclick="return activateRider(' . $row['rider_id'] . ');">Activate</button>
                                             </td>
                                         </tr>';
                                                 }
@@ -461,44 +469,51 @@ if (isset($_GET["activate"])) {
         $('#add-modal').fadeOut();
         return false;
     }
-
-    function deactivateAdmin(id) {
-        Swal.fire({
-            title: 'Deactivate this admin ?',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "get",
-                    url: "admin_manage.php",
-                    data: {
-                        'deactivate': true,
-                        'user_id': id
-                    },
-                    cache: false,
-                    success: function(html) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Successfully Updated',
-                            confirmButtonText: 'Okay',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.href = 'admin_manage.php';
-                            }
-                        })
-                    }
-                });
-            }
-        });
+    
+    function deactivateRider(id, delivery) {
+        if(delivery != "") {
+            Swal.fire({
+                title: 'This rider is delivering ! ',
+                icon: "warning"
+            });
+        } else {
+            Swal.fire({
+                title: 'Deactivate this rider ?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin_rider.php",
+                        data: {
+                            'deactivate': true,
+                            'rider_id': id
+                        },
+                        cache: false,
+                        success: function(html) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully Updated',
+                                confirmButtonText: 'Okay',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = 'admin_rider.php';
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        }
         return false;
     }
 
-    function activateAdmin(id) {
+    function activateRider(id) {
 
         Swal.fire({
-            title: 'Activate this admin ?',
+            title: 'Activate this rider ?',
             showCancelButton: true,
             confirmButtonText: 'Yes',
         }).then((result) => {
@@ -506,10 +521,10 @@ if (isset($_GET["activate"])) {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "get",
-                    url: "admin_manage.php",
+                    url: "admin_rider.php",
                     data: {
                         'activate': true,
-                        'user_id': id
+                        'rider_id': id
                     },
                     cache: false,
                     success: function(html) {
@@ -519,7 +534,7 @@ if (isset($_GET["activate"])) {
                             confirmButtonText: 'Okay',
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                location.href = 'admin_manage.php';
+                                location.href = 'admin_rider.php';
                             }
                         })
                     }
@@ -530,7 +545,7 @@ if (isset($_GET["activate"])) {
     }
     $(document).ready(function() {
         var table = $('#dtBasicExample').DataTable({
-            "scrollY": "50vh",
+            //"scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
@@ -542,7 +557,7 @@ if (isset($_GET["activate"])) {
                     },
                 },
                 {
-                    text: 'Rider available : 10',
+                    text: 'Rider available : <?php echo $no_rider . " / " . $total_rider ?>',
                     className: "displayRider",
                 }],
         });
@@ -551,7 +566,7 @@ if (isset($_GET["activate"])) {
         $(".displayRider").attr("disabled", "true");
 
         var table = $('#dtTableInactive').DataTable({
-            "scrollY": "50vh",
+            //"scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
@@ -559,6 +574,8 @@ if (isset($_GET["activate"])) {
         });
         //table.buttons().container()
         // .appendTo('#dtBasicExample_wrapper .col-md-6:eq(0)');
+        $('.dataTable').wrap('<div class="dataTables_scroll" />');
+        $('.dataTables_scroll').css({"overflow": "auto", "position": "relative"});
     });
 </script>
 <!-- template js -->

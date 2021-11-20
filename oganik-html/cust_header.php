@@ -105,6 +105,9 @@ include  $_SESSION['lang']. ".php";
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
+    <!--Time&Date-->
+    <script src="assets/js/clock.js"></script>
+
     <style>
         .mode {
             color: #fff;
@@ -162,7 +165,7 @@ include  $_SESSION['lang']. ".php";
     </style>
 </head>
 
-<body>
+<body onload="renderTime();">
     <div class="preloader">
         <img class="preloader__image" width="55" src="assets/images/loaderr.png" alt="" />
     </div>

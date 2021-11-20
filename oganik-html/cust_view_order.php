@@ -207,6 +207,7 @@ div.dt-buttons {
                 </a>.
                 <i style="color: red;"><?php echo $lang['xcancel'] ?></i>
             </b>
+            <div id="clockDisp"></div>
         </p>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default text-center">

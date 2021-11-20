@@ -532,7 +532,6 @@ if (isset($_GET["activate"])) {
         });
 
         var table = $('#dtTableInactive').DataTable({
-            "scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',

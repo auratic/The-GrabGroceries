@@ -163,7 +163,6 @@ if (isset($_GET["activate"])) {
 <script>
     $(document).ready(function() {
         var table = $('#dtBasicExample').DataTable({
-            "scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',
@@ -178,7 +177,6 @@ if (isset($_GET["activate"])) {
         });
 
         var table = $('#dtTableInactive').DataTable({
-            "scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',

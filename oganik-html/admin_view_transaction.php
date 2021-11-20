@@ -265,6 +265,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                     $delRider = $display_row['rider_id'];
                                     $delETA = $display_row['estimated_time'];
                                     $delID = $display_row['delivery_id'];
+                                    $textCust = "Address: ".$rAdds." %0aName: ".$rName." ".$Fname." %0aPhone Number: ".$rPhone;
                                     $riderName = ($delRider == "No available rider" || $delRider == "") ? "" : $display_row['rider_fullname'];
 
                                     if($delStatus == "Delivering") {
@@ -301,7 +302,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td> <button type="button" class="btn-sm ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'btn-dark' : 'btn-primary') . '" name="update" ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`'.$delID.'`, `'.$delStatus.'`, `'.$rArea.'`, `'.$delRider.'`,`'.$delETA.'`, `'.$riderName.'`, `'.$rAdds.'`)"/>Update Status</button></td>
+                                                        <td> <button type="button" class="btn-sm ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'btn-dark' : 'btn-primary') . '" name="update" ' . (($delStatus == "Received" || $delStatus == "Cancelled") ? 'disabled' : '') . ' onclick="return updateStatus(`'.$delID.'`, `'.$delStatus.'`, `'.$rArea.'`, `'.$delRider.'`,`'.$delETA.'`, `'.$riderName.'`, `'.$textCust.'`)"/>Update Status</button></td>
                                                     </form>
                                                 </tr>
                                             ';
@@ -445,7 +446,7 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
         console.info("This page is not reloaded");
     }
 
-    function updateStatus(id, init_status, c_area, init_rider, init_ETA, riderName, rAdds) {
+    function updateStatus(id, init_status, c_area, init_rider, init_ETA, riderName, textCust) {
         
         var status_select = (function() {
             if(init_status == "Not Set") {
@@ -559,9 +560,9 @@ if ($receipt_result = mysqli_query($link, $sql_receipt)) {
                                 confirmButtonText: 'Okay',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    if(get_rider != "No available rider")
+                                    if(get_rider != "No available rider" && get_status != "Received" && get_status != "Preparing" && get_status != "Cancelled" && init_status != get_status)
                                     {
-                                        window.open("https://api.whatsapp.com/send?phone=60123608370&text="+rAdds, "_blank").focus();
+                                        window.open("https://api.whatsapp.com/send?phone=60123608370&text="+textCust, "_blank").focus();
                                     }
                                     location.href = 'admin_view_transaction.php';
                                 }

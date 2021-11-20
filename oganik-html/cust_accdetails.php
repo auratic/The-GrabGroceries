@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 if(isset($_GET['deactivate']))
 {
-    $sql = "UPDATE users SET mode = 'deactivate' WHERE user_id = ".$_SESSION['userid'];
+    $sql = "UPDATE users SET mode = 'deactivateCust' WHERE user_id = ".$_SESSION['userid'];
     if(mysqli_query($link, $sql))
     {
         echo'

@@ -188,7 +188,7 @@ include  $_SESSION['lang'] . ".php";
                 while ($row = mysqli_fetch_assoc($result)) {
                     if (password_verify($password, $row['password'])) {
 
-                        if ($row["mode"] == "deactivate") {
+                        if ($row["mode"] == "deactivate" || $row["mode"] == "deactivateCust") {
 
                             echo "
                             <script>

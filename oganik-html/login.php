@@ -195,13 +195,19 @@ include  $_SESSION['lang'] . ".php";
                                 Swal.fire({
                                     title: 'Error',
                                     text: 'Your account is deactivated. Please contact us to activate your account.',
-                                    icon: 'warning'
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Contact Us',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        let a= document.createElement('a');
+                                        a.target= '_blank';
+                                        a.href= 'https://api.whatsapp.com/send?phone=60123608370&text=Hi,%20I%20want%20reactivate%20my%20account%20$email';
+                                        a.click();
+                                        location.href = 'login.php';
+                                    }
                                 })
-                                /*
-                                .then(function() {
-                                    location.href = 'login.php'
-                                })
-                                */
+                            
                             </script>";
                         } else if ($row["verified"] == "false") {
 

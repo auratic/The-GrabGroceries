@@ -43,23 +43,20 @@
 
     $category = $category_err = "";
 
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     if (isset($_GET["add-category"])) {
 
         $sql = "SELECT * FROM category WHERE category_name = '" . $_GET["category-name"] . "'";
         $result = mysqli_query($link, $sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            $category_err = "Category name is taken";
-
-            echo "
-            <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Category name is taken!'
-            });
-            </script>";
-        } else if (empty($_GET["category-name"])) {
+        if (empty(test_input($_GET["category-name"]))) {
 
             $category_err = "Input is empty";
 
@@ -71,8 +68,19 @@
                 text: 'Input field is empty!'
             });
             </script>";
+        } elseif (mysqli_num_rows($result) > 0) {
+            $category_err = "Category name is taken";
+
+            echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Category name is taken!'
+            });
+            </script>";
         } else {
-            $category = ucwords($_GET["category-name"]);
+            $category = ucwords(test_input($_GET["category-name"]));
         }
 
         if (empty($category_err)) {

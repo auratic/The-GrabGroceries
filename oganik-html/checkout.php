@@ -74,7 +74,11 @@ if (isset($_POST["place-order"])) {
 	$emails = test_input($_POST['email']);
 	$phones = test_input($_POST['phone']);
 	$addresss = test_input($_POST['address']);
-	
+	$areas = (isset($_POST['area']) && $_POST['area'] != "") ? $_POST['area'] : "";
+	$states = (isset($_POST['state']) && $_POST['state'] != "") ? $_POST['state'] : "";
+	$postcodes = (isset($_POST['postcode']) && $_POST['postcode'] != "") ? $_POST['postcode'] : "";
+
+	/*
 	if (isset($_POST['area']) && $_POST['area'] != "")
 		$areas = $_POST['area'];
 	elseif ($_POST['default-area'] != "")
@@ -89,6 +93,7 @@ if (isset($_POST["place-order"])) {
 		$postcodes = $_POST['postcode'];
 	elseif ($_POST['default-postcode'] != "")
 		$postcodes = $_POST['default-postcode'];
+	*/
 
 	$cardcvvs = $_POST['cvv'];
 	$cardnums = $_POST['cardno'];
@@ -455,8 +460,8 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-6">
 							<label><?php echo $lang['area']?></label> <br>
 							<select name="area" class="form-select form-select-lg" style="width: 100%">
-								<option hidden disabled selected style="display: none;" value="<?php echo $areas; ?>"><?php echo $areas; ?></option>
-								<option id="set-area" style="display: none;"></option>
+								<option hidden selected value="<?php echo $areas; ?>"><?php echo $areas; ?></option>
+								<option id="set-area" hidden></option>
 								<option value="Alor Gajah">Alor Gajah</option>
 								<option value="Melaka Tengah">Melaka Tengah</option>
 								<option value="Jasin">Jasin</option>
@@ -467,22 +472,18 @@ if (isset($_POST["place-order"])) {
 						<div class="col-md-6">
 							<label><?php echo $lang['state']?></label> <br>
 							<select name="state" class="form-select form-select-lg" style="width: 100%">
-								<option hidden disabled selected style="display: none;" value="<?php echo $states; ?>"><?php echo $states; ?></option>
-								<option id="set-state" style="display: none;"></option>
+								<option hidden selected value="<?php echo $states; ?>"><?php echo $states; ?></option>
+								<option id="set-state" hidden></option>
 								<option value="Melaka">Melaka</option>
 							</select>
 							<span class="invalid-feedback d-block"><?php echo $state_err; ?></span>
 						</div><!-- /.col-md-6 -->
 
-						<input type="hidden" value="<?php echo $states; ?>" name="default-state">
-						<input type="hidden" value="<?php echo $areas; ?>" name="default-area">
-						<input type="hidden" value="<?php echo $postcodes; ?>" name="default-postcode">
-
 						<div class="col-md-6">
 							<label><?php echo $lang['pcode']?></label> <br>
 							<select name="postcode" class="form-select form-select-lg" style="width: 100%">
-								<option hidden disabled selected style="display: none;" value="<?php echo $postcodes; ?>"><?php echo $postcodes; ?></option>
-								<option id="set-postcode" style="display: none;"></option>
+								<option hidden selected value="<?php echo $postcodes; ?>"><?php echo $postcodes; ?></option>
+								<option id="set-postcode" hidden></option>
 								<option value="75000">75000</option>
 								<option value="75050">75050</option>
 								<option value="75100">75100</option>
@@ -753,13 +754,13 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-phone").value = phone[0];
 				document.getElementById("set-address").value = address[0];
 
-				document.getElementById("set-area").innerHTML = area[0];
-				document.getElementById("set-state").innerHTML = state[0];
-				document.getElementById("set-postcode").innerHTML = postcode[0];
-
 				document.getElementById("set-area").value = area[0];
 				document.getElementById("set-state").value = state[0];
 				document.getElementById("set-postcode").value = postcode[0];
+				
+				document.getElementById("set-area").innerHTML = area[0];
+				document.getElementById("set-state").innerHTML = state[0];
+				document.getElementById("set-postcode").innerHTML = postcode[0];
 
 				break;
 			case '2':
@@ -784,9 +785,14 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-email").value = email[2];
 				document.getElementById("set-phone").value = phone[2];
 				document.getElementById("set-address").value = address[2];
+
 				document.getElementById("set-area").value = area[2];
 				document.getElementById("set-state").value = state[2];
 				document.getElementById("set-postcode").value = postcode[2];
+				
+				document.getElementById("set-area").innerHTML = area[2];
+				document.getElementById("set-state").innerHTML = state[2];
+				document.getElementById("set-postcode").innerHTML = postcode[2];
 				break;
 			case '4':
 				document.getElementById("set-fname").value = fname[3];
@@ -794,9 +800,14 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-email").value = email[3];
 				document.getElementById("set-phone").value = phone[3];
 				document.getElementById("set-address").value = address[3];
+
 				document.getElementById("set-area").value = area[3];
 				document.getElementById("set-state").value = state[3];
 				document.getElementById("set-postcode").value = postcode[3];
+
+				document.getElementById("set-area").innerHTML = area[3];
+				document.getElementById("set-state").innerHTML = state[3];
+				document.getElementById("set-postcode").innerHTML = postcode[3];
 				break;
 			case '5':
 				document.getElementById("set-fname").value = fname[4];
@@ -804,9 +815,14 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-email").value = email[4];
 				document.getElementById("set-phone").value = phone[4];
 				document.getElementById("set-address").value = address[4];
+				
 				document.getElementById("set-area").value = area[4];
 				document.getElementById("set-state").value = state[4];
 				document.getElementById("set-postcode").value = postcode[4];
+				
+				document.getElementById("set-area").innerHTML = area[4];
+				document.getElementById("set-state").innerHTML = state[4];
+				document.getElementById("set-postcode").innerHTML = postcode[4];
 				break;
 			case '6':
 				document.getElementById("set-fname").value = fname[5];
@@ -814,9 +830,14 @@ if (isset($_POST["place-order"])) {
 				document.getElementById("set-email").value = email[5];
 				document.getElementById("set-phone").value = phone[5];
 				document.getElementById("set-address").value = address[5];
+
 				document.getElementById("set-area").value = area[5];
 				document.getElementById("set-state").value = state[5];
 				document.getElementById("set-postcode").value = postcode[5];
+				
+				document.getElementById("set-area").innerHTML = area[5];
+				document.getElementById("set-state").innerHTML = state[5];
+				document.getElementById("set-postcode").innerHTML = postcode[5];
 				break;
 		}
 		return false;

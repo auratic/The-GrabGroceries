@@ -13,6 +13,7 @@ Password Strength - https://www.codexworld.com/how-to/validate-password-strength
 Get Last ID - https://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
 Ternary / if else within echo - https://stackoverflow.com/questions/3507042/if-block-inside-echo-statement
 Associative Array - https://www.w3schools.com/php/php_arrays_associative.asp
+Check if uploaded file is image - https://stackoverflow.com/questions/9314164/php-uploading-files-image-only-checking
 
 //////////////////////////////////////////
 HTML

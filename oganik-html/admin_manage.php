@@ -2,6 +2,14 @@
 
 include 'admin_header.php';
 
+if ($_SESSION["mode"] !== "superadmin") {
+    echo "
+    <script>
+      alert('You are not authorized to this page');
+      location.href='admin_dashboard.php';
+    </script>";
+}
+
 // Define variables and initialize with empty values
 $email = $fname = $lname = $password = $confirm_password = $phone = "";
 $fname_err = $lname_err = $email_err = $password_err = $confirm_password_err = $phone_err = "";

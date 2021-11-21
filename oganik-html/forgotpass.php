@@ -139,9 +139,11 @@ if (isset($_POST["confirm-code"])) {
 	} else if (strtoupper($_POST["ver-code"]) == "") {
 
 		$code_err = "Enter your PIN";
+		$verify_status = "Wrong PIN entered";
 	} else {
 
 		$code_err = "Wrong PIN entered";
+		$verify_status = "Wrong PIN entered";
 	}
 }
 
@@ -272,7 +274,8 @@ if (isset($_POST["new-pass"])) {
 							</div>
 						</div>
 					</div>
-					<div class="row">
+
+					<div class="row" style="display:none">
 						<div class="col-md-10">
 							<p id="verify-status" style='color:var(--thm-base)'><?php echo $verify_status; ?></p>
 						</div>
@@ -414,6 +417,8 @@ if (isset($_POST["new-pass"])) {
 
 	if (ver_status.innerHTML == "Correct PIN entered") {
 		$('#reset-modal').fadeIn();
+	} else if (ver_status.innerHTML == "Wrong PIN entered") {
+		$('#ver-modal').fadeIn();
 	}
 
 	function passReset() {

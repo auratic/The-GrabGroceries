@@ -129,7 +129,8 @@
         "edit"    => "Edit",
         "save"    => "Save",
         //address
-        "default" => "Default",
+        "default" => "Default Address",
+        "otherAdd"=> "Other Address",
         "fullname"=> "Full Name",
         "area"    => "Area",
         "state"   => "State",
@@ -141,6 +142,7 @@
         //accdtails
         "accd"    => "Account Details",
         "updated" => "Your details have been updated.",
+        "deactive"=> "Deactivate Account",
         //password
         "curpwd"  => "Current Password",
         "newpwd"  => "New Password",

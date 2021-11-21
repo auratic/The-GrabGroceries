@@ -129,7 +129,8 @@
         "edit"    => "编辑",
         "save"    => "保存",
         //address
-        "default" => "默认",
+        "default" => "默认地址",
+        "otherAdd"=> "其他地址",
         "fullname"=> "名字",
         "area"    => "地区",
         "state"   => "州属",
@@ -141,6 +142,7 @@
         //accdtails
         "accd"    => "详细资料",
         "updated" => "您的资料已更新。",
+        "deactive"=> "关闭户口",
         //password
         "curpwd"  => "当前密码",
         "newpwd"  => "新密码",

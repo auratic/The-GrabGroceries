@@ -247,7 +247,7 @@ if ($result = mysqli_query($link, $sql)) {
                     }
 
                     echo '
-                        <h4>Default Address</h4>
+                        <h4>'.$lang['default'].'</h4>
                         <hr>
                         <div class="row">
                             <div class="col-5" style="background-color: rgba(255,255,255,0.5); margin: 1%; padding: 1%;">
@@ -320,7 +320,7 @@ if ($result = mysqli_query($link, $sql)) {
                                 </div>
                             </div>
                         </div>
-                        <h4>Other addresses</h4>
+                        <h4>'.$lang['otherAdd'].'</h4>
                         <hr>
                         <div class="row">';
                     $counterr = 0;

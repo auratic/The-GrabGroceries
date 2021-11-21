@@ -178,7 +178,7 @@ if(isset($_GET['deactivate']))
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group">
-                                            <input type="submit" name="save" class="btn btn-primary" value="Save">
+                                            <input type="submit" name="save" class="btn btn-primary" value="<?php echo $lang['save']?>">
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@ if(isset($_GET['deactivate']))
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="form-group">
-                                            <a href="cust_accdetails.php?deactivate" onclick="return Deactivate(event);">Deactivate Account?</a>
+                                            <a href="cust_accdetails.php?deactivate" onclick="return Deactivate(event);"><?php echo $lang['deactive']?>?</a>
                                         </div>
                                     </div>
                                 </div>

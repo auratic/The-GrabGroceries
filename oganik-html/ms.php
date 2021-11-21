@@ -129,7 +129,8 @@
         "edit"    => "Edit",
         "save"    => "Simpan",
         //address
-        "default" => "Lalai",
+        "default" => "Alamat Lalai",
+        "otherAdd"=> "Alamat Lain",
         "fullname"=> "Nama penuh",
         "area"    => "Kawasan",
         "state"   => "Negeri",
@@ -141,6 +142,7 @@
         //accdtails
         "accd"    => "Butiran Akaun",
         "updated" => "Butiran anda telah dikemas kini.",
+        "deactive"=> "Nyahaktifkan Akaun",
         //password
         "curpwd"  => "Kata laluan semasa",
         "newpwd"  => "Kata laluan baharu",

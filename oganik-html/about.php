@@ -83,14 +83,12 @@
             <div class="col-sm-4">
                 <div class="team-card">
                     <div class="team-card__image">
-                        <img src="assets/images/team/team-1-1.png" alt="">
+                        <img src="assets/images/team/Picture1.png" style="margin-left: 50px; width: 280px; height: 300px;" alt="">
                     </div><!-- /.team-card__image -->
                     <div class="team-card__content">
                         <h3>Liyu Guang Jie</h3>
                         <div class="team-card__social">
-                            <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
-                            <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/guangjie_l/" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div><!-- /.team-card__social -->
                     </div><!-- /.team-card__content -->
                 </div><!-- /.team-card -->
@@ -98,14 +96,12 @@
             <div class="col-sm-4">
                 <div class="team-card">
                     <div class="team-card__image">
-                        <img src="assets/images/team/team-1-2.png" alt="">
+                        <img src="assets/images/team/Picture3.png" style="margin-left: 50px; width: 280px; height: 300px;" alt="">
                     </div><!-- /.team-card__image -->
                     <div class="team-card__content">
                         <h3>Ley Chin Chong</h3>
                         <div class="team-card__social">
-                            <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
-                            <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/darenley/" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div><!-- /.team-card__social -->
                     </div><!-- /.team-card__content -->
                 </div><!-- /.team-card -->
@@ -113,14 +109,12 @@
             <div class="col-sm-4">
                 <div class="team-card">
                     <div class="team-card__image">
-                        <img src="assets/images/team/team-1-3.png" alt="">
+                        <img src="assets/images/team/Picture2.png" style="margin-left: 50px; width: 280px; height: 300px;" alt="">
                     </div><!-- /.team-card__image -->
                     <div class="team-card__content">
                         <h3>Chan, Mingwai</h3>
                         <div class="team-card__social">
-                            <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
-                            <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/_mingwai01/" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div><!-- /.team-card__social -->
                     </div><!-- /.team-card__content -->
                 </div><!-- /.team-card -->

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate first name
-    if (empty($_POST["fname"])) {
+    if (empty(test_input($_POST["fname"]))) {
         $fname_err = "Name is required";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["fname"]))) {
         $fname_err = "Only letters and white space allowed";
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate last name
-    if (empty($_POST["lname"])) {
+    if (empty(test_input($_POST["lname"]))) {
         $lname_err = "Name is required";
     } else if (!preg_match("/^[a-zA-Z-' ]*$/", test_input($_POST["lname"]))) {
         $lname_err = "Only letters and white space allowed";
@@ -62,11 +62,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    $password = $_POST["password"];
+
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
     // Validate password
     if (empty($_POST["password"])) {
-        $password_err = "Please enter a password.";
-    } elseif (strlen(trim($_POST["password"])) < 6) {
-        $password_err = "Password must have atleast 6 characters.";
+        $password_err = "Please enter a password";
+    } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        $password_err = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character";
     } else {
         $password = $_POST["password"];
     }
@@ -253,9 +260,7 @@ if (isset($_GET["activate"])) {
                                                 <td>' . $row['email'] . '</td>
                                                 <td>' . $row['phone'] . '</td>
                                                 <td>
-                                                    <div class="form-group" style="text-align: left">
-                                                        <button class="btn btn-info btn-sm" onclick="return deactivateAdmin(' . $row['user_id'] . ');">Deactivate</button>
-                                                    </div>
+                                                    <button class="btn btn-info btn-sm" onclick="return deactivateAdmin(' . $row['user_id'] . ');">Deactivate</button>
                                                 </td>
                                             </tr>';
                                             }
@@ -309,9 +314,7 @@ if (isset($_GET["activate"])) {
                                             <td>' . $row['email'] . '</td>
                                             <td>' . $row['phone'] . '</td>
                                             <td>
-                                                <div class="form-group" style="text-align: left">
-                                                    <button class="btn btn-info btn-sm" onclick="return activateAdmin(' . $row['user_id'] . ');">Activate</button>
-                                                </div>
+                                                <button class="btn btn-info btn-sm" onclick="return activateAdmin(' . $row['user_id'] . ');">Activate</button>
                                             </td>
                                         </tr>';
                                             }
@@ -517,7 +520,7 @@ if (isset($_GET["activate"])) {
     }
     $(document).ready(function() {
         var table = $('#dtBasicExample').DataTable({
-            "scrollY": "50vh",
+            //"scrollY": "50vh",
             "scrollCollapse": true,
             "pagingType": "full_numbers",
             dom: 'Bfrtip',

@@ -71,9 +71,7 @@ if (isset($_GET["activate"])) {
                                                 <td>' . $row['email'] . '</td>
                                                 <td>' . $row['phone'] . '</td>
                                                 <td>
-                                                    <div class="form-group" style="text-align: left">
-                                                        <button class="btn btn-info btn-sm" onclick="return deactivateCust(' . $row['user_id'] . ');">Deactivate</button>
-                                                    </div>
+                                                    <button class="btn btn-info btn-sm" onclick="return deactivateCust(' . $row['user_id'] . ');">Deactivate</button>
                                                 </td>
                                             </tr>';
                                             }
@@ -127,9 +125,7 @@ if (isset($_GET["activate"])) {
                                             <td>' . $row['email'] . '</td>
                                             <td>' . $row['phone'] . '</td>
                                             <td>
-                                                <div class="form-group" style="text-align: left">
-                                                    <button class="btn btn-info btn-sm" onclick="return activateCust(' . $row['user_id'] . ');">Activate</button>
-                                                </div>
+                                                <button class="btn btn-info btn-sm" onclick="return activateCust(' . $row['user_id'] . ');">Activate</button>
                                             </td>
                                         </tr>';
                                             }

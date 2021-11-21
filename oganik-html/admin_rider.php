@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         font-family:Arial, Helvetica, sans-serif;
                         margin: auto"
                         >
-                        Admin Registration Successful
+                        Rider Registration Successful
                     </h1>
                     <br>
                     <h3>

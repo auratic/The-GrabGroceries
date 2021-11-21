@@ -59,6 +59,7 @@ if (isset($_POST["update-item"])) {
 
   $id_err = $exp_err = $cost_err = $img_err = $category_err = $name_err = $desc_err = $stock_err = "";
 
+  /*
   if ($_FILES['image']['size'] == 0) {
   } else {
     $upload_img = true;
@@ -66,6 +67,34 @@ if (isset($_POST["update-item"])) {
     $tempname = $_FILES["image"]["tmp_name"];
     $folder = "assets/images/items/" . $filename;
   }
+  */
+
+  if ($_FILES['image']['size'] == 0) {
+
+  } elseif ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+
+    $img_err = "Upload failed with error code " . $_FILES['image']['error'];
+
+  } else {
+    $upload_img = true;
+    $info = getimagesize($_FILES['image']['tmp_name']);
+    // never assume the upload succeeded
+    if ($info === FALSE) {
+      $img_err ="Unable to determine image type of uploaded file";
+    } elseif (($info[2] !== IMAGETYPE_JPEG) && ($info[2] !== IMAGETYPE_PNG)) {
+      $img_err = "Not a jpeg/png";
+    } else {
+      $filename = $_FILES["image"]["name"];
+      $tempname = $_FILES["image"]["tmp_name"];
+      $folder = "assets/images/items/" . $filename;
+
+      if (is_file($folder)) {
+        $img_err = "The file name $filename exists";
+      } 
+
+    }
+
+  } 
 
   if (empty(trim($_POST["item-name"]))) {
 

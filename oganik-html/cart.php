@@ -2,6 +2,34 @@
 
 include 'cust_header.php';
 
+if(isset($_GET["checkcart"])) {
+    $result = mysqli_query($link, "SELECT * FROM cust_cart WHERE user_id = ".$_SESSION["userid"]);
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $check_item = mysqli_query ($link, "SELECT * FROM item WHERE item_id = ".$row["item_id"]);
+
+        while($item_row = mysqli_fetch_assoc($check_item)) {
+            if($item_row["stock"] <= 0) {
+
+                $remove = mysqli_query($link, "DELETE FROM cust_cart WHERE user_id = ".$_SESSION["userid"]." AND item_id = ".$row["item_id"]);
+                echo "
+                <script>
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Your cart product ".$item_row["item"]." is out of stock ! ',
+                        icon: 'warning'
+                    }).then(function() {
+                        location.href = 'checkout.php'
+                    })
+                </script>
+                ";
+            }
+        }
+    }
+
+    //echo "<script>location.href = 'checkout.php'</script>";
+}
+
 if (!isset($_SESSION['loggedin'])) {
     echo "
         <script>
@@ -210,7 +238,7 @@ if (isset($_GET['remove'])) {
                 <div class="button-box" style="margin-left: -20px;">
                     <!-- <a href="index.php" class="thm-btn" style="text-decoration: none;"></i> <?php echo $lang['cancels']?></a> --><!-- /.thm-btn -->
                     <a href="products.php" class="thm-btn" style="text-decoration: none;"></i><?php echo $lang['contshop']?></a><!-- /.thm-btn -->
-                    <a href="checkout.php" class="thm-btn" style="text-decoration: none;"><i class="far fa-credit-card"></i> <?php echo $lang['chkout']?></a><!-- /.thm-btn -->
+                    <a href="cart.php?checkcart" class="thm-btn" style="text-decoration: none;" ><i class="far fa-credit-card"></i> <?php echo $lang['chkout']?></a><!-- /.thm-btn -->
                 </div><!-- /.button-box -->
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
